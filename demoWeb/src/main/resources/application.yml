@@ -1,0 +1,12 @@
+server.port: 8090
+spring.mvc.view.prefix: /WEB-INF/jsp/
+spring.mvc.view.suffix: .jsp
+
+spring:
+  redis:
+    host: localhost
+    port: 6379
+  session:
+    redis:
+      flush-mode: on-save
+      namespace: spring:session

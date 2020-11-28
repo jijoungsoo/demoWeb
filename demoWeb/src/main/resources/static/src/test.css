@@ -1,0 +1,50 @@
+h2{
+  font: 14px Arial, sans-serif;
+  color:#fff;
+  padding: 10px;
+}
+
+.lm_content{
+  text-align: center;
+	color: white;
+}
+
+body {
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*position: absolute;*/
+    transition: all 0.5s ease;
+}
+
+#layoutContainer{
+  /*
+  width: 100%;
+  height: calc(100% - 50px);
+  */
+  height: 100%;
+  width: calc(100% - 200px);
+  position:absolute;
+  top: 0;
+  left: 200px;
+  /*
+  box-shadow: -3px 0px 9px 0px rgba( 0, 0, 0, 0.4 );
+  */
+}
+
+
+/*로그인 박스*/
+.login {
+  background: #083d72;
+  position: absolute;
+  width: 200px;
+  height:60px;
+  top:0px;
+  left:0; 
+}
+
+.login label{
+  color: white;
+  font-size:30px !important;
+  line-height: 60px;
+  padding-left: 30px;
+}
