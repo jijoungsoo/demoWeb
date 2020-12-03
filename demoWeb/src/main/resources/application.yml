@@ -10,3 +10,39 @@ spring:
     redis:
       flush-mode: on-save
       namespace: spring:session
+      
+server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초
+
+logging:
+  config: classpath:logback-spring.xml 
+  
+  
+logging.level.org.zalando.logbook: TRACE
+
+
+#https://github.com/zalando/logbook
+logbook:
+  include:
+    - /api/**
+    - /actuator/**
+  exclude:
+    - /actuator/healthlo
+    - /api/admin/**
+  filter.enabled: true
+  secure-filter.enabled: true
+  format.style: json
+  strategy: default
+  minimum-status: 400
+  obfuscate:
+    headers:
+      - Authorization
+      - X-Secret
+    parameters:
+      - access_token
+      - password
+    write:
+      chunk-size: 0
+      
+logserver.host: 127.0.0.1
+logserver.port: 8092
+      

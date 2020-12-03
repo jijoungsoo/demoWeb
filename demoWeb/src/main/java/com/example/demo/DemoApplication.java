@@ -9,14 +9,28 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.zalando.logbook.HttpLogFormatter;
+import org.zalando.logbook.json.JsonHttpLogFormatter;
 
 @Controller
 @SpringBootApplication
-@EnableRedisHttpSession
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60)
+/*https://java2020.com/q/kmpcswsk   
+ * sesstion time out 변경 값 
+ * 기분 30분 (1800)
+ * @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60)
+ * 스프링 부트 2.0에서 아래와 같이 할수도 있다. [application.yml]
+ * 과거 느낌으로 하면 아래에 -1 입력하면 무제한이라고 한다.
+ * server.servlet.session.timeout   
+ * server.servlet.session.timeout=30m   (30분)
+ * server.servlet.session.timeout=30s   (30초)
+ * 
+ * */
 public class DemoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DemoApplication.class, args);
+		
 	}
 	
 	@GetMapping("/")
@@ -44,6 +58,26 @@ public class DemoApplication {
 	  * 다른데 
 	  * 설명 : https://sup2is.github.io/2020/07/15/session-clustering-with-redis.html
 	  * 소스 : https://github.com/sup2is/study/tree/master/db/redis/session-clustering-with-redis
+	  * 
+	  * 3개의 spring boot 를 띄우는 방법 8080, 8081 , 8082  port 
+	  * mvn spring-boot:run -Dspring-boot.run.arguments=--server.port={port}
+	  * 
+	  * gradle의 경우는 어떻게 해야하지 ??
+	  * 
+	  *  https://spring.io/guides/gs/spring-boot/
+	  *  
+	  * ./gradlew bootRun -Dspring-boot.run.arguments=--server.port={port}
+	  * 
+	  * https://stackoverflow.com/questions/51968308/how-to-add-command-line-properties-with-gradle-bootrun
+	  * gradle bootRun --args='--spring.config.name=myproject'    [gradle 4.9에서 동작]
+	  * gradle bootRun --args '--spring.config.name=myproject'    [gradle 5.5에서 동작]
+	  * 
+	  * 
+	  * gradlew bootRun --args='--server.port=8091'
+	  * gradlew bootRun --args='--server.port=8092'
+	  * gradlew bootRun --args='--server.port=8093'
+	  * server.port: 8090
+	  * 
 	  * 
 	  * 
 	  * 엠베디드 레디스  로컬 테스트용

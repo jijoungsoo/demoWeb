@@ -27,6 +27,12 @@ dependencies {
 	/*외부 레디스 세션을 사용하기 위해*/
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.session:spring-session-data-redis'
+
+	
+	implementation('org.apache.httpcomponents:httpclient')   /*외부api 호출을 위해서 */
+	
+	compile group: 'org.zalando', name: 'logbook-spring-boot-starter', version: '2.4.1'  /*restcontroller 로그 남기기 */
+	
    	   	
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
