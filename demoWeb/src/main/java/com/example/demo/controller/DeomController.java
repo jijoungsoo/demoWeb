@@ -32,6 +32,8 @@ public class DeomController {
 	       return "movie"; 
 	    }
 	 
+	 private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER");  
+	 
 	    /*https://vmpo.tistory.com/27*/
 	 /*내가 너무 복잡하게 생각했나보다..   여기에만 로그가 생기면 된다. 
 	  *  logbook-spring-boot-starter 이거 쓰고 application.yml 사용해서 이미 로그는 남겼다.
@@ -41,7 +43,6 @@ public class DeomController {
 	 @PostMapping(path= "/api/{br}", consumes = "application/json", produces = "application/json")
 	    public String callAPI(@PathVariable("br") String br
 				, @RequestBody String body) throws JsonProcessingException {
-	 
 	        HashMap<String, Object> result = new HashMap<String, Object>();
 	 
 	        String jsonInString = "";
@@ -81,6 +82,16 @@ public class DeomController {
 	            result.put("body"  , "excpetion오류");
 	            System.out.println(e.toString());
 	        }
+	        /*호출화면 유일id
+	         *br명
+	         *input 
+	         *output
+	         *time
+	         *
+	         *시간 형식으로 문자열을 만든다.
+	         **/
+	        String logMsg =br+"/"+body+"/"+jsonInString;
+	        logger.debug(logMsg);
 	 
 	        return jsonInString;
 	 

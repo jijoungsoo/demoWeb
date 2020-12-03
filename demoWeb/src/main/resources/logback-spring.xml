@@ -114,27 +114,19 @@
 
     
     <appender name="SOCKET" class="ch.qos.logback.classic.net.SocketAppender">  
-		    <remoteHost>${logserver.host}</remoteHost>
-		    <port>${logserver.port}</port>
+		    <remoteHost>127.0.0.1</remoteHost>
+		    <port>8092</port>
 		    <reconnectionDelay>10000</reconnectionDelay>
 		    <includeCallerData>false</includeCallerData>
 	</appender>
   
-  
-  <logger name="org.zalando.logbook" level="TRACE" additivity="false">
-  
-  </logger>
-
+  <logger name="MLS_LOGGER" level="DEBUG">  
+    <appender-ref ref="SOCKET" />
+</logger>  
+    
   <root level="info">
     <appender-ref ref="ROLLING"/>
     <appender-ref ref="STDOUT"/>
-    <appender-ref ref="SOCKET"/>
   </root>
-  
-  
-     
-    
-
-  
 </configuration>
 
