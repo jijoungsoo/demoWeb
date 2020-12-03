@@ -27,7 +27,11 @@ dependencies {
 	/*외부 레디스 세션을 사용하기 위해*/
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'org.springframework.session:spring-session-data-redis'
-
+	
+    //embedded-redis --로컬용 --- redis 서버를 띄우지 않아도 된다.   https://jojoldu.tistory.com/297
+    compile ('it.ozimov:embedded-redis:0.7.3') {  /*spring 이랑 slf4j-simple이  중복 classpath가 되므로 제거해야한다.*/
+		exclude group: "org.slf4j", module: "slf4j-simple"
+	}
 	
 	implementation('org.apache.httpcomponents:httpclient')   /*외부api 호출을 위해서 */
 	
