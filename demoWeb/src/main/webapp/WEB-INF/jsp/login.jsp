@@ -2,7 +2,6 @@
 <!--  include 참고
 https://yongblog.tistory.com/26
  -->
-
 <div id="app">
 	<el-container>
 	  <el-main>
@@ -44,7 +43,7 @@ var app = new Vue({
 	    return { 
 	      visible: false,
 	      form: {
-	        userId: 'aa',
+	        userId: '',
 	        userPwd: ''        
 	      },
 	      fullscreenLoading: false 
@@ -71,10 +70,7 @@ var app = new Vue({
 		      }
 	        });
 	        */
-	      /*json 전송하면 안되고 post전송이어야한다. 
-	      post 방식으로 보낼때 주의할점은 content-type을 application-json으로 보내면 안된다는 점이다.
-		  파라미터 이름도 따로 설정하지 않으면 username, password로 맞춰주어야한다.	      
-	      https://csy7792.tistory.com/265*/
+	      
 
 	      /*이건 공통적용인데 spring security로 보낼때 모두 체크해야하므로 !! 넣어준다.*/
 	      $.ajaxPrefilter(function (options) { 
@@ -89,7 +85,14 @@ var app = new Vue({
 	        $.ajax({
 	          type: "post",
 	          url: "/doLogin", /*이게 로그인 처리로 이동이 안되었다. */
-	          data: param,
+	          data: param,    
+	          /*json 전송하면 안되고 post전송이어야한다. 
+		      post 방식으로 보낼때 주의할점은 content-type을 application-json으로 보내면 안된다는 점이다.
+			  파라미터 이름도 따로 설정하지 않으면 username, password로 맞춰주어야한다.	      
+		      https://csy7792.tistory.com/265
+
+		      이게 문제가 되었다 api 서버를 호출할때 CSRF가 또 문제가 된다.
+			  */
 	          success: function(data) {
 	        	  console.log(data);
 	        	  tmp.fullscreenLoading = false; // 프로그래스 제거
@@ -103,10 +106,15 @@ var app = new Vue({
 			                      type: 'info',
 			                      message: `action: ${ action }`
 			                    });
-			                  }*/
+			                  */
 			        	  });
 				      } else {
-					      alert("로그인되었습니다.");
+					      app.$alert("로그인 되었습니다.", {
+			                  confirmButtonText: 'OK'
+			                  ,callback: action => {
+			                    window.location.href="/";
+			                  }
+					      });				                  
 				      }
 		          }
 	          },

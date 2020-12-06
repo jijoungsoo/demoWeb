@@ -7,7 +7,6 @@
   	<link rel="stylesheet" href="/src/js/element-ui/2.14.1/theme-chalk/index.css">
 	<script src="/src/js/vue2/vue.js"></script>
 	<script src="/src/js/element-ui/2.14.1/index.js"></script>
-	<script src="/src/js/axios-0.21.0/axios.js"></script>
 	<script type="text/javascript" src="/src/slickgrid/lib/jquery-3.5.0.js"></script>
 	<script src="/src/js/util/custom_ajax.js"></script>
 	

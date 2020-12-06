@@ -1,5 +1,6 @@
 package com.example.demo.user.domain;
 
+import java.beans.ConstructorProperties;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -9,8 +10,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import lombok.Builder;
-import lombok.NoArgsConstructor;
 
+
+@Builder
 public class UserInfo implements UserDetails {
 	/*
 	private String password;
@@ -32,12 +34,33 @@ public class UserInfo implements UserDetails {
   private String userId;
   private String userPwd;
   private String auth;
+  private String userNm;
+  private String email;
 
   @Builder
-  public UserInfo(String userId, String userPwd, String auth) {
+  @ConstructorProperties({"userId", "userPwd", "auth" , "userNm" ,"email"})
+  public UserInfo(String userId, String userPwd, String auth,String userNm,String email) {
     this.userId = userId;
     this.userPwd = userPwd;
     this.auth = auth;
+    this.userNm =userNm;
+    this.email =email;
+  }
+  
+  public String getEmail() {
+	  return email;
+  }
+  
+  public void setEmail(String email) {
+	  this.email=email;
+  }
+  
+  public String getUserNm() {
+	  return userNm;
+  }
+  
+  public void setUserNm(String userNm) {
+	  this.userNm=userNm;
   }
 
 

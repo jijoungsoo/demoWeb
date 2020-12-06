@@ -1,14 +1,28 @@
-﻿
-<!doctype html>
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><!doctype html>
 <html lang="en">
 
 <head>
 	<meta charset="UTF-8">
 	<title>Layout Manager</title>
+	<script type="text/javascript" src="/src/slickgrid/lib/jquery-3.5.0.js"></script>
+		<script>
+    /*이건 공통적용인데 spring security로 보낼때 모두 체크해야하므로 !! 넣어준다.*/
+    var csrf_headerName = '${_csrf.headerName}'; 
+	var csrf_token = '${_csrf.token}';
+	/* 이거 동작 안함 동작하는건 custom_ajax.js 에 있다.   https://hyunsangwon93.tistory.com/28 이게 동작함
+    $.ajaxPrefilter(function (options) { 
+ 
+	      	if (options.method === 'POST') { 
+		      options.headers = options.headers || {}; 
+		      options.headers[csrf_headerName] = csrf_token; 
+		    } 
+	      });
+	 */
+	</script>
 
 	<link rel="stylesheet" type="text/css" href="/src/css/goldenlayout-base.css" />
 	<link rel="stylesheet" type="text/css" href="/src/css/goldenlayout-light-theme.css" />
-	<script type="text/javascript" src="/src/slickgrid/lib/jquery-3.5.0.js"></script>
+	
 
 	<script type="text/javascript">
 		window.lm = { "config": {}, "container": {}, "controls": {}, "errors": {}, "items": {}, "utils": {} };
@@ -111,7 +125,18 @@
 		src="https://cdn.rawgit.com/ax5ui/ax5ui-formatter/master/dist/ax5formatter.min.js"></script>
 
 
-	<script src="/src/js/util/pgm_mngr.js"></script>
+	
+	<!--좌측 메뉴-->
+	<link rel="stylesheet" type="text/css" href="src/metismenujs/metismenujs.css" />
+	<script src="src/metismenujs/metismenujs.js"></script>
+
+	<script src="/src/js/util/popup_mngr.js"></script>
+	<script src="/src/js/util/custom_ajax.js"></script>
+	<script src="/src/js/util/grid_mngr.js"></script>
+	<script src="/src/js/util/progress_mngr.js"></script>
+	<script src="/src/js/util/selectbox_mngr.js"></script>
+
+	
 	<script src="/src/js/util/form_mngr.js"></script>
 	<script src="/src/js/util/app_mngr.js"></script>
 
@@ -119,28 +144,8 @@
 	<link rel="stylesheet" type="text/css" href="/src/test.css" />
 	<link rel="stylesheet" type="text/css" href="/src/metismenujs/mm-vertical.css" />
 	
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	
-	
-	
+
 	</head>
-<!-- 붙일만한  view js 모듈
-https://buefy.org/documentation/tooltip
-
-https://vuesax.com/docs/components/Loading.html#default   -- 로딩이 쓸만하다. 이것만 쓸만함
-
-/*유료네..*/
-https://primefaces.org/primevue/showcase/#/multiselect    -- 마스크가 쓸만하다.
-https://primefaces.org/primevue/showcase/#/datatable/responsive    테이블이 쓸만하다.
-
-
-https://element.eleme.io/#/en-US/component/table   테이블이 쓸많다 , 로딩도 전체 로딩이 있다.  MIT 다 무료다 마음에 든다. 이걸로 고고
-https://josephuspaye.github.io/Keen-UI/#/ui-tooltip  좋은데........... 로딩이 없다. 테이블도 빈약하다.
-
-
-
-크롬에서 es6 지원하기
-https://v8.dev/features/modules
-
-
- -->
 <body>

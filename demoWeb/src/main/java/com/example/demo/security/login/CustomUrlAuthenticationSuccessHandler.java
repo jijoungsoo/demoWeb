@@ -29,12 +29,12 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 	    	responseDataDTO.setCode(ResponseDataCode.SUCCESS);
 	    	responseDataDTO.setStatus(ResponseDataStatus.SUCCESS);
 	    	
-	    	String prevPage = request.getSession().getAttribute("prevPage").toString();	//이전 페이지 가져오기
-	    	 
 	    	Map<String, String> items = new HashMap<String,String>();	
-	    	items.put("url", prevPage);	// 이전 페이지 저장
+	    	if(request.getSession().getAttribute("prevPage")!=null) {
+	    		String prevPage = request.getSession().getAttribute("prevPage").toString();	//이전 페이지 가져오기
+	    		items.put("url", prevPage);	// 이전 페이지 저장
+	    	}
 	    	responseDataDTO.setItem(items);
-	    	
 	    	response.setCharacterEncoding("UTF-8");
 	    	response.setContentType("application/json;charset=UTF-8");  //된다 한글  
 	        response.setStatus(HttpServletResponse.SC_OK);

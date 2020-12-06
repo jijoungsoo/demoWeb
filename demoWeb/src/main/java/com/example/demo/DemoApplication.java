@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,8 @@ import org.zalando.logbook.json.JsonHttpLogFormatter;
 @Controller
 @EnableAspectJAutoProxy
 @SpringBootApplication
-@EnableRedisHttpSession(maxInactiveIntervalInSeconds = 60)
+@EnableRedisHttpSession(maxInactiveIntervalInSeconds = (60*60*3))
+@EnableCaching    /*캐싱한다.*/
 /*https://java2020.com/q/kmpcswsk   
  * sesstion time out 변경 값 
  * 기분 30분 (1800)

@@ -13,8 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-import com.example.demo.user.domain.UserService;
-
 import lombok.RequiredArgsConstructor;
 
 @Configuration
@@ -28,20 +26,19 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	 *  
 	 *  */
 	
-	@Autowired
-	private UserService userService;
-	
-    
 
  // AuthenticationSuccessHandler 등록
 /*로그인 처리 json 응답을 위해서 
  * https://jungeunlee95.github.io/java/2019/07/18/8-Spring-Security-ajax-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%9B%84-json%EC%9D%91%EB%8B%B5%EB%B0%9B%EA%B8%B0/
  * */
 	@Autowired
-	private AuthenticationSuccessHandler CustomUrlAuthenticationSuccessHandler;
+	private AuthenticationSuccessHandler customUrlAuthenticationSuccessHandler;
 	
 	@Autowired
 	private CustomAuthenticationFailureHandler  customAuthenticationFailureHandler;
+	
+	@Autowired   /*인증모듈 비교*/
+	CustomAuthenticationProvider customAuthenticationProvider;
 
 	  @Bean 
 	  public PasswordEncoder passwordEncoder() { // 4
@@ -71,12 +68,12 @@ anyRequest는 anyMatchers에서 설정하지 않은 나머지 경로를 의미�
 	                .antMatchers("/admin/**").hasRole("ADMIN")      /*해당주소는 Admin 관한이 있는 사람만 접근할수 있음*/
 	                .antMatchers("/user/myinfo").hasRole("MEMBER")  /*해당주소는 MEMBER 관한이 있는 사람만 접근할수 있음*/
 	                //.antMatchers("/**").permitAll()   /*나머지는 모두 허용 -- 좋아보이지 않는다.*/
-	                .antMatchers("/login","/doLogin","/signup","/user").permitAll()  //누구나 접근 가능	                
+	                .antMatchers("/login","/doLogin","/signup","/user").permitAll()  //누구나 접근 가능
 	                .anyRequest().authenticated()    //*권한의 종료에 상관 없이 권한이 있어야 접근가능*//
 	            .and() 
 	              .formLogin() // 로그인 설정
 	                .loginPage("/login")   /*로그인 페이지*/
-	                .successHandler(CustomUrlAuthenticationSuccessHandler)
+	                .successHandler(customUrlAuthenticationSuccessHandler)
 	                .failureHandler(customAuthenticationFailureHandler)
 	                .loginProcessingUrl("/doLogin")   /*로그인을 처리할 페이지  ajax호출을 당할 주소  /login에서 사용  
 	                    
@@ -96,6 +93,8 @@ anyRequest는 anyMatchers에서 설정하지 않은 나머지 경로를 의미�
 	            .and()
 	                // 403 예외처리 핸들링
 	                               .exceptionHandling().accessDeniedPage("/user/denied");
+//                .and()
+//	            	.csrf().disable();  /*csrf꺼보자.  -- 이거끄면 post 전송이 잘된다. html 응답받는 !! */
 	    }
 
 	    @Override
@@ -109,7 +108,9 @@ anyRequest는 anyMatchers에서 설정하지 않은 나머지 경로를 의미�
 /*JPA 모듈을 따로 만들었는데 로그인때문에 USER클래스는 여기서 세로 만들어야겠다.
  * CmUser
 */	    	
-	        auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+	        //auth.userDetailsService(userService).passwordEncoder(passwordEncoder());
+	    	auth.authenticationProvider(customAuthenticationProvider);
+	    	
 	        
 	    }
 }
