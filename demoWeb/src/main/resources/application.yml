@@ -11,7 +11,7 @@ spring:
       flush-mode: on-save
       namespace: spring:session
   profiles:
-    active: local      
+    active: dev      
       
 server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초
 

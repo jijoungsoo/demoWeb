@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Controller;
@@ -109,23 +110,24 @@ public class GoRestController {
 	            factory.setReadTimeout(5000);//타임아웃 설정 5초
 	            RestTemplate restTemplate = new RestTemplate(factory);
 	 
-	            HttpHeaders header = new HttpHeaders();
-	            HttpEntity<?> entity = new HttpEntity<>(header);
+	            HttpHeaders headers = new HttpHeaders();
+	            headers.setContentType(MediaType.APPLICATION_JSON);
+	            
+	            HttpEntity<?> entity = new HttpEntity<>(body,headers);
 	 
 	            String url = "http://localhost:8091/"+br;
 	 
 	            UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
 	 
 	            //이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
-	            ResponseEntity<Map> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.POST, entity, Map.class);
+	            ResponseEntity<String> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.POST, entity, String.class);
 	            result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
 	            result.put("header", resultMap.getHeaders()); //헤더 정보 확인
 	            result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
-	 
 	            //데이터를 제대로 전달 받았는지 확인 string형태로 파싱해줌
 	            ObjectMapper mapper = new ObjectMapper();
 	            jsonInString = mapper.writeValueAsString(resultMap.getBody());
-	 
+	            
 	        } catch (HttpClientErrorException | HttpServerErrorException e) {
 	            result.put("statusCode", e.getRawStatusCode());
 	            result.put("body"  , e.getStatusText());
@@ -147,6 +149,7 @@ public class GoRestController {
 	         **/
 	        String logMsg =br+"/"+body+"/"+jsonInString;
 	        logger.debug(logMsg);
+	        logger.debug(result.toString());
 	 
 	        return jsonInString;
 	 

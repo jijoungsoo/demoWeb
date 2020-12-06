@@ -17,6 +17,7 @@ public class CertificationInterceptor implements HandlerInterceptor{
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
+    	/*  사용안함  security  사용으로 대체
         HttpSession session = request.getSession();
         String userId = (String) session.getAttribute("userId");
  
@@ -27,6 +28,8 @@ public class CertificationInterceptor implements HandlerInterceptor{
             session.setMaxInactiveInterval(30*60);
             return true;
         }
+        */
+    	return true;
         
     }
  

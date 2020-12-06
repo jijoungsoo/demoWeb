@@ -1,9 +1,12 @@
+
+
 function send_post_ajax(p_url, p_param, p_funtion) {
     var hash = window.location.hash;
+    p_url = "/api/"+p_url;
     if (hash.indexOf("#debug=Y") >= 0) {
         console.log('hash');
         console.log(hash);
-        console.log("p_url=>" + p_url);
+        console.log("p_url=>"+ p_url);
         console.log("p_param:");
         console.log(JSON.stringify(p_param));
     }
@@ -31,6 +34,7 @@ function send_post_ajax(p_url, p_param, p_funtion) {
             var msg = "Sorry but there was an error: ";
             console.log(msg + jqXHR.status + " " + jqXHR.statusText);
         }
+        p_funtion(null);
     });   
 }
 
