@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/include/inner_top.jsp" %>
+<%	String pgmId = (String) request.getAttribute("pgmId");
+	String uuid = (String) request.getAttribute("uuid");
+%>
 <script>
   var KIW_2100 = function () {
     var _this=this;
@@ -25,7 +30,7 @@
     searchForm.get("search").trigger("click");
   }
 </script>
-<div id="{{.uuid}}">
+<div id="<%=uuid%>">
   <div name="search_area">
     <table>
       <tr>
@@ -36,4 +41,4 @@
 
   <div name="grid"></div>
 </div>
-{{include "templates/footer" }}
+<%@ include file="/WEB-INF/jsp/include/inner_bottom.jsp" %>

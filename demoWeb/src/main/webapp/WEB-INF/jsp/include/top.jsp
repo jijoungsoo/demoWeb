@@ -20,13 +20,15 @@
 	 */
 	</script>
 
-	<link rel="stylesheet" type="text/css" href="/src/css/goldenlayout-base.css" />
-	<link rel="stylesheet" type="text/css" href="/src/css/goldenlayout-light-theme.css" />
+	
 	
 
 	<script type="text/javascript">
 		window.lm = { "config": {}, "container": {}, "controls": {}, "errors": {}, "items": {}, "utils": {} };
 	</script>
+<% if (false) { %>
+	<link rel="stylesheet" type="text/css" href="/src/css/goldenlayout-base.css" />
+	<link rel="stylesheet" type="text/css" href="/src/css/goldenlayout-light-theme.css" />
 	<script type="text/javascript" src="/src/js/utils/utils.js"></script>
 	<script type="text/javascript" src="/src/js/items/AbstractContentItem.js"></script>
 	<script type="text/javascript" src="/src/js/LayoutManager.js"></script>
@@ -53,7 +55,12 @@
 	<script type="text/javascript" src="/src/js/utils/EventEmitter.js"></script>
 	<script type="text/javascript" src="/src/js/utils/EventHub.js"></script>
 	<script type="text/javascript" src="/src/js/utils/ReactComponentHandler.js"></script>
-
+<% } else {  %>
+<link rel="stylesheet" type="text/css" href="/src/goldenlayout-1.5.9/goldenlayout-base.css" />
+<link rel="stylesheet" type="text/css" href="/src/goldenlayout-1.5.9/goldenlayout-light-theme.css" />
+<!-- link rel="stylesheet" type="text/css" href="/src/goldenlayout-1.5.9/goldenlayout-dark-theme.css"  -->
+<script type="text/javascript" src="/src/goldenlayout-1.5.9/goldenlayout.js"></script>
+<% } %>
 
 	<!--slick formatter-->
 	<script src="/src/slickgrid/lib/firebugx.js"></script>
@@ -145,6 +152,13 @@
 	<link rel="stylesheet" type="text/css" href="/src/metismenujs/mm-vertical.css" />
 	
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<!-- vue 못씀 -->
+<link rel="stylesheet" href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
+<script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+
+<script src="/src/js/tui-grid-renderer/dateRenderer.js"></script>
+<script src="/src/js/tui-grid-renderer/datetimeRenderer.js"></script>
 	
 
 	</head>

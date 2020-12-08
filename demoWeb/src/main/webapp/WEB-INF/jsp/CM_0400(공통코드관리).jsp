@@ -1,3 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/include/inner_top.jsp" %>
+<%	String pgmId = (String) request.getAttribute("pgmId");
+	String uuid = (String) request.getAttribute("uuid");
+%>
 <script>
   var CM_0400 = function () {
     var _this = this;
@@ -141,7 +146,7 @@
     searchForm1.get("grid1-search").trigger("click");
   }
 </script>
-<div id="{{.uuid}}">
+<div id="<%=uuid %>">
   <div name="search_area1">
     <table>
       <tr>
@@ -164,4 +169,4 @@
 
   <div name="grid2"></div>
 </div>
-{{include "templates/footer" }}
+<%@ include file="/WEB-INF/jsp/include/inner_bottom.jsp" %>

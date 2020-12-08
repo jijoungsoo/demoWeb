@@ -4,6 +4,11 @@ plugins {
 	id 'java'
 }
 
+/*
+https://github.com/axboot/ax-boot-framework/tree/master/ax-boot-admin/src/main/java/com/chequer/axboot/admin/domain/user
+내가 하려 했던 모든기능이 이미 구현되어있다.
+*/
+
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'

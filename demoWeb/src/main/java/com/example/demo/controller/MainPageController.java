@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -33,6 +34,7 @@ public class MainPageController {
 	
 	@PostMapping(path= "/page/{pageId}")
 	public String page(@PathVariable("pageId") String pageId
+			, @RequestBody Map<String,String> hm
 			, Model model
 			){
 		
@@ -40,9 +42,12 @@ public class MainPageController {
 		//pageId를 가지고 PgmLink를 가져오도록 해야한다.
 		//login 페이지 가져올때 pgmList를 가져오니가 그걸 cache에 넣자.
 		System.out.println(pageId);
+		System.out.println(hm.get("uuid"));
 		
 		HashMap<String, String> cmPgmLink=findPgmList();
 		String pgmLink = cmPgmLink.get(pageId);
+		model.addAttribute("pgmId", pageId);
+		model.addAttribute("uuid", hm.get("uuid").toString());
 		return pgmLink; 
     }
 	
