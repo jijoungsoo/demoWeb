@@ -152,10 +152,38 @@
 	<link rel="stylesheet" type="text/css" href="/src/metismenujs/mm-vertical.css" />
 	
 	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+	
+	<!-- 기본 ui 는 axjs 를 쓰자. -->
+	<!--  데모페이지가 바로 연결 안되는 데..  http://ax5ui.axisj.com/ax5ui-dialog/
+	여기에 http://ax5ui.axisj.com/ax5ui-dialog/demo 이렇게 demo 를 붙여주면 된다.
+	    -->
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-dialog/master/dist/ax5dialog.css" />
+<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5core/master/dist/ax5core.min.js"></script>
+<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-dialog/master/dist/ax5dialog.min.js"></script>
+<script src="/src/js/util/Message.js"></script>
+
+
+<!-- 로딩시에 페이지를 로딩할것이다. -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-mask/master/dist/ax5mask.css" />
+<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-mask/master/dist/ax5mask.min.js"></script>
+
+
 
 <!-- vue 못씀 -->
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
+<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+
+
+<link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
+<script src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
+
+
 <link rel="stylesheet" href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
 <script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+
+
+
 
 <script src="/src/js/tui-grid-renderer/dateRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/datetimeRenderer.js"></script>

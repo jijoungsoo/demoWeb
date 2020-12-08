@@ -11,7 +11,8 @@ class datetimeRenderer {
     }
 
     render(props) {
-   	    if(props.value){
+    console.log(props.value);
+   	    if(props.value!=''){
            	var yyyy  = ('0000'+( (new Date(props.value)).getFullYear())).substr(-4,4);
            	var mm = ('00'+( (new Date(props.value)).getMonth()+1 )).substr(-2,2);
            	var dd   = ('00'+( (new Date(props.value)).getDate() )).substr(-2,2);
@@ -19,7 +20,10 @@ class datetimeRenderer {
            	var mi   = ('00'+( (new Date(props.value)).getMinutes() )).substr(-2,2);
            	var ss   = ('00'+( (new Date(props.value)).getSeconds() )).substr(-2,2);
 			var yyyymmddhh24miss  = (yyyy+'-'+mm+'-'+dd+' '+hh24+':'+mi+':'+ss);
-		}    	
-        this.el.innerText = yyyymmddhh24miss;
+			this.el.innerText = yyyymmddhh24miss;
+		}  else {
+			this.el.innerText = '';
+		}
+        
     }
   }
