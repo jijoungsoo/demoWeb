@@ -1,12 +1,19 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 import com.example.demo.service.GoRestService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -75,15 +82,33 @@ public class GoRestController {
 	  * 답은   https://github.com/zalando/logbook/issues/559
 	  * */
 	 @PostMapping(path= "/api/{br}", consumes = "application/json", produces = "application/json")
-	    public String callAPI(@PathVariable("br") String br
-				, @RequestBody String jsonInString)  {
+	 public ResponseEntity<Object> callAPI(@PathVariable("br") String br
+				, @RequestBody String jsonInString) throws Exception  {
 		 String jsonOutString=null;
+		 HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
 			jsonOutString = goService.callAPI(br, jsonInString);
-		} catch (JsonProcessingException e) {
+		
+		}catch (HttpClientErrorException | HttpServerErrorException e) {
+            result.put("statusCode", e.getRawStatusCode());
+            result.put("body"  , e.getStatusText());
+            e.printStackTrace();
+            https://owin2828.github.io/devlog/2019/12/30/spring-16.html
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            		.body("("+br+ ") API가 존재하지 않습니다.");
+		}	catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	        
-	     return jsonOutString;
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+							.body("JSON 파싱오류");
+        } catch (Exception e) {
+            result.put("statusCode", "999");
+            result.put("body"  , "excpetion오류");
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("알수없는 오류");
+            
+        }
+	    return ResponseEntity.ok(jsonOutString);
 	 }
 }

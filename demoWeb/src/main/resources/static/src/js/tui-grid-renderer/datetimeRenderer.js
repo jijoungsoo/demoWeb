@@ -11,7 +11,6 @@ class datetimeRenderer {
     }
 
     render(props) {
-    console.log(props.value);
    	    if(props.value!=''){
            	var yyyy  = ('0000'+( (new Date(props.value)).getFullYear())).substr(-4,4);
            	var mm = ('00'+( (new Date(props.value)).getMonth()+1 )).substr(-2,2);

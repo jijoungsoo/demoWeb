@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @Service
 public class MainPageService {
 	  @Autowired
-	  private GoRestController goRestApi;
+	  private GoRestService goRestS;
 	  
 	  /*
 	   * 캐싱처리 참고
@@ -33,10 +33,11 @@ public class MainPageService {
 	@Cacheable(value = "menuCache")
     public ArrayList<HashMap<String, Object>>  findMainMenu(){
 		ArrayList<HashMap<String, Object>> cmMenuList = new ArrayList<HashMap<String,Object>>();
-		String jsonMenuOutString = goRestApi.callAPI("findMainMenu", null);
+		try {
+		String jsonMenuOutString = goRestS.callAPI("findMainMenu", null);
 		
 		ObjectMapper om = new ObjectMapper();		 
-		try {
+		
 			cmMenuList=om.readValue(jsonMenuOutString,ArrayList.class);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
@@ -48,9 +49,10 @@ public class MainPageService {
 	@Cacheable(value = "pgmCache")
     public ArrayList<HashMap<String, Object>>  findMainPgm(){
 		ArrayList<HashMap<String, Object>> cmPgmList = new ArrayList<HashMap<String,Object>>();
-		String jsonPgmOutString = goRestApi.callAPI("findMainPgm", null);
-		ObjectMapper om = new ObjectMapper();		 
 		try {
+		String jsonPgmOutString = goRestS.callAPI("findMainPgm", null);
+		ObjectMapper om = new ObjectMapper();		 
+		
 			cmPgmList=om.readValue(jsonPgmOutString,ArrayList.class);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block

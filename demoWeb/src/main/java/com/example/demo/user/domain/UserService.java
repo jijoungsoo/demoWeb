@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.controller.GoRestController;
+import com.example.demo.service.GoRestService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -27,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService implements UserDetailsService {
 	
 	@Autowired
-	private GoRestController goRestApi;
+	private GoRestService goRestS;
 
   /**
    * Spring Security 필수 메소드 구현
@@ -39,12 +40,13 @@ public class UserService implements UserDetailsService {
   @Override // 기본적인 반환 타입은 UserDetails, UserDetails를 상속받은 UserInfo로 반환 타입 지정 (자동으로 다운 캐스팅됨)
   public UserInfo loadUserByUsername(String userId) throws UsernameNotFoundException { // 시큐리티에서 지정한 서비스이기 때문에 이 메소드를 필수로 구현
 	  String userJson = "{\"inData\": [{\"userId\":\""+userId+"\"}]}";   //이건 나중에 json 객체 만드는걸로 바꾸자.
-	  ArrayList<UserInfo> userInfo = new ArrayList<UserInfo>(); 
-		String jsonOutString = goRestApi.callAPI("loadUserByusername", userJson);
+	  ArrayList<UserInfo> userInfo = new ArrayList<UserInfo>();
+	  try {
+		String jsonOutString = goRestS.callAPI("loadUserByusername", userJson);
 		ObjectMapper om = new ObjectMapper();
 		om.enable(SerializationFeature.INDENT_OUTPUT);
 		JsonNode rootNode;
-		try {
+		
 			rootNode = om.readValue(jsonOutString,JsonNode.class);
 			ArrayNode arrayNode = (ArrayNode) rootNode.get("outData");
 			//userInfo =   om.convertValue(arrayNode,new TypeReference<ArrayList<UserInfo>>() {});
@@ -89,7 +91,7 @@ public class UserService implements UserDetailsService {
     ObjectMapper om = new ObjectMapper();
     String jsonString = om.writeValueAsString(userInfoDto);
 
-	String tmp = goRestApi.callAPI("saveUser", jsonString);
+	String tmp = goRestS.callAPI("saveUser", jsonString);
   }	
 	   
 }

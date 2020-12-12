@@ -104,14 +104,14 @@ $(function () {
 		for (int i = 0; i < cmPgmList.size(); i++) {
 			HashMap<String,Object> hm = cmPgmList.get(i);
 	%>
-	pgmNmMap.add("<%=hm.get("pgmId")%>","<%=hm.get("pgmNm")%>");
+	PgmPageMngr.addPgmPageMap("<%=hm.get("pgmId")%>","<%=hm.get("pgmNm")%>");
 	myLayout.registerComponent("<%=hm.get("pgmId")%>", function (container, state) {
 		var p_param = {
 			uuid : container._config.id
 		}
 		//container.getElement().load(container._config.pg);
 		//파라미터를 고정해서 던져야 하는데.. 
-		get_page_ajax(container.getElement(),container._config.pg,p_param);
+		AjaxMngr.get_page_ajax(container.getElement(),container._config.pg,p_param);
 		
 		container.on("open",function() {
 			/*
@@ -151,7 +151,7 @@ $(function () {
 		e.preventDefault();
 		var target = $(this).data("target");
 		//var title = $(this).data("title");
-		goOnePage(target);
+		PgmPageMngr.goOnePage(target);
 	});
 });
 

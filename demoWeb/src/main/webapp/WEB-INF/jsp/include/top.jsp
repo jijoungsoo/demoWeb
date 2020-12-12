@@ -138,14 +138,16 @@
 	<script src="src/metismenujs/metismenujs.js"></script>
 
 	<script src="/src/js/util/popup_mngr.js"></script>
-	<script src="/src/js/util/custom_ajax.js"></script>
+	<script src="/src/js/util/ajax_mngr.js"></script>
 	<script src="/src/js/util/grid_mngr.js"></script>
+	<script src="/src/js/util/tui_grid_mngr.js"></script>
 	<script src="/src/js/util/progress_mngr.js"></script>
 	<script src="/src/js/util/selectbox_mngr.js"></script>
 
 	
 	<script src="/src/js/util/form_mngr.js"></script>
 	<script src="/src/js/util/app_mngr.js"></script>
+	<script src="/src/js/util/pgmPage_mngr.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="/src/common.css" />
 	<link rel="stylesheet" type="text/css" href="/src/test.css" />
