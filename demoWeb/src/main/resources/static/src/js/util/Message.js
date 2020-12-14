@@ -3,10 +3,15 @@ class Message {
 	constructor() { 
 	}
     static alert(message,p_funtion) { 
+    	var mask = new ax5.ui.mask();
+        mask.open();
       	var dialog = new ax5.ui.dialog({
-			title: "Alert"
+			title: "Alert",
+			width: 400,
+			height: 600
     	});
 		dialog.alert(message, function () {
+		 		mask.close();
 				if(p_funtion!=undefined){
 					p_funtion()
 				}
@@ -18,7 +23,9 @@ class Message {
         var confirmDialog = new ax5.ui.dialog();
         confirmDialog.setConfig({
             title: "confirm",
-            theme: "danger"
+            theme: "danger",
+            width: 400,
+			height: 600
         });
         var mask = new ax5.ui.mask();
         mask.open();

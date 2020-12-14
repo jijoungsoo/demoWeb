@@ -8,6 +8,7 @@ class AjaxMngr {
 	        console.log("p_url=>"+ p_url);
 	        console.log("p_param:");
 	        console.log(JSON.stringify(p_param));
+	        console.log("p_function=>"+p_function);
 	    }
 	    var req=$.ajax({
 	        type: "POST",

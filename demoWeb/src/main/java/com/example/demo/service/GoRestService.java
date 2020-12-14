@@ -82,6 +82,8 @@ public class GoRestService {
             result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
             jsonOutString =resultMap.getBody();
             
+            log.info(jsonOutString);
+            
             } catch(ResourceAccessException e) {
             	e.printStackTrace();
             	throw new BizException("제한시간이 5초가 초과되었습니다.");	
@@ -94,6 +96,8 @@ public class GoRestService {
     	        if(resMap.success.equals("false")) {
     	        	throw new BizException(resMap.errorMessage);	
     	        }
+    	        
+    	        
     	        
     	        return resMap.jsonOutString;
 				

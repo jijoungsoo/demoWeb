@@ -149,6 +149,9 @@ class TuiGridMngr {
           grid.resetData(t);
         }
       }
+      if(p_func){
+    	p_func(data);
+    	}
       
       /* tui_grid 전용 함수  나중에는 이대로 가야할것 같다.
       if(data.result) {
@@ -162,7 +165,7 @@ class TuiGridMngr {
           grid.resetData(t);
         } 
       }
-      p_func(data);
+      
       */
     })
   }
@@ -174,8 +177,53 @@ class TuiGridMngr {
   getModifiedRows() {
     return this.grid.getModifiedRows();
   }
-  validate() {
+  getColumns(){
+  	return this.grid.getColumns();
+  }
+  /* 필요없다.
+  valid() {
+    //없으면 []
     return this.grid.validate();
+  }
+  */
+  isValid() {
+	if(this.grid.validate().length==0){
+		return true;
+	}
+    return false;
+  }
+  validMsg() {
+    var valid_err_data=this.grid.validate();
+    
+    console.log(valid_err_data);
+    
+    if(valid_err_data.length==0){
+    	return;
+    }
+    
+    var grid_columns = this.grid.getColumns();
+    
+    var ret ='';
+    for(var i=0;i<valid_err_data.length;i++){
+    	//이거가 한줄이다.  한줄에 컬럼별로 valid가 걸린다.
+    	var al_col_error  =  valid_err_data[i].errors;
+    	for(var j=0;j<al_col_error.length;j++){
+    		var columnNmae =  al_col_error[j].columnName;
+    		var errorCode  =  al_col_error[j].errorCode;
+    		var header ='';
+    		grid_columns.forEach(function(data){ 
+    			if(data.name==columnNmae) { 
+    				header = data.header;
+    			}  
+    		});
+    		ret = ret+ "["+i+"]행 ["+header+"]컬럼이 유효하지않습니다.["+errorCode+"]<br />";
+    		
+    	}
+    }
+    console.log(ret);
+    Message.alert("<div style='text-align:left'>"+ret+"</div>");
+    return;
+    
   }
   appendRow() {
     //column 값을 읽어와서 하나짜리 row를 만들어야한다.

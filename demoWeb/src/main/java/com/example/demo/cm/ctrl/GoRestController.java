@@ -110,7 +110,7 @@ public class GoRestController {
                 result.put("body"  , e.getMessage());
                 e.printStackTrace();
                 https://owin2828.github.io/devlog/2019/12/30/spring-16.html
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 		.body(e.getMessage());
             
 		}	catch (Exception e) {

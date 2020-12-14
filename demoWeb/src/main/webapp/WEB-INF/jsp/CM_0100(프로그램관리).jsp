@@ -149,7 +149,7 @@ $(document).ready(function(){
 			}
 	    	grid.loadData('findPgm',param,function(data){
 		    	console.log(data);
-		    	grid.resetData(data.OUT_DATA);
+		    	//gridLoadData에서 자동으로 로드됨..
 	        	
 	    	});
 	    });
@@ -163,8 +163,53 @@ $(document).ready(function(){
 	    searchForm.addEvent("save", "click", function (e) {
 	        var data = grid.getModifiedRows();
 	        console.log(data);
+	        var crt_cnt	= data.createdRows.length;
+	        var updt_cnt= data.updatedRows.length;
+
+	        
+	        if((crt_cnt+updt_cnt)==0) {
+	        	Message.alert("저장할 내용이 존재하지 않습니다.");
+	        	return;
+		    }
+	        if(grid.isValid()==false) {
+	        	grid.validMsg();    
+	        	return;
+		    }
+		    var in_data = [];
+		    for (var i=0;i<crt_cnt;i++){
+		    	var row = data.createdRows[i];
+		    	in_data.push({
+		    		PGM_ID 		: row.PGM_ID,
+		    		PGM_NM 		: row.PGM_NM,
+		    		PGM_LINK	: row.PGM_LINK,
+		    		CATEGORY 	: row.CATEGORY,
+		    		RMK 		: row.RMK
+		    	});
+			}
+
+		    var updt_data = [];
+		    for (var i=0;i<updt_cnt;i++){
+		    	var row = data.updatedRows[i];
+		    	updt_data.push({
+		    		PGM_ID 		: row.PGM_ID,
+		    		PGM_NM 		: row.PGM_NM,
+		    		PGM_LINK	: row.PGM_LINK,
+		    		CATEGORY 	: row.CATEGORY,
+		    		RMK 		: row.RMK
+		    	});
+			}
+	        	        
 	    	Message.confirm('저장하시겠습니까?',function()  {
-	        	grid.appendRow();
+	    		var param ={
+					brRq 		: 'IN_DATA,UPDT_DATA'
+					,brRs 		: ''
+					,IN_DATA	: in_data
+	    			,UPDT_DATA	: updt_data
+				}
+	        	CM_0100.send('savePgm',param,function(data){
+		        	console.log(data);
+
+		        });
 			});
 	    });
 	

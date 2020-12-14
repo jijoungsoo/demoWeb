@@ -28,27 +28,17 @@ console.log("Day: "+moment(myDate).format("dddd"));
 console.log("Time: "+moment(myDate).format("HH:mm")); // Time in24 hour format
 console.log("Time: "+moment(myDate).format("hh:mm A"));
    	    */
-   	    
-   	    
-   	    console.log(props.value)
-   	    console.log(this.source)
-   	    console.log(this.format)
    	        if(this.source=='YYYYMMDDHHmmss'){
 	   	      	this.el.innerText = moment(props.value,'YYYYMMDDHHmmss').format(this.format);
-	   	      	console.log('a')
    	        } else if(this.source=='YYYYMMDDHHmm'){
 				this.el.innerText = moment(props.value,'YYYYMMDDHHmm').format(this.format);
-				console.log('b')
    	        } else if(this.source=='YYYYMMDD'){
    	        	this.el.innerText = moment(props.value,'YYYYMMDD').format(this.format);
-   	        	console.log('c')
    	        } else if(this.source=='TIME'){
    	        	var tmp = new Date(props.value);
    	        	this.el.innerText = moment(tmp).format(this.format);
-   	        	console.log('d')
    	        } else {
    	        	this.el.innerText = props.value;
-   	        	console.log('e')
    	        }
      
     }
