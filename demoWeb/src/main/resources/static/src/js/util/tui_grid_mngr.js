@@ -125,7 +125,7 @@ class TuiGridMngr {
     let grid=this.grid;    
     let options = this.options;
     grid.clear();
-    AjaxMngr.send_post_ajax(url, param, function (data) {
+    AjaxMngr.send_api_post_ajax(url, param, function (data) {
 
 	  console.log('param')
 	  console.log(param)

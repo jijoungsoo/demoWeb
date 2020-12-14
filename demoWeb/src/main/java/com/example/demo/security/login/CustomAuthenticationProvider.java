@@ -52,13 +52,13 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			throw new InternalAuthenticationServiceException(e.getMessage());
 		}
 		if(ud == null) {
-			throw new UsernameNotFoundException("사용자가 없거나 비밀번호가 다릅니다.1");  //사용자 없음
+			throw new UsernameNotFoundException("사용자가 없거나 비밀번호가 다릅니다.[3]");  //사용자 없음
 		}
 		
 		matchPass = passEncoder.matches(loginPass, ud.getPassword());
 		
 		if(!matchPass) {
-			throw new UsernameNotFoundException("사용자가 없거나 비밀번호가 다릅니다.2");  //사용자 없음
+			throw new UsernameNotFoundException("사용자가 없거나 비밀번호가 다릅니다.[4]");  //사용자 없음
 		}
 		//if(ud == null || !matchPass) return null;
 		

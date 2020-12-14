@@ -5,10 +5,29 @@
 <sec:authentication var="user" property="principal" />
 <sec:authorize access="isAuthenticated()">
 <login class="login">
+	
 	${user.username}<br />
 	${user.email}<br />
 	${user.userNm}<br />
-	<input type="submit" value="로그아웃" />
+
+		
+	<input type="submit" name="logOut" id="logOut" value="로그아웃" />
+	
+	<script>
+	$( "#logOut" ).on( "click", function( event ) {
+		Message.confirm("로그아웃하시겠습니까?",function(data){
+			//WebSecurityConfiguration 여기에 로그아웃 주소
+			var param =null;
+			AjaxMngr.send_post_ajax('/user/logout', param, function(data2){
+				//console.log(data2);
+				Message.alert("로그아웃되었습니다.",function(){
+					window.location.href="/login";
+				});
+				  
+			});
+		}); 
+	});
+	</script>
 </login>
 </sec:authorize>
 <nav class="sidebar-nav">

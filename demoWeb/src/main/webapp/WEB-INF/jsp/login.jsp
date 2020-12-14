@@ -2,135 +2,100 @@
 <!--  include 참고
 https://yongblog.tistory.com/26
  -->
-<div id="app">
-	<el-container>
-	  <el-main>
-		<el-form ref="form" :model="form" label-width="120px">
-		  <el-form-item label="아이디">
-	        <el-input v-model="form.userId"></el-input>
-	      </el-form-item>
-	      <el-form-item label="PWD">
-	        <el-input v-model="form.userPwd" placeholder="Please input password" show-password></el-input>
-	      </el-form-item>
-		  <el-form-item>
-		    <el-button type="primary" @click="onSubmit"
-		     v-loading.fullscreen.lock="fullscreenLoading"
-		    >로그인</el-button>
-		  </el-form-item>
-		</el-form>
-	  </el-main>
-	</el-container>
-	
+ <%
+ 	String userId 	= request.getAttribute("userId").toString();
+ 	String userPwd  = request.getAttribute("userPwd").toString();
+ 	String autoLoginYn  = request.getAttribute("autoLoginYn").toString();
+ %>
+ <div id="app">
+	 <form class name="binder-form" onsubmit="return false;" style="border: 1px solid #ccc;padding: 10px;border-radius: 10px;">
+	    <div class="form-group">
+	        <label>아이디</label>
+	        <input type="text" class="form-control" data-ax-path="userId">
+	    </div>
+	    <div class="form-group">
+	        <label>PWD</label>
+	        <input type="password" class="form-control" data-ax-path="userPwd">
+	    </div>
+	    <div class="checkbox">
+	        <label>
+	            <input type="checkbox" data-ax-path="autoLoginYn" value="Y">
+	            자동로그인
+	        </label>
+	        <button class="btn btn-default" data-btn="login">로그인</button>
+	    </div>
+	</form>
 </div>
-<style>
-  .el-main {
+
+<script type="text/javascript">
+$(function () {
+	var myModel = new ax5.ui.binder();
+    myModel.setModel({
+        userId      : "<%=userId%>",
+        userPwd     : "<%=userPwd%>",
+        autoLoginYn : "<%=autoLoginYn%>",
+    }, $(document["binder-form"]));
     
-    color: #333;
-    text-align: center;
-    line-height: 160px;
-    width: 400px;
-  }
-  .el-container {
-    width: 402px;
-    margin: 100px auto;
-    border: solid 1px #000
-  }
-</style>    
-<script>
-var app = new Vue({
-	  el: '#app',
-	  data: function() {
-	    return { 
-	      visible: false,
-	      form: {
-	        userId: '',
-	        userPwd: ''        
-	      },
-	      fullscreenLoading: false 
-	    }
-	  },
-	  methods: {
-	    onSubmit() {
-	      this.fullscreenLoading = true;
-	      console.log('submit!');
-		  let tmp=this;
-	      var param = {
-	    	      userId: this.form.userId,
-	    	      userPwd: this.form.userPwd,
-	    	      ${_csrf.parameterName}:'${_csrf.token}'
-		  };
-		  
-		  /*jpa호출이아니고  web에 프로젝트 내부 호출이기에 일반 ajax를 써야한다.
-	      send_post_ajax('login', param, function (data) {
-		      alert('11');
-		      tmp.fullscreenLoading = false;  프로그래스 제거
-		      alert('22');
-		      if(data){
-		    	  
-		      }
-	        });
-	        */
-	      
-
-	      /*이건 공통적용인데 spring security로 보낼때 모두 체크해야하므로 !! 넣어준다.*/
-	      $.ajaxPrefilter(function (options) { 
-		      var headerName = '${_csrf.headerName}'; 
-		      var token = '${_csrf.token}'; 
-		      	if (options.method === 'POST') { 
-			      options.headers = options.headers || {}; 
-			      options.headers[headerName] = token; 
-			    } 
-		      });
-
-	        $.ajax({
-	          type: "post",
-	          url: "/doLogin", /*이게 로그인 처리로 이동이 안되었다. */
-	          data: param,    
-	          /*json 전송하면 안되고 post전송이어야한다. 
-		      post 방식으로 보낼때 주의할점은 content-type을 application-json으로 보내면 안된다는 점이다.
-			  파라미터 이름도 따로 설정하지 않으면 username, password로 맞춰주어야한다.	      
-		      https://csy7792.tistory.com/265
-
-		      이게 문제가 되었다 api 서버를 호출할때 CSRF가 또 문제가 된다.
-			  */
-	          success: function(data) {
-	        	  console.log(data);
-	        	  tmp.fullscreenLoading = false; // 프로그래스 제거
-		          if(data) {
-			          if(data.code==="999"  /*실패*/)  {
-			        	  app.$alert(data.message, {
-			                  confirmButtonText: 'OK'
-			                  /*
-			                  ,callback: action => {
-			                    this.$message({
-			                      type: 'info',
-			                      message: `action: ${ action }`
-			                    });
-			                  */
-			        	  });
-				      } else {
-					      app.$alert("로그인 되었습니다.", {
-			                  confirmButtonText: 'OK'
-			                  ,callback: action => {
-			                    window.location.href="/";
-			                  }
-					      });				                  
-				      }
-		          }
-	          },
-	          error: function(e){
-	        	  tmp.fullscreenLoading = false; // 프로그래스 제거
-	              alert('error!!');
-	          }
-	      });
-	    }
-	  }
-	})
-
-
-
-
-
-
+    $('[data-btn]').click(function () {
+		var act = this.getAttribute("data-btn");
+        switch (act) {
+            case "login":
+				var data = myModel.get();
+				console.log(data);
+				//var param =JSON.stringify(data);
+				  var param = {
+			    	      userId		: data.userId,
+			    	      userPwd		: data.userPwd,
+			    	      autoLoginYn	: data.autoLoginYn,
+			    	      ${_csrf.parameterName}:'${_csrf.token}'
+				  };
+                Message.confirm("로그인하시겠습니까?", function(data){
+					$.ajax({
+						type: "post",
+					    url: "/doLogin", /*이게 로그인 처리로 이동이 안되었다. */
+					    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					    data: param,    
+					    /*이거 동작한다.  -- https://hyunsangwon93.tistory.com/28*/
+						beforeSend : function(xhr) { 
+							xhr.setRequestHeader(csrf_headerName, csrf_token);
+					    },
+					    success: function(data) {
+					    	console.log(data);
+					        if(data) {
+						    	if(data.code==="999"  /*실패*/)  {
+							    	Message.alert(data.message);
+							    	return;
+							    } else {
+							    	Message.alert("로그인 되었습니다.",function (data){
+							    		window.location.href="/";
+								    });
+							    	return;
+							    }
+					        }
+					    },
+					    error: function(e){
+					    	Message.alert("로그인에 실패하였습니다.");
+					    }
+					});
+			  	});
+				break;
+        }
+    });
+});
 </script>
+<%
+  /*
+  		자동로그인이 내가 생각했던 과거에 쿠키로 사용자ID와 비밀번호를 남겨서 로그인을 시도하는 그런것이 아니라 패턴이 있었다.
+  		
+  		참고는 https://codevang.tistory.com/274 이사이트다.
+  		스프링에서 제공해주는 remember me 라는 기능을 익혀보자.
+  		이거 좋다.
+  		천천히 해보자. 깉다.
+  		스프링에 있는걸 내가 다시 구현할 필요는 없고 설명을 보았을때 나보다 훨씬 깊다.
+  
+  		하지만 일단 쿠키로 한거 먼저 해놓자.
+  
+  */
+
+%>
 <%@ include file="/WEB-INF/jsp/include/simple_bottom.jsp" %>

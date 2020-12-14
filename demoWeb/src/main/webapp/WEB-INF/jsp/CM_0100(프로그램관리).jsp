@@ -207,8 +207,9 @@ $(document).ready(function(){
 	    			,UPDT_DATA	: updt_data
 				}
 	        	CM_0100.send('savePgm',param,function(data){
-		        	console.log(data);
-
+	        		Message.alert('저장되었습니다.',function()  {
+		        		searchForm.click('search');
+		        	});
 		        });
 			});
 	    });
@@ -222,13 +223,24 @@ $(document).ready(function(){
 	        	Message.alert('선택된 항목이 없습니다.');
 	        	return;
 	        }
+	        var in_data = [];
+		    for (var i=0;i<data.length;i++){
+		    	var row = data[i];
+		    	in_data.push({
+		    		PGM_ID 		: row.PGM_ID
+		    	});
+			}
 	        Message.confirm('삭제하시겠습니까?',function()  {
 		        var param ={
 					brRq : 'IN_DATA'
 					,brRs : ''
-					,IN_DATA:[{}]
+					,IN_DATA: in_data
 				}
-	        	CM_0100.send('rmPgm',param);
+	        	CM_0100.send('rmPgm',param,function(data){
+		        	Message.alert('삭제되었습니다.',function()  {
+		        		searchForm.click('search');
+		        	});
+		        });
 			});
 	        //실제로 서버에서 삭제하는로직 필요.
 	    	//grid.removeRow(0); 

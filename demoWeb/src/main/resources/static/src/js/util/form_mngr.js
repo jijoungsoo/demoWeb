@@ -32,4 +32,12 @@ class FormMngr {
             func(e);
         });
     }
+    click(sel_name){
+         
+        var em = this.get(sel_name);
+        console.log(em);
+        
+        //document.getElementById("my-btn")[0].click();
+        em.click();
+    }
 }

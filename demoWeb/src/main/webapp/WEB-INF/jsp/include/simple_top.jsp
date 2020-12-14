@@ -4,28 +4,29 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Layout Manager</title>
-  	<link rel="stylesheet" href="/src/js/element-ui/2.14.1/theme-chalk/index.css">
-	<script src="/src/js/vue2/vue.js"></script>
-	<script src="/src/js/element-ui/2.14.1/index.js"></script>
+  	<script>
+    /*이건 공통적용인데 spring security로 보낼때 모두 체크해야하므로 !! 넣어준다.*/
+    var csrf_headerName = '${_csrf.headerName}'; 
+	var csrf_token = '${_csrf.token}';
+	/*이거 ajax쪽에 넣었다.*/
+	</script>
 	<script type="text/javascript" src="/src/slickgrid/lib/jquery-3.5.0.js"></script>
-	<script src="/src/js/util/custom_ajax.js"></script>
+	<script src="/src/js/util/ajax_mngr.js"></script>
+	<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5core/master/dist/ax5core.min.js"></script>
+	<!-- http://ax5ui.axisj.com/     form 바인더 -->
+	<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-binder/master/dist/ax5binder.min.js"></script>
+	
+	<!-- 로딩시에 페이지를 로딩할것이다. -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-mask/master/dist/ax5mask.css" />
+	<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-mask/master/dist/ax5mask.min.js"></script>
+	
+	<!-- axjs의 dialog 구현체 -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-dialog/master/dist/ax5dialog.css" />
+	<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-dialog/master/dist/ax5dialog.min.js"></script>
+	<!-- Message 박스 (axjs 렙퍼) -->
+	<script src="/src/js/util/Message.js"></script>
 	
 	
 	</head>
-<!-- 붙일만한  view js 모듈
-https://buefy.org/documentation/tooltip
-
-https://vuesax.com/docs/components/Loading.html#default   -- 로딩이 쓸만하다. 이것만 쓸만함
-
-/*유료네..*/
-https://primefaces.org/primevue/showcase/#/multiselect    -- 마스크가 쓸만하다.
-https://primefaces.org/primevue/showcase/#/datatable/responsive    테이블이 쓸만하다.
-
-
-https://element.eleme.io/#/en-US/component/table   테이블이 쓸많다 , 로딩도 전체 로딩이 있다.  MIT 다 무료다 마음에 든다. 이걸로 고고
-https://josephuspaye.github.io/Keen-UI/#/ui-tooltip  좋은데........... 로딩이 없다. 테이블도 빈약하다.
-
-
-
- -->
 <body>

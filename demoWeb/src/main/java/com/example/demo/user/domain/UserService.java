@@ -43,7 +43,7 @@ public class UserService implements UserDetailsService {
 	  try {
 			HashMap<String,Object> IN_DS = new HashMap<String,Object>();
 			IN_DS.put("brRq","IN_DATA");
-			IN_DS.put("brRs","");
+			IN_DS.put("brRs","OUT_DATA");
 			ArrayList<HashMap<String,String>> IN_DATA  = new ArrayList<HashMap<String,String>>();
 			  
 			HashMap<String,String> IN_DATA_ROW = new HashMap<String,String>();
@@ -86,7 +86,10 @@ public class UserService implements UserDetailsService {
 			throw  new UsernameNotFoundException(e.getMessage());
 		}
 		if(userInfo==null) {
-			throw new UsernameNotFoundException(userId);
+			throw new UsernameNotFoundException(userId+"사용자가 없거나 비밀번호가 다릅니다.[1]");
+		}
+		if(userInfo.size()==0) {
+			throw new UsernameNotFoundException(userId+"사용자가 없거나 비밀번호가 다릅니다.[2]");
 		}
 	return  userInfo.get(0);
   }

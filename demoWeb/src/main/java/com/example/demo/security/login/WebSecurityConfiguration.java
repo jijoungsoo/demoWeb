@@ -37,6 +37,11 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private CustomAuthenticationFailureHandler  customAuthenticationFailureHandler;
 	
+	@Autowired
+	private CustomLogoutSuccessHandler  customLogoutSuccessHandler;
+	
+	
+	
 	@Autowired   /*인증모듈 비교*/
 	CustomAuthenticationProvider customAuthenticationProvider;
 
@@ -88,7 +93,8 @@ anyRequest는 anyMatchers에서 설정하지 않은 나머지 경로를 의미�
 	            .and() 
 	              .logout() // 로그아웃 설정
 	                .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))  /*로그아웃 주소 */
-	                .logoutSuccessUrl("/user/logout/result")  /*로그아웃 성공 후 리다이렉트 주소 */
+	                .logoutSuccessHandler(customLogoutSuccessHandler)  /*로그아웃 핸들러 !! */
+	                //.logoutSuccessUrl("/user/logout/result")  /*로그아웃 성공 후 리다이렉트 주소 */
 	                .invalidateHttpSession(true)     /*로그아웃 성공시 세션 날리기 */
 	            .and()
 	                // 403 예외처리 핸들링

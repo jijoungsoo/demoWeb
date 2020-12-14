@@ -9,20 +9,8 @@
     /*이건 공통적용인데 spring security로 보낼때 모두 체크해야하므로 !! 넣어준다.*/
     var csrf_headerName = '${_csrf.headerName}'; 
 	var csrf_token = '${_csrf.token}';
-	/* 이거 동작 안함 동작하는건 custom_ajax.js 에 있다.   https://hyunsangwon93.tistory.com/28 이게 동작함
-    $.ajaxPrefilter(function (options) { 
- 
-	      	if (options.method === 'POST') { 
-		      options.headers = options.headers || {}; 
-		      options.headers[csrf_headerName] = csrf_token; 
-		    } 
-	      });
-	 */
+	/*이거 ajax쪽에 넣었다.*/
 	</script>
-
-	
-	
-
 	<script type="text/javascript">
 		window.lm = { "config": {}, "container": {}, "controls": {}, "errors": {}, "items": {}, "utils": {} };
 	</script>

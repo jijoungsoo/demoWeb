@@ -1,6 +1,57 @@
 class AjaxMngr {
 	static send_post_ajax(p_url, p_param, p_function) {
 	    var hash = window.location.hash;
+	    if (hash.indexOf("#debug=Y") >= 0) {
+	        console.log('hash');
+	        console.log(hash);
+	        console.log("p_url=>"+ p_url);
+	        console.log("p_param:");
+	        console.log(JSON.stringify(p_param));
+	        console.log("p_function=>"+p_function);
+	    }
+	    var req=$.ajax({
+	        type: "POST",
+	        url: p_url,
+	        contentType: "application/json; charset=utf-8",
+	        accept: "application/json",
+	         beforeSend : function(xhr)   /*이거 동작한다.  -- https://hyunsangwon93.tistory.com/28*/
+	        { 
+				xhr.setRequestHeader(csrf_headerName, csrf_token);
+	        },
+	        data: JSON.stringify(p_param), //이게 포인트 였다
+	        dataType: "json",
+	    });
+	
+	    req.done(function (data, status) {
+	        if (hash.indexOf("#debug=Y") >= 0) {
+	            console.log("result:");
+	            console.log(JSON.stringify(data));
+	            
+	        }
+	        	        
+	        if(p_function){
+	        	p_function(data);
+	        }
+	        
+	    });
+	
+	    req.fail(function (jqXHR, textStatus) {
+	        console.log(jqXHR)
+	        console.log(textStatus)
+	        if (textStatus == "error") {
+	            var msg = "Sorry but there was an error: ";
+	            console.log(msg + jqXHR.status + ",statusText: " + jqXHR.statusText+ ",responseText: " + jqXHR.responseText);
+	            Message.alert(msg + jqXHR.status + "<br />statusText: " + jqXHR.statusText+ "<br />responseText: " + jqXHR.responseText);
+	        }
+	        
+	        if(p_function){
+	        	p_function();
+	        }
+	    });   
+	}
+	
+	static send_api_post_ajax(p_url, p_param, p_function) {
+	    var hash = window.location.hash;
 	    p_url = "/api/"+p_url;
 	    if (hash.indexOf("#debug=Y") >= 0) {
 	        console.log('hash');
