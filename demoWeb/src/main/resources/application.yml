@@ -19,7 +19,9 @@ logging:
   config: classpath:logback-spring.xml 
   
   
-logging.level.org.zalando.logbook: TRACE
+logging.level:
+  org.zalando.logbook: TRACE
+  org.springframework.web.client: DEBUG   #restTemplate에서 로그 남기기
 
 
 #https://github.com/zalando/logbook
@@ -49,4 +51,3 @@ logserver.host: 127.0.0.1
 logserver.port: 8092
 #메뉴, 프로그램 리스트 캐싱
 spring.cache.ehcache.config: classpath:ehcache.xml
-      

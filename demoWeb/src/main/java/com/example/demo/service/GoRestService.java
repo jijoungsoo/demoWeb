@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -30,19 +33,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.example.demo.cm.ctrl.ApiResultMap;
+import com.example.demo.cm.utils.PjtUtil;
+import com.example.demo.exception.BizException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class GoRestService {
 	 private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER");  
 	 public String callAPI(String br
 				, String jsonInString
-				) throws JsonProcessingException {
+				) throws BizException {
+		 log.info("br=>"+br);
+		 log.info("jsonInString=>"+jsonInString);
 		 String jsonOutString=null;
 	        HashMap<String, Object> result = new HashMap<String, Object>();
             HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
@@ -55,23 +68,40 @@ public class GoRestService {
             
             HttpEntity<?> entity = new HttpEntity<>(jsonInString,headers);
  
-            String url = "http://localhost:8091/"+br;
-            UriComponents uri = UriComponentsBuilder.fromHttpUrl(url).build();
- 
+            String url = "http://localhost:8091/api/"+br;
+            
+            UriComponentsBuilder  uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
+            //uriBuilder.queryParam("uuid", pgmId);
+            //uriBuilder.queryParam("pgmId", uuid);
+    		
             //이 한줄의 코드로 API를 호출해 MAP타입으로 전달 받는다.
-            ResponseEntity<String> resultMap = restTemplate.exchange(uri.toString(), HttpMethod.POST, entity, String.class);
+            try {
+            ResponseEntity<String> resultMap = restTemplate.exchange(uriBuilder.build().toString(), HttpMethod.POST, entity, String.class);
             result.put("statusCode", resultMap.getStatusCodeValue()); //http status code를 확인
             result.put("header", resultMap.getHeaders()); //헤더 정보 확인
             result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
-            //데이터를 제대로 전달 받았는지 확인 string형태로 파싱해줌
-            ObjectMapper mapper = new ObjectMapper();
-            //jsonOutString = mapper.writeValueAsString(resultMap.getBody());   //두번사지는 효과가 있다. 슬래쉬로 !!
             jsonOutString =resultMap.getBody();
-	            
-
-	        String logMsg =br+"/"+jsonInString+"/"+jsonOutString;
-	        logger.debug(logMsg);
-	        logger.debug(result.toString());
-	        return jsonOutString;
+            
+            } catch(ResourceAccessException e) {
+            	e.printStackTrace();
+            	throw new BizException("제한시간이 5초가 초과되었습니다.");	
+            }
+            try {
+            	ApiResultMap resMap=PjtUtil.JsonStringToObject(jsonOutString,ApiResultMap.class);
+				String logMsg =br+"/"+jsonInString+"/"+resMap.jsonOutString;
+    	        logger.debug(logMsg);
+    	        logger.debug(resMap.jsonOutString);
+    	        if(resMap.success.equals("false")) {
+    	        	throw new BizException(resMap.errorMessage);	
+    	        }
+    	        
+    	        return resMap.jsonOutString;
+				
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw new BizException("시스템오류가 발생하였습니다.(관리자에게 문의하세요.)");
+			}
 	 }
+
 }

@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.cm.ctrl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -61,7 +61,7 @@ public class MainPageController {
 		ArrayList<HashMap<String, Object>> cmPgmList=mps.findMainPgm();
 		for(int i=0;i<cmPgmList.size();i++) {
 			HashMap<String, Object> tmp =cmPgmList.get(i);
-			pgmLink.put(tmp.get("pgmId").toString(), tmp.get("pgmLink").toString());
+			pgmLink.put(tmp.get("PGM_ID").toString(), tmp.get("PGM_LINK").toString());
 		}
 		return pgmLink;
 	}

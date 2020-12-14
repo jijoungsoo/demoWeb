@@ -5,13 +5,16 @@ import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpServerErrorException;
 
 import com.example.demo.user.domain.UserInfo;
 import com.example.demo.user.domain.UserService;
@@ -39,15 +42,25 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 		System.out.println(loginPass);
 		System.out.println(authentication);
 		
-		UserInfo ud = (UserInfo) userService.loadUserByUsername(loginId);
+		UserInfo ud = null;
+		Boolean matchPass =null;
+		try {
+			ud = (UserInfo) userService.loadUserByUsername(loginId);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new InternalAuthenticationServiceException(e.getMessage());
+		}
+		if(ud == null) {
+			throw new UsernameNotFoundException("사용자가 없거나 비밀번호가 다릅니다.1");  //사용자 없음
+		}
 		
+		matchPass = passEncoder.matches(loginPass, ud.getPassword());
 		
-		
-		
-		
-		Boolean matchPass = passEncoder.matches(loginPass, ud.getPassword());
-		
-		if(ud == null || !matchPass) return null;
+		if(!matchPass) {
+			throw new UsernameNotFoundException("사용자가 없거나 비밀번호가 다릅니다.2");  //사용자 없음
+		}
+		//if(ud == null || !matchPass) return null;
 		
 		//권한 가져오는 로직
 		HashSet<GrantedAuthority> authorities = (HashSet<GrantedAuthority>) ud.getAuthorities();

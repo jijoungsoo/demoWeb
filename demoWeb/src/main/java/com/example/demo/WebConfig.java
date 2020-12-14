@@ -9,7 +9,9 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.example.demo.controller.GoRestController;
+import com.example.demo.cm.ctrl.GoRestController;
+
+
 
 
 @Configuration
@@ -23,6 +25,9 @@ public class WebConfig  implements WebMvcConfigurer {
      * */
     @Autowired
     CertificationInterceptor certificationInterceptor;
+    
+
+    		
     
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

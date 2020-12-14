@@ -26,7 +26,7 @@ $(document).ready(function(){
 		var columns= [
 	       {
 	           header: '프로그램',
-	           name: 'pgmId',
+	           name: 'PGM_ID',
 	           width: 100,
 	           resizable: false,
 	           sortable: true,
@@ -41,7 +41,7 @@ $(document).ready(function(){
 	         },
 	         {
 	           header: '프로그램명',
-	           name: 'pgmNm',
+	           name: 'PGM_NM',
 	           width: 'auto',   /*너비 자동조절*/
 	           sortable: true,
 	           filter: { type: 'text', showApplyBtn: true, showClearBtn: true },
@@ -60,7 +60,7 @@ $(document).ready(function(){
 	         
 	         {
 	           header: '카테고리',
-	           name: 'category',
+	           name: 'CATEGORY',
 	           width: 100,
 	           sortable: true,
 	           align: "center",
@@ -78,7 +78,7 @@ $(document).ready(function(){
 	         },
 	         {
 	           header: '프로그램링크',
-	           name: 'pgmLink',
+	           name: 'PGM_LINK',
 	           editor: 'text',
 	           filter: {
 	               type: 'text',
@@ -93,32 +93,42 @@ $(document).ready(function(){
 	         },
 	         {
 	           header: '비고',
-	           name: 'rmk',
+	           name: 'RMK',
 	           editor: 'text'
 	         },
 	         {
 	             header: '생성일',
-	             name: 'crtDtm',
+	             name: 'CRT_DTM',
 	             renderer: {
 	                 type: datetimeRenderer
+                	 ,options: {
+                		 format:  'yyyy-MM-DD HH:mm'  /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+                         ,source: 'YYYYMMDDHHmmss'  /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+                       }
 	             },
 	             width: 120,
 	             sortable: true,
+	             align: "center",
 	             filter: {
 	                 type: 'date',
-	                 format: 'yyyy-MM-dd'
+	                 format: 'yyyy-MM-DD'
 	                     /*'yyyy-MM-dd HH:mm A'*/
 	                     /*실제 데이터랑 비교하나보다 .. 비교가 안된다. */
 	               }
 	         },
 	         {
 	             header: '수정일',
-	             name: 'updtDtm',
+	             name: 'UPDT_DTM',
 	 			renderer: {
 	              	type: datetimeRenderer
+	              	 ,options: {
+                		 format: 'yyyy-MM-DD HH:mm'  /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+                         ,source: 'YYYYMMDDHHmmss'  /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+                       }
 	 			},
 	             width: 120,
-	             sortable: true    
+	             sortable: true,
+	             align: "center" 
 	             /*,  filter: 'number'  숫자일경우 비교 */            
 	         }
 	    ];
@@ -132,8 +142,14 @@ $(document).ready(function(){
 	  	grid.build();
 	    
 	    searchForm.addEvent("search", "click", function (e) {
-	    	var param = []
+    	 	var param ={
+				 brRq : 'IN_DATA'
+				,brRs : 'OUT_DATA'
+				,IN_DATA:[{}]
+			}
 	    	grid.loadData('findPgm',param,function(data){
+		    	console.log(data);
+		    	grid.resetData(data.OUT_DATA);
 	        	
 	    	});
 	    });
@@ -165,9 +181,7 @@ $(document).ready(function(){
 		        var param ={
 					brRq : 'IN_DATA'
 					,brRs : ''
-					,IN_DATA:[{
-						
-						}]
+					,IN_DATA:[{}]
 				}
 	        	CM_0100.send('rmPgm',param);
 			});

@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.cm.ctrl;
 
 import java.util.HashMap;
 
@@ -11,13 +11,18 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
+import com.example.demo.exception.BizException;
 import com.example.demo.service.GoRestService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class GoRestController {
 	
@@ -83,30 +88,37 @@ public class GoRestController {
 	  * */
 	 @PostMapping(path= "/api/{br}", consumes = "application/json", produces = "application/json")
 	 public ResponseEntity<Object> callAPI(@PathVariable("br") String br
-				, @RequestBody String jsonInString) throws Exception  {
+				, @RequestBody String jsonInString
+			 ) throws Exception  {
+		 log.info("br=>"+br);
+		 log.info("jsonInString=>"+jsonInString);
 		 String jsonOutString=null;
+		 
+		 
 		 HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
 			jsonOutString = goService.callAPI(br, jsonInString);
-		
-		}catch (HttpClientErrorException | HttpServerErrorException e) {
+		} catch (HttpClientErrorException | HttpServerErrorException e) {
             result.put("statusCode", e.getRawStatusCode());
             result.put("body"  , e.getStatusText());
             e.printStackTrace();
             https://owin2828.github.io/devlog/2019/12/30/spring-16.html
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            		.body("("+br+ ") API가 존재하지 않습니다.");
-		}	catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-							.body("JSON 파싱오류");
-        } catch (Exception e) {
+            		.body("서버오류가 발생하였습니다.(HTTP)");
+		}catch (BizException e) {
+                result.put("statusCode", "999");
+                result.put("body"  , e.getMessage());
+                e.printStackTrace();
+                https://owin2828.github.io/devlog/2019/12/30/spring-16.html
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                		.body(e.getMessage());
+            
+		}	catch (Exception e) {
             result.put("statusCode", "999");
             result.put("body"  , "excpetion오류");
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("알수없는 오류");
+					.body("서버오류가 발생하였습니다.(Exception)");
             
         }
 	    return ResponseEntity.ok(jsonOutString);

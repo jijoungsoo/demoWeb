@@ -183,6 +183,8 @@ class PgmPageMngr {
         this.progressMngr.hideProgress();
     }
     send(p_url, p_param, p_funtion){
+    	console.log('p_url=>'+p_url);
+    	console.log('p_param=>'+p_param);
     	AjaxMngr.send_post_ajax(p_url, p_param, p_funtion);
     }
 }

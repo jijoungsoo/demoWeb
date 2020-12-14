@@ -127,7 +127,30 @@ class TuiGridMngr {
     grid.clear();
     AjaxMngr.send_post_ajax(url, param, function (data) {
 
+	  console.log('param')
+	  console.log(param)
+	  
       console.log('loadData')
+      console.log(data)
+      
+      var arr_brRs = param.brRs.split(",");
+      var brRs  = arr_brRs[0];
+      
+      console.log('arr_brRs')
+      console.log(brRs)
+      if(data[brRs]) {
+	    grid.resetData(data[brRs]);
+        if(options.showRowStatus==true){
+          var t = grid.getData(); 
+          t.forEach(element => { 
+            element._ROW_STATUS=null;
+            }
+          )
+          grid.resetData(t);
+        }
+      }
+      
+      /* tui_grid 전용 함수  나중에는 이대로 가야할것 같다.
       if(data.result) {
         grid.resetData(data.data.contents);
         if(options.showRowStatus==true){
@@ -140,6 +163,7 @@ class TuiGridMngr {
         } 
       }
       p_func(data);
+      */
     })
   }
    

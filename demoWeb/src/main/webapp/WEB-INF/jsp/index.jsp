@@ -104,8 +104,8 @@ $(function () {
 		for (int i = 0; i < cmPgmList.size(); i++) {
 			HashMap<String,Object> hm = cmPgmList.get(i);
 	%>
-	PgmPageMngr.addPgmPageMap("<%=hm.get("pgmId")%>","<%=hm.get("pgmNm")%>");
-	myLayout.registerComponent("<%=hm.get("pgmId")%>", function (container, state) {
+	PgmPageMngr.addPgmPageMap("<%=hm.get("PGM_ID")%>","<%=hm.get("PGM_NM")%>");
+	myLayout.registerComponent("<%=hm.get("PGM_ID")%>", function (container, state) {
 		var p_param = {
 			uuid : container._config.id
 		}
