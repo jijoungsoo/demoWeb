@@ -33,6 +33,11 @@ import org.zalando.logbook.json.JsonHttpLogFormatter;
 public class DemoApplication {
 
 	public static void main(String[] args) {
+		/*https://haviyj.tistory.com/11 라이브 리로딩*/
+		//System.setProperty("spring.devtools.restart.enabled","false");  // 나는 spa여서 쓸일이 없는데..
+		//System.setProperty("spring.devtools.livereload.enabled","true");
+		/*https://haviyj.tistory.com/11 라이브 리로딩*/
+		
 		SpringApplication.run(DemoApplication.class, args);
 		
 	}

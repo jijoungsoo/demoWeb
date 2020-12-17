@@ -83,7 +83,8 @@ public class LoginPageController {
 			log.info("v_userId=>"+v_userId);
 			log.info("v_userPwd=>"+v_userPwd);
 			log.info("v_autoLoginYn=>"+v_autoLoginYn);
-			
+			log.info("v_autoLoginYn=>"+v_autoLoginYn);
+						
 			model.addAttribute(CustomUrlAuthenticationSuccessHandler.userId, v_userId);
 			model.addAttribute(CustomUrlAuthenticationSuccessHandler.userPwd, v_userPwd);
 			model.addAttribute(CustomUrlAuthenticationSuccessHandler.autoLoginYn, v_autoLoginYn);

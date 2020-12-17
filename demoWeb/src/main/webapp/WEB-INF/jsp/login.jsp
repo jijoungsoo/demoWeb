@@ -8,7 +8,7 @@ https://yongblog.tistory.com/26
  	String autoLoginYn  = request.getAttribute("autoLoginYn").toString();
  %>
  <div id="app">
-	 <form class name="binder-form" onsubmit="return false;" style="border: 1px solid #ccc;padding: 10px;border-radius: 10px;">
+	 <form class name="binder-form" onsubmit="return false;" style="border: 1px solid #ccc;padding: 10px;border-radius: 10px;width:300px;margin:100px auto 0 auto">
 	    <div class="form-group">
 	        <label>아이디</label>
 	        <input type="text" class="form-control" data-ax-path="userId">

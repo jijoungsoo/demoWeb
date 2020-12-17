@@ -15,7 +15,6 @@
     </table>
   </div>
   <div name="grid"></div>
-  <div id="grid1"></div>
 </div>
 <script>
 $(document).ready(function(){
@@ -137,115 +136,119 @@ $(document).ready(function(){
 	      editable: true
 	      ,showRowStatus: true
 	      ,rowNum: true
-	      ,checkbox: true
+	      ,checkbox: true      
 	  	});
 	  	grid.build();
-	    
-	    searchForm.addEvent("search", "click", function (e) {
-    	 	var param ={
-				 brRq : 'IN_DATA'
-				,brRs : 'OUT_DATA'
-				,IN_DATA:[{}]
-			}
-	    	grid.loadData('findPgm',param,function(data){
-		    	console.log(data);
-		    	//gridLoadData에서 자동으로 로드됨..
-	        	
-	    	});
-	    });
-	
-	    searchForm.addEvent("add_row", "click", function (e) {
-	    	Message.confirm('행을 추가하시겠습니까?',function()  {
-	        	grid.appendRow();
-			});
-	    });
-	
-	    searchForm.addEvent("save", "click", function (e) {
-	        var data = grid.getModifiedRows();
-	        console.log(data);
-	        var crt_cnt	= data.createdRows.length;
-	        var updt_cnt= data.updatedRows.length;
 
-	        
-	        if((crt_cnt+updt_cnt)==0) {
-	        	Message.alert("저장할 내용이 존재하지 않습니다.");
-	        	return;
-		    }
-	        if(grid.isValid()==false) {
-	        	grid.validMsg();    
-	        	return;
-		    }
-		    var in_data = [];
-		    for (var i=0;i<crt_cnt;i++){
-		    	var row = data.createdRows[i];
-		    	in_data.push({
-		    		PGM_ID 		: row.PGM_ID,
-		    		PGM_NM 		: row.PGM_NM,
-		    		PGM_LINK	: row.PGM_LINK,
-		    		CATEGORY 	: row.CATEGORY,
-		    		RMK 		: row.RMK
+	  	searchForm.addEvent("click",function(el){
+		   //console.log(el);
+	  	   switch(el.target.name){
+           case 'search':
+        		var param ={
+					 brRq : 'IN_DATA'
+					,brRs : 'OUT_DATA'
+					,IN_DATA:[{}]
+				}
+		    	grid.loadData('findPgm',param,function(data){
+			    	console.log(data);
+			    	//gridLoadData에서 자동으로 로드됨..
+		        	
 		    	});
-			}
+               break;
+           case 'add_row':
+        	   Message.confirm('행을 추가하시겠습니까?',function()  {
+		        	grid.appendRow();
+				});
+               break;
+	  		
+	  		case 'save':
+	  		    var data = grid.getModifiedRows();
+		        console.log(data);
+		        var crt_cnt	= data.createdRows.length;
+		        var updt_cnt= data.updatedRows.length;
 
-		    var updt_data = [];
-		    for (var i=0;i<updt_cnt;i++){
-		    	var row = data.updatedRows[i];
-		    	updt_data.push({
-		    		PGM_ID 		: row.PGM_ID,
-		    		PGM_NM 		: row.PGM_NM,
-		    		PGM_LINK	: row.PGM_LINK,
-		    		CATEGORY 	: row.CATEGORY,
-		    		RMK 		: row.RMK
-		    	});
-			}
-	        	        
-	    	Message.confirm('저장하시겠습니까?',function()  {
-	    		var param ={
-					brRq 		: 'IN_DATA,UPDT_DATA'
-					,brRs 		: ''
-					,IN_DATA	: in_data
-	    			,UPDT_DATA	: updt_data
+		        
+		        if((crt_cnt+updt_cnt)==0) {
+		        	Message.alert("저장할 내용이 존재하지 않습니다.");
+		        	return;
+			    }
+		        if(grid.isValid()==false) {
+		        	grid.validMsg();    
+		        	return;
+			    }
+			    var in_data = [];
+			    for (var i=0;i<crt_cnt;i++){
+			    	var row = data.createdRows[i];
+			    	in_data.push({
+			    		PGM_ID 		: row.PGM_ID,
+			    		PGM_NM 		: row.PGM_NM,
+			    		PGM_LINK	: row.PGM_LINK,
+			    		CATEGORY 	: row.CATEGORY,
+			    		RMK 		: row.RMK
+			    	});
 				}
-	        	CM_0100.send('savePgm',param,function(data){
-	        		Message.alert('저장되었습니다.',function()  {
-		        		searchForm.click('search');
-		        	});
-		        });
-			});
-	    });
-	
-	    
-	
-	    searchForm.addEvent("del", "click", function (e) {
-	        var data = grid.getCheckedData();
-	        console.log(data);
-	        if(data.length<=0) {
-	        	Message.alert('선택된 항목이 없습니다.');
-	        	return;
-	        }
-	        var in_data = [];
-		    for (var i=0;i<data.length;i++){
-		    	var row = data[i];
-		    	in_data.push({
-		    		PGM_ID 		: row.PGM_ID
-		    	});
-			}
-	        Message.confirm('삭제하시겠습니까?',function()  {
-		        var param ={
-					brRq : 'IN_DATA'
-					,brRs : ''
-					,IN_DATA: in_data
+
+			    var updt_data = [];
+			    for (var i=0;i<updt_cnt;i++){
+			    	var row = data.updatedRows[i];
+			    	updt_data.push({
+			    		PGM_ID 		: row.PGM_ID,
+			    		PGM_NM 		: row.PGM_NM,
+			    		PGM_LINK	: row.PGM_LINK,
+			    		CATEGORY 	: row.CATEGORY,
+			    		RMK 		: row.RMK
+			    	});
 				}
-	        	CM_0100.send('rmPgm',param,function(data){
-		        	Message.alert('삭제되었습니다.',function()  {
-		        		searchForm.click('search');
-		        	});
-		        });
-			});
-	        //실제로 서버에서 삭제하는로직 필요.
-	    	//grid.removeRow(0); 
-	    });
-	
+		        	        
+		    	Message.confirm('저장하시겠습니까?',function()  {
+		    		var param ={
+						brRq 		: 'IN_DATA,UPDT_DATA'
+						,brRs 		: ''
+						,IN_DATA	: in_data
+		    			,UPDT_DATA	: updt_data
+					}
+		    		_this.showProgress();					
+		    		_this.send('savePgm',param,function(data){
+		    			_this.hideProgress();
+		        		Message.alert('저장되었습니다.',function()  {
+			        		searchForm.click('search');
+			        	});
+			        });
+				});
+				break;
+	  		case "del":
+	  			var data = grid.getCheckedData();
+		        console.log(data);
+		        if(data.length<=0) {
+		        	Message.alert('선택된 항목이 없습니다.');
+		        	return;
+		        }
+		        var in_data = [];
+			    for (var i=0;i<data.length;i++){
+			    	var row = data[i];
+			    	in_data.push({
+			    		PGM_ID 		: row.PGM_ID
+			    	});
+				}
+		        Message.confirm('삭제하시겠습니까?',function()  {
+			        var param ={
+						brRq : 'IN_DATA'
+						,brRs : ''
+						,IN_DATA: in_data
+					}
+		        	_this.showProgress();
+			        _this.send('rmPgm',param,function(data){
+			        	_this.hideProgress();
+			        	Message.alert('삭제되었습니다.',function()  {
+			        		searchForm.click('search');
+			        	});
+			        });
+				});
+		        //실제로 서버에서 삭제하는로직 필요.
+		    	//grid.removeRow(0); 
+		  		break;
+	  	   }
+	  	});
 	});
 });
 

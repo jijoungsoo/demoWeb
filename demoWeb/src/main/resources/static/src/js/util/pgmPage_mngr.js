@@ -90,7 +90,7 @@ class PgmPageMngr {
                 console.log(pgmMap);
                 console.log("-destroy--:end");
                 */
-                PgmPageMngr.removePgmUuidMap(item.config.id);
+                PgmPageMngr.removePgmUuIdMap(item.config.id);
                 PgmPageMngr.removeReqMap(item.config.id);
                 //그때 id가져오는 걸 했었는데 기억이 안난다.
             })   //The middle mouse button
@@ -136,7 +136,7 @@ class PgmPageMngr {
         var tmp = myLayout.root.getItemsById('stack_window')[0]
         var item = tmp.getActiveContentItem();
         item.container.on("destroy", () => {  /*팝업닫기는 여기*/
-            PgmPageMngr.removePgmUuidMap(item.config.id);
+            PgmPageMngr.removePgmUuIdMap(item.config.id);
             PgmPageMngr.removeReqMap(item.config.id);
         })
 
@@ -147,7 +147,7 @@ class PgmPageMngr {
 
     constructor(pgm_id, uuid) {
         var _this = this;
-        this.progressMngr = new ProgressMngr(uuid);
+        this.mask = new ax5.ui.mask();
         this.container = $("#" + uuid);
         this.pgm_id = pgm_id
         this.uuid = uuid;
@@ -177,10 +177,13 @@ class PgmPageMngr {
         return this.container.find("[name=" + name + "]");
     }
     showProgress() {
-        this.progressMngr.showProgress();
+		this.mask.open({
+			content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading</h1>'
+			,target: $("#"+this.getId()).get(0),
+		});
     }
     hideProgress() {
-        this.progressMngr.hideProgress();
+        this.mask.close();
     }
     send(p_url, p_param, p_funtion){
     	console.log('p_url=>'+p_url);

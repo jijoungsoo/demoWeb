@@ -1,10 +1,10 @@
 class TuiGridMngr {
   constructor(pgm_mngr, grid_name, columns, p_options) {
-
+		this.pgm_mngr=pgm_mngr;
       var basic_options = {
         editable: false
-        ,scrollX: false
-        ,scrollY: false
+        ,scrollX: true
+        ,scrollY: true
         ,width: 1100               /*그리드 너비 조절 */
         ,bodyHeight: 700           /*그리드 높이지정 */
         ,editingEvent: 'dblclick'  /*더블클릭 수정 */
@@ -122,6 +122,11 @@ class TuiGridMngr {
   }
  
   loadData(url,param, p_func){
+    var mask = new ax5.ui.mask();
+	mask.open({
+		content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading</h1>'
+		,target: $("#"+this.pgm_mngr.getId()).get(0),
+	});
     let grid=this.grid;    
     let options = this.options;
     grid.clear();
@@ -149,6 +154,7 @@ class TuiGridMngr {
           grid.resetData(t);
         }
       }
+      mask.close();
       if(p_func){
     	p_func(data);
     	}

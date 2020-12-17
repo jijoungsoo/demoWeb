@@ -4,10 +4,10 @@
 <%@ page import="java.util.*"%>
 <sec:authentication var="user" property="principal" />
 <sec:authorize access="isAuthenticated()">
-<login class="login">
+<login class="login" style="color:000">
 	
 	${user.username}<br />
-	${user.email}<br />
+	<%//  ${user.email}<br />   %>
 	${user.userNm}<br />
 
 		

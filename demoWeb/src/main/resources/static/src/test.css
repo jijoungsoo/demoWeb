@@ -40,6 +40,9 @@ body {
   height:60px;
   top:0px;
   left:0; 
+  color:#fff;
+  padding: 2px 20px 2px 20px;
+  line-height:14px;
 }
 
 .login label{

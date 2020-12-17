@@ -23,21 +23,25 @@ class FormMngr {
     get(name) {
         return this.container_area.find("[name=" + name + "]");
     }
-    addEvent(sel_name, event_name, func){
-        if(event_name!="click") {
-            return;
-        } 
-        this.get(sel_name).on(event_name, function (e) {
-            e.preventDefault();
-            func(e);
-        });
-    }
-    click(sel_name){
-         
-        var em = this.get(sel_name);
-        console.log(em);
-        
-        //document.getElementById("my-btn")[0].click();
-        em.click();
+    
+    
+    
+    /*https://stackoverflow.com/questions/57774772/how-to-get-child-element-in-a-click-event
+    버튼을 순회하여 누르면 event를 발생시키자.
+    */
+    /*
+     <td><input type="button" name="search" value="조회" /></td>
+        <td><input type="button" name="add_row" value="추가" /></td>
+        <td><input type="button" name="save" value="저장" /></td>
+        <td><input type="button" name="del" value="삭제" /></td>
+    */
+    addEvent(event_name,func){
+    	console.log(this);
+    	var w=document.getElementById(this.getUUID());
+    	if(w.querySelectorAll("input[type=button]")){
+			w.querySelectorAll("input[type=button]").forEach(function(el){
+					el.addEventListener(event_name, func);	
+			});
+    	}
     }
 }

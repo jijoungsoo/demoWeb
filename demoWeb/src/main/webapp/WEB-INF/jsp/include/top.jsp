@@ -4,8 +4,8 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Layout Manager</title>
-	<script type="text/javascript" src="/src/slickgrid/lib/jquery-3.5.0.js"></script>
-		<script>
+	<script type="text/javascript" src="/src/js/jquery-3.5.1/jquery-3.5.1.min.js"></script>
+	<script>
     /*이건 공통적용인데 spring security로 보낼때 모두 체크해야하므로 !! 넣어준다.*/
     var csrf_headerName = '${_csrf.headerName}'; 
 	var csrf_token = '${_csrf.token}';
@@ -14,93 +14,10 @@
 	<script type="text/javascript">
 		window.lm = { "config": {}, "container": {}, "controls": {}, "errors": {}, "items": {}, "utils": {} };
 	</script>
-<% if (false) { %>
-	<link rel="stylesheet" type="text/css" href="/src/css/goldenlayout-base.css" />
-	<link rel="stylesheet" type="text/css" href="/src/css/goldenlayout-light-theme.css" />
-	<script type="text/javascript" src="/src/js/utils/utils.js"></script>
-	<script type="text/javascript" src="/src/js/items/AbstractContentItem.js"></script>
-	<script type="text/javascript" src="/src/js/LayoutManager.js"></script>
-	<script type="text/javascript" src="/src/js/config/ItemDefaultConfig.js"></script>
-	<script type="text/javascript" src="/src/js/config/defaultConfig.js"></script>
-	<script type="text/javascript" src="/src/js/container/ItemContainer.js"></script>
-	<script type="text/javascript" src="/src/js/controls/BrowserPopout.js"></script>
-	<script type="text/javascript" src="/src/js/controls/DragProxy.js"></script>
-	<script type="text/javascript" src="/src/js/controls/DragSource.js"></script>
-	<script type="text/javascript" src="/src/js/controls/DropTargetIndicator.js"></script>
-	<script type="text/javascript" src="/src/js/controls/Header.js"></script>
-	<script type="text/javascript" src="/src/js/controls/HeaderButton.js"></script>
-	<script type="text/javascript" src="/src/js/controls/Splitter.js"></script>
-	<script type="text/javascript" src="/src/js/controls/Tab.js"></script>
-	<script type="text/javascript" src="/src/js/controls/TransitionIndicator.js"></script>
-	<script type="text/javascript" src="/src/js/errors/ConfigurationError.js"></script>
-	<script type="text/javascript" src="/src/js/items/Component.js"></script>
-	<script type="text/javascript" src="/src/js/items/Root.js"></script>
-	<script type="text/javascript" src="/src/js/items/RowOrColumn.js"></script>
-	<script type="text/javascript" src="/src/js/items/Stack.js"></script>
-	<script type="text/javascript" src="/src/js/utils/BubblingEvent.js"></script>
-	<script type="text/javascript" src="/src/js/utils/ConfigMinifier.js"></script>
-	<script type="text/javascript" src="/src/js/utils/DragListener.js"></script>
-	<script type="text/javascript" src="/src/js/utils/EventEmitter.js"></script>
-	<script type="text/javascript" src="/src/js/utils/EventHub.js"></script>
-	<script type="text/javascript" src="/src/js/utils/ReactComponentHandler.js"></script>
-<% } else {  %>
-<link rel="stylesheet" type="text/css" href="/src/goldenlayout-1.5.9/goldenlayout-base.css" />
-<link rel="stylesheet" type="text/css" href="/src/goldenlayout-1.5.9/goldenlayout-light-theme.css" />
-<!-- link rel="stylesheet" type="text/css" href="/src/goldenlayout-1.5.9/goldenlayout-dark-theme.css"  -->
-<script type="text/javascript" src="/src/goldenlayout-1.5.9/goldenlayout.js"></script>
-<% } %>
-
-	<!--slick formatter-->
-	<script src="/src/slickgrid/lib/firebugx.js"></script>
-	<!--slick grid-->
-	<script type="text/javascript" src="/src/slickgrid/lib/jquery.event.drag-2.3.0.js"></script>
-	<script type="text/javascript" src="/src/slickgrid/lib/jquery-ui.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="/src/slickgrid/slick.grid.css" />
-	<link rel="stylesheet" type="text/css" href="/src/slickgrid/slick-default-theme.css" />
-	<link rel="stylesheet" href="/src/slickgrid/smoothness/jquery-ui.css" type="text/css" />
-	<link rel="stylesheet" href="/src/slickgrid/examples.css" type="text/css" />
-	<script type="text/javascript" src="/src/slickgrid/slick.core.js"></script>
-
-	<!--slick formatter-->
-	<script type="text/javascript" src="/src/slickgrid/slick.editors.js"></script>
-	<script type="text/javascript" src="/src/slickgrid/slick.formatters.js"></script>
-
-	<!--grid resize-->
-	<script src="/src/slickgrid/plugins/slick.resizer.js"></script>
-
-
-	<!--slick checkbox -->
-	<link rel="stylesheet" type="text/css" href="/src/slickgrid/controls/slick.columnpicker.css" />
-	<script src="/src/slickgrid/plugins/slick.checkboxselectcolumn.js"></script>
-	<script src="/src/slickgrid/plugins/slick.autotooltips.js"></script>
-	<script src="/src/slickgrid/plugins/slick.cellcopymanager.js"></script>
-
-	<!--tooltip-->
-
-	<script src="/src/slickgrid/plugins/slick.autotooltips.js"></script>
-
-	<script src="/src/slickgrid/controls/slick.columnpicker.js"></script>
-
-
-	<!--slick checkbox -->
-	<!---->
-	<script src="/src/slickgrid/slick.editors.js"></script>
-
-	<!--셀클릭시 한줄 선택되도록 -->
-	<script src="/src/slickgrid/plugins/slick.rowselectionmodel.js"></script>
-
-	<!--curd가 되도록 row add  -->
-	<script src="/src/slickgrid/plugins/slick.cellrangedecorator.js"></script>
-	<script src="/src/slickgrid/plugins/slick.cellrangeselector.js"></script>
-	<script src="/src/slickgrid/plugins/slick.cellselectionmodel.js"></script>
-	<!--curd가 되도록 row add  -->
-
-	<script type="text/javascript" src="src/slickgrid/slick.grid.js"></script>
-
-	<!--dataView 필터사용을 위해서 -->
-	<script type="text/javascript" src="/src/slickgrid/slick.dataview.js"></script>
-	<link rel="stylesheet" href="/src/slickgrid/controls/slick.pager.css" type="text/css" />
-	<script src="/src/slickgrid/controls/slick.pager.js"></script>
+	<link rel="stylesheet" type="text/css" href="/src/goldenlayout-1.5.9/goldenlayout-base.css" />
+	<!--link rel="stylesheet" type="text/css" href="/src/goldenlayout-1.5.9/goldenlayout-light-theme.css"-->
+	<link rel="stylesheet" type="text/css" href="/src/goldenlayout-1.5.9/goldenlayout-dark-theme.css" />
+	<script type="text/javascript" src="/src/goldenlayout-1.5.9/goldenlayout.js"></script>
 
 	<!-- jQuery popup -->
 	<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -127,7 +44,6 @@
 
 	<script src="/src/js/util/popup_mngr.js"></script>
 	<script src="/src/js/util/ajax_mngr.js"></script>
-	<script src="/src/js/util/grid_mngr.js"></script>
 	<script src="/src/js/util/tui_grid_mngr.js"></script>
 	<script src="/src/js/util/progress_mngr.js"></script>
 	<script src="/src/js/util/selectbox_mngr.js"></script>
@@ -160,7 +76,6 @@
 
 
 
-<!-- vue 못씀 -->
 <link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
 <script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
 
