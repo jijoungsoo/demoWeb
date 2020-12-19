@@ -131,7 +131,7 @@ $(document).ready(function(){
 	  	});
 	  	grid.build();
 
-	    searchForm.addEvent("click",function(el){
+	    searchForm.addEvent("click","input[type=button]",function(el){
 	  	   switch(el.target.name){
            case 'search':
         		var param ={

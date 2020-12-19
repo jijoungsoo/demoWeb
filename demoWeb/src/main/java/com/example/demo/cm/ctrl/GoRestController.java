@@ -5,9 +5,11 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -123,4 +125,11 @@ public class GoRestController {
         }
 	    return ResponseEntity.ok(jsonOutString);
 	 }
+	 
+	/*출처: https://coding-start.tistory.com/324 [코딩스타트]*/
+    @PostMapping(path= "/refresh", consumes = "application/json", produces = "application/json")
+    @CacheEvict(value = {"pgmLinkCache","pgmCache","menuCache"})
+    public String cacheRefresh() {
+        return "{OK}";
+    }
 }

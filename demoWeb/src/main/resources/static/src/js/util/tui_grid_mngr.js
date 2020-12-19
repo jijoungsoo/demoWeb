@@ -5,7 +5,6 @@ class TuiGridMngr {
         editable: false
         ,scrollX: true
         ,scrollY: true
-        ,width: 1100               /*그리드 너비 조절 */
         ,bodyHeight: 700           /*그리드 높이지정 */
         ,editingEvent: 'dblclick'  /*더블클릭 수정 */
         ,minBodyHeight: 30
@@ -236,5 +235,14 @@ class TuiGridMngr {
     var t  = this.grid.getColumns();
     var tmp={};
     this.grid.appendRow(tmp);
+  }
+  on(event_name,func){
+  	this.grid.on(event_name,func);
+  }
+  getRow(rowKey){
+  	return this.grid.getRow(rowKey);
+  }
+  clear(){
+  	this.grid.clear();
   }
 }

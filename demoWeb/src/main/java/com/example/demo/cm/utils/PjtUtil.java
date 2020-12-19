@@ -20,6 +20,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.cm.ctrl.ApiResultMap;
@@ -109,4 +111,36 @@ public class PjtUtil {
 	    byte[] decryptedTextBytes = cipher.doFinal(encryoptedTextBytes);
 	    return new String(decryptedTextBytes);
 	}
+	
+
+    public static JSONObject convertExceptionToJSON(Throwable e) throws Exception {
+        JSONObject responseBody = new JSONObject();
+        JSONObject errorTag = new JSONObject();
+        responseBody.put("error", errorTag);
+
+        JSONArray detailList = new JSONArray();
+        errorTag.put("details", detailList);
+
+        Throwable nextRunner = e;
+        while (nextRunner!=null) {
+            Throwable runner = nextRunner;
+            nextRunner = runner.getCause();
+
+            HashMap detailObj = new HashMap();
+            detailObj.put("code", runner.getClass().getName());
+            String msg =  runner.toString();
+            detailObj.put("message",msg);
+
+            detailList.put(detailObj);
+        }
+
+        JSONArray stackList = new JSONArray();
+        for (StackTraceElement ste : e.getStackTrace()) {
+            stackList.put(ste.getFileName() + ": " + ste.getMethodName()
+                   + ": " + ste.getLineNumber());
+        }
+        errorTag.put("stack", stackList);
+
+        return responseBody;
+    }
 }

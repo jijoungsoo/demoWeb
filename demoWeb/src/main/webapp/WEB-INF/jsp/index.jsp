@@ -12,6 +12,7 @@
 
 		
 	<input type="submit" name="logOut" id="logOut" value="로그아웃" />
+	<input type="submit" name="clearCache" id="clearCache" value="캐시갱신" />
 	
 	<script>
 	$( "#logOut" ).on( "click", function( event ) {
@@ -27,9 +28,30 @@
 			});
 		}); 
 	});
+	$( "#clearCache" ).on( "click", function( event ) {
+		Message.confirm("캐시를 갱신하겠습니까?",function(data){
+			//WebSecurityConfiguration 여기에 로그아웃 주소
+			var param =null;
+			AjaxMngr.send_post_ajax('/refresh', param, function(data2){
+				//console.log(data2);
+				Message.alert("캐시가 갱신되었습니다.",function(){
+					window.location.href="/";
+				});
+				  
+			});
+		}); 
+	});
 	</script>
 </login>
 </sec:authorize>
+<%
+/*https://www.w3schools.com/howto/howto_js_filter_dropdown.asp
+  https://w3schoolsrus.github.io/howto/howto_js_filter_dropdown.html
+  SEARCH 기능이 있는 메뉴 만들기!!
+*/
+
+
+%>
 <nav class="sidebar-nav">
 	<ul class="metismenu" id="menu1">
 <%
@@ -176,6 +198,12 @@ $(function () {
 
 document.addEventListener("DOMContentLoaded", function (event) {
 	new MetisMenu('#menu1',{expand:true/*한번 열리면 모두 펼치기 */});
+});
+$(window).resize(function () {
+	//console.log(myLayout);
+	//console.log($(window).width());
+	//console.log($(window).height());
+	myLayout.updateSize($(window).width()-200, $(window).height());
 });
 </script>	
 <%@ include file="/WEB-INF/jsp/include/bottom.jsp" %>

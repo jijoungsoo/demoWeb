@@ -20,8 +20,7 @@ String uuid = (String) request.getAttribute("uuid");
 </div>
 <script>
 $(document).ready(function(){
-	var CM_0300 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>
-	');
+	var CM_0300 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
 		CM_0300.init(function(p_param) {
 			var _this = CM_0300;
 			var searchForm = new FormMngr(_this, "search_area");
@@ -69,7 +68,7 @@ $(document).ready(function(){
 			{
 				header : '부모메뉴코드',
 				name : 'PRNT_MENU_CD',
-				width : 200,
+				width : 100,
 				sortable : true,
 				align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -78,12 +77,6 @@ $(document).ready(function(){
 					showApplyBtn : true,
 					showClearBtn : true
 				}, /*text, number, select, date 4가지가 있다.*/
-				validation : {
-					dataType : 'string', /*string ,number*/
-					required : true, /*  true 필수, false 필수아님  */
-					unique : true
-				/*true 데이터가 중복되면 빨간색 표시 */
-				},
 				editor : 'text'
 			},
 
@@ -101,9 +94,7 @@ $(document).ready(function(){
 				}, /*text, number, select, date 4가지가 있다.*/
 				validation : {
 					dataType : 'string', /*string ,number*/
-					required : true, /*  true 필수, false 필수아님  */
-					unique : true
-				/*true 데이터가 중복되면 빨간색 표시 */
+					required : true /*  true 필수, false 필수아님  */
 				},
 				editor : 'text'
 			}, {
@@ -120,9 +111,7 @@ $(document).ready(function(){
 				}, /*text, number, select, date 4가지가 있다.*/
 				validation : {
 					dataType : 'string', /*string ,number*/
-					required : true, /*  true 필수, false 필수아님  */
-					unique : true
-				/*true 데이터가 중복되면 빨간색 표시 */
+					required : true /*  true 필수, false 필수아님  */
 				},
 				editor : 'text'
 			}, {
@@ -136,13 +125,7 @@ $(document).ready(function(){
 					type : 'text',
 					showApplyBtn : true,
 					showClearBtn : true
-				}, /*text, number, select, date 4가지가 있다.*/
-				validation : {
-					dataType : 'string', /*string ,number*/
-					required : true, /*  true 필수, false 필수아님  */
-					unique : true
-				/*true 데이터가 중복되면 빨간색 표시 */
-				},
+				}, 
 				editor : 'text'
 			}, {
 				header : '종류',
@@ -151,22 +134,11 @@ $(document).ready(function(){
 				resizable : false,
 				sortable : true,
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-				filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-				}, /*text, number, select, date 4가지가 있다.*/
-				validation : {
-					dataType : 'string', /*string ,number*/
-					required : true, /*  true 필수, false 필수아님  */
-					unique : true
-				/*true 데이터가 중복되면 빨간색 표시 */
-				},
 				editor : 'text'
 			}, {
 				header : '비고',
 				name : 'RMK',
-				width : 300,
+				width : 100,
 				sortable : true,
 				align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -175,12 +147,6 @@ $(document).ready(function(){
 					showApplyBtn : true,
 					showClearBtn : true
 				}, /*text, number, select, date 4가지가 있다.*/
-				validation : {
-					dataType : 'string', /*string ,number*/
-					required : true, /*  true 필수, false 필수아님  */
-					unique : true
-				/*true 데이터가 중복되면 빨간색 표시 */
-				},
 				editor : 'text'
 			}, {
 				header : '생성일',
@@ -224,15 +190,13 @@ $(document).ready(function(){
 				showRowStatus : true,
 				rowNum : true,
 				checkbox : true,
-				width : 1400 /*그리드 너비 조절 */
-				,
 				bodyHeight : 700 /*그리드 높이지정 */
 				,
 				showDummyRows : false
 			});
 			grid.build();
 
-			searchForm.addEvent("click", function(el) {
+			searchForm.addEvent("click","input[type=button]", function(el) {
 				switch (el.target.name) {
 				case 'search':
 					var param = {
@@ -304,7 +268,7 @@ $(document).ready(function(){
 							IN_DATA : in_data,
 							UPDT_DATA : updt_data
 						}
-						_this.send('saveDomain', param, function(data) {
+						_this.send('saveMenu', param, function(data) {
 							Message.alert('저장되었습니다.', function() {
 								searchForm.get("search").trigger("click");
 							});

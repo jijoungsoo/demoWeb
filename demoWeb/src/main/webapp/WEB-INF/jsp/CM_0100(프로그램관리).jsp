@@ -3,19 +3,7 @@
 <%	String pgmId = (String) request.getAttribute("pgmId");
 	String uuid = (String) request.getAttribute("uuid");
 %>
-<div id="<%=uuid%>">
-  <div name="search_area">
-    <table>
-      <tr>
-        <td><input type="button" name="search" value="조회" /></td>
-        <td><input type="button" name="add_row" value="추가" /></td>
-        <td><input type="button" name="save" value="저장" /></td>
-        <td><input type="button" name="del" value="삭제" /></td>
-      </tr>
-    </table>
-  </div>
-  <div name="grid"></div>
-</div>
+<%@ include file="/WEB-INF/jsp/CM_0100(프로그램관리).html" %>
 <script>
 $(document).ready(function(){
 	var CM_0100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
@@ -140,7 +128,7 @@ $(document).ready(function(){
 	  	});
 	  	grid.build();
 
-	  	searchForm.addEvent("click",function(el){
+	  	searchForm.addEvent("click","input[type=button]",function(el){
 		   //console.log(el);
 	  	   switch(el.target.name){
            case 'search':
@@ -176,43 +164,23 @@ $(document).ready(function(){
 		        	grid.validMsg();    
 		        	return;
 			    }
-			    var in_data = [];
-			    for (var i=0;i<crt_cnt;i++){
-			    	var row = data.createdRows[i];
-			    	in_data.push({
-			    		PGM_ID 		: row.PGM_ID,
-			    		PGM_NM 		: row.PGM_NM,
-			    		PGM_LINK	: row.PGM_LINK,
-			    		CATEGORY 	: row.CATEGORY,
-			    		RMK 		: row.RMK
-			    	});
-				}
-
-			    var updt_data = [];
-			    for (var i=0;i<updt_cnt;i++){
-			    	var row = data.updatedRows[i];
-			    	updt_data.push({
-			    		PGM_ID 		: row.PGM_ID,
-			    		PGM_NM 		: row.PGM_NM,
-			    		PGM_LINK	: row.PGM_LINK,
-			    		CATEGORY 	: row.CATEGORY,
-			    		RMK 		: row.RMK
-			    	});
-				}
-		        	        
+			    	        
 		    	Message.confirm('저장하시겠습니까?',function()  {
 		    		var param ={
 						brRq 		: 'IN_DATA,UPDT_DATA'
 						,brRs 		: ''
-						,IN_DATA	: in_data
-		    			,UPDT_DATA	: updt_data
+						,IN_DATA	: data.createdRows
+		    			,UPDT_DATA	: data.updatedRows
 					}
 		    		_this.showProgress();					
 		    		_this.send('savePgm',param,function(data){
 		    			_this.hideProgress();
-		        		Message.alert('저장되었습니다.',function()  {
-			        		searchForm.click('search');
-			        	});
+		    			if(data){
+		    				Message.alert('저장되었습니다.',function()  {
+				        		searchForm.get("search").trigger("click");
+				        	});
+			    		}
+		        		
 			        });
 				});
 				break;
@@ -223,29 +191,24 @@ $(document).ready(function(){
 		        	Message.alert('선택된 항목이 없습니다.');
 		        	return;
 		        }
-		        var in_data = [];
-			    for (var i=0;i<data.length;i++){
-			    	var row = data[i];
-			    	in_data.push({
-			    		PGM_ID 		: row.PGM_ID
-			    	});
-				}
+
 		        Message.confirm('삭제하시겠습니까?',function()  {
 			        var param ={
 						brRq : 'IN_DATA'
 						,brRs : ''
-						,IN_DATA: in_data
+						,IN_DATA: data
 					}
 		        	_this.showProgress();
 			        _this.send('rmPgm',param,function(data){
 			        	_this.hideProgress();
-			        	Message.alert('삭제되었습니다.',function()  {
-			        		searchForm.click('search');
-			        	});
+			        	if(data){
+			        		Message.alert('삭제되었습니다.',function()  {
+				        		searchForm.get("search").trigger("click");
+				        	});
+				        }
+			        	
 			        });
 				});
-		        //실제로 서버에서 삭제하는로직 필요.
-		    	//grid.removeRow(0); 
 		  		break;
 	  	   }
 	  	});

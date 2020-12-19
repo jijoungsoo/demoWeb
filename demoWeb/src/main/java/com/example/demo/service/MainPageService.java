@@ -104,15 +104,17 @@ public class MainPageService {
 		ArrayList<HashMap<String,Object>> OUT_DATA= outDs.get("OUT_DATA");
 		return OUT_DATA; 
     }
-	@CachePut(value = "menuCache")
-	public ArrayList<HashMap<String, Object>>  reFindMainMenu() {
-		ArrayList<HashMap<String, Object>> cmMenuList=this.findMainMenu();
-		return cmMenuList; 
-	}
-	
-	@CachePut(value = "pgmCache")
-	public ArrayList<HashMap<String, Object>>  reFindMainPgm() {
-		ArrayList<HashMap<String, Object>> cmPgmList=this.findMainPgm();
-		return cmPgmList; 
-	}
+	    
+    //@CachePut(value = "pgmLinkCache", key = "T(com.dveamer.sample.KeyGen).generate(#pgmId)")
+	@Cacheable(value = "pgmLinkCache")
+    public HashMap<String, String> findPgmList(){
+        HashMap<String, String> pgmLink =new HashMap<String, String>();
+        
+        ArrayList<HashMap<String, Object>> cmPgmList=this.findMainPgm();
+        for(int i=0;i<cmPgmList.size();i++) {
+            HashMap<String, Object> tmp =cmPgmList.get(i);
+            pgmLink.put(tmp.get("PGM_ID").toString(), tmp.get("PGM_LINK").toString());
+        }
+        return pgmLink;
+    }
 }

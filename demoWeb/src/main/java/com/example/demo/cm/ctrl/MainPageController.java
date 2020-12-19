@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -31,7 +32,7 @@ public class MainPageController {
 		model.addAttribute("cmPgmList", mps.findMainPgm());
 		return "index"; 
     }
-	
+		
 	@PostMapping(path= "/page/{pageId}")
 	public String page(@PathVariable("pageId") String pageId
 			, @RequestBody Map<String,String> hm
@@ -44,7 +45,7 @@ public class MainPageController {
 		System.out.println(pageId);
 		System.out.println(hm.get("uuid"));
 		
-		HashMap<String, String> cmPgmLink=findPgmList();
+		HashMap<String, String> cmPgmLink=mps.findPgmList();
 		String pgmLink = cmPgmLink.get(pageId);
 		model.addAttribute("pgmId", pageId);
 		model.addAttribute("uuid", hm.get("uuid").toString());
@@ -52,17 +53,4 @@ public class MainPageController {
     }
 	
 	
-	
-	//@CachePut(value = "pgmLinkCache", key = "T(com.dveamer.sample.KeyGen).generate(#pgmId)")
-	@CachePut(value = "pgmLinkCache")
-	private HashMap<String, String> findPgmList(){
-		HashMap<String, String> pgmLink =new HashMap<String, String>();
-		
-		ArrayList<HashMap<String, Object>> cmPgmList=mps.findMainPgm();
-		for(int i=0;i<cmPgmList.size();i++) {
-			HashMap<String, Object> tmp =cmPgmList.get(i);
-			pgmLink.put(tmp.get("PGM_ID").toString(), tmp.get("PGM_LINK").toString());
-		}
-		return pgmLink;
-	}
 }

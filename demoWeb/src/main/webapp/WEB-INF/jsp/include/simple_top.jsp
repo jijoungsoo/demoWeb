@@ -10,7 +10,7 @@
 	var csrf_token = '${_csrf.token}';
 	/*이거 ajax쪽에 넣었다.*/
 	</script>
-	<script type="text/javascript" src="/src/slickgrid/lib/jquery-3.5.0.js"></script>
+	<script type="text/javascript" src="/src/js/jquery-3.5.1/jquery-3.5.1.min.js"></script>
 	<script src="/src/js/util/ajax_mngr.js"></script>
 	<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5core/master/dist/ax5core.min.js"></script>
 	<!-- http://ax5ui.axisj.com/     form 바인더 -->

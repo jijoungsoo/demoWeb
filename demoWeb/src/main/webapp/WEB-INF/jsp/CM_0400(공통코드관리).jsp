@@ -1,172 +1,498 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/jsp/include/inner_top.jsp" %>
-<%	String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ include file="/WEB-INF/jsp/include/inner_top.jsp"%>
+<%
+    String pgmId = (String) request.getAttribute("pgmId");
+String uuid = (String) request.getAttribute("uuid");
 %>
-<script>
-  var CM_0400 = function () {
-    var _this = this;
-    var searchForm1 = new PgmForm(_this, "search_area1");
-    var searchForm2 = new PgmForm(_this, "search_area2");
-    function requiredFieldValidator(value) {
-      console.log(value)
-      if (value == null || value == undefined || !value.length) {
-        return { valid: false, msg: "This is a required field" };
-      } else {
-        return { valid: true, msg: null };
-      }
-    }
-
-    var columns = [
-      { name: "공통그룹코드", id: "grp_cd", field: "grp_cd", width: 200, cssClass: "tar", sortable: true, editor: Slick.Editors.Text, validator: requiredFieldValidator },
-      { name: "공통그룹명", id: "grp_cd_nm", field: "grp_cd_nm", width: 200, cssClass: "tar", sortable: true, editor: Slick.Editors.Text, validator: requiredFieldValidator },
-      { name: "사용여부", id: "use_yn", field: "use_yn", width: 200, cssClass: "tar", sortable: true, editor: Slick.Editors.Text, validator: requiredFieldValidator },
-      { name: "정렬", id: "ord", field: "ord", width: 200, cssClass: "tar", sortable: true, editor: Slick.Editors.Text, validator: requiredFieldValidator },
-      { name: "비고", id: "rmk", field: "rmk", width: 200, cssClass: "tac", sortable: true, editor: Slick.Editors.Text },
-      { name: "등록일", id: "crt_dtm", field: "crt_dtm", width: 200, cssClass: "tac", sortable: true },
-      { name: "수정일", id: "updt_dtm", field: "updt_dtm", width: 200, cssClass: "tac", sortable: true }
-    ];
-
-    var columns_detail = [
-      { name: "공통그룹코드", id: "grp_cd", field: "grp_cd", width: 200, cssClass: "tar", sortable: true, editor: Slick.Editors.Text, validator: requiredFieldValidator },
-      { name: "공통코드", id: "cd", field: "cd", width: 200, cssClass: "tar", sortable: true, editor: Slick.Editors.Text, validator: requiredFieldValidator },
-      { name: "공통코드명", id: "cd_nm", field: "cd_nm", width: 200, cssClass: "tar", sortable: true, editor: Slick.Editors.Text, validator: requiredFieldValidator },
-      { name: "사용여부", id: "use_yn", field: "use_yn", width: 200, cssClass: "tar", sortable: true, editor: Slick.Editors.Text, validator: requiredFieldValidator },
-      { name: "정렬", id: "ord", field: "ord", width: 200, cssClass: "tar", sortable: true, editor: Slick.Editors.Text, validator: requiredFieldValidator },
-      { name: "비고", id: "rmk", field: "rmk", width: 200, cssClass: "tac", sortable: true, editor: Slick.Editors.Text },
-      { name: "등록일", id: "crt_dtm", field: "crt_dtm", width: 200, cssClass: "tac", sortable: true },
-      { name: "수정일", id: "updt_dtm", field: "updt_dtm", width: 200, cssClass: "tac", sortable: true }
-    ];
-
-    var options = {
-      editable: true /*수정여부*/,
-      enableAddRow: true /*행 추가 여부*/,
-      autoEdit: true   /*셀에 커서를 두면 자동으로 수정모드 되는게 true, 더블 클릭해서 수정 박스가 뜨는게 false*/,
-      showNumber: true,
-      height: 500
-    };
-
-
-    var grid1 = new GridMngr(_this, "grid1", columns, options);
-    grid1.build();
-    var grid2 = new GridMngr(_this, "grid2", columns_detail, options);
-    grid2.build();
-
-
-    grid1.onClick(function (e, p_args, p_grid) {
-      var cell = p_grid.getCellFromEvent(e);
-      if (p_grid.getColumns()[cell.cell].id == "grp_cd") {
-        if (!p_grid.getEditorLock().commitCurrentEdit()) {
-          return;
-        }
-        var rd = grid1.dataView.getItem(cell.row);
-        if (rd == undefined) {
-          return;
-        }
-
-        if (rd.grp_cd == undefined) {
-          return;
-        }
-        var param = {
-          grp_cd: rd.grp_cd
-        }
-        grid2.LoadData("cd_mngr_data", param);
-        //data[cell.row].priority = states[data[cell.row].priority];
-        e.stopPropagation();
-      }
-    });
-
-    /*조회버튼*/
-    searchForm1.addEvent("grid1-search", "click", function (e) {
-      grid1.LoadData("cd_grp_mngr_data", null);
-    });
-
-    /*저장*/
-    searchForm1.addEvent("grid1-save", "click", function (e) {
-      if (grid1.Validate() == false) {
-        return;
-      }
-      var tmp_data = grid1.GetChagedData();
-      if (tmp_data.length <= 0) {
-        alert("변경된 데이터가 없습니다");
-        return;
-      }
-      if (!confirm("저장하시겠습니까?")) {
-        return;
-      }
-
-      var p_param = [];
-      for (var i = 0; i < tmp_data.length; i++) {
-        var tmp = tmp_data[i];
-        p_param.push({
-          grp_cd: tmp.grp_cd,
-          grp_cd_nm: tmp.grp_cd_nm,
-          use_yn: tmp.use_yn,
-          ord: tmp.ord,
-          rmk: tmp.rmk,
-        })
-      }
-
-      send_post_ajax("insert_cd_grp_mngr_data", p_param, function (data) {
-        searchForm1.get("grid1-search").trigger("click");
-      });
-    });
-    /*상세저장*/
-    searchForm2.addEvent("grid2-save", "click", function (e) {
-      if (grid2.Validate() == false) {
-        return;
-      }
-      var tmp_data = grid2.GetChagedData();
-      if (tmp_data.length <= 0) {
-        alert("변경된 데이터가 없습니다");
-        return;
-      }
-      if (!confirm("저장하시겠습니까?")) {
-        return;
-      }
-
-      var p_param = [];
-      for (var i = 0; i < tmp_data.length; i++) {
-        var tmp = tmp_data[i];
-        p_param.push({
-          grp_cd: tmp.grp_cd,
-          grp_nm: tmp.grp_nm,
-          cd: tmp.cd,
-          cd_nm: tmp.cd_nm,
-          use_yn: tmp.use_yn,
-          ord: tmp.ord,
-          rmk: tmp.rmk
-        })
-      }
-
-      send_post_ajax("insert_cd_mngr_data", p_param, function (data) {
-        searchForm1.get("grid1-search").trigger("click");
-      });
-    });
-    searchForm1.get("grid1-search").trigger("click");
-  }
-</script>
 <div id="<%=uuid %>">
-  <div name="search_area1">
+  <div name="cm_grp_cd_search_area">
     <table>
       <tr>
-        <td><input type="button" name="grid1-search" value="조회" /></td>
-        <td><input type="button" name="grid1-save" value="저장" /></td>
+        <td><input type="button" name="cm_grp_cd_search" value="조회" /></td>
+        <td><input type="button" name="cm_grp_cd_add_row" value="추가" /></td>
+        <td><input type="button" name="cm_grp_cd_save" value="저장" /></td>
+		<td><input type="button" name="cm_grp_cd_del" value="삭제" /></td>
       </tr>
     </table>
   </div>
 
-  <div name="grid1"></div>
+  <div name="grid_cm_grp_cd"></div>
 
   <hr />
-  <div name="search_area2">
+  <div name="cm_cd_search_area">
     <table>
       <tr>
-        <td><input type="button" name="grid2-save" value="저장" /></td>
+        <td><input type="button" name="cm_cd_add_row" value="추가" /></td>
+        <td><input type="button" name="cm_cd_save" value="저장" /></td>
+		<td><input type="button" name="cm_cd_del" value="삭제" /></td>
       </tr>
     </table>
   </div>
 
-  <div name="grid2"></div>
+  <div name="grid_cm_cd"></div>
 </div>
-<%@ include file="/WEB-INF/jsp/include/inner_bottom.jsp" %>
+<script>
+$(document).ready(function(){
+	var CM_0400 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+		CM_0400.init(function(p_param) {
+			var _this = CM_0400;
+			var cmGrpCdSearchForm 	= new FormMngr(_this, "cm_grp_cd_search_area");
+			var cmCdSearchForm = new FormMngr(_this, "cm_cd_search_area");
+
+			
+		
+			var columns = [ {
+				header : '공통그룹코드',
+				name : 'GRP_CD',
+				width : 200,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				validation : {
+					dataType : 'string', /*string ,number*/
+					required : true, /*  true 필수, false 필수아님  */
+				},
+				editor : 'text'
+			},
+			{
+				header : '공통그룹명',
+				name : 'GRP_NM',
+				width : 200,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				validation : {
+					dataType : 'string', /*string ,number*/
+					required : true, /*  true 필수, false 필수아님  */
+					unique : true
+				/*true 데이터가 중복되면 빨간색 표시 */
+				},
+				editor : 'text'
+			},
+
+			{
+				header : '사용여부',
+				name : 'USE_YN',
+				width : 100,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				editor : 'text'
+			}, {
+				header : '정렬',
+				name : 'ORD',
+				width : 200,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				validation : {
+					dataType : 'number', /*string ,number*/
+					required : true /*  true 필수, false 필수아님  */
+				},
+				editor : 'text'
+			}, {
+				header : '비고',
+				name : 'RMK',
+				width : 100,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				editor : 'text'
+			}, {
+				header : '생성일',
+				name : 'CRT_DTM',
+				renderer : {
+					type : datetimeRenderer,
+					options : {
+						format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+						,
+						source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+					}
+				},
+				width : 120,
+				sortable : true,
+				align : "center",
+				filter : {
+					type : 'date',
+					format : 'yyyy-MM-DD'
+				/*'yyyy-MM-dd HH:mm A'*/
+				/*실제 데이터랑 비교하나보다 .. 비교가 안된다. */
+				}
+			}, {
+				header : '수정일',
+				name : 'UPDT_DTM',
+				renderer : {
+					type : datetimeRenderer,
+					options : {
+						format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+						,
+						source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+					}
+				},
+				width : 120,
+				sortable : true,
+				align : "center"
+			/*,  filter: 'number'  숫자일경우 비교 */
+			} ];
+
+			const grid_cm_grp_cd = new TuiGridMngr(_this, 'grid_cm_grp_cd', columns, {
+				editable : true,
+				showRowStatus : true,
+				rowNum : true,
+				checkbox : true,
+				bodyHeight : 300 /*그리드 높이지정 */
+				,
+				showDummyRows : false
+			});
+			grid_cm_grp_cd.build();
+
+			grid_cm_grp_cd.on('click', (ev) => {
+				//ev.rowKey === 3 
+				//ev.columnName === 'col1'
+				if (ev.rowKey >=0) {
+					var row_data=grid_cm_grp_cd.getRow(ev.rowKey);
+					console.log(row_data);
+					//row_data.GRP_CD;
+					//공통코드상세조회
+					var param = {
+						brRq : 'IN_DATA',
+						brRs : 'OUT_DATA',
+						IN_DATA : [ { GRP_CD : row_data.GRP_CD } ]
+					}
+					grid_cm_cd.loadData('findCmCd', param, function(data) {
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+
+					});
+				}
+			});
+
+
+			
+			var columns = [ {
+				header : '공통그룹코드',
+				name : 'GRP_CD',
+				width : 200,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				validation : {
+					dataType : 'string', /*string ,number*/
+					required : true, /*  true 필수, false 필수아님  */
+				},
+				editor : 'text'
+			},
+			{
+				header : '공통코드',
+				name : 'CD',
+				width : 200,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				validation : {
+					dataType : 'string', /*string ,number*/
+					required : true, /*  true 필수, false 필수아님  */
+					unique : true
+				/*true 데이터가 중복되면 빨간색 표시 */
+				},
+				editor : 'text'
+			},
+			{
+				header : '공통코드명',
+				name : 'CD_NM',
+				width : 200,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				validation : {
+					dataType : 'string', /*string ,number*/
+					required : true, /*  true 필수, false 필수아님  */
+					unique : true
+				/*true 데이터가 중복되면 빨간색 표시 */
+				},
+				editor : 'text'
+			},
+
+			{
+				header : '사용여부',
+				name : 'USE_YN',
+				width : 100,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				editor : 'text'
+			}, {
+				header : '정렬',
+				name : 'ORD',
+				width : 200,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				validation : {
+					dataType : 'string', /*string ,number*/
+					required : true /*  true 필수, false 필수아님  */
+				},
+				editor : 'text'
+			}, {
+				header : '비고',
+				name : 'RMK',
+				width : 100,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
+				editor : 'text'
+			}, {
+				header : '생성일',
+				name : 'CRT_DTM',
+				renderer : {
+					type : datetimeRenderer,
+					options : {
+						format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+						,
+						source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+					}
+				},
+				width : 120,
+				sortable : true,
+				align : "center",
+				filter : {
+					type : 'date',
+					format : 'yyyy-MM-DD'
+				/*'yyyy-MM-dd HH:mm A'*/
+				/*실제 데이터랑 비교하나보다 .. 비교가 안된다. */
+				}
+			}, {
+				header : '수정일',
+				name : 'UPDT_DTM',
+				renderer : {
+					type : datetimeRenderer,
+					options : {
+						format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+						,
+						source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+					}
+				},
+				width : 120,
+				sortable : true,
+				align : "center"
+			/*,  filter: 'number'  숫자일경우 비교 */
+			} ];
+
+			const grid_cm_cd = new TuiGridMngr(_this, 'grid_cm_cd', columns, {
+				editable : true,
+				showRowStatus : true,
+				rowNum : true,
+				checkbox : true,
+				bodyHeight : 300 /*그리드 높이지정 */
+				,
+				showDummyRows : false
+			});
+			grid_cm_cd.build();
+
+
+			cmGrpCdSearchForm.addEvent("click","input[type=button]", function(el) {
+				switch (el.target.name) {
+				case 'cm_grp_cd_search':
+					var param = {
+						brRq : 'IN_DATA',
+						brRs : 'OUT_DATA',
+						IN_DATA : [ {} ]
+					}
+					grid_cm_grp_cd.loadData('findCmGrpCd', param, function(data) {
+						console.log(data);
+						grid_cm_cd.clear();
+						//gridLoadData에서 자동으로 로드됨..
+
+					});
+					break;
+				case 'cm_grp_cd_add_row':
+					Message.confirm('행을 추가하시겠습니까?', function() {
+						grid_cm_grp_cd.appendRow();
+					});
+					break;
+
+				case 'cm_grp_cd_save':
+					var data = grid_cm_grp_cd.getModifiedRows();
+					console.log(data);
+					var crt_cnt = data.createdRows.length;
+					var updt_cnt = data.updatedRows.length;
+
+					if ((crt_cnt + updt_cnt) == 0) {
+						Message.alert("저장할 내용이 존재하지 않습니다.");
+						return;
+					}
+					if (grid_cm_grp_cd.isValid() == false) {
+						grid_cm_grp_cd.validMsg();
+						return;
+					}
+
+					Message.confirm('공통그룹을 저장하시겠습니까?', function() {
+						var param = {
+							brRq : 'IN_DATA,UPDT_DATA',
+							brRs : '',
+							IN_DATA : data.createdRows,
+							UPDT_DATA : data.updatedRows
+						}
+						_this.send('saveCmGrpCd', param, function(data) {
+							if(data){
+								Message.alert('공통그룹이 저장되었습니다.', function() {
+									cmGrpCdSearchForm.get("cm_grp_cd_search").trigger("click");
+								});
+							}
+						});
+					});
+					break;
+				case "cm_grp_cd_del":
+					var data = grid_cm_grp.getCheckedData();
+					console.log(data);
+					if (data.length <= 0) {
+						Message.alert('선택된 항목이 없습니다.');
+						return;
+					}
+
+					Message.confirm('공통그룹을 삭제하시겠습니까?', function() {
+						var param = {
+							brRq : 'IN_DATA',
+							brRs : '',
+							IN_DATA : data
+						}
+						_this.send('rmCmGrpCd', param, function(data) {
+							if(data) {
+								Message.alert('공통그룹이 삭제되었습니다.', function() {
+									cmGrpSearchForm.get("cm_grp_cd_search").trigger("click");
+								});
+							}
+						});
+					});
+					//실제로 서버에서 삭제하는로직 필요.
+					//grid.removeRow(0); 
+					break;
+				}
+			});
+
+			cmCdSearchForm.addEvent("click","input[type=button]", function(el) {
+				switch (el.target.name) {
+				case 'cm_cd_add_row':
+					Message.confirm('행을 추가하시겠습니까?', function() {
+						grid_cm_cd.appendRow();
+					});
+					break;
+
+				case 'cm_cd_save':
+					var data = grid_cm_cd.getModifiedRows();
+					console.log(data);
+					var crt_cnt = data.createdRows.length;
+					var updt_cnt = data.updatedRows.length;
+
+					if ((crt_cnt + updt_cnt) == 0) {
+						Message.alert("공통코드 상세에 저장할 내용이 존재하지 않습니다.");
+						return;
+					}
+					if (grid_cm_cd.isValid() == false) {
+						grid_cm_cd.validMsg();
+						return;
+					}
+					
+					Message.confirm('공통코드상세를 저장하시겠습니까?', function() {
+						var param = {
+							brRq : 'IN_DATA,UPDT_DATA',
+							brRs : '',
+							IN_DATA : data.createdRows,
+							UPDT_DATA : data.updatedRows
+						}
+						_this.send('saveCmCd', param, function(data) {
+							if(data){
+								Message.alert('저장되었습니다.', function() {
+									cmCdSearchForm.get("cm_cd_search").trigger("click");
+								});
+							}
+						});
+					});
+					break;
+				case "cm_cd_del":
+					var data = grid_cm_cd.getCheckedData();
+					console.log(data);
+					if (data.length <= 0) {
+						Message.alert('선택된 항목이 없습니다.');
+						return;
+					}
+					Message.confirm('코드상세를 삭제하시겠습니까?', function() {
+						var param = {
+							brRq : 'IN_DATA',
+							brRs : '',
+							IN_DATA : data
+						}
+						_this.send('rmCmCd', param, function(data) {
+							if(data) {
+								Message.alert('삭제되었습니다.', function() {
+									cmCdSearchForm.get("cm_cd_search").trigger("click");
+								});
+							}
+						});
+					});
+					//실제로 서버에서 삭제하는로직 필요.
+					//grid.removeRow(0); 
+					break;
+				}
+			});
+			cmGrpCdSearchForm.get("cm_grp_cd_search").trigger("click");
+		});
+	});
+</script>
+<%@ include file="/WEB-INF/jsp/include/inner_bottom.jsp"%>

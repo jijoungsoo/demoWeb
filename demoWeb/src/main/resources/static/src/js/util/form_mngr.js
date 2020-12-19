@@ -35,11 +35,18 @@ class FormMngr {
         <td><input type="button" name="save" value="저장" /></td>
         <td><input type="button" name="del" value="삭제" /></td>
     */
-    addEvent(event_name,func){
+    addEvent(event_name,el_sel,func){
     	console.log(this);
     	var w=document.getElementById(this.getUUID());
+    	/*
     	if(w.querySelectorAll("input[type=button]")){
 			w.querySelectorAll("input[type=button]").forEach(function(el){
+					el.addEventListener(event_name, func);	
+			});
+    	}
+    	*/
+    	if(w.querySelectorAll(el_sel)){
+			w.querySelectorAll(el_sel).forEach(function(el){
 					el.addEventListener(event_name, func);	
 			});
     	}
