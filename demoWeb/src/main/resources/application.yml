@@ -2,6 +2,18 @@ server.port: 8090
 spring.mvc.view.prefix: /WEB-INF/jsp/
 spring.mvc.view.suffix: .jsp
 
+####HTML 한글깨짐을 고칠수가 없었다.
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8
+spring.mandatory-file-encoding: UTF-8
+####HTML 한글깨짐을 고칠수가 없었다.
+      
 spring:
   redis:
     host: localhost
@@ -12,7 +24,7 @@ spring:
       namespace: spring:session
   profiles:
     active: dev      
-      
+       
 server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초
 
 logging:

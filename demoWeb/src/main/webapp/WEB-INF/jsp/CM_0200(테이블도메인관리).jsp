@@ -4,17 +4,7 @@
 	String uuid = (String) request.getAttribute("uuid");
 %>
 <div id="<%=uuid%>">
-  <div name="search_area">
-    <table>
-      <tr>
-        <td><input type="button" name="search" value="조회" /></td>
-        <td><input type="button" name="add_row" value="추가" /></td>
-        <td><input type="button" name="save" value="저장" /></td>
-        <td><input type="button" name="del" value="삭제" /></td>
-      </tr>
-    </table>
-  </div>
-  <div name="grid"></div>
+  <%@ include file="/WEB-INF/jsp/CM_0200(테이블도메인관리).html" %>
 </div>
 <script>
 $(document).ready(function(){

@@ -3,7 +3,9 @@
 <%	String pgmId = (String) request.getAttribute("pgmId");
 	String uuid = (String) request.getAttribute("uuid");
 %>
+<div id="<%=uuid%>">
 <%@ include file="/WEB-INF/jsp/CM_0100(프로그램관리).html" %>
+</div>
 <script>
 $(document).ready(function(){
 	var CM_0100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
