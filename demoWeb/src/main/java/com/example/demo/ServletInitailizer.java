@@ -26,6 +26,7 @@ public class ServletInitailizer extends SpringBootServletInitializer {
                 JspPropertyGroup jspPropertyGroup = new JspPropertyGroup();
                 jspPropertyGroup.addUrlPattern("*.jsp");
                 jspPropertyGroup.addUrlPattern("*.html");   //이걸로 HTML을 JSP처럼 할수있었다. 한글도 안깨지고
+                                                            //include 동적 문제로 html을 사용하지 않고  ui.jsp라고 사용하는 거로 했다.
                 jspPropertyGroup.setPageEncoding("UTF-8");
                 //jspPropertyGroup.setScriptingInvalid("true");
                 //jspPropertyGroup.setTrimWhitespace("true");

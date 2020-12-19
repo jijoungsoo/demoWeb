@@ -1,11 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/jsp/include/inner_top.jsp" %>
 <%	String pgmId = (String) request.getAttribute("pgmId");
 	String uuid = (String) request.getAttribute("uuid");
 %>
-<div id="<%=uuid%>">
-<%@ include file="/WEB-INF/jsp/CM_0100(프로그램관리).html" %>
-</div>
 <script>
 $(document).ready(function(){
 	var CM_0100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
@@ -218,5 +213,3 @@ $(document).ready(function(){
 });
 
 </script>
-<!--하단에 공통으로 스크립트를 넣을 것이 필요하다.-->
-<%@ include file="/WEB-INF/jsp/include/inner_bottom.jsp" %>

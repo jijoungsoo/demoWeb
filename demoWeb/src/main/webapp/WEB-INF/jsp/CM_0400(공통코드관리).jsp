@@ -1,37 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ include file="/WEB-INF/jsp/include/inner_top.jsp"%>
 <%
     String pgmId = (String) request.getAttribute("pgmId");
-String uuid = (String) request.getAttribute("uuid");
+	String uuid = (String) request.getAttribute("uuid");
 %>
-<div id="<%=uuid %>">
-  <div name="cm_grp_cd_search_area">
-    <table>
-      <tr>
-        <td><input type="button" name="cm_grp_cd_search" value="조회" /></td>
-        <td><input type="button" name="cm_grp_cd_add_row" value="추가" /></td>
-        <td><input type="button" name="cm_grp_cd_save" value="저장" /></td>
-		<td><input type="button" name="cm_grp_cd_del" value="삭제" /></td>
-      </tr>
-    </table>
-  </div>
-
-  <div name="grid_cm_grp_cd"></div>
-
-  <hr />
-  <div name="cm_cd_search_area">
-    <table>
-      <tr>
-        <td><input type="button" name="cm_cd_add_row" value="추가" /></td>
-        <td><input type="button" name="cm_cd_save" value="저장" /></td>
-		<td><input type="button" name="cm_cd_del" value="삭제" /></td>
-      </tr>
-    </table>
-  </div>
-
-  <div name="grid_cm_cd"></div>
-</div>
 <script>
 $(document).ready(function(){
 	var CM_0400 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
@@ -495,4 +465,3 @@ $(document).ready(function(){
 		});
 	});
 </script>
-<%@ include file="/WEB-INF/jsp/include/inner_bottom.jsp"%>

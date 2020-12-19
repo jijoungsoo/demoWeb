@@ -25,19 +25,35 @@ import com.example.demo.service.MainPageService;
 public class MainPageController {
 	  @Autowired
 	  private MainPageService mps;
+	  
+	@CacheEvict(value = {"pgmLinkCache","pgmCache","menuCache"})
+	private String cacheRefresh() {
+        return "{OK}";
+    }
 	
 	@GetMapping("/")
     public String main(HttpSession session , Model model){
-		model.addAttribute("cmMenuList", mps.findMainMenu());
-		model.addAttribute("cmPgmList", mps.findMainPgm());
+	    ArrayList<HashMap<String, Object>>  cmMenuList = mps.findMainMenu();
+	    if(cmMenuList==null) {
+	        this.cacheRefresh();
+	        cmMenuList = mps.findMainMenu();
+        }
+	    ArrayList<HashMap<String, Object>>  cmPgmList = mps.findMainPgm();
+	    //cacheRefresh()
+		model.addAttribute("cmMenuList", cmMenuList);
+		model.addAttribute("cmPgmList", cmPgmList);
 		return "index"; 
     }
 		
 	@PostMapping(path= "/page/{pageId}")
-	public String page(@PathVariable("pageId") String pageId
+	public String pagePost(@PathVariable("pageId") String pageId
 			, @RequestBody Map<String,String> hm
 			, Model model
 			){
+	    String uuid ="";
+	    if(hm.get("uuid")!=null) {
+	        uuid = hm.get("uuid").toString();
+	    }
 		
 		//pageId를 가지고 하는 것도 문제가 있다.
 		//pageId를 가지고 PgmLink를 가져오도록 해야한다.
@@ -48,8 +64,27 @@ public class MainPageController {
 		HashMap<String, String> cmPgmLink=mps.findPgmList();
 		String pgmLink = cmPgmLink.get(pageId);
 		model.addAttribute("pgmId", pageId);
+		model.addAttribute("pgmLink", pgmLink);
 		model.addAttribute("uuid", hm.get("uuid").toString());
-		return pgmLink; 
+		return "pageRouter"; 
+    }
+	
+	@GetMapping(path= "/page/{pageId}")
+    public String pageGet(@PathVariable("pageId") String pageId
+            , Model model
+            ){
+        String uuid ="";
+   
+        //pageId를 가지고 하는 것도 문제가 있다.
+        //pageId를 가지고 PgmLink를 가져오도록 해야한다.
+        //login 페이지 가져올때 pgmList를 가져오니가 그걸 cache에 넣자.
+        System.out.println(pageId);
+        
+        HashMap<String, String> cmPgmLink=mps.findPgmList();
+        String pgmLink = cmPgmLink.get(pageId);
+        model.addAttribute("pgmId", pageId);
+        model.addAttribute("pgmLink", pgmLink);
+        return "pageRouter"; 
     }
 	
 	

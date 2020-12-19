@@ -4,14 +4,14 @@
 %>
 <script>
 $(document).ready(function(){
-	var CM_0300 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
-		CM_0300.init(function(p_param) {
-			var _this = CM_0300;
+	var CM_0600 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+		CM_0600.init(function(p_param) {
+			var _this = CM_0600;
 			var searchForm = new FormMngr(_this, "search_area");
 			var columns = [ {
-				header : '메뉴코드',
-				name : 'MENU_CD',
-				width : 200,
+				header : '시퀀스명',
+				name : 'SEQ_NM',
+				width : 300,
 				resizable : false,
 				sortable : true,
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -29,8 +29,8 @@ $(document).ready(function(){
 				editor : 'text'
 			},
 			{
-				header : '메뉴명',
-				name : 'MENU_NM',
+				header : '시퀀스값',
+				name : 'SEQ_NO',
 				width : 200,
 				sortable : true,
 				align : "center",
@@ -50,8 +50,8 @@ $(document).ready(function(){
 			},
 
 			{
-				header : '부모메뉴코드',
-				name : 'PRNT_MENU_CD',
+				header : '테이블명',
+				name : 'TB_NM',
 				width : 100,
 				sortable : true,
 				align : "center",
@@ -65,8 +65,8 @@ $(document).ready(function(){
 			},
 
 			{
-				header : '첫번째정렬',
-				name : 'FST_ORD',
+				header : '컬러명',
+				name : 'COL_NM',
 				width : 200,
 				sortable : true,
 				align : "center",
@@ -82,9 +82,9 @@ $(document).ready(function(){
 				},
 				editor : 'text'
 			}, {
-				header : '두번째정렬',
-				name : 'SED_ORD',
-				width : 200,
+				header : '초기값',
+				name : 'INIT_VAL',
+				width : 100,
 				sortable : true,
 				align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -99,8 +99,8 @@ $(document).ready(function(){
 				},
 				editor : 'text'
 			}, {
-				header : '프로그램',
-				name : 'PGM_ID',
+				header : '증가값',
+				name : 'ALLOCATION_SIZE',
 				width : 100,
 				resizable : false,
 				sortable : true,
@@ -110,27 +110,6 @@ $(document).ready(function(){
 					showApplyBtn : true,
 					showClearBtn : true
 				}, 
-				editor : 'text'
-			}, {
-				header : '종류',
-				name : 'MENU_KIND',
-				width : 100,
-				resizable : false,
-				sortable : true,
-				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-				editor : 'text'
-			}, {
-				header : '비고',
-				name : 'RMK',
-				width : 100,
-				sortable : true,
-				align : "center",
-				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-				filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-				}, /*text, number, select, date 4가지가 있다.*/
 				editor : 'text'
 			}, {
 				header : '생성일',
@@ -188,7 +167,7 @@ $(document).ready(function(){
 						brRs : 'OUT_DATA',
 						IN_DATA : [ {} ]
 					}
-					grid.loadData('findMenu', param, function(data) {
+					grid.loadData('findCmSeq', param, function(data) {
 						console.log(data);
 						//gridLoadData에서 자동으로 로드됨..
 
@@ -214,45 +193,15 @@ $(document).ready(function(){
 						grid.validMsg();
 						return;
 					}
-					var in_data = [];
-					for (var i = 0; i < crt_cnt; i++) {
-						var row = data.createdRows[i];
-						in_data.push({
-							MENU_CD : row.MENU_CD,
-							MENU_NM : row.MENU_NM,
-							PRNT_MENU_CD : row.PRNT_MENU_CD,
-							FST_ORD : row.FST_ORD,
-							SED_ORD : row.SED_ORD,
-							PGM_ID : row.PGM_ID,
-							MENU_KIND : row.MENU_KIND,
-							RMK : row.RMK
-
-						});
-					}
-
-					var updt_data = [];
-					for (var i = 0; i < updt_cnt; i++) {
-						var row = data.updatedRows[i];
-						updt_data.push({
-							MENU_CD : row.MENU_CD,
-							MENU_NM : row.MENU_NM,
-							PRNT_MENU_CD : row.PRNT_MENU_CD,
-							FST_ORD : row.FST_ORD,
-							SED_ORD : row.SED_ORD,
-							PGM_ID : row.PGM_ID,
-							MENU_KIND : row.MENU_KIND,
-							RMK : row.RMK
-						});
-					}
-
+				
 					Message.confirm('저장하시겠습니까?', function() {
 						var param = {
 							brRq : 'IN_DATA,UPDT_DATA',
 							brRs : '',
-							IN_DATA : in_data,
-							UPDT_DATA : updt_data
+							IN_DATA : data.createdRows,
+							UPDT_DATA : data.updatedRows
 						}
-						_this.send('saveMenu', param, function(data) {
+						_this.send('saveCmSeq', param, function(data) {
 							Message.alert('저장되었습니다.', function() {
 								searchForm.get("search").trigger("click");
 							});
@@ -266,27 +215,19 @@ $(document).ready(function(){
 						Message.alert('선택된 항목이 없습니다.');
 						return;
 					}
-					var in_data = [];
-					for (var i = 0; i < data.length; i++) {
-						var row = data[i];
-						in_data.push({
-							MENU_CD : row.MENU_CD
-						});
-					}
+					
 					Message.confirm('삭제하시겠습니까?', function() {
 						var param = {
 							brRq : 'IN_DATA',
 							brRs : '',
-							IN_DATA : in_data
+							IN_DATA : data
 						}
-						_this.send('rmMenu', param, function(data) {
+						_this.send('rmCmSeq', param, function(data) {
 							Message.alert('삭제되었습니다.', function() {
 								searchForm.get("search").trigger("click");
 							});
 						});
 					});
-					//실제로 서버에서 삭제하는로직 필요.
-					//grid.removeRow(0); 
 					break;
 				}
 			});
