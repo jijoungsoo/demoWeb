@@ -16,6 +16,7 @@ import java.util.Collections;
 @Component
 public class ServletInitailizer extends SpringBootServletInitializer {
 
+    /*https://parinote.tistory.com/30  참고페이지 !!!! */
     @Bean
     public ConfigurableServletWebServerFactory configurableServletWebServerFactory ( ) {
         return new TomcatServletWebServerFactory() {
