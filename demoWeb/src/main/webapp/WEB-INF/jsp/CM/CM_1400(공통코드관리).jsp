@@ -4,9 +4,9 @@
 %>
 <script>
 $(document).ready(function(){
-	var CM_0400 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
-		CM_0400.init(function(p_param) {
-			var _this = CM_0400;
+	var CM_1400 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+		CM_1400.init(function(p_param) {
+			var _this = CM_1400;
 			var cmGrpCdSearchForm 	= new FormMngr(_this, "cm_grp_cd_search_area");
 			var cmCdSearchForm = new FormMngr(_this, "cm_cd_search_area");
 
@@ -63,7 +63,16 @@ $(document).ready(function(){
 					showApplyBtn : true,
 					showClearBtn : true
 				}, /*text, number, select, date 4가지가 있다.*/
-				editor : 'text'
+				formatter: 'listItemText',
+				editor: {
+		            type: 'select',
+		            options: {
+		              listItems: [
+		                { text: 'Y', value: 'Y' },
+		                { text: 'N', value: 'N' }
+		              ]
+		            }
+				}
 			}, {
 				header : '정렬',
 				name : 'ORD',
@@ -97,15 +106,7 @@ $(document).ready(function(){
 			}, {
 				header : '생성일',
 				name : 'CRT_DTM',
-				renderer : {
-					type : datetimeRenderer,
-					options : {
-						format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
-						,
-						source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
-					}
-				},
-				width : 120,
+				width : 140,
 				sortable : true,
 				align : "center",
 				filter : {
@@ -117,15 +118,7 @@ $(document).ready(function(){
 			}, {
 				header : '수정일',
 				name : 'UPDT_DTM',
-				renderer : {
-					type : datetimeRenderer,
-					options : {
-						format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
-						,
-						source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
-					}
-				},
-				width : 120,
+				width : 140,
 				sortable : true,
 				align : "center"
 			/*,  filter: 'number'  숫자일경우 비교 */
@@ -236,7 +229,16 @@ $(document).ready(function(){
 					showApplyBtn : true,
 					showClearBtn : true
 				}, /*text, number, select, date 4가지가 있다.*/
-				editor : 'text'
+				formatter: 'listItemText',
+				editor: {
+		            type: 'select',
+		            options: {
+		              listItems: [
+		                { text: 'Y', value: 'Y' },
+		                { text: 'N', value: 'N' }
+		              ]
+		            }
+				}
 			}, {
 				header : '정렬',
 				name : 'ORD',
@@ -250,7 +252,7 @@ $(document).ready(function(){
 					showClearBtn : true
 				}, /*text, number, select, date 4가지가 있다.*/
 				validation : {
-					dataType : 'string', /*string ,number*/
+					dataType : 'number', /*string ,number*/
 					required : true /*  true 필수, false 필수아님  */
 				},
 				editor : 'text'
@@ -261,24 +263,11 @@ $(document).ready(function(){
 				sortable : true,
 				align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-				filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-				}, /*text, number, select, date 4가지가 있다.*/
 				editor : 'text'
 			}, {
 				header : '생성일',
 				name : 'CRT_DTM',
-				renderer : {
-					type : datetimeRenderer,
-					options : {
-						format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
-						,
-						source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
-					}
-				},
-				width : 120,
+				width : 140,
 				sortable : true,
 				align : "center",
 				filter : {
@@ -290,15 +279,7 @@ $(document).ready(function(){
 			}, {
 				header : '수정일',
 				name : 'UPDT_DTM',
-				renderer : {
-					type : datetimeRenderer,
-					options : {
-						format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
-						,
-						source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
-					}
-				},
-				width : 120,
+				width : 140,
 				sortable : true,
 				align : "center"
 			/*,  filter: 'number'  숫자일경우 비교 */

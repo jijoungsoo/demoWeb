@@ -22,10 +22,12 @@ body {
   height: calc(100% - 50px);
   */
   height: 100%;
-  width: calc(100% - 200px);
+  /*width: calc(100% - 200px);*/
+  /*left: 200px;*/
+  width: 100%;
   position:absolute;
   top: 0;
-  left: 200px;
+  
   /*
   box-shadow: -3px 0px 9px 0px rgba( 0, 0, 0, 0.4 );
   */
@@ -35,14 +37,17 @@ body {
 /*로그인 박스*/
 .login {
   background: #083d72;
-  position: absolute;
+  /*border:solid 1px red;*/
   width: 200px;
   height:60px;
   top:0px;
   left:0; 
   color:#fff;
-  padding: 2px 20px 2px 20px;
+  padding: 0px 0px 0px 0px;
   line-height:14px;
+  display:table;
+  float:left;
+  text-align:center;
 }
 
 .login label{

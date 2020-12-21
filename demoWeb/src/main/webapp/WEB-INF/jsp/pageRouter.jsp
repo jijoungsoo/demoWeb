@@ -2,6 +2,7 @@
 <%@ include file="/WEB-INF/jsp/include/inner_top.jsp" %>
 <%	String pgmId = (String) request.getAttribute("pgmId");
 	String uuid = (String) request.getAttribute("uuid");
+	String dirLink = (String) request.getAttribute("dirLink");
 	String pgmLink = (String) request.getAttribute("pgmLink");
 %>
 <%
@@ -22,14 +23,16 @@
 //html 확장자를 빼버리고 ui.jsp로 파일명을 바꾸자.!!
 %>
 <div id="<%=uuid%>">
-	<jsp:include page="/WEB-INF/jsp/${pgmLink}.ui.jsp" flush="true" >
+	<jsp:include page="/WEB-INF/jsp/${dirLink}/${pgmLink}.ui.jsp" flush="true" >
 	  <jsp:param name="pgmId" value="<%=pgmId%>"/>
 	  <jsp:param name="uuid" value="<%=uuid%>"/>
+	  <jsp:param name="dirLink" value="<%=dirLink%>"/>
 	  <jsp:param name="pgmLink" value="<%=pgmLink%>"/>
 	</jsp:include>
-	<jsp:include page="/WEB-INF/jsp/${pgmLink}.jsp" flush="true" >
+	<jsp:include page="/WEB-INF/jsp/${dirLink}/${pgmLink}.jsp" flush="true" >
 	  <jsp:param name="pgmId" value="<%=pgmId%>"/>
 	  <jsp:param name="uuid" value="<%=uuid%>"/>
+	  <jsp:param name="dirLink" value="<%=dirLink%>"/>
 	  <jsp:param name="pgmLink" value="<%=pgmLink%>"/>
 	</jsp:include>
 </div>

@@ -49,29 +49,11 @@ public class MainPageService {
 			
 			HashMap<String,Object> IN_DS = new HashMap<String,Object>();
 			IN_DS.put("brRq","");
-			IN_DS.put("brRs","OUT_DATA,OUT_CHILD_DATA");
+			IN_DS.put("brRs","OUT_DATA");
 			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-			String jsonOutString = goRestS.callAPI("findMainMenu", jsonInString);
+			String jsonOutString = goRestS.callAPI("findMainMenu2", jsonInString);
 			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
-			
 			OUT_DATA= outDs.get("OUT_DATA");
-			ArrayList<HashMap<String,Object>> OUT_CHILD_DATA= outDs.get("OUT_CHILD_DATA");
-			log.info("OUT_DATA.size()=>"+OUT_DATA.size());
-			log.info("OUT_CHILD_DATA.size()=>"+OUT_CHILD_DATA.size());
-			
-			for(int i=0;i<OUT_DATA.size();i++) {
-				HashMap<String,Object> OUT_DATA_ROW = OUT_DATA.get(i);
-				ArrayList<HashMap<String,Object>> childAl = new ArrayList<HashMap<String,Object>>(); 
-				OUT_DATA_ROW.put("child", childAl);
-				for(int j=0;j<OUT_CHILD_DATA.size();j++) {
-					HashMap<String,Object> OUT_CHILD_DATA_ROW  = OUT_CHILD_DATA.get(j);
-					String prnt_menu_cd =OUT_CHILD_DATA.get(j).get("prnt_menu_cd").toString();
-					String menu_cd = OUT_DATA_ROW.get("menu_cd").toString();
-					if(prnt_menu_cd.equals(menu_cd)) {
-						childAl.add(OUT_CHILD_DATA_ROW);
-					}
-				}
-			}
 		} catch (BizException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -107,13 +89,13 @@ public class MainPageService {
 	    
     //@CachePut(value = "pgmLinkCache", key = "T(com.dveamer.sample.KeyGen).generate(#pgmId)")
 	@Cacheable(value = "pgmLinkCache")
-    public HashMap<String, String> findPgmList(){
-        HashMap<String, String> pgmLink =new HashMap<String, String>();
+    public HashMap<String, Object> findPgmList(){
+        HashMap<String, Object> pgmLink =new HashMap<String, Object>();
         
         ArrayList<HashMap<String, Object>> cmPgmList=this.findMainPgm();
         for(int i=0;i<cmPgmList.size();i++) {
             HashMap<String, Object> tmp =cmPgmList.get(i);
-            pgmLink.put(tmp.get("PGM_ID").toString(), tmp.get("PGM_LINK").toString());
+            pgmLink.put(tmp.get("PGM_ID").toString(), tmp);
         }
         return pgmLink;
     }

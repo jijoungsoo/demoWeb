@@ -3,9 +3,9 @@
 %>
 <script>
 $(document).ready(function(){
-	var CM_0200 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
-	CM_0200.init(function(p_param) {
-		var _this = CM_0200;
+	var CM_1200 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	CM_1200.init(function(p_param) {
+		var _this = CM_1200;
 		var searchForm = new FormMngr(_this, "search_area");
 		var columns= [
 	       {
@@ -71,14 +71,7 @@ $(document).ready(function(){
 	         {
 	             header: '생성일',
 	             name: 'CRT_DTM',
-	             renderer: {
-	                 type: datetimeRenderer
-                	 ,options: {
-                		 format:  'yyyy-MM-DD HH:mm'  /*YYYYMMDDHHmmss    이게 풀양식이다.*/
-                         ,source: 'YYYYMMDDHHmmss'  /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
-                       }
-	             },
-	             width: 120,
+	             width: 140,
 	             sortable: true,
 	             align: "center",
 	             filter: {
@@ -91,14 +84,7 @@ $(document).ready(function(){
 	         {
 	             header: '수정일',
 	             name: 'UPDT_DTM',
-	 			renderer: {
-	              	type: datetimeRenderer
-	              	 ,options: {
-                		 format: 'yyyy-MM-DD HH:mm'  /*YYYYMMDDHHmmss    이게 풀양식이다.*/
-                         ,source: 'YYYYMMDDHHmmss'  /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
-                       }
-	 			},
-	             width: 120,
+	             width: 140,
 	             sortable: true,
 	             align: "center" 
 	             /*,  filter: 'number'  숫자일경우 비교 */            

@@ -2,87 +2,218 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page import="java.util.*"%>
-<sec:authentication var="user" property="principal" />
-<sec:authorize access="isAuthenticated()">
-<login class="login" style="color:000">
-	
-	${user.username}<br />
-	<%//  ${user.email}<br />   %>
-	${user.userNm}<br />
 
+
+<style>
+    html, body {
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+</style>
+
+
+<div data-ax5layout="ax1" data-config='{layout:"dock-panel"}' style="height: 100%;border:0px solid #ccc;background-color:#212529">
+    <div data-dock-panel='{dock:"top", split:true, height: 60, maxHeight: 300}'>
+        <div style="height:100%;">
+			<div style="width:100%;height:60px;">
+				          	<sec:authentication var="user" property="principal" />
+							<sec:authorize access="isAuthenticated()">
+							<login class="login" style="color:000">
+								<br />
+								${user.username}(${user.userNm})님
+								
+							</login>
+							</sec:authorize>			
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="float:left;width: calc(100% - 200px);">
+				  <div class="container-fluid">
+				    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+				      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<%						ArrayList<HashMap<String, Object>> cmMenuList = (ArrayList<HashMap<String, Object>>) request.getAttribute("cmMenuList");
+						for (int i = 0; i < cmMenuList.size(); i++) {
+							HashMap<String,Object> hm = cmMenuList.get(i); %>
+				        <li class="nav-item">
+				          <a class="nav-link" href="javascript:void top_menu_click('MENU_<%=hm.get("MENU_CD") %>')"><%=hm.get("MENU_NM") %></a>
+				        </li>
+<%						}	%>
+				        
+				      </ul>
+				      <form class="d-flex">
+				        <input type="button" name="logOut" id="logOut" value="로그아웃"  class="btn btn-outline-success" />
+						<input type="button" name="clearCache" id="clearCache" value="캐시갱신" class="btn btn-outline-success"  />
+						<script>
+						$( "#logOut" ).on( "click", function( event ) {
+							Message.confirm("로그아웃하시겠습니까?",function(data){
+								//WebSecurityConfiguration 여기에 로그아웃 주소
+								var param =null;
+								AjaxMngr.send_post_ajax('/user/logout', param, function(data2){
+									//console.log(data2);
+									Message.alert("로그아웃되었습니다.",function(){
+										window.location.href="/login";
+									});
+									  
+								});
+							}); 
+						});
+						$( "#clearCache" ).on( "click", function( event ) {
+							Message.confirm("캐시를 갱신하겠습니까?",function(data){
+								//WebSecurityConfiguration 여기에 로그아웃 주소
+								var param =null;
+								AjaxMngr.send_post_ajax('/refresh', param, function(data2){
+									//console.log(data2);
+									Message.alert("캐시가 갱신되었습니다.",function(){
+										window.location.href="/";
+									});
+									  
+								});
+							}); 
+						});
+						</script>
+				      </form>
+				    </div>
+				  </div>
+				</nav>
+			</div>
+        </div>
+    </div>
+    <div data-dock-panel='{dock:"left", split:true, width: 200, minWidth: 50}' style="background-color:#212529">
+    	<div id="lnb">
+    	<% 
+		    /*이 메뉴로 가자!! 고고 
+		    https://webclub.tistory.com/368
+		    */
 		
-	<input type="submit" name="logOut" id="logOut" value="로그아웃" />
-	<input type="submit" name="clearCache" id="clearCache" value="캐시갱신" />
-	
-	<script>
-	$( "#logOut" ).on( "click", function( event ) {
-		Message.confirm("로그아웃하시겠습니까?",function(data){
-			//WebSecurityConfiguration 여기에 로그아웃 주소
-			var param =null;
-			AjaxMngr.send_post_ajax('/user/logout', param, function(data2){
-				//console.log(data2);
-				Message.alert("로그아웃되었습니다.",function(){
-					window.location.href="/login";
-				});
-				  
-			});
-		}); 
-	});
-	$( "#clearCache" ).on( "click", function( event ) {
-		Message.confirm("캐시를 갱신하겠습니까?",function(data){
-			//WebSecurityConfiguration 여기에 로그아웃 주소
-			var param =null;
-			AjaxMngr.send_post_ajax('/refresh', param, function(data2){
-				//console.log(data2);
-				Message.alert("캐시가 갱신되었습니다.",function(){
-					window.location.href="/";
-				});
-				  
-			});
-		}); 
-	});
-	</script>
-</login>
-</sec:authorize>
-<%
-/*https://www.w3schools.com/howto/howto_js_filter_dropdown.asp
-  https://w3schoolsrus.github.io/howto/howto_js_filter_dropdown.html
-  SEARCH 기능이 있는 메뉴 만들기!!
-*/
-
-
-%>
-<nav class="sidebar-nav">
-	<ul class="metismenu" id="menu1">
-<%
-	ArrayList<HashMap<String, Object>> cmMenuList = (ArrayList<HashMap<String, Object>>) request.getAttribute("cmMenuList");
-	for (int i = 0; i < cmMenuList.size(); i++) {
-		HashMap<String,Object> hm = cmMenuList.get(i);
-%>
-		<li  <% if (i==0) { %> class="mm-active" <% } %> >
-			<a class="has-arrow" href="#" aria-expanded="true">
-				<span class="fa fa-fw fa-github fa-lg"></span>
-				<%=hm.get("menu_nm") %>
-			</a>
-			<ul class="mm-collapse">
-				<% 	ArrayList<HashMap<String, Object>> subMenuList= (ArrayList<HashMap<String, Object>>) hm.get("child");
-				 	for(int j=0;j<subMenuList.size();j++){
-				 		HashMap<String,Object> subHm = subMenuList.get(j);
+		
+			for (int i = 0; i < cmMenuList.size(); i++) {
+				HashMap<String,Object> ONE_DATA_ROW = cmMenuList.get(i);
+		%>
+		<ul style="margin:0">
+			<li ><a href="#none"  id="MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>" ><%=ONE_DATA_ROW.get("MENU_NM") %></a>
+			<ul >
+				<%   ArrayList<HashMap<String, Object>> TWO_DATA = (ArrayList<HashMap<String, Object>>)ONE_DATA_ROW.get("child");
+					 for(int j=0;j<TWO_DATA.size();j++){
+					     HashMap<String, Object> TWO_DATA_ROW = TWO_DATA.get(j);
 				%>
-				<li><a href="#" 
-						class="js-open-target" 
-						data-target="<%=subHm.get("pgm_id") %>" 
-						data-title="<%=subHm.get("menu_nm") %>"><%=subHm.get("menu_nm") %></a>
+				<li>
+					<a href="#" >
+						<%=TWO_DATA_ROW.get("MENU_NM") %>
+					</a>
+					<ul>
+						<%   ArrayList<HashMap<String, Object>> THREE_DATA = (ArrayList<HashMap<String, Object>>)TWO_DATA_ROW.get("child");
+							 for(int k=0;k<THREE_DATA.size();k++){
+							     HashMap<String, Object> THREE_DATA_ROW = THREE_DATA.get(k);
+						%>
+						<li class="THREE_DATA"><a href="#" 
+								class="js-open-target" 
+								data-target="<%=THREE_DATA_ROW.get("PGM_ID") %>" 
+								data-title="<%=THREE_DATA_ROW.get("MENU_NM") %>"><%=THREE_DATA_ROW.get("MENU_NM") %></a>
+						</li>
+						<%	} %>
+					</ul>
 				</li>
-				<% 		
-				 	}
-				%>
+				<%	}	%>
 			</ul>
-		</li>
-<%	} %>		
-	</ul>
-</nav>
-<div id="layoutContainer"></div>
+			</li>
+		</ul> 
+		<%	} %>
+		
+		</div>
+		<div id="footer_search">
+			<ul id="footer_menu"></ul>
+			<input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
+		</div>	
+    </div>
+    <div data-dock-panel='{dock:"center"}' style="padding: 0px;background-color:#222222">
+		<div id="layoutContainer"></div>
+
+    </div>
+</div>
+<style>
+  #lnb li {list-style: none;} a {} 
+  #lnb {position: relative;width: 200px;} 
+  #lnb > ul {
+  maring:0 !important; 
+  padding:0;
+  } 
+  #lnb > ul > li { 
+  maring:0 ; 
+  padding:0;
+  list-style: none;
+  } 
+  #lnb > ul > li > a {
+  display: block;
+  padding: 10px 0 10px 14px;				/*1뎁스 패딩*/
+  color: #f8f9fa; 
+  font-size: 120%;
+  background:#000;							/*1단뎁스 색깔*/
+  } 
+    #lnb > ul > li a:hover {
+    color: #f8f9fa;
+    background-color: #0b7285;
+    } 
+    #lnb > ul > li ul {
+    	/*display: none;*/
+  		padding:0;
+  		margin:0;
+    }
+    #lnb > ul > li > ul > li > a {			/*2단뎁스 색깔*/
+    display: block;
+    padding: 0 0 14px 14px;				/*2단뎁스 패딩*/
+    color: #inherit; 
+    font-size: 110%;
+    background: #f5f2ec ;
+    } #lnb > ul > li > ul > li > a {		/*2단뎁스 색깔*/
+    color: #f8f9fa; 
+    background-color: #212529; 
+    } 
+    #lnb > ul > li > ul li ul {
+    display: block;
+    padding-bottom: 8px;
+    background-color: #343a40;
+    } 
+    #lnb > ul > li > ul li li a {			/*3단뎁스 색깔*/
+    display: block;
+    padding: 0 0 10px 14px; 
+    color: rgba(255,255,255,.75); 
+    background-color: #343a40;
+    } 
+    #lnb > ul > li > ul > li li a:hover {	/*3단뎁스 색깔*/
+    color: #f8f9fa;
+    background-color: #0b7285;
+    } 
+    
+    /*출처: https://juve.tistory.com/157 [Forza Juve!]*/
+    #footer_search { 
+    position: fixed; 
+    bottom: 0; 
+    width: 200px; 
+    }
+    
+  #footer_search > ul {
+  maring:0 !important; 
+  padding:0;
+  } 
+  #footer_search > ul > li { 
+  maring:0 ; 
+  padding:0;
+  list-style: none;
+  } 
+/*하단 박스 */
+  #footer_search > ul > li > a {
+  display: block;
+  padding: 0 0 10px 14px;				/*1뎁스 패딩*/
+  color: #f8f9fa; 
+  background:#6610f2;							/*1단뎁스 색깔*/
+  } 
+  #footer_search > ul > li a:hover {
+    color: #f8f9fa;
+    background-color: #6610f2;
+  } 
+  
+  ol, ul {
+    margin-bottom: 0;
+  }
+</style>
 <script>
 $(function () {
 	/*골든레이아웃을 하단으로 내림*/
@@ -197,7 +328,7 @@ $(function () {
 });
 
 document.addEventListener("DOMContentLoaded", function (event) {
-	new MetisMenu('#menu1',{expand:true/*한번 열리면 모두 펼치기 */});
+	//new MetisMenu('#menu1',{expand:true/*한번 열리면 모두 펼치기 */});
 });
 $(window).resize(function () {
 	//console.log(myLayout);
@@ -205,5 +336,87 @@ $(window).resize(function () {
 	//console.log($(window).height());
 	myLayout.updateSize($(window).width()-200, $(window).height());
 });
-</script>	
+    jQuery(document.body).ready(function () {
+        jQuery('[data-ax5layout="ax1"]').ax5layout({
+            onResize: function () {
+                //console.log(this.$target);
+                //console.log(this);
+            }
+        });
+        return;
+    });
+
+
+
+/*출처: https://webclub.tistory.com/368 [Web Club]*/
+
+(function($){ 
+var lnbUI  = { 
+		click : function (target, speed) { 
+			var _self = this, 
+			$target = $(target); 
+			_self.speed = speed || 300; 
+
+			$target.each(function(){ 
+				if(findChildren($(this))) {
+					return; 
+				} 
+			}); 
+
+			function findChildren(obj) { 
+				return obj.find('> ul').length > 0; 
+			} 
+
+			$target.on('click','a', function(e){ 
+				e.stopPropagation(); 
+				var $this = $(this), 
+				$depthTarget = $this.next(), 
+				$siblings = $this.parent().siblings(); 
+
+				$this.parent('li').find('ul li')
+				$siblings.removeClass('on'); $siblings.find('ul').slideUp(250); 
+				if($depthTarget.css('display') == 'none') { 
+					$depthTarget.slideDown(_self.speed); 
+				} else { 
+					$depthTarget.slideUp(_self.speed);
+				} 
+			}) 
+		}, 
+	}; // Call lnbUI 
+	$(function(){ 
+		lnbUI.click('#lnb li', 300) 
+	}); 
+}(jQuery));
+
+function top_menu_click(el_id){
+	$('#'+el_id).trigger('click');
+}
+/*https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_search_menu*  */
+function myFunction() {
+  var input, filter, ul, li, a, i;
+  input = document.getElementById("mySearch");
+  filter = input.value.toUpperCase();
+  ul = document.getElementById("lnb");
+  li = ul.querySelectorAll('[class="THREE_DATA"]');
+  //li = ul.getElementsByTagName("li");
+
+  footer_menu  = document.getElementById("footer_menu");
+  //console.log(li)
+   
+  if(filter==''){
+	  $("#footer_menu").empty();  //전체를 지우고
+	  return;
+  }
+  $("#footer_menu").empty();  //전체를 지우고
+  for (i = 0; i < li.length; i++) {
+    a = li[i].getElementsByTagName("a")[0];
+    if(a!=undefined){
+    	if (a.innerHTML.toUpperCase().indexOf(filter) > -1) {
+     	    var tmp = li[i].cloneNode(true);
+     		footer_menu.appendChild(tmp)
+     	}
+    }
+  }
+}
+</script>
 <%@ include file="/WEB-INF/jsp/include/bottom.jsp" %>

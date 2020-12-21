@@ -3,9 +3,9 @@
 %>
 <script>
 $(document).ready(function(){
-	var CM_0100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
-	CM_0100.init(function(p_param) {
-		var _this = CM_0100;
+	var CM_1100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	CM_1100.init(function(p_param) {
+		var _this = CM_1100;
 		var searchForm = new FormMngr(_this, "search_area");
 		var columns= [
 	       {
@@ -61,6 +61,21 @@ $(document).ready(function(){
 	             }
 	         },
 	         {
+		           header: '폴더링크',
+		           name: 'DIR_LINK',
+		           editor: 'text',
+		           filter: {
+		               type: 'text',
+		               operator: 'OR'
+		             },    /*자동검색*/
+		           validation: {
+		               dataType: 'string',  /*string ,number*/
+		               required: true,    /*  true 필수, false 필수아님  */
+		               unique: false   /*true 데이터가 중복되면 빨간색 표시 */
+		             },
+		           
+		         },
+	         {
 	           header: '프로그램링크',
 	           name: 'PGM_LINK',
 	           editor: 'text',
@@ -83,37 +98,16 @@ $(document).ready(function(){
 	         {
 	             header: '생성일',
 	             name: 'CRT_DTM',
-	             renderer: {
-	                 type: datetimeRenderer
-                	 ,options: {
-                		 format:  'yyyy-MM-DD HH:mm'  /*YYYYMMDDHHmmss    이게 풀양식이다.*/
-                         ,source: 'YYYYMMDDHHmmss'  /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
-                       }
-	             },
-	             width: 120,
+	             width: 140,
 	             sortable: true,
-	             align: "center",
-	             filter: {
-	                 type: 'date',
-	                 format: 'yyyy-MM-DD'
-	                     /*'yyyy-MM-dd HH:mm A'*/
-	                     /*실제 데이터랑 비교하나보다 .. 비교가 안된다. */
-	               }
+	             align: "center"
 	         },
 	         {
 	             header: '수정일',
 	             name: 'UPDT_DTM',
-	 			renderer: {
-	              	type: datetimeRenderer
-	              	 ,options: {
-                		 format: 'yyyy-MM-DD HH:mm'  /*YYYYMMDDHHmmss    이게 풀양식이다.*/
-                         ,source: 'YYYYMMDDHHmmss'  /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
-                       }
-	 			},
-	             width: 120,
+	             width: 140,
 	             sortable: true,
 	             align: "center" 
-	             /*,  filter: 'number'  숫자일경우 비교 */            
 	         }
 	    ];
 	

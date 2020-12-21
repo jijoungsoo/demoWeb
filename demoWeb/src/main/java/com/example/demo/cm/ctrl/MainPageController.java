@@ -34,12 +34,7 @@ public class MainPageController {
 	@GetMapping("/")
     public String main(HttpSession session , Model model){
 	    ArrayList<HashMap<String, Object>>  cmMenuList = mps.findMainMenu();
-	    if(cmMenuList==null) {
-	        this.cacheRefresh();
-	        cmMenuList = mps.findMainMenu();
-        }
 	    ArrayList<HashMap<String, Object>>  cmPgmList = mps.findMainPgm();
-	    //cacheRefresh()
 		model.addAttribute("cmMenuList", cmMenuList);
 		model.addAttribute("cmPgmList", cmPgmList);
 		return "index"; 
@@ -61,10 +56,11 @@ public class MainPageController {
 		System.out.println(pageId);
 		System.out.println(hm.get("uuid"));
 		
-		HashMap<String, String> cmPgmLink=mps.findPgmList();
-		String pgmLink = cmPgmLink.get(pageId);
+		HashMap<String, Object> cmPgmLink=mps.findPgmList();
+		HashMap<String, Object> pgmLinkMap = (HashMap<String, Object>) cmPgmLink.get(pageId);
 		model.addAttribute("pgmId", pageId);
-		model.addAttribute("pgmLink", pgmLink);
+		model.addAttribute("dirLink", pgmLinkMap.get("DIR_LINK"));
+        model.addAttribute("pgmLink", pgmLinkMap.get("PGM_LINK"));
 		model.addAttribute("uuid", hm.get("uuid").toString());
 		return "pageRouter"; 
     }
@@ -80,10 +76,11 @@ public class MainPageController {
         //login 페이지 가져올때 pgmList를 가져오니가 그걸 cache에 넣자.
         System.out.println(pageId);
         
-        HashMap<String, String> cmPgmLink=mps.findPgmList();
-        String pgmLink = cmPgmLink.get(pageId);
+        HashMap<String, Object> cmPgmLink=mps.findPgmList();
+        HashMap<String, Object> pgmLinkMap = (HashMap<String, Object>) cmPgmLink.get(pageId);
         model.addAttribute("pgmId", pageId);
-        model.addAttribute("pgmLink", pgmLink);
+        model.addAttribute("dirLink", pgmLinkMap.get("DIR_LINK"));
+        model.addAttribute("pgmLink", pgmLinkMap.get("PGM_LINK"));
         return "pageRouter"; 
     }
 	

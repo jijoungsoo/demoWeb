@@ -1,6 +1,7 @@
 class FormMngr {
 	constructor(pgm_mngr, area_name) {
 		var _this = this;
+		this.arr_select2=[];
 		this.area_name = area_name;
 		this.uuid = pgm_mngr.getId();
 		this.area_name = area_name;
@@ -31,11 +32,13 @@ class FormMngr {
 	initBinder() {
 		//var myModel = new ax5.ui.binder();
 		//이것 너무  axjs붙어있다.
-		
+
 		//es6에 proxy를 이용하자.
 		//https://www.sitepoint.com/es6-proxies/
 		//https://ko.javascript.info/proxy
 		//https://www.youtube.com/watch?v=h1RCCJtQoUs&t=463s   [이거 강추]
+		/** 이거 동작 잘되는 select2 라이브러리로 사용했더니 동작이 안된다.
+		    axjs binder로 바꾸니까 동작한다.
 		let c = this;
 		const createState = (stateObj) => {
 			return new Proxy(stateObj, {
@@ -68,29 +71,57 @@ class FormMngr {
 				state[name] = element.value;
 			})
 		});
+		*/
+		this.target_data = {};
+		let tgt_data = this.target_data;
+		var w = this.container_area[0];
+		console.log(w.querySelectorAll('[data-model]').length)
+		for (var i = 0; i < w.querySelectorAll('[data-model]').length; i++) {
+			var el = w.querySelectorAll('[data-model]')[i];
+			tgt_data[el.name] = '';
+		}
+		this.myModel = new ax5.ui.binder();
+		this.myModel.setModel(tgt_data, this.container_area);
+		
 	}
 	getData() {
-		return this.target_data;
+		return this.myModel.get()
+		//return this.target_data;
 	}
 	setDataAll(data_all) {
+		console.log(data_all);
+		console.log(this.container_area);
+		this.myModel.setModel(data_all, this.container_area);
+		
+		//select2 combobox 갱신
+		this.reSyncSelect2();
+		/*
 		console.log(this.state);
 		for (const [key, value] of Object.entries(data_all)) {
 			this.setData(key, value);
 		}
+		*/
 	}
 	setData(prop, value) {
+		this.myModel.set(prop, value);
+		/*
 		if (this.state.hasOwnProperty(prop)) {
 			this.state[prop] = value;
 		} else {
 			//alert(prop+'속성은 존재하지 않습니다.');
 			console.log(prop + '속성은 존재하지 않습니다.')
-		}
+		}*/
 	}
-	clearData(){
-		//proxy를 가지고 값들을 "" 처리한다.
+	clearData() {
 		for (const [key, value] of Object.entries(this.target_data)) {
 			this.setData(key, "");
 		}
+		//proxy를 가지고 값들을 "" 처리한다.
+		/*
+		for (const [key, value] of Object.entries(this.target_data)) {
+			this.setData(key, "");
+		}
+		*/
 	}
 
 
@@ -119,4 +150,20 @@ class FormMngr {
 			});
 		}
 	}
+	addSelect2(element_name,arr_data){
+		if(this.arr_select2.indexOf(element_name)<0){	//배열에 없으면 추가
+			this.arr_select2.push(element_name);
+			this.get(element_name).select2({
+				data: arr_data
+			});
+		}
+		
+	}
+	reSyncSelect2(){
+		for(var i=0;i<this.arr_select2.length;i++){
+			var tmp =this.arr_select2[i];
+			this.get(tmp).select2({}); 갱신;
+		}
+	}
+
 }

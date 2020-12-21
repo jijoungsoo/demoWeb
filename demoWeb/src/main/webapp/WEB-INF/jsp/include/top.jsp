@@ -56,6 +56,7 @@
 	<script src="/src/js/util/form_mngr.js"></script>
 	<script src="/src/js/util/app_mngr.js"></script>
 	<script src="/src/js/util/pgmPage_mngr.js"></script>
+	<script src="/src/js/util/pjtutil_mngr.js"></script>
 
 	<link rel="stylesheet" type="text/css" href="/src/common.css" />
 	<link rel="stylesheet" type="text/css" href="/src/test.css" />
@@ -109,5 +110,13 @@
 <!-- select2 셀렉트 박스 라이브러리 !! 고고  https://select2.org/getting-started/installation  -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+
+<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-binder/master/dist/ax5binder.min.js"></script>
+
+
+<!-- layout 설정 -->
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-layout/master/dist/ax5layout.css" />
+<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-layout/master/dist/ax5layout.min.js"></script>
 	</head>
 <body>
