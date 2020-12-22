@@ -43,8 +43,7 @@
 
 	
 	<!--좌측 메뉴-->
-	<link rel="stylesheet" type="text/css" href="src/metismenujs/metismenujs.css" />
-	<script src="src/metismenujs/metismenujs.js"></script>
+
 
 	<script src="/src/js/util/popup_mngr.js"></script>
 	<script src="/src/js/util/ajax_mngr.js"></script>
@@ -119,4 +118,13 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-layout/master/dist/ax5layout.css" />
 <script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-layout/master/dist/ax5layout.min.js"></script>
 	</head>
+	
+	
+	<link rel="stylesheet" href="https://unpkg.com/metismenujs/dist/metismenujs.min.css">
+<!-- OR -->  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/metismenujs/dist/metismenujs.min.css">
+
+<script src="https://unpkg.com/metismenujs/dist/metismenujs.min.js"></script>
+<!-- OR -->
+<script src="https://cdn.jsdelivr.net/npm/metismenujs/dist/metismenujs.min.js"></script>
 <body>

@@ -77,50 +77,43 @@
         </div>
     </div>
     <div data-dock-panel='{dock:"left", split:true, width: 200, minWidth: 50}' style="background-color:#212529">
-    	<div id="lnb">
-    	<% 
-		    /*이 메뉴로 가자!! 고고 
-		    https://webclub.tistory.com/368
-		    */
-		
-		
-			for (int i = 0; i < cmMenuList.size(); i++) {
-				HashMap<String,Object> ONE_DATA_ROW = cmMenuList.get(i);
+    
+    
+<nav class="sidebar-nav" id="left_menu">
+<% 	for (int i = 0; i < cmMenuList.size(); i++) {
+		HashMap<String,Object> ONE_DATA_ROW = cmMenuList.get(i);
+%>    
+	<ul class="metismenu"  id="MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>">
+		<%   ArrayList<HashMap<String, Object>> TWO_DATA = (ArrayList<HashMap<String, Object>>)ONE_DATA_ROW.get("child");
+			 for(int j=0;j<TWO_DATA.size();j++){
+			     HashMap<String, Object> TWO_DATA_ROW = TWO_DATA.get(j);
 		%>
-		<ul style="margin:0">
-			<li ><a href="#none"  id="MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>" ><%=ONE_DATA_ROW.get("MENU_NM") %></a>
-			<ul >
-				<%   ArrayList<HashMap<String, Object>> TWO_DATA = (ArrayList<HashMap<String, Object>>)ONE_DATA_ROW.get("child");
-					 for(int j=0;j<TWO_DATA.size();j++){
-					     HashMap<String, Object> TWO_DATA_ROW = TWO_DATA.get(j);
+		<li  <% if (j==0) { %> class="mm-active" <% } %> >
+			<a class="has-arrow" href="#" aria-expanded="true">
+				<span class="fa fa-fw fa-github fa-lg"></span>
+				<%=TWO_DATA_ROW.get("MENU_NM") %>
+			</a>
+			<ul class="mm-collapse">
+				<%   ArrayList<HashMap<String, Object>> THREE_DATA = (ArrayList<HashMap<String, Object>>)TWO_DATA_ROW.get("child");
+					for(int k=0;k<THREE_DATA.size();k++){
+						HashMap<String, Object> THREE_DATA_ROW = THREE_DATA.get(k);
 				%>
-				<li>
-					<a href="#" >
-						<%=TWO_DATA_ROW.get("MENU_NM") %>
-					</a>
-					<ul>
-						<%   ArrayList<HashMap<String, Object>> THREE_DATA = (ArrayList<HashMap<String, Object>>)TWO_DATA_ROW.get("child");
-							 for(int k=0;k<THREE_DATA.size();k++){
-							     HashMap<String, Object> THREE_DATA_ROW = THREE_DATA.get(k);
-						%>
-						<li class="THREE_DATA"><a href="#" 
-								class="js-open-target" 
-								data-target="<%=THREE_DATA_ROW.get("PGM_ID") %>" 
-								data-title="<%=THREE_DATA_ROW.get("MENU_NM") %>"><%=THREE_DATA_ROW.get("MENU_NM") %></a>
-						</li>
-						<%	} %>
-					</ul>
+				<li class="THREE_DATA"><a href="#" 
+						class="js-open-target" 
+						data-target="<%=THREE_DATA_ROW.get("PGM_ID") %>" 
+						data-title="<%=THREE_DATA_ROW.get("MENU_NM") %>"><%=THREE_DATA_ROW.get("MENU_NM") %></a>
 				</li>
-				<%	}	%>
+				<%	} %>
 			</ul>
-			</li>
-		</ul> 
-		<%	} %>
-		
-		</div>
+		</li>
+		<%	}	%>	
+	</ul>
+<%	} %>	
+</nav>
+
 		<div id="footer_search">
 			<ul id="footer_menu"></ul>
-			<input type="text" id="mySearch" onkeyup="myFunction()" placeholder="Search.." title="Type in a category">
+			<input type="text" id="mySearch" onkeyup="func_menu_search()" placeholder="Search.." title="Type in a category">
 		</div>	
     </div>
     <div data-dock-panel='{dock:"center"}' style="padding: 0px;background-color:#222222">
@@ -129,59 +122,6 @@
     </div>
 </div>
 <style>
-  #lnb li {list-style: none;} a {} 
-  #lnb {position: relative;width: 200px;} 
-  #lnb > ul {
-  maring:0 !important; 
-  padding:0;
-  } 
-  #lnb > ul > li { 
-  maring:0 ; 
-  padding:0;
-  list-style: none;
-  } 
-  #lnb > ul > li > a {
-  display: block;
-  padding: 10px 0 10px 14px;				/*1뎁스 패딩*/
-  color: #f8f9fa; 
-  font-size: 120%;
-  background:#000;							/*1단뎁스 색깔*/
-  } 
-    #lnb > ul > li a:hover {
-    color: #f8f9fa;
-    background-color: #0b7285;
-    } 
-    #lnb > ul > li ul {
-    	/*display: none;*/
-  		padding:0;
-  		margin:0;
-    }
-    #lnb > ul > li > ul > li > a {			/*2단뎁스 색깔*/
-    display: block;
-    padding: 0 0 14px 14px;				/*2단뎁스 패딩*/
-    color: #inherit; 
-    font-size: 110%;
-    background: #f5f2ec ;
-    } #lnb > ul > li > ul > li > a {		/*2단뎁스 색깔*/
-    color: #f8f9fa; 
-    background-color: #212529; 
-    } 
-    #lnb > ul > li > ul li ul {
-    display: block;
-    padding-bottom: 8px;
-    background-color: #343a40;
-    } 
-    #lnb > ul > li > ul li li a {			/*3단뎁스 색깔*/
-    display: block;
-    padding: 0 0 10px 14px; 
-    color: rgba(255,255,255,.75); 
-    background-color: #343a40;
-    } 
-    #lnb > ul > li > ul > li li a:hover {	/*3단뎁스 색깔*/
-    color: #f8f9fa;
-    background-color: #0b7285;
-    } 
-    
     /*출처: https://juve.tistory.com/157 [Forza Juve!]*/
     #footer_search { 
     position: fixed; 
@@ -327,9 +267,27 @@ $(function () {
 	});
 });
 
+var menu_root =[];
 document.addEventListener("DOMContentLoaded", function (event) {
-	//new MetisMenu('#menu1',{expand:true/*한번 열리면 모두 펼치기 */});
+<% 	for (int i = 0; i < cmMenuList.size(); i++) {
+	HashMap<String,Object> ONE_DATA_ROW = cmMenuList.get(i); 
+%>
+	new MetisMenu('#MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>',{expand:true/*한번 열리면 모두 펼치기 */});
+	menu_root.push('MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>');
+	<% if(i==0) { %>
+	$('#MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>').show();  //첫번째 것은 display='block'
+	<% } else { %>
+	$('#MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>').hide();	//그다음것은 display='none'
+	<% } %>
+<%	}	%>
 });
+function top_menu_click(menu_id){
+	for(var i=0;i<menu_root.length;i++){
+		$('#'+menu_root[i]).hide();	
+	}
+	$('#'+menu_id).show();
+}
+
 $(window).resize(function () {
 	//console.log(myLayout);
 	//console.log($(window).width());
@@ -347,56 +305,12 @@ $(window).resize(function () {
     });
 
 
-
-/*출처: https://webclub.tistory.com/368 [Web Club]*/
-
-(function($){ 
-var lnbUI  = { 
-		click : function (target, speed) { 
-			var _self = this, 
-			$target = $(target); 
-			_self.speed = speed || 300; 
-
-			$target.each(function(){ 
-				if(findChildren($(this))) {
-					return; 
-				} 
-			}); 
-
-			function findChildren(obj) { 
-				return obj.find('> ul').length > 0; 
-			} 
-
-			$target.on('click','a', function(e){ 
-				e.stopPropagation(); 
-				var $this = $(this), 
-				$depthTarget = $this.next(), 
-				$siblings = $this.parent().siblings(); 
-
-				$this.parent('li').find('ul li')
-				$siblings.removeClass('on'); $siblings.find('ul').slideUp(250); 
-				if($depthTarget.css('display') == 'none') { 
-					$depthTarget.slideDown(_self.speed); 
-				} else { 
-					$depthTarget.slideUp(_self.speed);
-				} 
-			}) 
-		}, 
-	}; // Call lnbUI 
-	$(function(){ 
-		lnbUI.click('#lnb li', 300) 
-	}); 
-}(jQuery));
-
-function top_menu_click(el_id){
-	$('#'+el_id).trigger('click');
-}
 /*https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_search_menu*  */
-function myFunction() {
+function func_menu_search() {
   var input, filter, ul, li, a, i;
   input = document.getElementById("mySearch");
   filter = input.value.toUpperCase();
-  ul = document.getElementById("lnb");
+  ul = document.getElementById("left_menu");
   li = ul.querySelectorAll('[class="THREE_DATA"]');
   //li = ul.getElementsByTagName("li");
 
