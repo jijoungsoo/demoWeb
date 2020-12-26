@@ -8,7 +8,17 @@ $(document).ready(function(){
 		CM_1600.init(function(p_param) {
 			var _this = CM_1600;
 			var searchForm = new FormMngr(_this, "search_area");
-			var columns = [ {
+
+			const grid = new TuiGridMngr(_this, 'grid', {
+				editable : true,
+				showRowStatus : true,
+				rowNum : true,
+				checkbox : true,
+				bodyHeight : 700 /*그리드 높이지정 */
+				,
+				showDummyRows : false
+			},
+			[ {
 				header : '시퀀스명',
 				name : 'SEQ_NM',
 				width : 300,
@@ -146,17 +156,8 @@ $(document).ready(function(){
 				sortable : true,
 				align : "center"
 			/*,  filter: 'number'  숫자일경우 비교 */
-			} ];
-
-			const grid = new TuiGridMngr(_this, 'grid', columns, {
-				editable : true,
-				showRowStatus : true,
-				rowNum : true,
-				checkbox : true,
-				bodyHeight : 700 /*그리드 높이지정 */
-				,
-				showDummyRows : false
-			});
+			} ]
+			);
 			grid.build();
 
 			searchForm.addEvent("click","input[type=button]", function(el) {

@@ -34,7 +34,15 @@ public class MainPageController {
 	@GetMapping("/")
     public String main(HttpSession session , Model model){
 	    ArrayList<HashMap<String, Object>>  cmMenuList = mps.findMainMenu();
+	    if(cmMenuList==null) {
+	        cacheRefresh();
+	        cmMenuList = mps.findMainMenu();
+	    }
 	    ArrayList<HashMap<String, Object>>  cmPgmList = mps.findMainPgm();
+	    if(cmPgmList==null) {
+            cacheRefresh();
+            cmPgmList = mps.findMainPgm();
+        }
 		model.addAttribute("cmMenuList", cmMenuList);
 		model.addAttribute("cmPgmList", cmPgmList);
 		return "index"; 

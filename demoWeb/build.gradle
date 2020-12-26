@@ -59,6 +59,12 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
 	
+	/*스프링 상태 모니터링
+	/actuator  로 접근
+	 */
+	compile("org.springframework.boot:spring-boot-starter-actuator")
+	
+	
 }
 
 test {

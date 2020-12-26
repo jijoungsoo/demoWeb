@@ -8,10 +8,88 @@ $(document).ready(function(){
 		CM_1300.init(function(p_param) {
 			var _this = CM_1300;
 			var searchForm = new FormMngr(_this, "search_area");
-			var columns = [ {
+
+			//콤보박스 세팅
+			var grid_arr_data_pgm = []
+			var param ={
+					 brRq : 'IN_DATA'
+					,brRs : 'OUT_DATA'
+					,IN_DATA:[{}]
+				}
+			_this.send_sync('findPgm', param, function(data) {
+				if (data) {
+					console.log(data.OUT_DATA);
+					if(data.OUT_DATA){
+						for(var i =0;i<data.OUT_DATA.length;i++){
+							var tmp =data.OUT_DATA[i];
+							grid_arr_data_pgm.push({ value: tmp.PGM_ID , text: "["+tmp.PGM_ID+"]"+tmp.PGM_NM  })
+						}
+					}
+				}
+			});
+			console.log(grid_arr_data_pgm)
+			
+			const grid_tree = new TuiGridMngr(_this, 'grid_tree', {
+				rowNum : true,
+					bodyHeight : 500,
+					bodyHeight : 700,
+					showRowStatus : false,
+					treeColumnOptions : {
+						name : 'MENU_NM',
+						useCascadingCheckbox : false
+					}
+				}, [ {
+					header : '메뉴TREE',
+					name : 'MENU_NM',
+					width : 320
+				}, {
+					header : '메뉴코드',
+					name : 'MENU_CD',
+					width : 120
+				}, {
+					header : '프로그램ID',
+					name : 'PGM_ID',
+					width : 80
+				}, {
+					header : '정렬',
+					name : 'ORD',
+					width : 60,
+				}
+				]
+
+			);
+			grid_tree.build();
+
+
+		
+
+
+			const grid = new TuiGridMngr(_this, 'grid', {
+				editable : true,
+				showRowStatus : true,
+				rowNum : false,
+				checkbox : true,
+				bodyHeight : 700,
+				showDummyRows : false
+				 ,columnOptions: {
+			          resizable: true,
+			          frozenCount: 1,
+			          frozenBorderWidth: 2,
+			          minWidth: 20
+			        }
+			}, [
+				 {
+						header : '번호',
+						name : 'MENU_NO',
+						width : 50,
+						resizable : false,
+						sortable : true,
+						sortingType : 'desc' /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+					},
+				 {
 				header : '메뉴코드',
 				name : 'MENU_CD',
-				width : 200,
+				width : 100,
 				resizable : false,
 				sortable : true,
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -28,25 +106,25 @@ $(document).ready(function(){
 				},
 				editor : 'text'
 			}, {
-			header : '종류',
-			name : 'MENU_KIND',
-			width : 100,
-			resizable : false,
-			sortable : true,
-			sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-			editor : 'text',
-			align : 'center'
-			}, {
-				header : '레벨',
-				name : 'MENU_LVL',
-				width : 100,
+				header : '종류',
+				name : 'MENU_KIND',
+				width : 60,
 				resizable : false,
 				sortable : true,
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
 				editor : 'text',
 				align : 'center'
-				},  
-			{
+			}, {
+				header : 'LVL',
+				name : 'MENU_LVL',
+				width : 60,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				editor : 'text',
+				align : 'center'
+			}, {
+				
 				header : '메뉴명',
 				name : 'MENU_NM',
 				width : 200,
@@ -66,24 +144,8 @@ $(document).ready(function(){
 				},
 				editor : 'text'
 			},
-
 			{
-				header : '메뉴PATH',
-				name : 'MENU_PATH',
-				width : 300,
-				sortable : true,
-				align : "left",
-				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-				filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-				}, /*text, number, select, date 4가지가 있다.*/
-				editor : 'text'
-			},
-
-			{
-				header : '부모메뉴코드',
+				header : '부모메뉴',
 				name : 'PRNT_MENU_CD',
 				width : 100,
 				sortable : true,
@@ -95,28 +157,10 @@ $(document).ready(function(){
 					showClearBtn : true
 				}, /*text, number, select, date 4가지가 있다.*/
 				editor : 'text'
-			},
-			{
-				header : '첫번째정렬',
-				name : 'FST_ORD',
-				width : 200,
-				sortable : true,
-				align : "center",
-				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-				filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-				}, /*text, number, select, date 4가지가 있다.*/
-				validation : {
-					dataType : 'string', /*string ,number*/
-					required : true /*  true 필수, false 필수아님  */
-				},
-				editor : 'text'
 			}, {
-				header : '두번째정렬',
-				name : 'SED_ORD',
-				width : 200,
+				header : '정렬',
+				name : 'ORD',
+				width : 100,
 				sortable : true,
 				align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -127,13 +171,14 @@ $(document).ready(function(){
 				}, /*text, number, select, date 4가지가 있다.*/
 				validation : {
 					dataType : 'string', /*string ,number*/
-					required : true /*  true 필수, false 필수아님  */
+					required : true
+				/*  true 필수, false 필수아님  */
 				},
 				editor : 'text'
 			}, {
 				header : '프로그램',
 				name : 'PGM_ID',
-				width : 100,
+				width : 200,
 				resizable : false,
 				sortable : true,
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -141,9 +186,30 @@ $(document).ready(function(){
 					type : 'text',
 					showApplyBtn : true,
 					showClearBtn : true
-				}, 
+				},
+				formatter: 'listItemText',
+		           editor: {
+		               type: 'select',
+		               options: {
+		                 listItems: grid_arr_data_pgm
+		               }
+		             }
+				}, {
+
+				header : 'PATH',
+				name : 'MENU_PATH',
+				width : 300,
+				sortable : true,
+				align : "left",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, /*text, number, select, date 4가지가 있다.*/
 				editor : 'text'
 			}, {
+				
 
 				header : '비고',
 				name : 'RMK',
@@ -157,6 +223,7 @@ $(document).ready(function(){
 					showClearBtn : true
 				}, /*text, number, select, date 4가지가 있다.*/
 				editor : 'text'
+
 			}, {
 				header : '생성일',
 				name : 'CRT_DTM',
@@ -169,20 +236,10 @@ $(document).ready(function(){
 				width : 140,
 				sortable : true,
 				align : "center"
-			} ];
-
-			const grid = new TuiGridMngr(_this, 'grid', columns, {
-				editable : true,
-				showRowStatus : true,
-				rowNum : true,
-				checkbox : true,
-				bodyHeight : 700 /*그리드 높이지정 */
-				,
-				showDummyRows : false
-			});
+			} ]);
 			grid.build();
 
-			searchForm.addEvent("click","input[type=button]", function(el) {
+			searchForm.addEvent("click", "input[type=button]", function(el) {
 				switch (el.target.name) {
 				case 'search':
 					var param = {
@@ -190,15 +247,20 @@ $(document).ready(function(){
 						brRs : 'OUT_DATA',
 						IN_DATA : [ {} ]
 					}
-					grid.loadData('findMenu2', param, function(data) {
+					grid.loadData('findMenu', param, function(data) {
 						console.log(data);
 						//gridLoadData에서 자동으로 로드됨..
+
+					});
+					_this.send('findMenuRoot', param, function(data) {
+						console.log(data);
+						grid_tree.resetData(data.OUT_DATA);
 
 					});
 					break;
 				case 'add_row':
 					Message.confirm('행을 추가하시겠습니까?', function() {
-						grid.appendRow();
+						grid.appendRow({});
 					});
 					break;
 
@@ -216,7 +278,7 @@ $(document).ready(function(){
 						grid.validMsg();
 						return;
 					}
-				
+
 					Message.confirm('저장하시겠습니까?', function() {
 						var param = {
 							brRq : 'IN_DATA,UPDT_DATA',
@@ -226,11 +288,11 @@ $(document).ready(function(){
 						}
 						_this.send('saveMenu', param, function(data) {
 							console.log(data);
-							if(data){
+							if (data) {
 								Message.alert('저장되었습니다.', function() {
 									searchForm.get("search").trigger("click");
 								});
-							}							
+							}
 						});
 					});
 					break;
@@ -255,9 +317,11 @@ $(document).ready(function(){
 							IN_DATA : in_data
 						}
 						_this.send('rmMenu', param, function(data) {
-							Message.alert('삭제되었습니다.', function() {
-								searchForm.get("search").trigger("click");
-							});
+							if(data) {
+								Message.alert('삭제되었습니다.', function() {
+									searchForm.get("search").trigger("click");
+								});
+							}
 						});
 					});
 					//실제로 서버에서 삭제하는로직 필요.

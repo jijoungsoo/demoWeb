@@ -162,7 +162,7 @@ class FormMngr {
 	reSyncSelect2(){
 		for(var i=0;i<this.arr_select2.length;i++){
 			var tmp =this.arr_select2[i];
-			this.get(tmp).select2({}); 갱신;
+			this.get(tmp).select2({});
 		}
 	}
 

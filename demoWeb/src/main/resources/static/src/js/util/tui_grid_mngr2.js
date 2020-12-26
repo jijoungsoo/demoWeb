@@ -1,5 +1,5 @@
 class TuiGridMngr {
-  constructor(pgm_mngr, grid_name, p_options ,columns ) {
+  constructor(pgm_mngr, grid_name, columns, p_options) {
 		this.pgm_mngr=pgm_mngr;
       var basic_options = {
         editable: false
@@ -19,7 +19,6 @@ class TuiGridMngr {
         ,rowNum: false
         ,checkbox: false
         ,showDummyRows: true   /*높이만큼 비어있으면 비어있는 컨텐츠를 보여준다.*/
-       
       };
       this.options = $.extend(basic_options, p_options);
       var o_columns = [];
@@ -39,18 +38,14 @@ class TuiGridMngr {
           }
         }
       }
-      
-      if(this.options.rowNum==true || this.options.checkbox==true) {
-	      var arr_rowHeaders = new Array();
-	      if(this.options.rowNum==true) {
-	        arr_rowHeaders.push('rowNum');
-	      }
-	      if(this.options.checkbox==true) {
-	        arr_rowHeaders.push('checkbox');
-	      }
-	      this.options.rowHeaders=arr_rowHeaders;
-      } 
-      
+      var arr_rowHeaders = new Array();
+      if(this.options.rowNum==true) {
+        arr_rowHeaders.push('rowNum');
+      }
+      if(this.options.checkbox==true) {
+        arr_rowHeaders.push('checkbox');
+      }
+      this.options.rowHeaders=arr_rowHeaders;
 
 
       for (var i = 0; i < columns.length; i++) {
@@ -127,9 +122,7 @@ class TuiGridMngr {
 	});
     let grid=this.grid;    
     let options = this.options;
-    console.log('ddddddddddddddddddddddd');
-    ///..grid.clear();  저장하고 다시 loadData를 호출할때  grid.clear()에서 간헐적으로 에러나서 주석 
-    console.log('ccccccccccccccccccccc');
+    grid.clear();
     AjaxMngr.send_api_post_ajax(url, param, function (data) {
 
 	  console.log('param')
@@ -234,13 +227,10 @@ class TuiGridMngr {
     return;
     
   }
-  appendRow(row) {
+  appendRow() {
     //column 값을 읽어와서 하나짜리 row를 만들어야한다.
-    console.log(row)
     var t  = this.grid.getColumns();
     var tmp={};
-	tmp = $.extend(tmp, row);
-    console.log(tmp)
     this.grid.appendRow(tmp);
   }
   on(event_name,func){
@@ -252,17 +242,4 @@ class TuiGridMngr {
   clear(){
   	this.grid.clear();
   }
-  getSelectedRow() {
-  	var tmp =this.grid.getFocusedCell();
-  	if(tmp.rowKey==null){
-  		return null;
-  	}
-  	var tmp2 =this.grid.getRow(tmp.rowKey);
-  	console.log(tmp2);
-  	return tmp2; 
-  }
-  getRowCount(){
-  	return this.grid.getRowCount();
-  }
-  
 }

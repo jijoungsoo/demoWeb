@@ -11,7 +11,15 @@ $(document).ready(function(){
 			var searchForm = new FormMngr(_this, "search_area");
 			var userForm = new FormMngr(_this, "user_area");
 		    $('[data-ax5formatter]').ax5formatter();
-			var columns = [ {
+
+			const grid = new TuiGridMngr(_this, 'grid', {
+				editable : true,
+				showRowStatus : true,
+				rowNum : true,
+				checkbox : true,
+				bodyHeight: 300
+			},
+			[ {
 				header : '사용자번호',
 				name : 'USER_NO',
 				width : 100,
@@ -87,15 +95,8 @@ $(document).ready(function(){
 				width : 140,
 				sortable : true,
 				align : "center"
-			} ];
-
-			const grid = new TuiGridMngr(_this, 'grid', columns, {
-				editable : true,
-				showRowStatus : true,
-				rowNum : true,
-				checkbox : true,
-				bodyHeight: 300
-			});
+			} ]
+			);
 			grid.build();
 
 			grid.on('click', (ev) => {

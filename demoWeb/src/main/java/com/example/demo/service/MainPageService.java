@@ -51,7 +51,7 @@ public class MainPageService {
 			IN_DS.put("brRq","");
 			IN_DS.put("brRs","OUT_DATA");
 			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-			String jsonOutString = goRestS.callAPI("findMainMenu2", jsonInString);
+			String jsonOutString = goRestS.callAPI("findMainMenuRoot", jsonInString);
 			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
 			OUT_DATA= outDs.get("OUT_DATA");
 		} catch (BizException e) {

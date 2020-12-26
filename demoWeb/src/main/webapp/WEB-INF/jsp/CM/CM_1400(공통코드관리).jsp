@@ -9,10 +9,18 @@ $(document).ready(function(){
 			var _this = CM_1400;
 			var cmGrpCdSearchForm 	= new FormMngr(_this, "cm_grp_cd_search_area");
 			var cmCdSearchForm = new FormMngr(_this, "cm_cd_search_area");
+			cmCdSearchForm.get("cm_cd_search").hide();
 
-			
-		
-			var columns = [ {
+			const grid_cm_grp_cd = new TuiGridMngr(_this, 'grid_cm_grp_cd',  {
+				editable : true,
+				showRowStatus : true,
+				rowNum : true,
+				checkbox : true,
+				bodyHeight : 300 /*그리드 높이지정 */
+				,
+				showDummyRows : false
+			},
+			[ {
 				header : '공통그룹코드',
 				name : 'GRP_CD',
 				width : 200,
@@ -122,9 +130,21 @@ $(document).ready(function(){
 				sortable : true,
 				align : "center"
 			/*,  filter: 'number'  숫자일경우 비교 */
-			} ];
+			} ]
+			);
+			grid_cm_grp_cd.build();
 
-			const grid_cm_grp_cd = new TuiGridMngr(_this, 'grid_cm_grp_cd', columns, {
+			grid_cm_grp_cd.on('click', (ev) => {
+				//ev.rowKey === 3 
+				//ev.columnName === 'col1'
+				if (ev.rowKey >=0) {
+					//var row_data=grid_cm_grp_cd.getRow(ev.rowKey);
+					//console.log(row_data);
+					cmCdSearchForm.get("cm_cd_search").trigger("click");
+				}
+			});
+
+			const grid_cm_cd = new TuiGridMngr(_this, 'grid_cm_cd', {
 				editable : true,
 				showRowStatus : true,
 				rowNum : true,
@@ -132,33 +152,8 @@ $(document).ready(function(){
 				bodyHeight : 300 /*그리드 높이지정 */
 				,
 				showDummyRows : false
-			});
-			grid_cm_grp_cd.build();
-
-			grid_cm_grp_cd.on('click', (ev) => {
-				//ev.rowKey === 3 
-				//ev.columnName === 'col1'
-				if (ev.rowKey >=0) {
-					var row_data=grid_cm_grp_cd.getRow(ev.rowKey);
-					console.log(row_data);
-					//row_data.GRP_CD;
-					//공통코드상세조회
-					var param = {
-						brRq : 'IN_DATA',
-						brRs : 'OUT_DATA',
-						IN_DATA : [ { GRP_CD : row_data.GRP_CD } ]
-					}
-					grid_cm_cd.loadData('findCmCd', param, function(data) {
-						console.log(data);
-						//gridLoadData에서 자동으로 로드됨..
-
-					});
-				}
-			});
-
-
-			
-			var columns = [ {
+			},
+			[ {
 				header : '공통그룹코드',
 				name : 'GRP_CD',
 				width : 200,
@@ -283,17 +278,9 @@ $(document).ready(function(){
 				sortable : true,
 				align : "center"
 			/*,  filter: 'number'  숫자일경우 비교 */
-			} ];
+			} ]
 
-			const grid_cm_cd = new TuiGridMngr(_this, 'grid_cm_cd', columns, {
-				editable : true,
-				showRowStatus : true,
-				rowNum : true,
-				checkbox : true,
-				bodyHeight : 300 /*그리드 높이지정 */
-				,
-				showDummyRows : false
-			});
+			);
 			grid_cm_cd.build();
 
 
@@ -379,9 +366,36 @@ $(document).ready(function(){
 
 			cmCdSearchForm.addEvent("click","input[type=button]", function(el) {
 				switch (el.target.name) {
+				case 'cm_cd_search':
+					var row=grid_cm_grp_cd.getSelectedRow();
+					if(row==null){
+						Message.alert("상단공통코드를 선택해주세요.");
+						return;
+					}
+					//row_data.GRP_CD;
+					//공통코드상세조회
+					var param = {
+						brRq : 'IN_DATA',
+						brRs : 'OUT_DATA',
+						IN_DATA : [ { GRP_CD : row.GRP_CD } ]
+					}
+					grid_cm_cd.loadData('findCmCd', param, function(data) {
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+
+					});
+					
+					break;
 				case 'cm_cd_add_row':
 					Message.confirm('행을 추가하시겠습니까?', function() {
-						grid_cm_cd.appendRow();
+						var row=grid_cm_grp_cd.getSelectedRow();
+						if(row==null){
+							Message.alert("상단공통코드를 선택해주세요.");
+							return;
+						}
+						//무조건 상단공통코드를 클릭하면 하단에 그것에 대한 것이 새로 조회되므로 이렇게 하면 된다.
+						
+						grid_cm_cd.appendRow({ GRP_CD: row.GRP_CD });
 					});
 					break;
 

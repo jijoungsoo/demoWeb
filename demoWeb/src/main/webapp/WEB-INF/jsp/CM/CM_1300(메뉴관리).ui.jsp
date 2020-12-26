@@ -8,4 +8,14 @@
 		</tr>
 	</table>
 </div>
-<div name="grid"></div>
+<div>
+	<div style="float:left">
+		
+		<div name="grid_tree" style="width: 650px"></div>
+	</div>
+	<div  style="float:left">
+		<div name="grid" style="margin-left:20px;width:1200px"></div>
+	</div>
+</div>
+
+

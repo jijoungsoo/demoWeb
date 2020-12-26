@@ -191,6 +191,12 @@ class PgmPageMngr {
     	console.log('p_funtion=>'+p_funtion);
     	AjaxMngr.send_api_post_ajax(p_url, p_param, p_funtion);
     }
+    send_sync(p_url, p_param, p_funtion){
+    	console.log('p_url=>'+p_url);
+    	console.log('p_param=>'+p_param);
+    	console.log('p_funtion=>'+p_funtion);
+    	AjaxMngr.send_api_post_ajax_sync(p_url, p_param, p_funtion);
+    }
 }
 
 

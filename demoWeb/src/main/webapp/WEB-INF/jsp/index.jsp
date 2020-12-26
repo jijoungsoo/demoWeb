@@ -84,29 +84,67 @@
 		HashMap<String,Object> ONE_DATA_ROW = cmMenuList.get(i);
 %>    
 	<ul class="metismenu"  id="MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>">
-		<%   ArrayList<HashMap<String, Object>> TWO_DATA = (ArrayList<HashMap<String, Object>>)ONE_DATA_ROW.get("child");
-			 for(int j=0;j<TWO_DATA.size();j++){
-			     HashMap<String, Object> TWO_DATA_ROW = TWO_DATA.get(j);
-		%>
+	
+	
+	      <li>
+              <a class="has-arrow" href="#">
+				<span class="fa fa-fw fa-star"></span>
+                줄겨찾기
+              </a>
+              <ul>
+              <%
+              
+                //이걸구현하려면   캐싱을 쓰면 안되는구나...
+              %>
+                <li>
+                  <a href="https://github.com/onokumus/metisMenu">
+                    <span class="fa fa-fw fa-code-fork"></span> Fork
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/onokumus/metisMenu">
+                    <span class="fa fa-fw fa-star"></span> Star
+                  </a>
+                </li>
+                <li>
+                  <a href="https://github.com/onokumus/metisMenu/issues">
+                    <span class="fa fa-fw fa-exclamation-triangle"></span> Issues
+                  </a>
+                </li>
+              </ul>
+            </li>
+	
+	
+		<%   ArrayList<HashMap<String, Object>> TWO_DATA = (ArrayList<HashMap<String, Object>>)ONE_DATA_ROW.get("_children");
+			if(TWO_DATA!=null) {
+				for(int j=0;j<TWO_DATA.size();j++){
+				     HashMap<String, Object> TWO_DATA_ROW = TWO_DATA.get(j);
+			%>
 		<li  <% if (j==0) { %> class="mm-active" <% } %> >
 			<a class="has-arrow" href="#" aria-expanded="true">
-				<span class="fa fa-fw fa-github fa-lg"></span>
 				<%=TWO_DATA_ROW.get("MENU_NM") %>
 			</a>
 			<ul class="mm-collapse">
-				<%   ArrayList<HashMap<String, Object>> THREE_DATA = (ArrayList<HashMap<String, Object>>)TWO_DATA_ROW.get("child");
-					for(int k=0;k<THREE_DATA.size();k++){
-						HashMap<String, Object> THREE_DATA_ROW = THREE_DATA.get(k);
+				<%   ArrayList<HashMap<String, Object>> THREE_DATA = (ArrayList<HashMap<String, Object>>)TWO_DATA_ROW.get("_children");
+					if(THREE_DATA!=null){
+					    
+
+						for(int k=0;k<THREE_DATA.size();k++){
+							HashMap<String, Object> THREE_DATA_ROW = THREE_DATA.get(k);
 				%>
 				<li class="THREE_DATA"><a href="#" 
 						class="js-open-target" 
 						data-target="<%=THREE_DATA_ROW.get("PGM_ID") %>" 
 						data-title="<%=THREE_DATA_ROW.get("MENU_NM") %>"><%=THREE_DATA_ROW.get("MENU_NM") %></a>
 				</li>
-				<%	} %>
+				<%		} 
+					}
+				%>
 			</ul>
 		</li>
-		<%	}	%>	
+		<%		}	
+			}
+		%>	
 	</ul>
 <%	} %>	
 </nav>
@@ -213,8 +251,9 @@ $(function () {
 	*/
 	
 	<%	ArrayList<HashMap<String, Object>> cmPgmList = (ArrayList<HashMap<String, Object>>) request.getAttribute("cmPgmList");
-		for (int i = 0; i < cmPgmList.size(); i++) {
-			HashMap<String,Object> hm = cmPgmList.get(i);
+		if(cmPgmList!=null){
+			for (int i = 0; i < cmPgmList.size(); i++) {
+				HashMap<String,Object> hm = cmPgmList.get(i);
 	%>
 	PgmPageMngr.addPgmPageMap("<%=hm.get("PGM_ID")%>","<%=hm.get("PGM_NM")%>");
 	myLayout.registerComponent("<%=hm.get("PGM_ID")%>", function (container, state) {
@@ -240,7 +279,9 @@ $(function () {
 		});
 	
 	});
-	<%	} %>
+	<%		}
+		}
+	%>
 	
 	myLayout.init();
 	
@@ -272,7 +313,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 <% 	for (int i = 0; i < cmMenuList.size(); i++) {
 	HashMap<String,Object> ONE_DATA_ROW = cmMenuList.get(i); 
 %>
-	new MetisMenu('#MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>',{expand:true/*한번 열리면 모두 펼치기 */});
+	new MetisMenu('#MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>',{expand:true/*한번 열리면 모두 펼치기 */
+															, toggle: false   /*이거를 true로 하면 하나 닫히고 하나열림, false면 그것만 닫히고 그것만 열림*/
+															});
 	menu_root.push('MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>');
 	<% if(i==0) { %>
 	$('#MENU_<%=ONE_DATA_ROW.get("MENU_CD") %>').show();  //첫번째 것은 display='block'
