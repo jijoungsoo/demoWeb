@@ -127,4 +127,12 @@
 <script src="https://unpkg.com/metismenujs/dist/metismenujs.min.js"></script>
 <!-- OR -->
 <script src="https://cdn.jsdelivr.net/npm/metismenujs/dist/metismenujs.min.js"></script>
+
+
+<link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/ax5ui/ax5ui-grid/master/dist/ax5grid.css" />
+<script type="text/javascript" src="https://cdn.rawgit.com/ax5ui/ax5ui-grid/master/dist/ax5grid.min.js"></script>
+
+
+<script src="/src/js/util/ax_grid_mngr.js"></script>
+<script src="/src/js/util/timepicker_mngr.js"></script>
 <body>

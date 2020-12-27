@@ -39,9 +39,15 @@
 				        
 				      </ul>
 				      <form class="d-flex">
+				      	<input type="button" name="actuator" id="actuator" value="actuator"  class="btn btn-outline-success" />
 				        <input type="button" name="logOut" id="logOut" value="로그아웃"  class="btn btn-outline-success" />
 						<input type="button" name="clearCache" id="clearCache" value="캐시갱신" class="btn btn-outline-success"  />
 						<script>
+						$( "#actuator" ).on( "click", function( event ) {
+							Message.confirm("actuator를 열겠습니까?",function(data){
+								window.open('/actuator')
+							}); 
+						});
 						$( "#logOut" ).on( "click", function( event ) {
 							Message.confirm("로그아웃하시겠습니까?",function(data){
 								//WebSecurityConfiguration 여기에 로그아웃 주소

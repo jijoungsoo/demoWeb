@@ -165,5 +165,14 @@ class FormMngr {
 			this.get(tmp).select2({});
 		}
 	}
+	
+	valid(){
+		var t=this.container_area;
+		console.log(t)
+		var tmp =t[0].reportValidity();
+		console.log(tmp)
+		return tmp;
+		
+	}
 
 }

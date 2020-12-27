@@ -62,8 +62,8 @@ dependencies {
 	/*스프링 상태 모니터링
 	/actuator  로 접근
 	 */
-	compile("org.springframework.boot:spring-boot-starter-actuator")
-	
+	implementation "org.springframework.boot:spring-boot-starter-actuator:2.4.1"
+	implementation 'de.codecentric:spring-boot-admin-starter-client:2.3.1'
 	
 }
 

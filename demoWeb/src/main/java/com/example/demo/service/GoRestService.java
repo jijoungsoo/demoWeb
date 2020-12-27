@@ -59,8 +59,8 @@ public class GoRestService {
 		 String jsonOutString=null;
 	        HashMap<String, Object> result = new HashMap<String, Object>();
             HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-            factory.setConnectTimeout(5000); //타임아웃 설정 5초
-            factory.setReadTimeout(5000);//타임아웃 설정 5초
+            factory.setConnectTimeout(10000); //타임아웃 설정 5초
+            factory.setReadTimeout(10000);//타임아웃 설정 5초
             RestTemplate restTemplate = new RestTemplate(factory);
  
             HttpHeaders headers = new HttpHeaders();
@@ -82,17 +82,19 @@ public class GoRestService {
             result.put("body", resultMap.getBody()); //실제 데이터 정보 확인
             jsonOutString =resultMap.getBody();
             
-            log.info(jsonOutString);
+            //속도문제로 제거 
+            //log.info(jsonOutString);
             
             } catch(ResourceAccessException e) {
             	e.printStackTrace();
-            	throw new BizException("제한시간이 5초가 초과되었습니다.");	
+            	throw new BizException("제한시간이 10초가 초과되었습니다.");	
+            	//이렇게 에러를 던지는게 아니라 결과셋을 보내야한다.
             }
             try {
             	ApiResultMap resMap=PjtUtil.JsonStringToObject(jsonOutString,ApiResultMap.class);
-				String logMsg =br+"/"+jsonInString+"/"+resMap.jsonOutString;
-    	        logger.debug(logMsg);
-    	        logger.debug(resMap.jsonOutString);
+				//String logMsg =br+"/"+jsonInString+"/"+resMap.jsonOutString;
+    	        //logger.debug(logMsg);
+    	        //logger.debug(resMap.jsonOutString);
     	        if(resMap.success.equals("false")) {
     	        	throw new BizException(resMap.errorMessage);	
     	        }

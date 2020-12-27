@@ -278,8 +278,6 @@ $(document).ready(function(){
 							}
 						});
 					});
-					
-					break;
 					break;						
 				}
 			});

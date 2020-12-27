@@ -63,3 +63,34 @@ logserver.host: 127.0.0.1
 logserver.port: 8092
 #메뉴, 프로그램 리스트 캐싱
 spring.cache.ehcache.config: classpath:ehcache.xml
+
+
+#스프링액츄에이터 ==> 모니터링 프로그램
+#spring.boot.admin:
+#        client:
+#          url: http://localhost:8081 
+#          # username: jijs #admin monitoring server 의 id    
+#          #password: admin #admin monitoring server 의 password 
+#          instance: 
+#            name: demoWeb #(어플리케이션 명) 
+#            metadata: # 나의 어플리케이션 (스프링 시큐리티 )로그인 정보 
+#              username: jijs           #내가 기본 security 기능을 끄고 ajax로 해서 인지를 못하는 듯하다.
+#              userpassword: amdin      #로그인 부분은 순수하게 spring security 로 변경하자
+#              
+#actuator 라고 되어있지만 잘모르겠음  https://mycup.tistory.com/311
+#spring.security: 
+#    user: 
+#      name: admin 
+#      password: 1
+
+#spring.boot.admin.client.auto-registration: true
+# 어드민에서 모니터링 가능 하도록 엔드포인트도 모두 열어 줄것 
+#management:
+#  endpoints: 
+#    web: 
+#      exposure: 
+#        include: '*' 
+#  endpoint: 
+#    health: 
+#      show-details: always
+#    shutdown.enabled: true

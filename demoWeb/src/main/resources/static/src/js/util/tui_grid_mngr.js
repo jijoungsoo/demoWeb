@@ -1,5 +1,6 @@
 class TuiGridMngr {
   constructor(pgm_mngr, grid_name, p_options ,columns ) {
+  		var _this = this;
 		this.pgm_mngr=pgm_mngr;
       var basic_options = {
         editable: false
@@ -19,6 +20,9 @@ class TuiGridMngr {
         ,rowNum: false
         ,checkbox: false
         ,showDummyRows: true   /*높이만큼 비어있으면 비어있는 컨텐츠를 보여준다.*/
+        ,pageable: false /*커스터마이징 서버에 보낼때 페이징 파라미터를 달고 갈것인지 여부*/
+        ,pageSize: 300   /*페이징 처리를 한다면 한화면에 몇개보일지 여부*/
+        ,pageNum:1   /*페이징 처리를 한다면 현재화면이 몇번째인지 저장 */  
        
       };
       this.options = $.extend(basic_options, p_options);
@@ -120,6 +124,34 @@ class TuiGridMngr {
   }
  
   loadData(url,param, p_func){
+    if(this.options.pageable==true){
+    	//이걸변경시킨다.
+    	/*늘 동일한 형식
+    	var param = {
+					brRq : 'IN_DATA',
+					brRs : 'OUT_DATA',
+					IN_DATA : [ data ]
+		}
+		이렇게 바꿔야한다.
+		var param = {
+					brRq : 'IN_DATA,PAGE_DATA',
+					brRs : 'OUT_DATA',
+					IN_DATA : [ data ],
+					PAGE_DATA: [{PAGE_NUM: 1 , PAGE_SIZE: 100 }]
+					
+		}
+		*/
+		console.log(param)
+		param.brRq=(param.brRq+",PAGE_DATA");
+		var tmp=[];
+		var page_num = this.options.pageNum;
+		var page_size = this.options.pageSize;
+		tmp.push({PAGE_NUM:page_num, PAGE_SIZE: page_size });
+		param.PAGE_DATA=tmp;
+		console.log(param);
+    }
+  
+  
     var mask = new ax5.ui.mask();
 	mask.open({
 		content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading</h1>'
@@ -128,6 +160,7 @@ class TuiGridMngr {
     let grid=this.grid;    
     let options = this.options;
     console.log('ddddddddddddddddddddddd');
+    let _this=this;
     ///..grid.clear();  저장하고 다시 loadData를 호출할때  grid.clear()에서 간헐적으로 에러나서 주석 
     console.log('ccccccccccccccccccccc');
     AjaxMngr.send_api_post_ajax(url, param, function (data) {
@@ -142,8 +175,9 @@ class TuiGridMngr {
       var brRs  = arr_brRs[0];
       
       console.log('arr_brRs')
-      console.log(brRs)
-      if(data[brRs]) {
+      console.log(brRs);
+
+      if(data !=undefined  && data[brRs]!=undefined) {
 	    grid.resetData(data[brRs]);
         if(options.showRowStatus==true){
           var t = grid.getData(); 
@@ -154,25 +188,36 @@ class TuiGridMngr {
           grid.resetData(t);
         }
       }
+      var total_size=0;
+      if(_this.options.pageable==true 
+      		&& data !=undefined 
+      		&& data["PAGE_DATA"]!=undefined) {
+      		total_size = data["PAGE_DATA"][0]["TOTAL_SIZE"]
+      }
       mask.close();
       if(p_func){
     	p_func(data);
     	}
-      
-      /* tui_grid 전용 함수  나중에는 이대로 가야할것 같다.
-      if(data.result) {
-        grid.resetData(data.data.contents);
-        if(options.showRowStatus==true){
-          var t = grid.getData(); 
-          t.forEach(element => { 
-            element._ROW_STATUS=null;
-            }
-          )
-          grid.resetData(t);
-        } 
-      }
-      
+
+      /*조회를 하면  현재화면출력수/전체출력수  표시되었으면 한다 
+      	 more로갈거니까.
       */
+      var tmp = _this.pgm_mngr.get("grid_status");
+      console.log(tmp)
+      if(tmp[0]==undefined) {
+      	if(_this.options.pageable==true){
+      		$(_this.options.el).append("<span name='grid_status'>"+(_this.getRowCount())+"/"+total_size+"</span>")
+      	} else {
+      		$(_this.options.el).append("<span name='grid_status'>"+(_this.getRowCount())+"</span>")
+      	}
+      	
+      } else {
+        if(_this.options.pageable==true){
+      		tmp[0].innerHTML=(   (_this.getRowCount())+"/"+total_size    );
+      	} else {
+      		tmp[0].innerHTML=(_this.getRowCount());
+      	}
+      }
     })
   }
   resetData(data){
