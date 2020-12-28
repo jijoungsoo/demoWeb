@@ -11,6 +11,9 @@
 	var csrf_token = '${_csrf.token}';
 	/*이거 ajax쪽에 넣었다.*/
 	</script>
+	
+	<!-- 깉은 복사를 하려고 사용한 라이브러리   https://www.jsdelivr.com/package/npm/lodash  -->
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js"></script>
 	<!-- CSS only -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
@@ -135,4 +138,7 @@
 
 <script src="/src/js/util/ax_grid_mngr.js"></script>
 <script src="/src/js/util/timepicker_mngr.js"></script>
+
+
+
 <body>

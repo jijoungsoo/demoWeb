@@ -1,7 +1,12 @@
 class TuiGridMngr {
   constructor(pgm_mngr, grid_name, p_options ,columns ) {
-  		var _this = this;
 		this.pgm_mngr=pgm_mngr;
+		this.total_size=0;    /*전체 데이터 사이즈*/
+		this.curr_size=0;     /*현재까지 불러온 데이터 사이즈*/
+		this.url  ='';        /*페이징 처리를 하려면 화면에서 넘어온 주소를 알고 있어야한다. */
+		this.param  =[];        /*페이징 처리를 하려면 화면에서 넘어온 파라미터를 알고있어야한다. */ 
+		this.page_num =0;       /*현재페이지 번호  첫번째 페이지가 0 번이다. */
+		this.total_page = 1;    /*전체페이지 수*/
       var basic_options = {
         editable: false
         ,scrollX: true
@@ -22,7 +27,6 @@ class TuiGridMngr {
         ,showDummyRows: true   /*높이만큼 비어있으면 비어있는 컨텐츠를 보여준다.*/
         ,pageable: false /*커스터마이징 서버에 보낼때 페이징 파라미터를 달고 갈것인지 여부*/
         ,pageSize: 300   /*페이징 처리를 한다면 한화면에 몇개보일지 여부*/
-        ,pageNum:1   /*페이징 처리를 한다면 현재화면이 몇번째인지 저장 */  
        
       };
       this.options = $.extend(basic_options, p_options);
@@ -121,107 +125,151 @@ class TuiGridMngr {
         }
     });
     this.grid=grid;
+    
+    if(this.options.pageable==false) {
+    	return;
+    }
+    const page_element = `
+    <div>
+    	(<span name='curr_size'>0</span>/
+    	<span name='total_size'>0</span>
+    	)
+    	<span name='page_num'>0</span>/
+    	<span name='total_page'>0</span>
+    	<input type='button' name='more' value='more' />
+    	<input type='button' name='more_all' value='more all' />
+    </div>
+	`
+	$(this.options.el).append(page_element);
+	let _this=this;
+	this.pgm_mngr.get('more')[0].addEventListener('click', function(event){
+			if(_this.total_size==0){
+				alert('조회버튼을 눌러주세요.');
+				return;
+			}
+			if(_this.curr_size>=_this.total_size){
+				alert('전체 검색되었습니다.');
+				return;
+			}
+		_this.appendLoadData('one');
+	});
+	this.pgm_mngr.get('more_all')[0].addEventListener('click', function(event){
+			if(_this.total_size==0){
+				alert('조회버튼을 눌러주세요.');
+				return;
+			}
+			if(_this.curr_size>=_this.total_size){
+				alert('전체 검색되었습니다.');
+				return;
+			}
+		_this.appendLoadData('all');
+	});  
   }
  
   loadData(url,param, p_func){
+    this.url   = url;
+    this.param = _.cloneDeep(param);
     if(this.options.pageable==true){
-    	//이걸변경시킨다.
-    	/*늘 동일한 형식
-    	var param = {
-					brRq : 'IN_DATA',
-					brRs : 'OUT_DATA',
-					IN_DATA : [ data ]
-		}
-		이렇게 바꿔야한다.
-		var param = {
-					brRq : 'IN_DATA,PAGE_DATA',
-					brRs : 'OUT_DATA',
-					IN_DATA : [ data ],
-					PAGE_DATA: [{PAGE_NUM: 1 , PAGE_SIZE: 100 }]
-					
-		}
-		*/
-		console.log(param)
 		param.brRq=(param.brRq+",PAGE_DATA");
 		var tmp=[];
-		var page_num = this.options.pageNum;
-		var page_size = this.options.pageSize;
-		tmp.push({PAGE_NUM:page_num, PAGE_SIZE: page_size });
+		tmp.push({PAGE_NUM:  0 , PAGE_SIZE: this.options.pageSize });
 		param.PAGE_DATA=tmp;
-		console.log(param);
     }
-  
-  
     var mask = new ax5.ui.mask();
 	mask.open({
 		content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading</h1>'
 		,target: $("#"+this.pgm_mngr.getId()).get(0),
 	});
-    let grid=this.grid;    
-    let options = this.options;
-    console.log('ddddddddddddddddddddddd');
-    let _this=this;
-    ///..grid.clear();  저장하고 다시 loadData를 호출할때  grid.clear()에서 간헐적으로 에러나서 주석 
-    console.log('ccccccccccccccccccccc');
+	let _this=this;	
     AjaxMngr.send_api_post_ajax(url, param, function (data) {
-
-	  console.log('param')
-	  console.log(param)
-	  
-      console.log('loadData')
-      console.log(data)
-      
       var arr_brRs = param.brRs.split(",");
       var brRs  = arr_brRs[0];
-      
-      console.log('arr_brRs')
-      console.log(brRs);
-
       if(data !=undefined  && data[brRs]!=undefined) {
-	    grid.resetData(data[brRs]);
-        if(options.showRowStatus==true){
-          var t = grid.getData(); 
-          t.forEach(element => { 
-            element._ROW_STATUS=null;
-            }
-          )
-          grid.resetData(t);
+        if(_this.options.showRowStatus==true){
+          for(var i=0;i<data[brRs].length;i++){
+	        	data[brRS][i]._ROW_STATUS=null;
+	      }
+	 	  _this.grid.resetData(data[brRs])
+        } else {
+          _this.grid.resetData(data[brRs])
         }
       }
-      var total_size=0;
+      _this.total_size=0;
       if(_this.options.pageable==true 
       		&& data !=undefined 
       		&& data["PAGE_DATA"]!=undefined) {
-      		total_size = data["PAGE_DATA"][0]["TOTAL_SIZE"]
+      		 _this.total_size = data["PAGE_DATA"][0]["TOTAL_SIZE"]
+      		 _this.page_num   = data["PAGE_DATA"][0]["PAGE_NUM"]
+      		 _this.total_page   = data["PAGE_DATA"][0]["TOTAL_PAGE"]
+      		 _this.curr_size  = _this.grid.getRowCount()
       }
       mask.close();
       if(p_func){
     	p_func(data);
-    	}
-
-      /*조회를 하면  현재화면출력수/전체출력수  표시되었으면 한다 
-      	 more로갈거니까.
-      */
-      var tmp = _this.pgm_mngr.get("grid_status");
-      console.log(tmp)
-      if(tmp[0]==undefined) {
-      	if(_this.options.pageable==true){
-      		$(_this.options.el).append("<span name='grid_status'>"+(_this.getRowCount())+"/"+total_size+"</span>")
-      	} else {
-      		$(_this.options.el).append("<span name='grid_status'>"+(_this.getRowCount())+"</span>")
-      	}
-      	
-      } else {
-        if(_this.options.pageable==true){
-      		tmp[0].innerHTML=(   (_this.getRowCount())+"/"+total_size    );
-      	} else {
-      		tmp[0].innerHTML=(_this.getRowCount());
-      	}
       }
+      _this.pgm_mngr.get("curr_size")[0].innerText=_this.curr_size;
+      _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
+      _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num+1);
+      _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
     })
   }
   resetData(data){
   	this.grid.resetData(data);
+  }
+  
+  appendLoadData(p_data_flag_all){
+	    if(this.options.pageable==false){
+	    	return;
+	    }
+	    console.log(this.param);
+	    var param= _.cloneDeep(this.param);
+   		param.brRq=(param.brRq+",PAGE_DATA");
+		var tmp=[];
+		this.page_num = this.page_num+1;
+		tmp.push({PAGE_NUM: this.page_num, PAGE_SIZE: this.options.pageSize });
+		param.PAGE_DATA=tmp;
+	    
+	    var mask = new ax5.ui.mask();
+		mask.open({
+			content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading</h1>'
+			,target: $("#"+this.pgm_mngr.getId()).get(0),
+		});
+	    let _this=this;
+	    AjaxMngr.send_api_post_ajax(_this.url, param, function (data) {
+	      var arr_brRs = param.brRs.split(",");
+	      var brRs  = arr_brRs[0];
+	      if(data !=undefined  && data[brRs]!=undefined) {
+	        if(_this.options.showRowStatus==true){
+	          for(var i=0;i<data[brRs].length;i++){
+	        	data[brRs][i]._ROW_STATUS=null;
+	          }
+	 	      _this.grid.appendRows(data[brRs])
+	        } else {
+	        	_this.grid.appendRows(data[brRs])
+	        }
+	      }
+	      if(_this.options.pageable==true 
+	      		&& data !=undefined 
+	      		&& data["PAGE_DATA"]!=undefined) {
+	      		_this.total_page  = data["PAGE_DATA"][0]["TOTAL_PAGE"];
+	      		_this.total_size  = data["PAGE_DATA"][0]["TOTAL_SIZE"];
+	      		_this.page_num    = data["PAGE_DATA"][0]["PAGE_NUM"];
+	      		_this.curr_size   = _this.grid.getRowCount();
+	      }
+	      _this.pgm_mngr.get("curr_size")[0].innerText=_this.curr_size;
+      	  _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
+      	  _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num+1);
+      	  _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
+	      mask.close();
+	      
+	      if(_this.curr_size>=_this.total_size){
+	      	return;
+	      }
+	      
+	      if(p_data_flag_all==='all'){
+	      	_this.appendLoadData(p_data_flag_all);
+	      }
+	    })
   }
    
   getCheckedData() {
