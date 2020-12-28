@@ -40,7 +40,8 @@ $(document).ready(function(){
 			showRowStatus : false,
 			rowNum : true,
 			checkbox : false,
-			pageable : true
+			pageable : true,
+			pageSize : 300
 		}, [ {
 			header : '주식코드',
 			name : 'STOCK_CD',

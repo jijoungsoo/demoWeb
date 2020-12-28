@@ -260,14 +260,23 @@ class TuiGridMngr {
       	  _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
       	  _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num+1);
       	  _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
-	      mask.close();
+      	  if(p_data_flag_all!='all'){  //all 이 아니라면 종료
+      	  	mask.close();
+      	  	return;   
+      	  }
+	      
 	      
 	      if(_this.curr_size>=_this.total_size){
-	      	return;
+	      	mask.close();
+      	  	return;
 	      }
 	      
 	      if(p_data_flag_all==='all'){
-	      	_this.appendLoadData(p_data_flag_all);
+  	        setTimeout(function() {
+  	           mask.close();	
+  	        	_this.appendLoadData(p_data_flag_all);
+			}, 0);  //일단 딜레이0 으로 주자 서버 부하를 생각했는데
+			//확인해보니까. 1000개짜리 20번 호출하는 것보다 20000개를 1번 호출하는게 더 문제가 된다.
 	      }
 	    })
   }
