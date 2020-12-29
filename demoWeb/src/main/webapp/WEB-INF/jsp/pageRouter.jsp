@@ -4,6 +4,8 @@
 	String uuid = (String) request.getAttribute("uuid");
 	String dirLink = (String) request.getAttribute("dirLink");
 	String pgmLink = (String) request.getAttribute("pgmLink");
+	String result = (String) request.getAttribute("result");
+	
 %>
 <%
 //이방식은 정적으로 컴파일 되기 때문에 가변적으로 변할수없음.
@@ -21,6 +23,8 @@
 
 //html파일이 안잃혀진다.  include file은 되었는데.. 가변이 안되고....
 //html 확장자를 빼버리고 ui.jsp로 파일명을 바꾸자.!!
+
+if(result.equals("ok"))  {
 %>
 <div id="<%=uuid%>">
 	<jsp:include page="/WEB-INF/jsp/${dirLink}/${pgmLink}.ui.jsp" flush="true" >
@@ -36,4 +40,9 @@
 	  <jsp:param name="pgmLink" value="<%=pgmLink%>"/>
 	</jsp:include>
 </div>
+<%} else { %>
+<div id="<%=uuid%>">
+		<%=result %>
+</div>		
+<%}  %>
 <%@ include file="/WEB-INF/jsp/include/inner_bottom.jsp" %>

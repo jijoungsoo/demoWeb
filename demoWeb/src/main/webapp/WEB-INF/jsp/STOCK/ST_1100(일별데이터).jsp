@@ -181,6 +181,26 @@ $(document).ready(function(){
 		
 		);
 		grid.build();
+		
+		searchForm.addEvent("click","input[name=STOCK_CD]",function(el) {
+			var data = searchForm.getData();
+			console.log(data);
+			var param = {
+					STOCK_CD : data["STOCK_CD"]
+			}
+			console.log(param);
+			var popup = new PopupManger(_this, 'ST_CM_0100', {
+	          width: 1100,
+	          heght: 700
+	        },
+	          param
+	        );
+	        popup.open(function(data){
+	        	if(data){
+	        		console.log(data);
+	        	}
+	        });
+		});
 	
 		searchForm.addEvent("click","input[type=button]",function(el) {
 			//console.log(el);
@@ -201,6 +221,7 @@ $(document).ready(function(){
 					console.log(data);
 				});
 				break;
+			
 			}
 		});
 	});

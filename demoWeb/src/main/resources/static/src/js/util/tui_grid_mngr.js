@@ -187,7 +187,7 @@ class TuiGridMngr {
       if(data !=undefined  && data[brRs]!=undefined) {
         if(_this.options.showRowStatus==true){
           for(var i=0;i<data[brRs].length;i++){
-	        	data[brRS][i]._ROW_STATUS=null;
+	        	data[brRs][i]._ROW_STATUS=null;
 	      }
 	 	  _this.grid.resetData(data[brRs])
         } else {

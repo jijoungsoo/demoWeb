@@ -157,9 +157,12 @@ class PgmPageMngr {
     init(func){
         if(func!=undefined){
             var p_param={};
+            console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaa');
+            console.log(this.getId());
             var reqData=PgmPageMngr.getReqMap(this.getId());   /*페이지 호출을 했을때 입력된 req값을 기준으로 얻어온다. */
+            console.log(reqData);
             if(reqData!=undefined){           
-                $.extend(p_param, JSON.parse(reqData));
+                $.extend(p_param, reqData);
             }
             func(p_param);
         }
@@ -196,6 +199,18 @@ class PgmPageMngr {
     	console.log('p_param=>'+p_param);
     	console.log('p_funtion=>'+p_funtion);
     	AjaxMngr.send_api_post_ajax_sync(p_url, p_param, p_funtion);
+    }
+    
+    close(p_param){
+    	var uuid=this.getId();
+    	var data = PgmPageMngr.getReqMap(uuid);
+    	console.log(data);
+    	console.log(data.popup_mngr);
+    	if(data.popup_mngr != undefined)  {
+    		data.popup_mngr.close(p_param);
+    	}
+
+    	PgmPageMngr.removeReqMap(uuid);
     }
 }
 
