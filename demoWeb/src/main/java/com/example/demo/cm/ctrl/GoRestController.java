@@ -9,6 +9,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,7 +33,8 @@ public class GoRestController {
 	
 	@Autowired
 	 private GoRestService goService;
-	 private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER");  
+	 private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER"); 
+	 
 	 	/*
 		 @RequestMapping("/index")  
 		 public String jsp(){
@@ -125,11 +128,42 @@ public class GoRestController {
         }
 	    return ResponseEntity.ok(jsonOutString);
 	 }
-	 
-	/*출처: https://coding-start.tistory.com/324 [코딩스타트]*/
-    @PostMapping(path= "/refresh", consumes = "application/json", produces = "application/json")
-    @CacheEvict(value = {"pgmLinkCache","pgmCache","menuCache"})
-    public String cacheRefresh() {
-        return "{OK}";
+
+    
+    /*소켓*/
+    @MessageMapping("/api")   /*보내는 이름*/
+    @SendTo("/topic/message")  /*받는 이름*/
+    public ResponseEntity<Object> callStompAPI(@PathVariable("br") String br
+               , @RequestBody String jsonInString
+            ) throws Exception  {
+        log.info("br=>"+br);
+        log.info("jsonInString=>"+jsonInString);
+        String jsonOutString=null;
+
+        HashMap<String, Object> result = new HashMap<String, Object>();
+       try {
+           jsonOutString = goService.callAPI(br, jsonInString);
+       } catch (HttpClientErrorException | HttpServerErrorException e) {
+           result.put("statusCode", e.getRawStatusCode());
+           result.put("body"  , e.getStatusText());
+           e.printStackTrace();
+           return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                   .body("서버오류가 발생하였습니다.(HTTP)");
+       }catch (BizException e) {
+               result.put("statusCode", "999");
+               result.put("body"  , e.getMessage());
+               e.printStackTrace();
+               return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                       .body(e.getMessage());
+           
+       }   catch (Exception e) {
+           result.put("statusCode", "999");
+           result.put("body"  , "excpetion오류");
+           e.printStackTrace();
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                   .body("서버오류가 발생하였습니다.(Exception)");
+       }
+       return ResponseEntity.ok(jsonOutString);
     }
+ 
 }

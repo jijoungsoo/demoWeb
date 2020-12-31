@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -46,35 +47,6 @@ public class WebConfig  implements WebMvcConfigurer {
         */
     }
     
-    // 요청 - 뷰 연결
-    public void addViewControllers(ViewControllerRegistry registry) {
-    	/*
-      registry.addViewController("/").setViewName("main");
-      registry.addViewController("/login").setViewName("login");
-      registry.addViewController("/admin").setViewName("admin");
-      registry.addViewController("/signup").setViewName("signup");
-      */
-		
-		/*
-		 *
-		바보같았다. controller를 생성할수없으니까 의미 없다. 
-		url router를 써야한느데 있는지 모르겠다.
-		ObjectMapper om = new ObjectMapper();		 
-		ArrayList<HashMap<String, Object>> cmPgmList = new ArrayList<HashMap<String,Object>>();
-		String jsonPgmOutString = goRestApi.callAPI("findMainPgm", null);
-		try {
-			cmPgmList=om.readValue(jsonPgmOutString,ArrayList.class);
-		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		for (int i = 0; i < cmPgmList.size(); i++) {
-			HashMap<String,Object> hm = cmPgmList.get(i);
-			System.out.print(hm.get("pgmId"));
-			System.out.print(hm.get("pgmLink"));
-			registry.addViewController("/"+hm.get("pgmId")).setViewName(hm.get("pgmLink").toString());	
-		}
-		*/
-    }
+ 
  
 }
