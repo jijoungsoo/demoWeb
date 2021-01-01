@@ -27,7 +27,22 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         /*엔드 포인트 받는 주소 */
-       registry.addEndpoint("/stompMethod").setAllowedOrigins("*").withSockJS();
+       //registry.addEndpoint("/stompMethod").setAllowedOrigins("*").withSockJS();
+        //아래와 같은 이유로 주소로 써주어야한다.
+       registry.addEndpoint("/ws-stomp").setAllowedOrigins("http://localhost:8090").withSockJS();
+       
+       /*
+       Servlet.service() for servlet 
+       [dispatcherServlet] in context with path [] threw exception [Request processing 
+                                                                    failed; 
+nested exception is java.lang.IllegalArgumentException: 
+When allowCredentials is true, 
+allowedOrigins cannot contain the special value "*"
+since that cannot be set on the "Access-Control-Allow-Origin" response header. 
+To allow credentials to a set of origins, 
+list them explicitly or consider using "allowedOriginPatterns" instead.]
+ with root cause
+*/
     }
 }
  

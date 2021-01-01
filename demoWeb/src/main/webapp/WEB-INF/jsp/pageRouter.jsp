@@ -26,6 +26,7 @@
 
 if(result.equals("ok"))  {
 %>
+<%=pgmLink %>
 <div id="<%=uuid%>">
 	<jsp:include page="/WEB-INF/jsp/${dirLink}/${pgmLink}.ui.jsp" flush="true" >
 	  <jsp:param name="pgmId" value="<%=pgmId%>"/>

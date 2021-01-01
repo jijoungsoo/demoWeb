@@ -1,3 +1,4 @@
+'use strict';
 class AjaxMngr {
 	static send_post_ajax(p_url, p_param, p_function) {
 	    var hash = window.location.hash;

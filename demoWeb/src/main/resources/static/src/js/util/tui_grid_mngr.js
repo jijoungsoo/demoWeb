@@ -207,6 +207,10 @@ class TuiGridMngr {
       if(p_func){
     	p_func(data);
       }
+        
+	    if(_this.options.pageable==false) {
+	    	return;
+	    }
       _this.pgm_mngr.get("curr_size")[0].innerText=_this.curr_size;
       _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
       _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num+1);

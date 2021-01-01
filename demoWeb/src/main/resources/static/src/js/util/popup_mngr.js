@@ -1,3 +1,4 @@
+'use strict';
 class PopupManger {
 	constructor(pgm_mngr, page_id, options, p_param) {
 		/*page_id로 페이지내에 유일한 div로 생각한다. 앞에서 넘길때  uuid까지 조합해서 만들어야한다. */

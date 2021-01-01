@@ -1,3 +1,4 @@
+'use strict';
 class Message {
     // Static properties shared by all instances
 	constructor() { 

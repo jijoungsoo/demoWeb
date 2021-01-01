@@ -31,6 +31,7 @@ public class UserInfo implements UserDetails {
 	*/
 
 /*  @Id  */
+  private long userNo;
   private String userId;
   private String userPwd;
   private String auth;
@@ -38,8 +39,9 @@ public class UserInfo implements UserDetails {
   private String email;
 
   @Builder
-  @ConstructorProperties({"userId", "userPwd", "auth" , "userNm" ,"email"})
-  public UserInfo(String userId, String userPwd, String auth,String userNm,String email) {
+  @ConstructorProperties({"userNo","userId", "userPwd", "auth" , "userNm" ,"email"})
+  public UserInfo(long userNo,String userId, String userPwd, String auth,String userNm,String email) {
+    this.userNo = userNo;
     this.userId = userId;
     this.userPwd = userPwd;
     this.auth = auth;
@@ -61,6 +63,14 @@ public class UserInfo implements UserDetails {
   
   public void setUserNm(String userNm) {
 	  this.userNm=userNm;
+  }
+
+  public long getUserNo() {
+      return userNo;
+  }
+  
+  public void setUserNo(long userNo) {
+      this.userNo=userNo;
   }
 
 

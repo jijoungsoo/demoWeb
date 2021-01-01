@@ -32,7 +32,6 @@ $(document).ready(function(){
 			const grid_tree = new TuiGridMngr(_this, 'grid_tree', {
 				rowNum : true,
 					bodyHeight : 500,
-					bodyHeight : 700,
 					showRowStatus : false,
 					treeColumnOptions : {
 						name : 'MENU_NM',
@@ -70,6 +69,7 @@ $(document).ready(function(){
 				rowNum : false,
 				checkbox : true,
 				bodyHeight : 700,
+				width : 1000,
 				showDummyRows : false
 				 ,columnOptions: {
 			          resizable: true,

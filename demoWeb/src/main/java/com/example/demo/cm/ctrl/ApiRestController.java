@@ -1,5 +1,6 @@
 package com.example.demo.cm.ctrl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,15 +24,18 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
+import com.example.demo.cm.utils.PjtUtil;
 import com.example.demo.exception.BizException;
 import com.example.demo.service.GoRestService;
+import com.example.demo.user.domain.UserInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-public class GoRestController {
+public class ApiRestController {
 	
 	@Autowired
 	 private GoRestService goService;
@@ -95,10 +101,13 @@ public class GoRestController {
 	 @PostMapping(path= "/api/{br}", consumes = "application/json", produces = "application/json")
 	 public ResponseEntity<Object> callAPI(@PathVariable("br") String br
 				, @RequestBody String jsonInString
+				, Authentication authentication
 			 ) throws Exception  {
 		 log.info("br=>"+br);
 		 log.info("jsonInString=>"+jsonInString);
 		 String jsonOutString=null;
+		 
+		 jsonInString = makeLSession(jsonInString,authentication);
 
 		 HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
@@ -128,42 +137,36 @@ public class GoRestController {
         }
 	    return ResponseEntity.ok(jsonOutString);
 	 }
+	 
+	  private String makeLSession(String jsonInString,Authentication authentication) throws JsonMappingException, JsonProcessingException {
+	      /*
+          출처: https://itstory.tk/entry/Spring-Security-현재-로그인한-사용자-정보-가져오기 [덕's IT Story]
+	     */
+	      UserInfo userInfo = (UserInfo) authentication.getPrincipal();
+	      long USER_NO=userInfo.getUserNo();
+	      String USER_ID=userInfo.getUserNm();
+	      String EMAIL=userInfo.getEmail();
+	      HashMap<String,Object>  inDs= PjtUtil.JsonStringToObject(jsonInString, HashMap.class );
+	      /*세션은 하나이지만... 약속때문에..  list 에 담는다.*/
+	      ArrayList<HashMap<String,Object>> ses_al = new ArrayList<HashMap<String,Object>>();
+	      HashMap<String,Object>  sess = new HashMap<String,Object>();
+	      sess.put("USER_NO", String.valueOf(USER_NO));
+	      sess.put("USER_ID", USER_ID);
+	      ses_al.add(sess);
+	      String brRq=(String) inDs.get("brRq");
+	      brRq = brRq+",LSESSION";
+	      inDs.put("brRq", brRq);
+	      inDs.put("LSESSION", ses_al);
+	      
+	      String sessionJsonInString  = PjtUtil.ObjectToJsonString(inDs);
+          return sessionJsonInString;
+        }
 
-    
-    /*소켓*/
-    @MessageMapping("/api")   /*보내는 이름*/
-    @SendTo("/topic/message")  /*받는 이름*/
-    public ResponseEntity<Object> callStompAPI(@PathVariable("br") String br
-               , @RequestBody String jsonInString
-            ) throws Exception  {
-        log.info("br=>"+br);
-        log.info("jsonInString=>"+jsonInString);
-        String jsonOutString=null;
-
-        HashMap<String, Object> result = new HashMap<String, Object>();
-       try {
-           jsonOutString = goService.callAPI(br, jsonInString);
-       } catch (HttpClientErrorException | HttpServerErrorException e) {
-           result.put("statusCode", e.getRawStatusCode());
-           result.put("body"  , e.getStatusText());
-           e.printStackTrace();
-           return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                   .body("서버오류가 발생하였습니다.(HTTP)");
-       }catch (BizException e) {
-               result.put("statusCode", "999");
-               result.put("body"  , e.getMessage());
-               e.printStackTrace();
-               return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                       .body(e.getMessage());
-           
-       }   catch (Exception e) {
-           result.put("statusCode", "999");
-           result.put("body"  , "excpetion오류");
-           e.printStackTrace();
-           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                   .body("서버오류가 발생하였습니다.(Exception)");
-       }
-       return ResponseEntity.ok(jsonOutString);
-    }
- 
+    @PostMapping("/refresh")
+	   
+	    @CacheEvict(value = {"pgmLinkCache","pgmCache","menuCache"},allEntries=true)
+	    private ResponseEntity<Object> cacheRefresh() {
+	        return ResponseEntity.ok("[]");
+	    }
+	  
 }

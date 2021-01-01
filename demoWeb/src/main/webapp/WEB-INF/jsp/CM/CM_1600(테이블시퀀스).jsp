@@ -41,7 +41,7 @@ $(document).ready(function(){
 			{
 				header : '시퀀스값',
 				name : 'SEQ_NO',
-				width : 200,
+				width : 100,
 				sortable : true,
 				align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -51,9 +51,9 @@ $(document).ready(function(){
 					showClearBtn : true
 				}, /*text, number, select, date 4가지가 있다.*/
 				validation : {
-					dataType : 'string', /*string ,number*/
+					dataType : 'number', /*string ,number*/
 					required : true, /*  true 필수, false 필수아님  */
-					unique : true
+					unique : false
 				/*true 데이터가 중복되면 빨간색 표시 */
 				},
 				editor : 'text'
@@ -62,7 +62,7 @@ $(document).ready(function(){
 			{
 				header : '테이블명',
 				name : 'TB_NM',
-				width : 100,
+				width : 200,
 				sortable : true,
 				align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -104,7 +104,7 @@ $(document).ready(function(){
 					showClearBtn : true
 				}, /*text, number, select, date 4가지가 있다.*/
 				validation : {
-					dataType : 'string', /*string ,number*/
+					dataType : 'number', /*string ,number*/
 					required : true /*  true 필수, false 필수아님  */
 				},
 				editor : 'text'

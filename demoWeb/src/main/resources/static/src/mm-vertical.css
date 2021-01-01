@@ -44,23 +44,73 @@
     flex-direction: column;
     position: relative;
 }
-.sidebar-nav .metismenu a {
+.sidebar-nav .metismenu div {
+	border:solid 0px red;
     position: relative;
     display: block;
     padding: 13px 15px;
+    height:50px;
     color: #adb5bd;
     outline-width: 0;
     transition: all .3s ease-out;
 }
 
-.sidebar-nav .metismenu ul a {
+.sidebar-nav .metismenu a {
+    color: #adb5bd;
+}
+.sidebar-nav .metismenu .three_depth_left{
+	border:solid 0px red;
+	display:block;
+	width:134px;
+	float:left;
+	text-overflow: ellipsis;
+	text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden; 
+}
+.sidebar-nav .metismenu .three_depth_right{
+	border:solid 0px red;
+	display:block;
+	width:20px;
+	float:right;
+}
+
+
+.sidebar-nav .metismenu .fav_depth_left{
+	border:solid 0px red;
+	display:block;
+	width:20px;
+	float:left; 
+}
+.sidebar-nav .metismenu .fav_depth_right{
+	border:solid 0px red;
+	display:block;
+	width:132px;
+	margin-left:2px;
+	float:right;
+	text-overflow: ellipsis;
+	text-decoration: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+.sidebar-nav .metismenu ul div {
     padding: 10px 15px 10px 30px;
 }
 
-.sidebar-nav .metismenu ul ul a {
+.sidebar-nav .metismenu ul ul div {
     padding: 10px 15px 10px 45px;
 }
 
+.sidebar-nav .metismenu div:hover,
+.sidebar-nav .metismenu div:focus,
+.sidebar-nav .metismenu div:active {
+    color: #f8f9fa;
+    text-decoration: none;
+    background: #0b7285;
+}
+/*
 .sidebar-nav .metismenu a:hover,
 .sidebar-nav .metismenu a:focus,
 .sidebar-nav .metismenu a:active {
@@ -68,3 +118,4 @@
     text-decoration: none;
     background: #0b7285;
 }
+*/

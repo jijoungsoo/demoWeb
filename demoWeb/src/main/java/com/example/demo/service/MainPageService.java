@@ -37,7 +37,7 @@ public class MainPageService {
 	   * 
 	   * */
 	
-	@Cacheable(value = "menuCache")
+	//@Cacheable(value = "menuCache")
     public ArrayList<HashMap<String, Object>>  findMainMenu(){
 		HashMap<String,ArrayList<HashMap<String,Object>>> outDs = new HashMap<String,ArrayList<HashMap<String,Object>>>();
 		ArrayList<HashMap<String,Object>> OUT_DATA = new ArrayList<HashMap<String,Object>>(); 
@@ -64,7 +64,7 @@ public class MainPageService {
 		return OUT_DATA; 
     }
 	
-	@Cacheable(value = "pgmCache")
+	//@Cacheable(value = "pgmCache")
     public ArrayList<HashMap<String, Object>>  findMainPgm(){
 		HashMap<String,ArrayList<HashMap<String,Object>>> outDs = new HashMap<String,ArrayList<HashMap<String,Object>>>();
 		try {

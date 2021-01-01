@@ -1,3 +1,4 @@
+'use strict';
 /* http://ax5ui.axisj.com/ax5ui-mask/demo/index.html */
 function ProgressMngr(uuid) {
     var mask= new ax5.ui.mask();

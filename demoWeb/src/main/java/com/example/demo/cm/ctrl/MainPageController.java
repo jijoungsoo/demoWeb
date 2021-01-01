@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,10 +27,11 @@ public class MainPageController {
 	  @Autowired
 	  private MainPageService mps;
 	  
-	@CacheEvict(value = {"pgmLinkCache","pgmCache","menuCache"})
-	private String cacheRefresh() {
-        return "{OK}";
-    }
+	   
+	   @CacheEvict(value = {"pgmLinkCache","pgmCache","menuCache"},allEntries=true)
+      private void cacheRefresh() {
+          System.out.print("캐시삭제");
+      }
 	
 	@GetMapping("/")
     public String main(HttpSession session , Model model){
@@ -45,6 +47,6 @@ public class MainPageController {
         }
 		model.addAttribute("cmMenuList", cmMenuList);
 		model.addAttribute("cmPgmList", cmPgmList);
-		return "index"; 
+		return "MainPage"; 
     }
 }

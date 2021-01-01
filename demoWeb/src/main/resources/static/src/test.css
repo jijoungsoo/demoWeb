@@ -56,3 +56,40 @@ body {
   line-height: 60px;
   padding-left: 30px;
 }
+
+  html, body {
+        padding: 0;
+        height: 100%;
+        overflow: hidden;
+    }
+        /*출처: https://juve.tistory.com/157 [Forza Juve!]*/
+    #footer_search { 
+    position: fixed; 
+    bottom: 0; 
+    width: 200px; 
+    }
+    
+  #footer_search > ul {
+  maring:0 !important; 
+  padding:0;
+  } 
+  #footer_search > ul > li { 
+  maring:0 ; 
+  padding:0;
+  list-style: none;
+  } 
+/*하단 박스 */
+  #footer_search > ul > li > a {
+  display: block;
+  padding: 0 0 10px 14px;				/*1뎁스 패딩*/
+  color: #f8f9fa; 
+  background:#6610f2;							/*1단뎁스 색깔*/
+  } 
+  #footer_search > ul > li a:hover {
+    color: #f8f9fa;
+    background-color: #6610f2;
+  } 
+  
+  ol, ul {
+    margin-bottom: 0;
+  }

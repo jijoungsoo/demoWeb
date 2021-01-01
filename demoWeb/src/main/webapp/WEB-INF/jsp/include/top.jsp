@@ -23,6 +23,11 @@
 	<script src="/webjars/select2/4.0.13/js/select2.min.js"></script>
 	<link   href="/webjars/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" >
 	<script src="/webjars/font-awesome/5.15.1/js/all.min.js"></script>
+	
+	<script src="/webjars/sockjs-client/dist/sockjs.min.js"></script>
+	<script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
+	
+	<script src="/webjars/handlebars/4.7.6/handlebars.min.js"></script>
 
 	<script type="text/javascript">
 		window.lm = { "config": {}, "container": {}, "controls": {}, "errors": {}, "items": {}, "utils": {} };

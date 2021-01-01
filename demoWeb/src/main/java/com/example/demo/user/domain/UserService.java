@@ -11,6 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.cm.utils.PjtUtil;
 import com.example.demo.exception.BizException;
 import com.example.demo.service.GoRestService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -50,24 +51,17 @@ public class UserService implements UserDetailsService {
 			IN_DATA_ROW.put("USER_ID", userId);
 			IN_DATA.add(IN_DATA_ROW);
 			IN_DS.put("IN_DATA", IN_DATA);
-				  
-			ObjectMapper om = new ObjectMapper();
-			om.enable(SerializationFeature.INDENT_OUTPUT);
-			String jsonInString=om.writeValueAsString(IN_DS);
-				  
-			  
-			String jsonOutString = goRestS.callAPI("loadUserByusername",jsonInString);
-			ObjectMapper omOut = new ObjectMapper();
-			omOut.enable(SerializationFeature.INDENT_OUTPUT);
-			HashMap<String, Object> rs= omOut.readValue(jsonOutString,HashMap.class);
 			
+			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
+			String jsonOutString = goRestS.callAPI("loadUserByusername",jsonInString);
+			HashMap<String, Object> rs= PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
 			ArrayList<HashMap<String,String>> OUT_DATA = (ArrayList<HashMap<String,String>>) rs.get("OUT_DATA");
 			//userInfo =   om.convertValue(arrayNode,new TypeReference<ArrayList<UserInfo>>() {});
 			//위에꺼랑 아래꺼랑 결과는 같다.
 			if(OUT_DATA.size()==1) {
 				HashMap<String,String> OUT_DATA_ROW=OUT_DATA.get(0);
-				String tmp2  =om.writeValueAsString(OUT_DATA_ROW);   
-				UserInfo tmp3 = om.readValue(tmp2,UserInfo.class);
+				String tmp2  =PjtUtil.ObjectToJsonString(OUT_DATA_ROW);   
+				UserInfo tmp3 = PjtUtil.JsonStringToObject(tmp2,UserInfo.class);
 				userInfo.add(tmp3);
 			}
 			if(OUT_DATA.size()>1) {

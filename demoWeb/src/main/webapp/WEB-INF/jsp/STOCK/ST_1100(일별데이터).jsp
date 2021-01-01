@@ -7,6 +7,49 @@ $(document).ready(function(){
 	var ST_1100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
 	ST_1100.init(function(p_param) {
 		var _this = ST_1100;
+		var ws = null
+		function wsopen(){
+			ws = new WebSocket("ws://localhost:8090/replyEcho?bno=1234");
+			ws.onopen = function(){
+				console.log("Info: connection opened.");
+				
+				
+				ws.send('gogo');
+			}
+			ws.onmessage = function(event){
+				console.log("onReceive Msg"	);
+				console.log(event.data+"\n"	);
+				
+			}
+			ws.onclose = function(event){
+				console.log('Info: connection closed.');
+				//서버상황에 따라 종료가 된다면 1초에 한번 다시 연결 시도 
+				setTimeout( function(){ wsopen();},1000); //retry connection!!
+			}
+			
+			ws.onerror = function(err){
+				console.log('Info: Error.',err);
+			}	
+		}
+		
+		/*
+		var sock = new SockJS("/ws-stomp");
+		var client = Stomp.over(sock);
+
+		
+		client.connect({},function(){
+			alert("연결된다.")
+			
+			client.send('/socketApi',{},"msg-hahha");
+			
+			
+			client.subscribe('/topic/message',function (event){
+				console.log("111111event>>",event)
+			})
+			
+		})
+		*/
+		
 		var searchForm = new FormMngr(_this,"search_area");
 		
 		var ed_dt = moment(new Date());

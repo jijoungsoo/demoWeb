@@ -1,3 +1,4 @@
+'use strict';
 class AxGridMngr {
   constructor(pgm_mngr, grid_name, columns, p_options) {
 	  this.pgm_mngr=pgm_mngr;

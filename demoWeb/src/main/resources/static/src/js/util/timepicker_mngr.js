@@ -1,3 +1,4 @@
+'use strict';
 class TimePickerMngr {
 	constructor(pgm_mngr, el_name,p_options) {
 	/*참고 사이트 https://harui.tistory.com/75 */

@@ -1,3 +1,4 @@
+'use strict';
 class AppMngr {
 	static isEmpty(str){
 	    if(str==undefined){

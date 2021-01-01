@@ -33,10 +33,46 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 public class PjtUtil {
 	public static String key = "demo exmaple key";
-	public static String getYyyyMMddHHMMSS(java.util.Date inDate) {
-		DateFormat dateformat = new SimpleDateFormat("yyyyMMddHHMMSS");
-		return dateformat.format(inDate);
-	}
+	static DateFormat dateformat1 = new SimpleDateFormat("yyyyMMddHHmmss");
+    static DateFormat dateformat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    
+    public static String getYyyy_MM_dd_HHMMSS(java.util.Date inDate) {
+        return dateformat2.format(inDate);
+    }
+    
+    
+    
+    public static String getYyyyMMddHHMMSS(java.util.Date inDate) {
+        return dateformat1.format(inDate);
+    }
+
+
+
+    public static boolean isEmpty(String tmp) {
+        if (tmp == null) {
+            return true;
+        }
+        if (tmp.length() == 0) {
+            return true;
+        }
+        return false;
+    }
+
+    public static String str(Object tmp) {
+        if (tmp == null) {
+            return "";
+        }
+        String tmp2 = tmp.toString();
+        return tmp2;
+    }
+
+    public static String nvl(String first, String second) {
+        if (isEmpty(first)) {
+            return second;
+        }
+
+        return first;
+    }
 
 	public static  <T> T JsonStringToObject(String JsonInString, Class<T> valueType) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper omOut = new ObjectMapper();

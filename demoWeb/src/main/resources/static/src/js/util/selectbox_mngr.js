@@ -1,3 +1,4 @@
+'use strict';
 function SelectBoxMngr(form_mngr,name, p_url, p_param) {
 /*https://select2.org/data-sources/formats*/
 

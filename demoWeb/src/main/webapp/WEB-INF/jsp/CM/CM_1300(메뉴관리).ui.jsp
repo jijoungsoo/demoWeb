@@ -11,10 +11,10 @@
 <div>
 	<div style="float:left">
 		
-		<div name="grid_tree" style="width: 650px"></div>
+		<div name="grid_tree" style="width: 640px"></div>
 	</div>
 	<div  style="float:left">
-		<div name="grid" style="margin-left:20px;width:1200px"></div>
+		<div name="grid" style="margin-left:20px;width: calc(100% - 640px)"></div>
 	</div>
 </div>
 
