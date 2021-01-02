@@ -1,4 +1,9 @@
 <div name="socket_area" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+	<ul><h2>STOMP</h2>
+		<li>WebSocketStompConfig.java</li>
+		<li>WebSocketEventListener.java</li>
+		<li>ApiSocketStompRestController.java</li>
+	</ul>
 	<div class="container">
 		<div class="row row-cols-1">
 			<div class="col">
@@ -20,8 +25,8 @@
 	</div>
 	<div style="padding: 10px;">
 		<input type="button" name="send" value="send" />
-		<input type="button" name="open" value="open" /> 
-		<input type="button" name="close" value="close" />
+		<input type="button" name="ws_open" value="ws_open" /> 
+		<input type="button" name="ws_close" value="ws_close" />
 	</div>
 <pre>** 소켓의 단점
 ** 항상연결되어있다.

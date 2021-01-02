@@ -15,7 +15,17 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
     public void configureMessageBroker(MessageBrokerRegistry config) {
  
         //in-memory message-broker, topic에 대한 prefix 설정
-         config.enableSimpleBroker("/topic");
+         config.enableSimpleBroker("/topic","/queue");
+         /*http://minjoon.com/spring-stomp
+          * topic
+          * queue 는 기능적인 의미가 없다.
+          * “/topic”와 “/queue”로 시작하는 심플(simple) 브로커는 어떤한 특별한 의미도 없다. 
+          * 그것들은 단지 pub-sub 대 point-to-point 메시징(즉, 많은 가입자 대 하나의 소비자)을 
+          * 구별하기 위한 컨벤션일 뿐이다. 외부 브로커를 사용할 때, STOMP 페이지를 확인해서 
+          * 어떤 종류의 STOMP 목적지와 접두사를 지원하는지 확인하자.
+          * */
+         
+         
  
  
         //메세지를 수신하는 handler의 메세지 prefix 설정 

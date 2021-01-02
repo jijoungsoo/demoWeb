@@ -79,26 +79,39 @@ $(document).ready(function(){
 	    }
 	});
 
-	
-	$( "#actuator" ).on( "click", function( event ) {
-		Message.confirm("actuator를 열겠습니까?",function(data){
-			window.open('/actuator')
-		}); 
-	});
-	$( "#logOut" ).on( "click", function( event ) {
-		Message.confirm("로그아웃하시겠습니까?",function(data){
-			//WebSecurityConfiguration 여기에 로그아웃 주소
-			var param =null;
-			AjaxMngr.send_post_ajax('/user/logout', param, function(data2){
-				//console.log(data2);
-				Message.alert("로그아웃되었습니다.",function(){
-					window.location.href="/login";
+
+	var w=document.getElementById("form_top_buttons");
+	console.log(w)
+	PjtUtil.addEvent(w,"click","input[type=button]",function(el) {
+		console.log(w);
+		console.log(el);
+		switch (el.target.name) {
+		case 'erd':
+			Message.confirm("ERD를 열겠습니까?",function(data){
+			  	window.open('https://www.erdcloud.com/','erd');
+			}); 
+			break;
+		case 'actuator':
+			Message.confirm("actuator를 열겠습니까?",function(data){
+				window.open('/actuator','actuator');
+			}); 
+			break;
+		case 'logOut':
+			Message.confirm("로그아웃하시겠습니까?",function(data){
+				//WebSecurityConfiguration 여기에 로그아웃 주소
+				var param =null;
+				AjaxMngr.send_post_ajax('/user/logout', param, function(data2){
+					//console.log(data2);
+					Message.alert("로그아웃되었습니다.",function(){
+						window.location.href="/login";
+					});
+					  
 				});
-				  
-			});
-		}); 
+			}); 
+			break;
+		
+		}
 	});
-	
 
 	/*골든레이아웃을 하단으로 내림*/
 	var queryParams = getQueryParams();

@@ -1,4 +1,8 @@
 <div name="socket_area" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+	<ul><h2>웹소켓</h2>
+		<li>WebSocketConfig.java</li>
+		<li>ReplyEchoHandler.java</li>
+	</ul>
 	<div class="container">
 		<div class="row row-cols-1">
 			<div class="col">

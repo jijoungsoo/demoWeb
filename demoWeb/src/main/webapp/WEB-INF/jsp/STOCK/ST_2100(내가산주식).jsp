@@ -4,9 +4,9 @@
 %>
 <script>
 $(document).ready(function(){
-	var ST_CM_0200 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
-	ST_CM_0200.init(function(p_param) {
-		var _this = ST_CM_0200;
+	var ST_2100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	ST_2100.init(function(p_param) {
+		var _this = ST_2100;
 		var ws = null
 		function wsopen(){
 			ws = new WebSocket("ws://localhost:8090/replyEcho?bno=1234");
