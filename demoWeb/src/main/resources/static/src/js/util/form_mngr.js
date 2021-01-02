@@ -23,10 +23,6 @@ class FormMngr {
 		return this.area_name;
 	}
 	get(name) {
-		//console.log("get aaaa");
-		//console.log(this.container_area);
-		//console.log(this.container_area.find("[name=" + name + "]"));
-		//console.log("get aaaa");
 		return this.container_area.find("[name=" + name + "]");
 	}
 	initBinder() {
@@ -44,9 +40,6 @@ class FormMngr {
 			return new Proxy(stateObj, {
 				set(target, property, new_value) {
 					target[property] = new_value;
-					//console.log(property);
-					//console.log(c.get(property));
-					//console.log(new_value);
 					c.get(property)[0].value = new_value;
 					return true;
 				}
@@ -56,7 +49,6 @@ class FormMngr {
 		this.target_data = {};
 		let tgt_data = this.target_data;
 		var w = this.container_area[0];
-		console.log(w.querySelectorAll('[data-model]').length)
 		for (var i = 0; i < w.querySelectorAll('[data-model]').length; i++) {
 			var el = w.querySelectorAll('[data-model]')[i];
 			tgt_data[el.name] = '';
@@ -75,7 +67,6 @@ class FormMngr {
 		this.target_data = {};
 		let tgt_data = this.target_data;
 		var w = this.container_area[0];
-		console.log(w.querySelectorAll('[data-model]').length)
 		for (var i = 0; i < w.querySelectorAll('[data-model]').length; i++) {
 			var el = w.querySelectorAll('[data-model]')[i];
 			tgt_data[el.name] = '';
@@ -89,28 +80,13 @@ class FormMngr {
 		//return this.target_data;
 	}
 	setDataAll(data_all) {
-		console.log(data_all);
-		console.log(this.container_area);
 		this.myModel.setModel(data_all, this.container_area);
 		
 		//select2 combobox 갱신
 		this.reSyncSelect2();
-		/*
-		console.log(this.state);
-		for (const [key, value] of Object.entries(data_all)) {
-			this.setData(key, value);
-		}
-		*/
 	}
 	setData(prop, value) {
 		this.myModel.set(prop, value);
-		/*
-		if (this.state.hasOwnProperty(prop)) {
-			this.state[prop] = value;
-		} else {
-			//alert(prop+'속성은 존재하지 않습니다.');
-			console.log(prop + '속성은 존재하지 않습니다.')
-		}*/
 	}
 	clearData() {
 		for (const [key, value] of Object.entries(this.target_data)) {
@@ -135,15 +111,7 @@ class FormMngr {
         <td><input type="button" name="del" value="삭제" /></td>
     */
 	addEvent(event_name, el_sel, func) {
-		console.log(this);
 		var w = this.container_area[0];
-    	/*
-    	if(w.querySelectorAll("input[type=button]")){
-			w.querySelectorAll("input[type=button]").forEach(function(el){
-					el.addEventListener(event_name, func);	
-			});
-    	}
-    	*/
 		if (w.querySelectorAll(el_sel)) {
 			w.querySelectorAll(el_sel).forEach(function(el) {
 				el.addEventListener(event_name, func);
@@ -168,9 +136,7 @@ class FormMngr {
 	
 	valid(){
 		var t=this.container_area;
-		console.log(t)
 		var tmp =t[0].reportValidity();
-		console.log(tmp)
 		return tmp;
 		
 	}

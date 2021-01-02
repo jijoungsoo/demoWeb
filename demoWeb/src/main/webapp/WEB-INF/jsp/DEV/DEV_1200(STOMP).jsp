@@ -1,0 +1,85 @@
+
+<%	String pgmId = (String) request.getAttribute("pgmId");
+	String uuid = (String) request.getAttribute("uuid");
+%>
+<script>
+$(document).ready(function(){
+	var DEV_1200 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+		DEV_1200.init(function(p_param) {
+			var _this = DEV_1200;
+			var socketForm = new FormMngr(_this, "socket_area");
+
+			var ws = null
+			function wsopen() {
+				ws = new WebSocket("ws://localhost:8090/replyEcho?bno=1234");
+				ws.onopen = function() {
+					console.log("Info: connection opened.");
+
+				}
+				ws.onmessage = function(event) {
+					console.log("onReceive Msg");
+					console.log(event.data + "\n");
+					var output = socketForm.get("OUTPUT");
+					var txt = output[0].value;
+					txt = txt + event.data + "\n";
+					output[0].value = txt;
+
+				}
+				ws.onclose = function(event) {
+					console.log('Info: connection closed.');
+					//서버상황에 따라 종료가 된다면 1초에 한번 다시 연결 시도 
+					//setTimeout( function(){ wsopen();},1000); //retry connection!!
+				}
+
+				ws.onerror = function(err) {
+					console.log('Info: Error.', err);
+				}
+			}
+			wsopen();
+
+			console.log(socketForm.get("MSG"));
+			socketForm.addEvent("click", "input[type=button]", function(el) {
+				//console.log(el);
+				switch (el.target.name) {
+				case 'open':
+					console.log(ws)
+					if (ws.readyState == 1) {
+						alert('이미 열려있다.')
+					}
+					wsopen();
+					break;
+				case 'send':
+					console.log(ws)
+					if (ws.readyState == 3) {
+						alert('소켓이 닫혔다.')
+					}
+					// readyState == 1 이 정상
+					var data = socketForm.getData();
+					if (!data) {
+						return;
+					}
+					if (PjtUtil.isEmpty(data.MSG)) {
+						return;
+					}
+
+					ws.send(data.MSG);
+					socketForm.get("MSG")[0].value = ''
+					break;
+				case 'close':
+					alert('소켓을 닫는다.')
+					ws.close();
+					break;
+				}
+			});
+			
+			
+			_this.on('destory',function(){
+				ws.close();
+				///잘된다..
+				//alert('destory')
+			})
+		});
+		
+		
+	});
+</script>

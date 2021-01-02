@@ -68,8 +68,8 @@
 
 <script src="/src/js/tui-grid-renderer/dateRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/datetimeRenderer.js"></script>
-<link rel="stylesheet" href="/src/metismenujs-1.2.1/metismenujs.min.css">
-<script src="/src/metismenujs-1.2.1/metismenujs.min.js"></script>
+<link rel="stylesheet" href="/src/metismenujs-3.0.6/metisMenu.css">
+<script src="/src/metismenujs-3.0.6/metisMenu.js"></script>
 
 <script src="/src/js/util/Message.js"></script>
 <script src="/src/js/util/popup_mngr.js"></script>
@@ -81,6 +81,7 @@
 <script src="/src/js/util/app_mngr.js"></script>
 <script src="/src/js/util/pgmPage_mngr.js"></script>
 <script src="/src/js/util/pjtutil_mngr.js"></script>
+<script src="/src/js/util/metismenu_mngr.js"></script>
 <link rel="stylesheet" type="text/css" href="/src/common.css" />
 <link rel="stylesheet" type="text/css" href="/src/test.css" />
 <link rel="stylesheet" type="text/css" href="/src/mm-vertical.css" />
