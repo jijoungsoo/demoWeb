@@ -125,13 +125,29 @@ class FormMngr {
 				data: arr_data
 			});
 		}
-		
 	}
 	reSyncSelect2(){
 		for(var i=0;i<this.arr_select2.length;i++){
 			var tmp =this.arr_select2[i];
 			this.get(tmp).select2({});
 		}
+	}
+	
+	addSelect(element_name,arr_data){
+		var tmp = this.get(element_name);
+		console.log(tmp);
+		for (var i=0;i<arr_data.length;i++) {
+			var data = arr_data[i];
+			console.log(data);
+			var t= "<option value='"+data.id+"'>"+data.text+"</option>";
+			
+			
+			console.log(t);
+			
+			
+            tmp.append(t);
+		}
+               
 	}
 	
 	valid(){

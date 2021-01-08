@@ -215,7 +215,9 @@ class TuiGridMngr {
       _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
       _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num+1);
       _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
-    })
+    }
+    ,this.pgm_mngr.getId()
+    )
   }
   resetData(data){
   	this.grid.resetData(data);
@@ -225,7 +227,6 @@ class TuiGridMngr {
 	    if(this.options.pageable==false){
 	    	return;
 	    }
-	    console.log(this.param);
 	    var param= _.cloneDeep(this.param);
    		param.brRq=(param.brRq+",PAGE_DATA");
 		var tmp=[];

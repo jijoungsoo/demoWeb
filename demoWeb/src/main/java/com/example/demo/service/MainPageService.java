@@ -88,7 +88,7 @@ public class MainPageService {
     }
 	    
     //@CachePut(value = "pgmLinkCache", key = "T(com.dveamer.sample.KeyGen).generate(#pgmId)")
-	@Cacheable(value = "pgmLinkCache")
+	//@Cacheable(value = "pgmLinkCache")  //캐시 사용안함.
     public HashMap<String, Object> findPgmList(){
         HashMap<String, Object> pgmLink =new HashMap<String, Object>();
         

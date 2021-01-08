@@ -53,7 +53,10 @@ class PopupManger {
 	
 		this.dialog.on("dialogopen", function(event, ui) {
 			var a = $("#" + uuid)
-			var tmp_style = 'top:' + a.offset().top + 'px !important;left' + a.offset().left + 'px !important;height: ' + a.offset().height + 'px !important;width' + a.offset().width + 'px !important; z-index: 100;'
+			console.log('a');
+			console.log(a);
+			console.log('b');
+			var tmp_style = 'top:' + a.offset().top + 'px !important;left:' + a.offset().left + 'px !important;height: ' + a.height() + 'px !important;width:' + a.width() + 'px !important; z-index: 100;background:#aaa !important;opacity : 0.5;'
 			$("#" + uuid + " .ui-widget-overlay").attr('style', tmp_style);
 		});
 	}

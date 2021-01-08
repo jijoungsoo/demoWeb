@@ -39,8 +39,7 @@ public class PageController {
 		//pageId를 가지고 하는 것도 문제가 있다.
 		//pageId를 가지고 PgmLink를 가져오도록 해야한다.
 		//login 페이지 가져올때 pgmList를 가져오니가 그걸 cache에 넣자.
-		System.out.println(pageId);
-		System.out.println(hm.get("uuid"));
+		String debug = hm.get("debug");
 		
 		HashMap<String, Object> cmPgmLink=mps.findPgmList();
 		HashMap<String, Object> pgmLinkMap = (HashMap<String, Object>) cmPgmLink.get(pageId);
@@ -58,6 +57,8 @@ public class PageController {
         model.addAttribute("pgmLink", pgmLinkMap.get("PGM_LINK"));
 		model.addAttribute("uuid", hm.get("uuid").toString());
 		model.addAttribute("result", "ok");
+		model.addAttribute("debug", debug);
+        model.addAttribute("req_hm", hm);
 		return "pageRouter"; 
     }
 	

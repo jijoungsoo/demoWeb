@@ -7,75 +7,31 @@ $(document).ready(function(){
 	var ST_CM_0200 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
 	ST_CM_0200.init(function(p_param) {
 		var _this = ST_CM_0200;
-		var ws = null
-		function wsopen(){
-			ws = new WebSocket("ws://localhost:8090/replyEcho?bno=1234");
-			ws.onopen = function(){
-				console.log("Info: connection opened.");
-				
-				
-				ws.send('gogo');
-			}
-			ws.onmessage = function(event){
-				console.log("onReceive Msg"	);
-				console.log(event.data+"\n"	);
-				
-			}
-			ws.onclose = function(event){
-				console.log('Info: connection closed.');
-				//서버상황에 따라 종료가 된다면 1초에 한번 다시 연결 시도 
-				setTimeout( function(){ wsopen();},1000); //retry connection!!
-			}
-			
-			ws.onerror = function(err){
-				console.log('Info: Error.',err);
-			}	
-		}
-		
-		/*
-		var sock = new SockJS("/ws-stomp");
-		var client = Stomp.over(sock);
-
-		
-		client.connect({},function(){
-			alert("연결된다.")
-			
-			client.send('/socketApi',{},"msg-hahha");
-			
-			
-			client.subscribe('/topic/message',function (event){
-				console.log("111111event>>",event)
-			})
-			
-		})
-		*/
-		
 		var searchForm = new FormMngr(_this,"search_area");
 		
-		var ed_dt = moment(new Date());
-		var str_ed_dt = ed_dt.format("YYYYMMDD")
-		console.log(str_ed_dt);
-		console.log(ed_dt)
-		var str_st_dt = ed_dt.subtract('months',3).format("YYYYMMDD")
-		
-		var tp_STOCK_DT_ST = new TimePickerMngr(_this,"STOCK_DT_ST",{
-	         numberOfMonths: [1,3],
-	         yearRange: "1996:+0",
-	         stepMonths: 3,
-	         showWeek: true,
-	         dateFormat: 'yymmdd'
+		var param = {
+				brRq : 'IN_DATA',
+				brRs : 'OUT_DATA',
+				IN_DATA : [ { GRP_CD : 'MARKET'
+					,USE_YN : 'Y' } ]
+		}
+		_this.send('findCmCd', param, function(data) {
+			_this.hideProgress();
+			if (data) {
+				//콤보박스 세팅
+				var arr_data = []
+				console.log(data.OUT_DATA);
+				if(data.OUT_DATA){
+					for(var i =0;i<data.OUT_DATA.length;i++){
+						var tmp =data.OUT_DATA[i];
+						arr_data.push({ id: tmp.CD , text: tmp.CD_NM  })
+					}
+				}
+				console.log(arr_data);
+				searchForm.addSelect2("MARKET_CD",arr_data);
+			}
+
 		});
-		
-		
-		searchForm.setData("STOCK_DT_ST",str_st_dt)
-		var tp_STOCK_DT_ED = new TimePickerMngr(_this,"STOCK_DT_ED",{
-			numberOfMonths: [1,3],
-	         yearRange: "1996:+0",
-	         stepMonths: 3,
-	         showWeek: true,
-	         dateFormat: 'yymmdd'
-		});
-		searchForm.setData("STOCK_DT_ED",str_ed_dt)
 		
 		const grid = new TuiGridMngr(_this, 'grid',
 		{
@@ -85,16 +41,36 @@ $(document).ready(function(){
 			checkbox : false,
 			pageable : true,
 			pageSize : 300
-		}, [ {
+		}, 
+		[ 
+			{
 			header : '주식코드',
 			name : 'STOCK_CD',
 			width : 80,
 			resizable : false,
 			sortable : true,
-			sortingType : 'desc'
+			sortingType : 'desc',
+			filter : 'select'
 		}, {
-			header : '일자',
-			name : 'STOCK_DT',
+			header : '마켓코드',
+			name : 'LIST_MARKET_NM',
+			width : 200,
+			resizable : false,
+			sortable : true,
+			sortingType : 'desc',
+			filter : 'select'
+		}, {
+			header : '마켓CNT',
+			name : 'MARKET_CNT',
+			width : 100,
+			align : "right",
+			resizable : false,
+			sortable : true,
+			sortingType : 'desc',
+			filter : 'select'
+		}, {
+			header : '오픈일자',
+			name : 'OPEN_DT',
 			width : 100,
 			resizable : false,
 			sortable : true,
@@ -107,7 +83,7 @@ $(document).ready(function(){
 		}, {
 			header : '주식명',
 			name : 'STOCK_NM',
-			width : 'auto',
+			width : 200,
 			sortable : true,
 			filter : {
 				type : 'text',
@@ -115,100 +91,43 @@ $(document).ready(function(){
 				showClearBtn : true
 			}
 		},
-
 		{
 			header : '종가',
 			name : 'CLS_AMT',
+			renderer : {
+				type: commaRenderer
+			},
 			width : 100,
 			sortable : true,
-			align : "center",
+			align : "right",
 			filter : 'select',
 		}, {
-			header : '전일대비금액',
-			name : 'CHANGES_AMT',
-			filter : {
-				type : 'text',
-				operator : 'OR'
-			}
-		}, {
-			header : '전일대비비율',
-			name : 'CHANGES_RT',
-			filter : {
-				type : 'text',
-				operator : 'OR'
-			}
-		}, {
-			header : '거래량',
-			name : 'TRADE_QTY',
+				header : '주식수',
+				name : 'STOCK_CNT',
+				renderer : {
+					type: commaRenderer
+				},
+				width : 100,
+				sortable : true,
+				align : "right",
+				filter : 'select',
+			}, {
+			
+			
+			header : '감리구분',
+			name : 'CONSTRUCTION',
 			width : 100,
 			sortable : true,
 			align : "center",
 			sortingType : 'desc'
 		}, {
-			header : '거래대금',
-			name : 'TRADE_AMT',
-			width : 100,
+			header : '주식상태',
+			name : 'STOCK_STATE',
+			width : 200,
 			sortable : true,
 			align : "center",
 			sortingType : 'desc'
 		}, {
-			header : '시작가',
-			name : 'START_AMT',
-			width : 100,
-			sortable : true,
-			align : "center",
-			sortingType : 'desc'
-		}, {
-			header : '고가',
-			name : 'HIGH_AMT',
-			width : 100,
-			sortable : true,
-			align : "center",
-			sortingType : 'desc'
-		}, {
-			header : '저가',
-			name : 'LOW_AMT',
-			width : 100,
-			sortable : true,
-			align : "center",
-			sortingType : 'desc'
-		}, {
-			header : '시가총액(백만원)',
-			name : 'TOTAL_MRKT_AMT',
-			width : 100,
-			sortable : true,
-			align : "center",
-			sortingType : 'desc'
-		}, {
-			header : 'MarcapRatio',
-			name : 'TOTAL_MRKT_AMT_RT',
-			width : 100,
-			sortable : true,
-			align : "center",
-			sortingType : 'desc'
-		}, {
-			header : '외국인 보유주식수',
-			name : 'FRGN_CNT',
-			width : 100,
-			sortable : true,
-			align : "center",
-			sortingType : 'desc'
-		}, {
-			header : '외국인 지분율(%) ',
-			name : 'FRGN_RT',
-			width : 100,
-			sortable : true,
-			align : "center",
-			sortingType : 'desc'
-		}, {
-			header : '순위',
-			name : 'RNK',
-			width : 100,
-			sortable : true,
-			align : "center",
-			sortingType : 'desc'
-		},
-		{
 			header : '생성일',
 			name : 'CRT_DTM',
 			width : 140,
@@ -241,6 +160,8 @@ $(document).ready(function(){
 	        popup.open(function(data){
 	        	if(data){
 	        		console.log(data);
+	        		searchForm.setData("STOCK_CD",data.STOCK_CD);
+	        		searchForm.setData("STOCK_NM",data.STOCK_NM);
 	        	}
 	        });
 		});
@@ -260,7 +181,7 @@ $(document).ready(function(){
 					brRs : 'OUT_DATA',
 					IN_DATA : [ data ]
 				}
-				grid.loadData('findStckMarcap',param,function(data) {
+				grid.loadData('findKiwMst',param,function(data) {
 					console.log(data);
 				});
 				break;

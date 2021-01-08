@@ -3,6 +3,8 @@ package com.example.demo.cm.ctrl;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,12 +104,15 @@ public class ApiRestController {
 	 public ResponseEntity<Object> callAPI(@PathVariable("br") String br
 				, @RequestBody String jsonInString
 				, Authentication authentication
+				, HttpSession session 
 			 ) throws Exception  {
 		 log.info("br=>"+br);
+		 
 		 log.info("jsonInString=>"+jsonInString);
 		 String jsonOutString=null;
 		 
-		 jsonInString = makeLSession(jsonInString,authentication);
+		 jsonInString = makeLSession(jsonInString,authentication,session);
+
 
 		 HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
@@ -138,7 +143,7 @@ public class ApiRestController {
 	    return ResponseEntity.ok(jsonOutString);
 	 }
 	 
-	  private String makeLSession(String jsonInString,Authentication authentication) throws JsonMappingException, JsonProcessingException {
+	  private String makeLSession(String jsonInString,Authentication authentication,HttpSession session ) throws JsonMappingException, JsonProcessingException {
 	      /*
           출처: https://itstory.tk/entry/Spring-Security-현재-로그인한-사용자-정보-가져오기 [덕's IT Story]
 	     */
@@ -159,6 +164,13 @@ public class ApiRestController {
 	      inDs.put("LSESSION", ses_al);
 	      
 	      String sessionJsonInString  = PjtUtil.ObjectToJsonString(inDs);
+	      
+	      String UUID = (String) inDs.get("UUID");
+	      if(UUID!=null) {
+	          int SEQ = (int) inDs.get("SEQ");
+	          session.setAttribute(UUID+"-"+SEQ, jsonInString);    
+	      }
+	      
           return sessionJsonInString;
         }
 

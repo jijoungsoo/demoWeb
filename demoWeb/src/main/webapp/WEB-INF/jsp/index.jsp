@@ -1,6 +1,13 @@
 ﻿<%@ page import="java.util.*"%>
 <%	ArrayList<HashMap<String, Object>> cmMenuList = (ArrayList<HashMap<String, Object>>)  request.getAttribute("cmMenuList");	%>
+<%
+	String debug = (String) session.getAttribute("debug");	
+%>
 <script>
+AppMngr.debug_console="N";
+if("<%=debug%>"=="Y"){
+	AppMngr.debug_console="Y";
+}
 $(document).ready(function(){
 	/*상단 메뉴*/
 	var left_menu_3depth_list=[];
@@ -86,6 +93,12 @@ $(document).ready(function(){
 		console.log(w);
 		console.log(el);
 		switch (el.target.name) {
+		case 'stockdataloader':
+			Message.confirm("stockdataloader github를 열겠습니까?",function(data){
+			  	window.open('https://github.com/jijoungsoo/stockdataloader','stockdataloader');
+			}); 
+			break;
+		
 		case 'erd':
 			Message.confirm("ERD를 열겠습니까?",function(data){
 			  	window.open('https://www.erdcloud.com/','erd');

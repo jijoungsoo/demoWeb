@@ -95,6 +95,7 @@ class PgmPageMngr {
 			        } else {
 			        	console.log('error','pgm_mngr이 undefined 문제..')
 			        }
+			        sessionStorage.removeItem(item.config.id);
 			        PgmPageMngr.removePgmUuIdMap(item.config.id);
 			        PgmPageMngr.removeReqMap(item.config.id);
 			        //그때 id가져오는 걸 했었는데 기억이 안난다.
@@ -137,6 +138,38 @@ class PgmPageMngr {
         this.uuid = uuid;
         PgmPageMngr.addPgmUuIdMap(uuid,this);
         ///container가 있으니까 이벤트를 걸대는 여기다 걸자.!!!
+    	
+    	if(AppMngr.debug_console=="Y") {
+    		this.makeDebug(uuid);   
+    	}
+    }
+    
+    makeDebug(uuid){
+    	var div_height =$( "#"+uuid+"_debug_log" ).height()+4;
+    	$( "#"+uuid+"_draggable" ).draggable({ axis: "y"  /*수직으로만 이동*/
+			, zIndex: 999  /*z-index를 크게 줘서 최 상단에 보이도록*/ 
+			, start: function(event, ui) {
+		    		$(event.toElement).one('click', function(e) { e.stopPropagation(); });
+		  		}
+			, drag: function( event, ui ) {
+				var screenRelativeTop =  $("#"+uuid+"_draggable").offset().top - (window.scrollY || window.pageYOffset || document.body.scrollTop);
+				$("#"+uuid+"_debug_log").offset({top : screenRelativeTop-div_height });
+			 	console.log(ui.position);
+				}	
+		});
+		$("#"+uuid+"_debug_log").hide();
+		$("#"+uuid+"_debug_bottom_a").click(function(event){
+			if($("#"+uuid+"_debug_log").is(':visible') == false ) { 
+				$("#"+uuid+"_debug_log").show();
+				var screenRelativeTop =  $("#"+uuid+"_draggable").offset().top - (window.scrollY || window.pageYOffset || document.body.scrollTop);
+				$("#"+uuid+"_debug_log").offset({top : screenRelativeTop-(div_height*2) });
+				$("#"+uuid+"_draggable").offset({top : screenRelativeTop-div_height}); 
+			} else { 
+				$("#"+uuid+"_debug_log").hide();
+				var screenRelativeTop =  $("#"+uuid+"_draggable").offset().top - (window.scrollY || window.pageYOffset || document.body.scrollTop);
+				$("#"+uuid+"_draggable").offset({top : screenRelativeTop+div_height});  
+			}
+		});
     }
 
     init(func){
@@ -192,7 +225,6 @@ class PgmPageMngr {
     	if(data.popup_mngr != undefined)  {
     		data.popup_mngr.close(p_param);
     	}
-
     	PgmPageMngr.removeReqMap(uuid);
     }
     on(event_name,func){

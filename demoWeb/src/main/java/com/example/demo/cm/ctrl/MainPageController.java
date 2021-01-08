@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.example.demo.service.MainPageService;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Controller
 public class MainPageController {
 	  @Autowired
@@ -34,7 +38,21 @@ public class MainPageController {
       }
 	
 	@GetMapping("/")
-    public String main(HttpSession session , Model model){
+    public String main(HttpSession session , Model model,
+            HttpServletRequest request, HttpServletResponse response
+            ){
+	    String debug = request.getParameter("debug");
+	    if(debug==null) {
+	        session.setAttribute("debug", "N");
+	    } else {
+	        if(debug.equals("Y")) {
+	            session.setAttribute("debug", "Y");    
+	        } else {
+	            session.setAttribute("debug", "N");
+	        }
+	        
+	    }
+	    
 	    ArrayList<HashMap<String, Object>>  cmMenuList = mps.findMainMenu();
 	    if(cmMenuList==null) {
 	        cacheRefresh();

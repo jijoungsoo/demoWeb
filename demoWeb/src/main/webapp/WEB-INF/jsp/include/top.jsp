@@ -66,8 +66,6 @@
 <!-- 시간관련 함수 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 
-<script src="/src/js/tui-grid-renderer/dateRenderer.js"></script>
-<script src="/src/js/tui-grid-renderer/datetimeRenderer.js"></script>
 <link rel="stylesheet" href="/src/metismenujs-3.0.6/metisMenu.css">
 <script src="/src/metismenujs-3.0.6/metisMenu.js"></script>
 
@@ -87,5 +85,9 @@
 <link rel="stylesheet" type="text/css" href="/src/mm-vertical.css" />
 <script src="/src/js/util/ax_grid_mngr.js"></script>
 <script src="/src/js/util/timepicker_mngr.js"></script>
+
+<script src="/src/js/tui-grid-renderer/commaRenderer.js"></script>
+<script src="/src/js/tui-grid-renderer/dateRenderer.js"></script>
+<script src="/src/js/tui-grid-renderer/datetimeRenderer.js"></script>
 </head>
 <body>

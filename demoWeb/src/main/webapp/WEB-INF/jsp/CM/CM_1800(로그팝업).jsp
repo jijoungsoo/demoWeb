@@ -1,0 +1,133 @@
+<%	String pgmId = (String) request.getAttribute("pgmId");
+	String uuid = (String) request.getAttribute("uuid");
+%>
+<script>
+$(document).ready(function(){
+	var CM_1800 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	CM_1800.init(function(p_param) {
+		var _this = CM_1800;
+		var searchForm = new FormMngr(_this, "search_area");
+		const grid = new TuiGridMngr(_this,'grid',{
+		      editable: false
+		      ,showRowStatus: false
+		      ,rowNum: true
+		      ,checkbox: true      
+		  	}
+		,[
+			{
+		           header: 'FAV_NO',
+		           name: 'FAV_NO',
+		           width: 80,
+		           resizable: false,
+		           sortable: true,
+		           sortingType: 'desc' /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+		         },
+		       {
+		           header: '프로그램',
+		           name: 'PGM_ID',
+		           width: 100,
+		           resizable: false,
+		           sortable: true,
+		           sortingType: 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+		           filter: { type: 'text', showApplyBtn: true, showClearBtn: true },   /*text, number, select, date 4가지가 있다.*/
+		           validation: {
+		             dataType: 'string',  /*string ,number*/
+		             required: true,    /*  true 필수, false 필수아님  */
+		             unique: true   /*true 데이터가 중복되면 빨간색 표시 */
+		           },
+		         },
+		         {
+		           header: '프로그램명',
+		           name: 'PGM_NM',
+		           width: 'auto',   /*너비 자동조절*/
+		           sortable: true,
+		           filter: { type: 'text', showApplyBtn: true, showClearBtn: true },
+		         },
+		         {
+						header : '사용자번호',
+						name : 'USER_NO',
+						width : 100,
+						resizable : false,
+						sortable : true,
+						sortingType : 'desc' /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+					}, {
+						header : '사용자명',
+						name : 'USER_NM',
+						width : 'auto', /*너비 자동조절*/
+						width : 200,
+						sortable : true
+					},
+					{
+						header : '사용자ID',
+						name : 'USER_ID',
+						width : 100,
+						sortable : true,
+						align : "center",
+						filter : 'select'
+					},
+		         {
+		             header: '생성일',
+		             name: 'CRT_DTM',
+		             width: 140,
+		             sortable: true,
+		             align: "center"
+		         },
+		         {
+		             header: '수정일',
+		             name: 'UPDT_DTM',
+		             width: 140,
+		             sortable: true,
+		             align: "center" 
+		         }
+		    ]
+		);
+	  	grid.build();
+
+	  	searchForm.addEvent("click","input[type=button]",function(el){
+		   //console.log(el);
+	  	   switch(el.target.name){
+           case 'search':
+        		var param ={
+					 brRq : 'IN_DATA'
+					,brRs : 'OUT_DATA'
+					,IN_DATA:[{}]
+				}
+		    	grid.loadData('findFavMenu',param,function(data){
+			    	console.log(data);
+			    	//gridLoadData에서 자동으로 로드됨..
+		        	
+		    	});
+               break;
+        	case "del":
+	  			var data = grid.getCheckedData();
+		        console.log(data);
+		        if(data.length<=0) {
+		        	Message.alert('선택된 항목이 없습니다.');
+		        	return;
+		        }
+
+		        Message.confirm('삭제하시겠습니까?',function()  {
+			        var param ={
+						brRq : 'IN_DATA'
+						,brRs : ''
+						,IN_DATA: data
+					}
+		        	_this.showProgress();
+			        _this.send('rmFavMenu',param,function(data){
+			        	_this.hideProgress();
+			        	if(data){
+			        		Message.alert('삭제되었습니다.',function()  {
+				        		searchForm.get("search").trigger("click");
+				        	});
+				        }
+			        	
+			        });
+				});
+		  		break;
+	  	   }
+	  	});
+	  	searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

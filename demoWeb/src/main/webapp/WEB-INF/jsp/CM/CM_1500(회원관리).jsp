@@ -1,7 +1,6 @@
-
 <%
-    String pgmId = (String) request.getAttribute("pgmId");
-String uuid = (String) request.getAttribute("uuid");
+	String pgmId = (String) request.getAttribute("pgmId");
+	String uuid = (String) request.getAttribute("uuid");
 %>
 <script>
 $(document).ready(function(){

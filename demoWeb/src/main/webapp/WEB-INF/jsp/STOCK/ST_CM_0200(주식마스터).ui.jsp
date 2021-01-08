@@ -1,5 +1,15 @@
 <form name="search_area">
+
 <div class="row row-cols-auto" >
+<div class="col">
+	<div class="form-group">
+		<div class="input-group">
+			<span class="input-group-addon">마켓코드</span> 
+			<select class="form-control"  data-ax-path="MARKET_CD"  name="MARKET_CD" style="width:140px;" >
+			</select>
+		</div>
+	</div>
+</div>
 <div class="col">
 	<div class="form-group">
 		<div class="input-group">
