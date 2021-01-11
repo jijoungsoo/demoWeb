@@ -27,6 +27,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.cm.ctrl.ApiResultMap;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -84,6 +85,21 @@ public class PjtUtil {
 		ObjectMapper om = new ObjectMapper();
 		om.enable(SerializationFeature.INDENT_OUTPUT);
 		return om.writeValueAsString(value);
+	}
+	
+	public static String jsonBeautifier(String InJsonString) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+            JsonNode tree;
+            tree = objectMapper.readTree(InJsonString);
+            String formattedJson = objectMapper.writeValueAsString(tree);
+            return formattedJson;
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return InJsonString; 
+        }
 	}
 	
 	public static String encAES256AndUrl(String msg) throws Exception {

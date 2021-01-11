@@ -86,9 +86,7 @@ public class MainPageService {
 		ArrayList<HashMap<String,Object>> OUT_DATA= outDs.get("OUT_DATA");
 		return OUT_DATA; 
     }
-	    
-    //@CachePut(value = "pgmLinkCache", key = "T(com.dveamer.sample.KeyGen).generate(#pgmId)")
-	//@Cacheable(value = "pgmLinkCache")  //캐시 사용안함.
+
     public HashMap<String, Object> findPgmList(){
         HashMap<String, Object> pgmLink =new HashMap<String, Object>();
         

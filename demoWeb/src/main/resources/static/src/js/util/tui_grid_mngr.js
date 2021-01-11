@@ -371,5 +371,8 @@ class TuiGridMngr {
   getRowCount(){
   	return this.grid.getRowCount();
   }
+  setValue(rowKey, columnName, value){
+		this.grid.setValue(rowKey, columnName, value, false);  
+  }
   
 }

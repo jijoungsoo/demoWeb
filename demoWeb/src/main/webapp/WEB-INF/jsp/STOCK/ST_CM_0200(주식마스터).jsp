@@ -21,6 +21,7 @@ $(document).ready(function(){
 				//콤보박스 세팅
 				var arr_data = []
 				console.log(data.OUT_DATA);
+				arr_data.push({ id: "" , text: "ALL"  })
 				if(data.OUT_DATA){
 					for(var i =0;i<data.OUT_DATA.length;i++){
 						var tmp =data.OUT_DATA[i];

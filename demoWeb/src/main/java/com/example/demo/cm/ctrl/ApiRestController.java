@@ -2,6 +2,9 @@ package com.example.demo.cm.ctrl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.servlet.http.HttpSession;
 
@@ -111,24 +114,27 @@ public class ApiRestController {
 		 log.info("jsonInString=>"+jsonInString);
 		 String jsonOutString=null;
 		 
-		 jsonInString = makeLSession(jsonInString,authentication,session);
+		 MsgDebugInfo msg = makeLSession(br,jsonInString,authentication);
 
 
 		 HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
-			jsonOutString = goService.callAPI(br, jsonInString);
+			jsonOutString = goService.callAPI(br, msg.IN_DATA_JSON);
 		} catch (HttpClientErrorException | HttpServerErrorException e) {
             result.put("statusCode", e.getRawStatusCode());
             result.put("body"  , e.getStatusText());
             e.printStackTrace();
-            https://owin2828.github.io/devlog/2019/12/30/spring-16.html
+            //https://owin2828.github.io/devlog/2019/12/30/spring-16.html
+            saveSesstionDebugMsg(msg,PjtUtil.ObjectToJsonString(result),session);
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
             		.body("서버오류가 발생하였습니다.(HTTP)");
 		}catch (BizException e) {
                 result.put("statusCode", "999");
                 result.put("body"  , e.getMessage());
                 e.printStackTrace();
-                https://owin2828.github.io/devlog/2019/12/30/spring-16.html
+                //https://owin2828.github.io/devlog/2019/12/30/spring-16.html
+                
+                saveSesstionDebugMsg(msg,PjtUtil.ObjectToJsonString(result),session);
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 		.body(e.getMessage());
             
@@ -136,14 +142,32 @@ public class ApiRestController {
             result.put("statusCode", "999");
             result.put("body"  , "excpetion오류");
             e.printStackTrace();
+            saveSesstionDebugMsg(msg,PjtUtil.ObjectToJsonString(result),session);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body("서버오류가 발생하였습니다.(Exception)");
             
         }
+		saveSesstionDebugMsg(msg,jsonOutString,session);		
+		
 	    return ResponseEntity.ok(jsonOutString);
 	 }
 	 
-	  private String makeLSession(String jsonInString,Authentication authentication,HttpSession session ) throws JsonMappingException, JsonProcessingException {
+	 private void saveSesstionDebugMsg(MsgDebugInfo msg,String jsonOutString,HttpSession session ) {
+	     if(msg.UUID!=null) {
+	            msg.OUT_DATA_JSON=jsonOutString;
+	            Queue<MsgDebugInfo> que = (LinkedList<MsgDebugInfo>) session.getAttribute("UUID_DEBUG_LOG");
+	            if(que==null) {
+	                que = new LinkedList<MsgDebugInfo>();
+	            }
+	            while(que.size()>10) {
+	                que.poll();
+	            }
+	            que.add(msg);
+	            session.setAttribute("UUID_DEBUG_LOG",que);             
+	        } 
+	 }
+	 
+	  private MsgDebugInfo makeLSession(String br, String jsonInString,Authentication authentication) throws JsonMappingException, JsonProcessingException {
 	      /*
           출처: https://itstory.tk/entry/Spring-Security-현재-로그인한-사용자-정보-가져오기 [덕's IT Story]
 	     */
@@ -158,20 +182,27 @@ public class ApiRestController {
 	      sess.put("USER_NO", String.valueOf(USER_NO));
 	      sess.put("USER_ID", USER_ID);
 	      ses_al.add(sess);
+	      String UUID = (String) inDs.get("UUID");
 	      String brRq=(String) inDs.get("brRq");
 	      brRq = brRq+",LSESSION";
+	      inDs.put("UUID", UUID);
 	      inDs.put("brRq", brRq);
 	      inDs.put("LSESSION", ses_al);
 	      
+
+	      
 	      String sessionJsonInString  = PjtUtil.ObjectToJsonString(inDs);
 	      
-	      String UUID = (String) inDs.get("UUID");
+	      MsgDebugInfo  m = new MsgDebugInfo();
+	      m.Br=br;
+          m.IN_DATA_JSON=sessionJsonInString;
+	      
 	      if(UUID!=null) {
 	          int SEQ = (int) inDs.get("SEQ");
-	          session.setAttribute(UUID+"-"+SEQ, jsonInString);    
+	          m.UUID=UUID;
+              m.SEQ=SEQ;
 	      }
-	      
-          return sessionJsonInString;
+          return m;
         }
 
     @PostMapping("/refresh")

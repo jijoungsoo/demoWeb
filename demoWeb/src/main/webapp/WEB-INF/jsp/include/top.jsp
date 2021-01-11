@@ -55,14 +55,17 @@
 <link rel="stylesheet" type="text/css" href="/src/ax5grid/ax5grid.css" />
 <script type="text/javascript" src="/src/ax5grid/ax5grid.min.js"></script>
 
+<link rel="stylesheet" href="/src/tui.time-picker-2.0.3/dist/tui-time-picker.css">
+<script src="/src/tui.time-picker-2.0.3/dist/tui-time-picker.js"></script>
 
 
-<link rel="stylesheet" href="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.css">
-<script src="https://uicdn.toast.com/tui.date-picker/latest/tui-date-picker.js"></script>
+<link rel="stylesheet" href="/src/tui.date-picker-4.1.0/dist/tui-date-picker.css">
+<script src="/src/tui.date-picker-4.1.0/dist/tui-date-picker.js"></script>
+
 <link rel="stylesheet" href="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.css" />
 <script src="https://uicdn.toast.com/tui.pagination/latest/tui-pagination.js"></script>
-<link rel="stylesheet" href="https://uicdn.toast.com/tui-grid/latest/tui-grid.css" />
-<script src="https://uicdn.toast.com/tui-grid/latest/tui-grid.js"></script>
+<link rel="stylesheet" href="https://uicdn.toast.com/grid/v4.16.1/tui-grid.css" />
+<script src="https://uicdn.toast.com/grid/v4.16.1/tui-grid.js"></script>
 <!-- 시간관련 함수 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous"></script>
 
@@ -71,6 +74,7 @@
 
 <script src="/src/js/util/Message.js"></script>
 <script src="/src/js/util/popup_mngr.js"></script>
+<script src="/src/js/util/inline_popup_mngr.js"></script>
 <script src="/src/js/util/ajax_mngr.js"></script>
 <script src="/src/js/util/tui_grid_mngr.js"></script>
 <script src="/src/js/util/progress_mngr.js"></script>
@@ -89,5 +93,6 @@
 <script src="/src/js/tui-grid-renderer/commaRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/dateRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/datetimeRenderer.js"></script>
+<script src="/src/js/tui-grid-renderer/buttonRenderer.js"></script>
 </head>
 <body>

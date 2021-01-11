@@ -104,18 +104,16 @@ $(document).ready(function(){
 			align : "right",
 			filter : 'select',
 		}, {
-				header : '주식수',
-				name : 'STOCK_CNT',
-				renderer : {
-					type: commaRenderer
-				},
-				width : 100,
-				sortable : true,
-				align : "right",
-				filter : 'select',
-			}, {
-			
-			
+			header : '주식수',
+			name : 'STOCK_CNT',
+			renderer : {
+				type: commaRenderer
+			},
+			width : 100,
+			sortable : true,
+			align : "right",
+			filter : 'select',
+		}, {
 			header : '감리구분',
 			name : 'CONSTRUCTION',
 			width : 100,

@@ -42,7 +42,7 @@ if(result.equals("ok"))  {
 	  <jsp:param name="dirLink" value="<%=dirLink%>"/>
 	  <jsp:param name="hm" value="<%=hm%>"/>
 	</jsp:include>
-	<%	if(debug.equals("Y")) {  %>
+	<%	if(debug.equals("Y") && !pgmId.equals("CM_1800") ) {  %>
 		<div id="<%=uuid%>_debug_log" style="width:300px;height:200px;border: solid 2px red;z-index:999;background:#efefef;color:#000;margin-bottom:10px;overflow:auto;text-align:left;">
 			<ul id="<%=uuid%>_debug_log_ul"><%=pgmLink%>
 			</ul>

@@ -40,6 +40,7 @@ console.log("Time: "+moment(myDate).format("hh:mm A"));
    	        } else {
    	        	this.el.innerText = props.value;
    	        }
+   	        
      
     }
   }

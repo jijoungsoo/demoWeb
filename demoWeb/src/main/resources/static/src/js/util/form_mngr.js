@@ -80,6 +80,9 @@ class FormMngr {
 		//return this.target_data;
 	}
 	setDataAll(data_all) {
+		console.log('setDataAll');
+		console.log(data_all);
+		console.log(this.container_area);
 		this.myModel.setModel(data_all, this.container_area);
 		
 		//select2 combobox 갱신
