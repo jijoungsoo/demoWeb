@@ -16,39 +16,82 @@ $(document).ready(function(){
 		var searchForm = new FormMngr(_this,"search_area");
 		var popupForm = new FormMngr(_this, "popup_sell");
 	    $('[data-ax5formatter]').ax5formatter();
-		
+	    
+	    var datepicker = new tui.DatePicker(popupForm.get("SELL_DATE_CAL")[0]  /*달력이표시될 div*/, {
+	        date: new Date(),
+	        input: {
+	          element: popupForm.get("SELL_DATE")[0]  /*값이 실제로 입력될 input*/,
+	          format: 'yyyy-MM-dd hh:mm A'
+	        },
+	        timePicker: true,
+	        language: 'ko'
+	    });
+	    datepicker._element.style="z-index:100"; //위로 올리기 잘리는 효과 제거
+	    
+	    
+/*
+	    PjtUtil.setMaskNumber(popupForm.get("AMT")[0]);
+	    PjtUtil.setMaskNumber(popupForm.get("CNT")[0]);
+	    PjtUtil.setMaskNumber(popupForm.get("TOT_AMT")[0]);
+	    PjtUtil.setMaskNumber(popupForm.get("BAL_CNT")[0]);
+	    PjtUtil.setMaskNumber(popupForm.get("BAL_TOT_AMT")[0]);
+	    PjtUtil.setMaskNumber(popupForm.get("SELL_AMT")[0]);
+	    PjtUtil.setMaskNumber(popupForm.get("SELL_CNT")[0]);
+	    PjtUtil.setMaskNumber(popupForm.get("SELL_TOT_AMT")[0]);
+*/		
 		var grid_summary = {
-		        height: 40,
-		        position: 'bottom', // or 'top'
-		        columnContent: {
-		          AMT: {
-		            template: function(valueMap) {
-		            	console.log('bbbb');
-		            	console.log(valueMap);
-		              return `MAX: \${PjtUtil.numberComma(valueMap.max)}<br>MIN: \${PjtUtil.numberComma(valueMap.min)}`;
-		            }
-		          },
-		          FEE: {
-			            template: function(valueMap) {
-			            	console.log('ccccccccccc');
-			            	console.log(valueMap);
-			            	/*
-			            	여기서 그리드에 데이터를 읽어서 표시하는 걸 하면 좋겠다.
-			            	*/
-			              return `TOTAL: \${PjtUtil.numberComma(valueMap.sum)}`;
-			            }
-			      },
-		          TOT_AMT: {
-		            template: function(valueMap) {
-		            	console.log('ccccccccccc');
-		            	console.log(valueMap);
-		            	/*
-		            	여기서 그리드에 데이터를 읽어서 표시하는 걸 하면 좋겠다.
-		            	*/
-		              return `TOTAL: \${PjtUtil.numberComma(valueMap.sum)}`;
-		            }
-		          }
-		        }
+			height: 40,
+			position: 'bottom', // or 'top'
+			columnContent: {
+				AMT: {
+				  template: function(valueMap) {
+				    return `MAX: \${PjtUtil.numberComma(valueMap.max)}<br>MIN: \${PjtUtil.numberComma(valueMap.min)}`;
+				  }
+				},
+				FEE: {
+				   template: function(valueMap) {
+				   	 /*여기서 다른 값들을 판단할 방법이 없다.
+				   	 setSummaryColumnContent(columnName, columnContent) 이걸로 셋하고
+				   	getSummaryValues(columnName) 이걸로 겟하고
+				   	
+				   	filter가 적용되어도 아래쪽 써머리가 변경되지 않는다.
+				   	그리드의 row 갯수를 세어서 계산하는 로직을 별도로 빼야할것 같다.
+				   	그리고 실제로 이 구문을 페이지소스에 넣으면 너무 코드가 길어지므로
+				   	라이브러리로 빼자
+				   	
+				   	내가 이걸 찾은 이유는 2개의 써머리 값을 비교해서 색깔을 다르게 해주고 
+				   	싶었기 때문이다.
+				   	
+				   	 */
+				     return `\${PjtUtil.numberComma(valueMap.sum)}`;
+				   }
+				},
+				TOT_AMT: {
+				  template: function(valueMap) {
+				    return `\${PjtUtil.numberComma(valueMap.sum)}`;
+				  }
+				},
+				TOT_BAL_CURR_AMT: {
+				   template: function(valueMap) {
+				     return `\${PjtUtil.numberComma(valueMap.sum)}`;
+				   }
+				},
+				TOT_DIFF_BAL_AMT: {
+				  template: function(valueMap) {
+				    return `\${PjtUtil.numberComma(valueMap.sum)}`;
+				  }
+				},
+				TOT_BAL_AMT: {
+				  template: function(valueMap) {
+				    return `\${PjtUtil.numberComma(valueMap.sum)}`;
+				  }
+				},
+				TOT_BNFT_RT: {
+				  template: function(valueMap) {
+				    return `\${PjtUtil.numberComma(valueMap.avg)}`;
+				  }
+				}
+			}
 		}
 		const grid = new TuiGridMngr(_this, 'grid',
 		{
@@ -67,21 +110,21 @@ $(document).ready(function(){
 			{
 				header : 'SEQ',
 				name : 'BUY_SEQ',
-				width : 80,
+				width : 60,
 				resizable : false,
 				sortable : true,
 				sortingType : 'desc'
 			},{
 				header : '주식코드',
 				name : 'STOCK_CD',
-				width : 80,
+				width : 60,
 				resizable : false,
 				sortable : true,
 				sortingType : 'desc'
 			}, {
 				header : '주식명',
 				name : 'STOCK_NM',
-				width : 120,
+				width : 100,
 				sortable : true,
 				filter : {
 					type : 'text',
@@ -89,12 +132,57 @@ $(document).ready(function(){
 					showClearBtn : true
 				}
 			}, {
-				header : '주식단가',
-				name : 'AMT',
+				header : '구매주식단가',
+				name : 'BUY_AMT',
 				renderer : {
 					type: commaRenderer
 				},
 				width : 100,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc',
+				editor : 'text'
+			}, {
+				header : '현재가',
+				name : 'CURR_AMT',
+				renderer : {
+					type: commaStRenderer,
+					options : {
+						src : 'BUY_AMT',
+						tgt : 'CURR_AMT'
+					}
+				},
+				width : 100,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc',
+				editor : 'text'
+			}, {
+				header : '증감액',
+				name : 'DIFF_AMT',
+				renderer : {
+					type: commaStRenderer,
+					options : {
+						src : 'BUY_AMT',
+						tgt : 'CURR_AMT'
+					}
+				},
+				width : 80,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc',
+				editor : 'text'
+			}, {				
+				header : '수익비율',
+				name : 'BNFT_RT',
+				renderer : {
+					type: commaStRenderer,
+					options : {
+						src : 'BUY_AMT',
+						tgt : 'CURR_AMT'
+					}
+				},
+				width : 80,
 				sortable : true,
 				align : "right",
 				sortingType : 'desc',
@@ -105,7 +193,7 @@ $(document).ready(function(){
 				renderer : {
 					type: commaRenderer
 				},
-				width : 100,
+				width : 80,
 				sortable : true,
 				align : "right",
 				sortingType : 'desc',
@@ -117,9 +205,16 @@ $(document).ready(function(){
 					type: buttonRenderer,
 					options : {
 						txt : '팔기',
+						fn : function(el,data){
+							  var row_data=data.grid.getRow(data.rowKey);
+						        if(row_data.BAL_CNT==0){
+						        	$(el).hide();
+						        }
+						        
+						}
 					}
 				},
-				width : 100,
+				width : 60,
 				sortable : true,
 				align : "center"
 			}, {
@@ -128,10 +223,11 @@ $(document).ready(function(){
 				renderer : {
 					type: commaRenderer
 				},
-				width : 100,
+				width : 80,
 				sortable : true,
 				align : "right",
-				sortingType : 'desc'
+				sortingType : 'desc',
+				editor : 'text'
 			}, {
 				header : '수수료',
 				name : 'FEE',
@@ -144,17 +240,75 @@ $(document).ready(function(){
 				sortingType : 'desc',
 				editor : 'text'
 			}, {
-				header : '총금액',
+				header : '총구매금액',
 				name : 'TOT_AMT',
 				renderer : {
 					type: commaRenderer
 				},
-				width : 140,
+				width : 120,
 				sortable : true,
 				align : "right",
 				sortingType : 'desc',
 				editor : 'text'
+			}, {
+				header : '총잔액금액',
+				name : 'TOT_BAL_AMT',
+				renderer : {
+					type: commaRenderer
+				},
+				width : 120,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc',
+				editor : 'text'
+			}, {
+				header : '총잔액현재금액',
+				name : 'TOT_BAL_CURR_AMT',
+				renderer : {
+					type: commaStRenderer,
+					options : {
+						src : 'TOT_BAL_AMT',
+						tgt : 'TOT_BAL_CURR_AMT'
+					}
+				},
+				width : 120,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc',
+				editor : 'text'
+			}, {
+				header : '총잔액차감액',
+				name : 'TOT_DIFF_BAL_AMT',
+				renderer : {
+					type: commaStRenderer,
+					options : {
+						src : 'TOT_BAL_AMT',
+						tgt : 'TOT_BAL_CURR_AMT'
+					}
+				},
+				width : 120,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc',
+				editor : 'text'	
+			}, {
+				header : '총증감율',
+				name : 'TOT_BNFT_RT',
+				renderer : {
+					type: commaStRenderer,
+					options : {
+						src : 'TOT_BAL_AMT',
+						tgt : 'TOT_BAL_CURR_AMT'
+					}
+				},
+				width : 120,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc',
+				editor : 'text'				
 			},{
+				
+				
 			    header: '산날',
 			    name: 'BUY_DATE',
 			    renderer : {
@@ -164,7 +318,7 @@ $(document).ready(function(){
 						source : 'YYYYMMDDHHmm'
 					}
 				},
-				width : 140,
+				width : 120,
 			    editor: {
 			      type: 'datePicker',
 			      options: {
@@ -224,7 +378,6 @@ $(document).ready(function(){
 				){
 					var rowKey = ev.rowKey ;
 					var row_data=grid.getRow(ev.rowKey);
-					console.log(row_data);
 					var param = {
 							STOCK_NM : row_data["STOCK_NM"]
 					}
@@ -255,14 +408,22 @@ $(document).ready(function(){
 			if (ev.rowKey >=0) {
 				if(ev.columnName=="BTN_SELL"){
 					var row_data=grid.getRow(ev.rowKey);
-					console.log(row_data);
-					var BAL_CNT = row_data.BAL_CNT
-					var AMT = row_data.AMT
+					
+					if(row_data.BAL_CNT==0) {
+						return;	
+					}
+
+					var BAL_CNT 		 = row_data.BAL_CNT
+					var AMT 			 = row_data.AMT
 					row_data.BAL_TOT_AMT = (BAL_CNT * AMT);
-					var SELL_CNT = BAL_CNT;
-					row_data.SELL_AMT = AMT;
-					row_data.SELL_CNT = SELL_CNT;
-					row_data.SELL_TOT_AMT = (SELL_CNT * AMT);					
+					var SELL_CNT 		 = BAL_CNT;
+					row_data.SELL_AMT 	 = AMT;
+					row_data.SELL_CNT    = SELL_CNT;
+					row_data.SELL_TOT_AMT= (SELL_CNT * AMT);
+					row_data.SELL_TAX		 = String(0);
+					row_data.SELL_FEE		 = String(0);
+					row_data.SELL_DATE		 = moment(new Date()).format("yyyy-MM-DD hh:mm A");
+					
 					popupForm.setDataAll(row_data);
 					 $('[data-ax5formatter]').ax5formatter();
 						inline_popup = new InlinePopupManger(_this, 'popup_sell', {
@@ -273,6 +434,7 @@ $(document).ready(function(){
 						inline_popup.open(function(data){
 				        	if(data){
 				        		console.log(data);
+				        		popupForm.clearData()
 				        	}
 				        });
 				}	
@@ -293,8 +455,6 @@ $(document).ready(function(){
 				){
 					var rowKey = ev.rowKey ;
 					var row_data=grid.getRow(ev.rowKey);
-					console.log(ev.value);
-					console.log(row_data);
 					/*TOT_AMT 를 자동 계산하기 위해 사용
 					value 는 잘 넘어오지만
 					row_data로 다 하자.
@@ -313,7 +473,10 @@ $(document).ready(function(){
 					console.log(tot_amt);
 					grid.setValue(rowKey, "TOT_AMT", tot_amt)
 				}
-				
+				if(ev.columnName=="CNT"){
+					var cnt = row_data["CNT"];
+					grid.setValue(rowKey, "BAL_CNT", cnt);
+				}
 			}
 		});
 		
@@ -355,6 +518,55 @@ $(document).ready(function(){
 				}
 				grid.loadData('findStckBuy',param,function(data) {
 					console.log(data);
+					
+					/*로딩이 되면 summary를 변경한다.*/
+					var arr_TOT_BAL_AMT= grid.getSummaryValues("TOT_BAL_AMT");
+					var arr_TOT_BAL_CURR_AMT= grid.getSummaryValues("TOT_BAL_CURR_AMT");
+					var arr_TOT_DIFF_BAL_AMT= grid.getSummaryValues("TOT_DIFF_BAL_AMT");
+					var arr_TOT_BNFT_RT= grid.getSummaryValues("TOT_BNFT_RT");
+					
+					console.log(arr_TOT_BAL_CURR_AMT);
+					console.log(arr_TOT_BNFT_RT);
+					if(arr_TOT_BAL_AMT.sum>arr_TOT_BAL_CURR_AMT.sum){
+						grid.setSummaryColumnContent("TOT_BAL_CURR_AMT",{
+							  template: function(valueMap) {
+								    return `<div class="st_dn_amt">\${PjtUtil.numberComma(arr_TOT_DIFF_BAL_AMT.sum)}</div>`;
+								  }
+								});
+					} else if(arr_TOT_BAL_AMT.sum<arr_TOT_BAL_CURR_AMT.sum) {
+						grid.setSummaryColumnContent("TOT_BAL_CURR_AMT",{
+							  template: function(valueMap) {
+								  return `<div class="st_up_amt">\${PjtUtil.numberComma(arr_TOT_DIFF_BAL_AMT.sum)}</div>`;
+								  }
+								});
+					}
+					if(arr_TOT_BAL_AMT.sum>arr_TOT_BAL_CURR_AMT.sum){
+						grid.setSummaryColumnContent("TOT_DIFF_BAL_AMT",{
+							  template: function(valueMap) {
+								    return `<div class="st_dn_amt">\${PjtUtil.numberComma(arr_TOT_DIFF_BAL_AMT.sum)}</div>`;
+								  }
+								});
+					} else if(arr_TOT_BAL_AMT.sum<arr_TOT_BAL_CURR_AMT.sum) {
+						grid.setSummaryColumnContent("TOT_DIFF_BAL_AMT",{
+						  template: function(valueMap) {
+							    return `<div class="st_up_amt">\${PjtUtil.numberComma(arr_TOT_DIFF_BAL_AMT.sum)}</div>`;
+							  }
+							});
+					}
+					
+					if(arr_TOT_BAL_AMT.sum>arr_TOT_BAL_CURR_AMT.sum){
+						grid.setSummaryColumnContent("TOT_BNFT_RT",{
+							  template: function(valueMap) {
+								    return `<div class="st_dn_amt">\${PjtUtil.numberComma(arr_TOT_BNFT_RT.avg)}</div>`;
+								  }
+								});
+					} else if(arr_TOT_BAL_AMT.sum<arr_TOT_BAL_CURR_AMT.sum) {
+						grid.setSummaryColumnContent("TOT_BNFT_RT",{
+							  template: function(valueMap) {
+								    return `<div class="st_up_amt">\${PjtUtil.numberComma(arr_TOT_BNFT_RT.avg.toFixed(2))}</div>`;
+								  }
+								});
+					}
 				});
 				break;
 			case 'add_row':
@@ -377,17 +589,8 @@ $(document).ready(function(){
 					grid.validMsg();
 					return;
 				}
-				
-				/*날짜 데이터를 컨버전해줘야한다.
-				BUY_DATE 는 14자리이다.
-				UI에서는 아래와 같이 넘어온다.
-				ex)  2021-01-13 12:00 AM
-				202101131200   --이런식으로 변경해줘야함.
-				var ed_dt = moment(new Date());
-				var str_ed_dt = ed_dt.format("YYYYMMDD")
-				*/
+			
 				var crt_data=data.createdRows;
-				
 				var updt_data=data.updatedRows;
 				
 
@@ -456,9 +659,43 @@ $(document).ready(function(){
 			switch (el.target.name) {
 			case 'save':
 				Message.confirm('매도정보를 저장하시겠습니까?', function() {
-					alert("저장되었습니다.");
 					inline_popup.close();
-					searchForm.get("search").trigger("click");
+					
+					var data = popupForm.getData();
+					
+					/*날짜 데이터를 컨버전해줘야한다.
+					BUY_DATE 는 14자리이다.
+					UI에서는 아래와 같이 넘어온다.
+					ex)  2021-01-13 12:00 AM
+					202101131200   --이런식으로 변경해줘야함.
+					var ed_dt = moment(new Date());
+					var str_ed_dt = ed_dt.format("YYYYMMDD")
+					*/
+					data.SELL_DATE=moment(datepicker.getDate()).format("YYYYMMDDHHmm");
+					
+					var param = {
+						brRq : 'IN_DATA',
+						brRs : '',
+						IN_DATA : [ {
+							BUY_SEQ : data.BUY_SEQ,
+							STOCK_CD : data.STOCK_CD,
+							STOCK_NM : data.STOCK_NM,
+							AMT : PjtUtil.removeComma(data.SELL_AMT),
+							CNT : PjtUtil.removeComma(data.SELL_CNT),
+							FEE : PjtUtil.removeComma(data.SELL_FEE),
+							TAX : PjtUtil.removeComma(data.SELL_TAX),
+							TOT_AMT : PjtUtil.removeComma(data.SELL_TOT_AMT),
+							SELL_DATE : data.SELL_DATE,  
+						} ],
+					}
+					_this.send('createStckSell', param, function(data) {
+						if(data){
+							Message.alert('저장되었습니다.', function() {
+								searchForm.get("search").trigger("click");
+								popupForm.clearData();
+							});
+						}
+					});
 				});
 				break;
 

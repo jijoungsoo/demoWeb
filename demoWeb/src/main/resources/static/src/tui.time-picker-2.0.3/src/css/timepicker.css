@@ -139,7 +139,7 @@
     width: 52px;
     height: 28px;
     padding: 5px 0 5px 9px;
-    font-size: 12px;
+    font-size: 12px  !important;
     border: 1px solid #ddd;
     background: url(../img/ico_tui_select.png) no-repeat;
     background-position: 100% 50%;

@@ -123,3 +123,11 @@
 .tar {text-align:right}
 .tal {text-align:left}
 .tac {text-align:center}
+
+
+.st_up_amt {
+	color:#f10808
+}
+.st_dn_amt {
+	color:#0080ff
+}

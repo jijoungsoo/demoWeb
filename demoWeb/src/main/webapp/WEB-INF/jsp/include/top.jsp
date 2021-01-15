@@ -91,8 +91,11 @@
 <script src="/src/js/util/timepicker_mngr.js"></script>
 
 <script src="/src/js/tui-grid-renderer/commaRenderer.js"></script>
+<script src="/src/js/tui-grid-renderer/commaStRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/dateRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/datetimeRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/buttonRenderer.js"></script>
+
+
 </head>
 <body>

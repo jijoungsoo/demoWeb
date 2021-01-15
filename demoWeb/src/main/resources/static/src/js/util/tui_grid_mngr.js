@@ -375,4 +375,24 @@ class TuiGridMngr {
 		this.grid.setValue(rowKey, columnName, value, false);  
   }
   
+  setSummaryColumnContent(columnName, columnContent){
+  		this.grid.setSummaryColumnContent(columnName, columnContent);
+  }
+  getSummaryValues(columnName) {
+  		//return this.grid.getSummaryValues(columnName);
+  		console.log('aaaaa');
+  		console.log(this.grid.getSummaryValues(columnName));
+  		console.log('abbbb');
+  		//위에꺼쓰면안된다. 한번 사용하고 거기에 위에 것을 넣어 html을 넣으면 그다음부터 못가져옴
+  		console.log(this.grid);
+  		var sum=0;
+  		var cnt = this.grid.getRowCount()
+  		for(var i=0;i<cnt;i++){
+  			var row_data = this.grid.getRowAt(i);
+  			sum = sum+row_data[columnName];
+  		}
+  		//return sum;
+  		return this.grid.getSummaryValues(columnName);
+  }
+  
 }

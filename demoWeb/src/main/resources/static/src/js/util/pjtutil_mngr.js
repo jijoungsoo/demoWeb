@@ -45,9 +45,8 @@ class PjtUtil{
 	  } else {
 	  	return tmp2;
 	  }
-	  
-	  
 	}
+	
 
 	static addEvent(el, event_name, el_sel, func) {
 		var w = el;
@@ -60,6 +59,7 @@ class PjtUtil{
 	
 	static removeComma(str)
 	{
+		var str = String(str);
 		var n = parseInt(str.replace(/,/g,""));
 		return n;
 	}

@@ -152,6 +152,13 @@ $(document).ready(function(){
 			}
 		});
 		
+		searchForm.addEvent("keyup","input[type=text]",function(el) {
+			if(el.keyCode==13){
+				searchForm.get("search").trigger("click");	
+			}
+			
+		});
+		
 		searchForm.addEvent("click","input[type=button]",function(el) {
 			//console.log(el);
 			switch (el.target.name) {
