@@ -97,5 +97,12 @@
 <script src="/src/js/tui-grid-renderer/buttonRenderer.js"></script>
 
 
+<!--upload https://github.com/danielm/uploader -->
+<!--https://danielmg.org/demo/java-script/uploader/basic -->
+<link href="/src/uploader-1.0.2/dist/css/jquery.dm-uploader.min.css" rel="stylesheet">
+<script src="/src/uploader-1.0.2/dist/js/jquery.dm-uploader.min.js"></script>
+<script src="/src/uploader-1.0.2/dist/js/ui-main.js"></script>
+<script src="/src/uploader-1.0.2/dist/js/ui-multiple.js"></script>
+<script src="/src/uploader-1.0.2/dist/js/ui-single.js"></script>
 </head>
 <body>

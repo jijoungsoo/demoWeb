@@ -52,6 +52,8 @@ public class MainPageController {
 	        }
 	        
 	    }
+	    //디버그 모드 항상 on
+	    session.setAttribute("debug", "Y");
 	    
 	    ArrayList<HashMap<String, Object>>  cmMenuList = mps.findMainMenu();
 	    if(cmMenuList==null) {

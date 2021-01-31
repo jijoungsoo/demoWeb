@@ -116,6 +116,34 @@ $(document).ready(function(){
 				sortingType : 'desc',
 				editor : 'text'
 			}, {
+				header : '증감액',
+				name : 'DIFF_AMT',
+				renderer : {
+					type: commaStRenderer,
+					options : {
+						src : 'BUY_AMT',
+						tgt : 'AMT'
+					}
+				},
+				width : 80,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc'
+			}, {				
+				header : '수익비율',
+				name : 'BNFT_RT',
+				renderer : {
+					type: commaStRenderer,
+					options : {
+						src : 'BUY_AMT',
+						tgt : 'AMT'
+					}
+				},
+				width : 80,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc'
+			}, {
 				header : '판매수',
 				name : 'CNT',
 				renderer : {
@@ -138,7 +166,18 @@ $(document).ready(function(){
 				sortingType : 'desc',
 				editor : 'text'
 			}, {
-				header : '총금액',
+				header : '총구매금액',
+				name : 'TOT_BUY_AMT',
+				renderer : {
+					type: commaRenderer
+				},
+				width : 140,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc',
+				editor : 'text'
+			}, {
+				header : '총판매금액',
 				name : 'TOT_AMT',
 				renderer : {
 					type: commaRenderer
@@ -148,8 +187,23 @@ $(document).ready(function(){
 				align : "right",
 				sortingType : 'desc',
 				editor : 'text'
-			},{
-			    header: '판날',
+			}, {
+				header : '총이익금액',
+				name : 'TOT_BNFT_AMT',
+				renderer : {
+					type: commaStRenderer,
+					options : {
+						src : 'TOT_BUY_AMT',
+						tgt : 'TOT_AMT'
+					}
+				},
+				width : 120,
+				sortable : true,
+				align : "right",
+				sortingType : 'desc',
+				editor : 'text'
+			}, {
+				header: '판날',
 			    name: 'SELL_DATE',
 			    renderer : {
 					type: datetimeRenderer,

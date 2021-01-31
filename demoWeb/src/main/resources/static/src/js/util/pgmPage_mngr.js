@@ -143,6 +143,9 @@ class PgmPageMngr {
     		this.makeDebug(uuid);   
     	}
     }
+    getEl(){
+    	return this.container;
+    }
     
     makeDebug(uuid){
     	var div_height =$( "#"+uuid+"_debug_log" ).height()+4;
@@ -208,7 +211,7 @@ class PgmPageMngr {
     	console.log('p_url=>'+p_url);
     	console.log('p_param=>'+p_param);
     	console.log('p_funtion=>'+p_funtion);
-    	AjaxMngr.send_api_post_ajax(p_url, p_param, p_funtion);
+    	AjaxMngr.send_api_post_ajax(p_url, p_param, p_funtion,this.uuid);
     }
     send_sync(p_url, p_param, p_funtion){
     	console.log('p_url=>'+p_url);

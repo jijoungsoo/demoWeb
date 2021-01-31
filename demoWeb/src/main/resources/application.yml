@@ -10,7 +10,7 @@ server:
       enabled: true
       force: true
   tomcat:
-    uri-encoding: UTF-8
+    uri-encoding: UTF-8   
 spring.mandatory-file-encoding: UTF-8
 ####HTML 한글깨짐을 고칠수가 없었다.
       
@@ -23,8 +23,14 @@ spring:
       flush-mode: on-save
       namespace: spring:session
   profiles:
-    active: dev      
-       
+    active: dev
+#https://gofnrk.tistory.com/36
+  servlet:      
+    multipart:
+      file-size-threshold: 1MB    #1M이하면 메모리에 
+      location: C:/Temp           #1M이상이면 이경로에 이걸 안해주면  System.getProperty("java.io.tmpdir"); 
+      max-file-size: 100MB
+      max-request-size: 100MB
 server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초
 
 logging:
@@ -94,3 +100,4 @@ spring.cache.ehcache.config: classpath:ehcache.xml
 #    health: 
 #      show-details: always
 #    shutdown.enabled: true
+

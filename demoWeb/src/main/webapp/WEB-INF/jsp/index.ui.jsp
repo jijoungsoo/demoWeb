@@ -24,7 +24,8 @@
 				      </ul>
 				      <form class="d-flex" id="form_top_buttons">
 				      
-				      <input type="button" name="stockdataloader" id="stockdataloader" value="Stock Data Loader"  class="btn btn-outline-success" />
+				      	<input type="button" name="swagger-ui" id="swagger-ui" value="swagger-ui"  class="btn btn-outline-success" />
+				        <input type="button" name="stockdataloader" id="stockdataloader" value="Stock Data Loader"  class="btn btn-outline-success" />
 				      	<input type="button" name="erd" id="erd" value="ERD"  class="btn btn-outline-info" />
 				      	<input type="button" name="actuator" id="actuator" value="actuator"  class="btn btn-outline-success" />
 				        <input type="button" name="logOut" id="logOut" value="로그아웃"  class="btn btn-outline-danger" />

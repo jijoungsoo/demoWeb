@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
-import com.example.demo.cm.utils.PjtUtil;
+import com.example.demo.utils.PjtUtil;
 import com.example.demo.exception.BizException;
 import com.example.demo.service.GoRestService;
 import com.example.demo.user.domain.UserInfo;

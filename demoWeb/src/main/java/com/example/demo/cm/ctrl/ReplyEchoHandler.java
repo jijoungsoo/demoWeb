@@ -13,7 +13,7 @@ import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
-import com.example.demo.cm.utils.PjtUtil;
+import com.example.demo.utils.PjtUtil;
 
 
 public class ReplyEchoHandler extends TextWebSocketHandler {

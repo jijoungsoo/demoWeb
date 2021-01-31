@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.util.WebUtils;
 
-import com.example.demo.cm.utils.PjtUtil;
+import com.example.demo.utils.PjtUtil;
 import com.example.demo.security.login.CustomUrlAuthenticationSuccessHandler;
 import com.example.demo.user.domain.UserInfoDto;
 import com.example.demo.user.domain.UserService;

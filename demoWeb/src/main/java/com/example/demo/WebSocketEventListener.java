@@ -15,7 +15,7 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
-import com.example.demo.cm.utils.PjtUtil;
+import com.example.demo.utils.PjtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 @Component

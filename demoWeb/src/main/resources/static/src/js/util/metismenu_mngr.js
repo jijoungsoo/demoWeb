@@ -132,7 +132,7 @@ class MetismenuMngr {
 				brRs : 'OUT_DATA'
 		}
 		let _this = this;
-		AjaxMngr.send_api_post_ajax('findFavMenuByUserNo', param,  function(data) {
+		AjaxMngr.send_api_post_ajax('BR_CM_FAV_MENU_FIND_BY_USER_NO', param,  function(data) {
 			if(data){
 			    let fav_menu_template_html = $("#fav_menu-template").html();
 			    let fav_menu_template = Handlebars.compile(fav_menu_template_html);

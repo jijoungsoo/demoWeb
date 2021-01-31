@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.cm.utils.PjtUtil;
+import com.example.demo.utils.PjtUtil;
 import com.example.demo.exception.BizException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -51,7 +51,7 @@ public class MainPageService {
 			IN_DS.put("brRq","");
 			IN_DS.put("brRs","OUT_DATA");
 			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-			String jsonOutString = goRestS.callAPI("findMainMenuRoot", jsonInString);
+			String jsonOutString = goRestS.callAPI("BR_CM_MAIN_FIND_TREE", jsonInString);
 			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
 			OUT_DATA= outDs.get("OUT_DATA");
 		} catch (BizException e) {
@@ -73,7 +73,7 @@ public class MainPageService {
 			IN_DS.put("brRs","OUT_DATA,OUT_CHILD_DATA");
 
 			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-			String jsonOutString = goRestS.callAPI("findMainPgm", jsonInString);
+			String jsonOutString = goRestS.callAPI("BR_CM_MAIN_FIND_PGM", jsonInString);
 			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
 		} catch (BizException e) {
 			// TODO Auto-generated catch block

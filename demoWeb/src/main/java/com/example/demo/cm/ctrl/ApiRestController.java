@@ -29,7 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
-import com.example.demo.cm.utils.PjtUtil;
+import com.example.demo.utils.PjtUtil;
 import com.example.demo.exception.BizException;
 import com.example.demo.service.GoRestService;
 import com.example.demo.user.domain.UserInfo;
@@ -114,10 +114,9 @@ public class ApiRestController {
 		 log.info("jsonInString=>"+jsonInString);
 		 String jsonOutString=null;
 		 
-		 MsgDebugInfo msg = makeLSession(br,jsonInString,authentication);
+		MsgDebugInfo msg = PjtUtil.makeLSession(br,jsonInString,authentication);
 
-
-		 HashMap<String, Object> result = new HashMap<String, Object>();
+		HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
 			jsonOutString = goService.callAPI(br, msg.IN_DATA_JSON);
 		} catch (HttpClientErrorException | HttpServerErrorException e) {
@@ -167,43 +166,7 @@ public class ApiRestController {
 	        } 
 	 }
 	 
-	  private MsgDebugInfo makeLSession(String br, String jsonInString,Authentication authentication) throws JsonMappingException, JsonProcessingException {
-	      /*
-          출처: https://itstory.tk/entry/Spring-Security-현재-로그인한-사용자-정보-가져오기 [덕's IT Story]
-	     */
-	      UserInfo userInfo = (UserInfo) authentication.getPrincipal();
-	      long USER_NO=userInfo.getUserNo();
-	      String USER_ID=userInfo.getUserNm();
-	      String EMAIL=userInfo.getEmail();
-	      HashMap<String,Object>  inDs= PjtUtil.JsonStringToObject(jsonInString, HashMap.class );
-	      /*세션은 하나이지만... 약속때문에..  list 에 담는다.*/
-	      ArrayList<HashMap<String,Object>> ses_al = new ArrayList<HashMap<String,Object>>();
-	      HashMap<String,Object>  sess = new HashMap<String,Object>();
-	      sess.put("USER_NO", String.valueOf(USER_NO));
-	      sess.put("USER_ID", USER_ID);
-	      ses_al.add(sess);
-	      String UUID = (String) inDs.get("UUID");
-	      String brRq=(String) inDs.get("brRq");
-	      brRq = brRq+",LSESSION";
-	      inDs.put("UUID", UUID);
-	      inDs.put("brRq", brRq);
-	      inDs.put("LSESSION", ses_al);
-	      
-
-	      
-	      String sessionJsonInString  = PjtUtil.ObjectToJsonString(inDs);
-	      
-	      MsgDebugInfo  m = new MsgDebugInfo();
-	      m.Br=br;
-          m.IN_DATA_JSON=sessionJsonInString;
-	      
-	      if(UUID!=null) {
-	          int SEQ = (int) inDs.get("SEQ");
-	          m.UUID=UUID;
-              m.SEQ=SEQ;
-	      }
-          return m;
-        }
+	  
 
     @PostMapping("/refresh")
 	   

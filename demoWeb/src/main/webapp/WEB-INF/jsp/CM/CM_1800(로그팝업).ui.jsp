@@ -1,6 +1,6 @@
 <%@ page import="java.util.* "%>
 <%@ page import="com.example.demo.cm.ctrl.*" %>
-<%@ page import="com.example.demo.cm.utils.*" %>
+<%@ page import="com.example.demo.utils.*" %>
 
 <%
 	HashMap<String, String> hm = (HashMap<String, String>) request.getAttribute("req_hm");

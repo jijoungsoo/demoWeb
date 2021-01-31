@@ -291,24 +291,7 @@ $(document).ready(function(){
 				align : "right",
 				sortingType : 'desc',
 				editor : 'text'	
-			}, {
-				header : '총증감율',
-				name : 'TOT_BNFT_RT',
-				renderer : {
-					type: commaStRenderer,
-					options : {
-						src : 'TOT_BAL_AMT',
-						tgt : 'TOT_BAL_CURR_AMT'
-					}
-				},
-				width : 120,
-				sortable : true,
-				align : "right",
-				sortingType : 'desc',
-				editor : 'text'				
 			},{
-				
-				
 			    header: '산날',
 			    name: 'BUY_DATE',
 			    renderer : {

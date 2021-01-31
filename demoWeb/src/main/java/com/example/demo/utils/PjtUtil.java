@@ -1,4 +1,4 @@
-package com.example.demo.cm.utils;
+package com.example.demo.utils;
 
 import java.nio.ByteBuffer;
 import java.security.AlgorithmParameters;
@@ -22,9 +22,12 @@ import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.cm.ctrl.ApiResultMap;
+import com.example.demo.cm.ctrl.MsgDebugInfo;
+import com.example.demo.user.domain.UserInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -195,4 +198,42 @@ public class PjtUtil {
 
         return responseBody;
     }
+    
+    public static MsgDebugInfo makeLSession(String br, String jsonInString,Authentication authentication) throws JsonMappingException, JsonProcessingException {
+        /*
+        출처: https://itstory.tk/entry/Spring-Security-현재-로그인한-사용자-정보-가져오기 [덕's IT Story]
+       */
+        UserInfo userInfo = (UserInfo) authentication.getPrincipal();
+        long USER_NO=userInfo.getUserNo();
+        String USER_ID=userInfo.getUserNm();
+        String EMAIL=userInfo.getEmail();
+        HashMap<String,Object>  inDs= PjtUtil.JsonStringToObject(jsonInString, HashMap.class );
+        /*세션은 하나이지만... 약속때문에..  list 에 담는다.*/
+        ArrayList<HashMap<String,Object>> ses_al = new ArrayList<HashMap<String,Object>>();
+        HashMap<String,Object>  sess = new HashMap<String,Object>();
+        sess.put("USER_NO", String.valueOf(USER_NO));
+        sess.put("USER_ID", USER_ID);
+        ses_al.add(sess);
+        String UUID = (String) inDs.get("UUID");
+        String brRq=(String) inDs.get("brRq");
+        brRq = brRq+",LSESSION";
+        inDs.put("UUID", UUID);
+        inDs.put("brRq", brRq);
+        inDs.put("LSESSION", ses_al);
+        
+
+        
+        String sessionJsonInString  = PjtUtil.ObjectToJsonString(inDs);
+        
+        MsgDebugInfo  m = new MsgDebugInfo();
+        m.setBr(br);
+        m.setIN_DATA_JSON(sessionJsonInString);
+        
+        if(UUID!=null) {
+            int SEQ = (int) inDs.get("SEQ");
+            m.setUUID(UUID);
+            m.setSEQ(SEQ);
+        }
+        return m;
+      }
 }

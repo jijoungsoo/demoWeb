@@ -16,10 +16,11 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[{}]
 				}
-			_this.send_sync('findPgm', param, function(data) {
+			_this.send_sync('BR_CM_PGM_FIND', param, function(data) {
 				if (data) {
 					console.log(data.OUT_DATA);
 					if(data.OUT_DATA){
+					grid_arr_data_pgm.push({ value: '' , text: "빈것" })
 						for(var i =0;i<data.OUT_DATA.length;i++){
 							var tmp =data.OUT_DATA[i];
 							grid_arr_data_pgm.push({ value: tmp.PGM_ID , text: "["+tmp.PGM_ID+"]"+tmp.PGM_NM  })
@@ -243,16 +244,15 @@ $(document).ready(function(){
 				switch (el.target.name) {
 				case 'search':
 					var param = {
-						brRq : 'IN_DATA',
-						brRs : 'OUT_DATA',
-						IN_DATA : [ {} ]
+						brRq : '',
+						brRs : 'OUT_DATA'
 					}
-					grid.loadData('findMenu', param, function(data) {
+					grid.loadData('BR_CM_MENU_FIND', param, function(data) {
 						console.log(data);
 						//gridLoadData에서 자동으로 로드됨..
 
 					});
-					_this.send('findMenuRoot', param, function(data) {
+					_this.send('BR_CM_MENU_FIND_TREE', param, function(data) {
 						console.log(data);
 						grid_tree.resetData(data.OUT_DATA);
 
@@ -286,7 +286,7 @@ $(document).ready(function(){
 							IN_DATA : data.createdRows,
 							UPDT_DATA : data.updatedRows
 						}
-						_this.send('saveMenu', param, function(data) {
+						_this.send('BR_CM_MENU_SAVE', param, function(data) {
 							console.log(data);
 							if (data) {
 								Message.alert('저장되었습니다.', function() {
@@ -307,7 +307,7 @@ $(document).ready(function(){
 					for (var i = 0; i < data.length; i++) {
 						var row = data[i];
 						in_data.push({
-							MENU_CD : row.MENU_CD
+							MENU_NO : row.MENU_NO
 						});
 					}
 					Message.confirm('삭제하시겠습니까?', function() {
@@ -316,7 +316,7 @@ $(document).ready(function(){
 							brRs : '',
 							IN_DATA : in_data
 						}
-						_this.send('rmMenu', param, function(data) {
+						_this.send('BR_CM_MENU_RM', param, function(data) {
 							if(data) {
 								Message.alert('삭제되었습니다.', function() {
 									searchForm.get("search").trigger("click");

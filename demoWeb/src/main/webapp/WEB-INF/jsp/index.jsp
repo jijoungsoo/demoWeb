@@ -37,7 +37,7 @@ $(document).ready(function(){
 		%>var two_menu_item = {<%
 		        	%>MENU_CD: '<%=TWO_DATA_ROW.get("MENU_CD") %>'<%
 					%> ,MENU_NM: '<%=TWO_DATA_ROW.get("MENU_NM") %>' ,THREE_DATA: [] };
-			one_menu_item['TWO_DATA'].push(two_menu_item)<%	
+			one_menu_item['TWO_DATA'].push(two_menu_item);<%	
 			ArrayList<HashMap<String, Object>> THREE_DATA = (ArrayList<HashMap<String, Object>>)TWO_DATA_ROW.get("_children");
 				if(THREE_DATA!=null) {
 				    for(int k=0;k<THREE_DATA.size();k++){
@@ -96,6 +96,12 @@ $(document).ready(function(){
 		case 'stockdataloader':
 			Message.confirm("stockdataloader github를 열겠습니까?",function(data){
 			  	window.open('https://github.com/jijoungsoo/stockdataloader','stockdataloader');
+			}); 
+			break;
+			
+		case 'swagger-ui':
+			Message.confirm("stockdataloader github를 열겠습니까?",function(data){
+			  	window.open('http://localhost:8091/swagger-ui/index.html','swagger-ui');
 			}); 
 			break;
 		
