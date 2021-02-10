@@ -269,7 +269,7 @@ $(document).ready(function(){
 					brRs : 'OUT_DATA',
 					IN_DATA : [ data ]
 				}
-				grid.loadData('findStckSell',param,function(data) {
+				grid.loadData('BR_STCK_SELL_FIND',param,function(data) {
 					console.log(data);
 				});
 				break;
@@ -288,7 +288,7 @@ $(document).ready(function(){
 						brRs : '',
 						IN_DATA : data
 					}
-					_this.send('rmStckSell', param, function(data) {
+					_this.send('BR_STCK_SELL_RM', param, function(data) {
 						if(data) {
 							Message.alert('내가 판 주식이 삭제되었습니다.', function() {
 								searchForm.get("search").trigger("click");

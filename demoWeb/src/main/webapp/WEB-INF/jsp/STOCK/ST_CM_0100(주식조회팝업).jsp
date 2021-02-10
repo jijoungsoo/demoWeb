@@ -15,7 +15,7 @@ $(document).ready(function(){
 				IN_DATA : [ { GRP_CD : 'MARKET'
 					,USE_YN : 'Y' } ]
 		}
-		_this.send('findCmCd', param, function(data) {
+		_this.send('BR_CM_CD_FIND', param, function(data) {
 			_this.hideProgress();
 			if (data) {
 				//콤보박스 세팅
@@ -174,7 +174,7 @@ $(document).ready(function(){
 					brRs : 'OUT_DATA',
 					IN_DATA : [ data ]
 				}
-				grid.loadData('findKiwMst',param,function(data) {
+				grid.loadData('BR_KIW_MST_FIND',param,function(data) {
 					console.log(data);
 				});
 				break;

@@ -8,22 +8,64 @@ $(document).ready(function(){
 	var AV_1100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
 	AV_1100.init(function(p_param) {
 		var _this = AV_1100;
+		var up_uploader_el = _this.get("excel_upld")
+		var fileMngr = new FileMngr(_this,up_uploader_el,{
+		    extFilter: ['xls','xlsx'],
+			onBeforeUpload: function(id){
+			  _this.showProgress();
+			},
+			onFileExtError: function(file){
+				console.log(file);
+				Message.alert("xls,xlsx 확장자만 업로드 가능합니다.");
+		        return;
+				
+			},
+			onUploadSuccess: function(id, data){
+				_this.hideProgress();
+				Message.confirm('xls,xlsx파일이 업로드 되었습니다. 엑셀 데이터를 반영하시겠습니까?',function()  {
+					console.log('aaaa');
+					console.log(data);
+					if(data.length>0){
+			        	var file_id = data[0].fileId;
+			        	_this.showProgress();
+			        	ExcelMngr.saveExcel(file_id, function(data2) {
+							if (data2) {
+								var param = {
+										brRq : 'IN_DATA',
+										brRs : 'OUT_DATA',
+										IN_DATA : [ { FILE_ID : file_id } ]
+								}
+								_this.send('BR_AV_ACTR_EXCEL_SAVE', param, function(data) {
+									if (data) {
+									}
+								});
+							
+								_this.hideProgress();
+								searchForm.get("search").trigger("click");
+							}
+						});
+			        }	
+				});
+			}
+		});
+		fileMngr.build();
+		
 		var searchForm = new FormMngr(_this, "search_area");
 		var param = {
 				brRq : 'IN_DATA',
 				brRs : 'OUT_DATA',
-				IN_DATA : [ { GRP_CD : 'MSC_CD'
+				IN_DATA : [ { GRP_CD : 'MSC_YN'
 					,USE_YN : 'Y' } ]
 		}
 		//콤보박스 세팅
-		var grid_arr_data_msc_cd = []
-		_this.send_sync('findCmCd', param, function(data) {
+		var grid_arr_data_msc_yn = []
+		_this.send_sync('BR_CM_CD_FIND', param, function(data) {
 			if (data) {
 				console.log(data.OUT_DATA);
 				if(data.OUT_DATA){
 					for(var i =0;i<data.OUT_DATA.length;i++){
 						var tmp =data.OUT_DATA[i];
-						grid_arr_data_msc_cd.push({ value: tmp.CD , text: tmp.CD_NM  })
+						grid_arr_data_msc_yn.push({ value: tmp.CD , text: tmp.CD_NM  })
 					}
 				}
 			}
@@ -37,7 +79,7 @@ $(document).ready(function(){
 		}
 		//콤보박스 세팅
 		var grid_arr_data_sex = []
-		_this.send_sync('findCmCd', param, function(data) {
+		_this.send_sync('BR_CM_CD_FIND', param, function(data) {
 			if (data) {
 				console.log(data.OUT_DATA);
 				if(data.OUT_DATA){
@@ -162,8 +204,8 @@ $(document).ready(function(){
 		           width: 100,
 		           editor: 'text'
 		         },{
-					header : '모자이크상태',
-					name : 'MSC_CD',
+					header : '모자이크여부',
+					name : 'MSC_YN',
 					width : 200,
 					sortable : true,
 					align : "center",
@@ -172,7 +214,7 @@ $(document).ready(function(){
 		            editor: {
 		               type: 'select',
 		               options: {
-		                 listItems: grid_arr_data_msc_cd
+		                 listItems: grid_arr_data_msc_yn
 		               }
 		            }
 		            ,validation: {
@@ -206,7 +248,7 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[{}]
 				}
-		    	grid.loadData('findAvActr',param,function(data){
+		    	grid.loadData('BR_AV_ACTR_FIND',param,function(data){
 			    	console.log(data);
 			    	//gridLoadData에서 자동으로 로드됨..
 		        	
@@ -242,7 +284,7 @@ $(document).ready(function(){
 		    			,UPDT_DATA	: data.updatedRows
 					}
 		    		_this.showProgress();					
-		    		_this.send('saveAvActr',param,function(data){
+		    		_this.send('BR_AV_ACTR_SAVE',param,function(data){
 		    			_this.hideProgress();
 		    			if(data){
 		    				Message.alert('저장되었습니다.',function()  {
@@ -268,17 +310,28 @@ $(document).ready(function(){
 						,IN_DATA: data
 					}
 		        	_this.showProgress();
-			        _this.send('rmAvActr',param,function(data){
+			        _this.send('BR_AV_ACTR_RM',param,function(data){
 			        	_this.hideProgress();
 			        	if(data){
 			        		Message.alert('삭제되었습니다.',function()  {
 				        		searchForm.get("search").trigger("click");
 				        	});
 				        }
-			        	
 			        });
 				});
 		  		break;
+		  	case "excel_dwnld":
+		  		var param ={
+						brRq 		: 'IN_DATA'
+						,brRs 		: 'OUT_DATA'
+						,IN_DATA	: [{}]
+				}
+		  		ExcelMngr.downExcel('BR_AV_ACTR_EXCEL_DWNLD',
+		  		param,
+		  		function(data){
+		  			
+		  		});
+	  			break;
 	  	   }
 	  	});
 	  	searchForm.get("search").trigger("click");

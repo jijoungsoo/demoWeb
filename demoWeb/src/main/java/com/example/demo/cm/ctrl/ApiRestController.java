@@ -119,52 +119,30 @@ public class ApiRestController {
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
 			jsonOutString = goService.callAPI(br, msg.IN_DATA_JSON);
-		} catch (HttpClientErrorException | HttpServerErrorException e) {
-            result.put("statusCode", e.getRawStatusCode());
-            result.put("body"  , e.getStatusText());
-            e.printStackTrace();
-            //https://owin2828.github.io/devlog/2019/12/30/spring-16.html
-            saveSesstionDebugMsg(msg,PjtUtil.ObjectToJsonString(result),session);
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            		.body("서버오류가 발생하였습니다.(HTTP)");
-		}catch (BizException e) {
+		} catch (HttpClientErrorException e) {
                 result.put("statusCode", "999");
                 result.put("body"  , e.getMessage());
                 e.printStackTrace();
                 //https://owin2828.github.io/devlog/2019/12/30/spring-16.html
                 
-                saveSesstionDebugMsg(msg,PjtUtil.ObjectToJsonString(result),session);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                PjtUtil.saveSesstionDebugMsg(msg,PjtUtil.ObjectToJsonString(result),session);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 		.body(e.getMessage());
             
-		}	catch (Exception e) {
-            result.put("statusCode", "999");
-            result.put("body"  , "excpetion오류");
+		}	catch (HttpServerErrorException e) {
+            result.put("statusCode", e.getRawStatusCode());
+            result.put("body"  , e.getStatusText());
             e.printStackTrace();
-            saveSesstionDebugMsg(msg,PjtUtil.ObjectToJsonString(result),session);
+            //https://owin2828.github.io/devlog/2019/12/30/spring-16.html
+            PjtUtil.saveSesstionDebugMsg(msg,PjtUtil.ObjectToJsonString(result),session);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body("서버오류가 발생하였습니다.(Exception)");
-            
+                    .body(e.getMessage());
         }
-		saveSesstionDebugMsg(msg,jsonOutString,session);		
+		PjtUtil.saveSesstionDebugMsg(msg,jsonOutString,session);		
 		
 	    return ResponseEntity.ok(jsonOutString);
 	 }
-	 
-	 private void saveSesstionDebugMsg(MsgDebugInfo msg,String jsonOutString,HttpSession session ) {
-	     if(msg.UUID!=null) {
-	            msg.OUT_DATA_JSON=jsonOutString;
-	            Queue<MsgDebugInfo> que = (LinkedList<MsgDebugInfo>) session.getAttribute("UUID_DEBUG_LOG");
-	            if(que==null) {
-	                que = new LinkedList<MsgDebugInfo>();
-	            }
-	            while(que.size()>10) {
-	                que.poll();
-	            }
-	            que.add(msg);
-	            session.setAttribute("UUID_DEBUG_LOG",que);             
-	        } 
-	 }
+	
 	 
 	  
 

@@ -135,12 +135,17 @@ $(document).ready(function(){
 			grid_cm_grp_cd.build();
 
 			grid_cm_grp_cd.on('click', (ev) => {
-				//ev.rowKey === 3 
-				//ev.columnName === 'col1'
 				if (ev.rowKey >=0) {
-					//var row_data=grid_cm_grp_cd.getRow(ev.rowKey);
-					//console.log(row_data);
-					cmCdSearchForm.get("cm_cd_search").trigger("click");
+					
+					if(ev.columnName=='GRP_CD'){
+						var row_data=grid_cm_grp_cd.getRow(ev.rowKey);
+						if(PjtUtil.isEmpty(row_data.GRP_CD)==false){
+							cmCdSearchForm.get("cm_cd_search").trigger("click");
+						}
+						
+						
+					}
+					
 				}
 			});
 
@@ -292,7 +297,7 @@ $(document).ready(function(){
 						brRs : 'OUT_DATA',
 						IN_DATA : [ {} ]
 					}
-					grid_cm_grp_cd.loadData('findCmGrpCd', param, function(data) {
+					grid_cm_grp_cd.loadData('BR_CM_GRP_CD_FIND', param, function(data) {
 						console.log(data);
 						grid_cm_cd.clear();
 						//gridLoadData에서 자동으로 로드됨..
@@ -327,7 +332,7 @@ $(document).ready(function(){
 							IN_DATA : data.createdRows,
 							UPDT_DATA : data.updatedRows
 						}
-						_this.send('saveCmGrpCd', param, function(data) {
+						_this.send('BR_CM_GRP_CD_SAVE', param, function(data) {
 							if(data){
 								Message.alert('공통그룹이 저장되었습니다.', function() {
 									cmGrpCdSearchForm.get("cm_grp_cd_search").trigger("click");
@@ -337,7 +342,7 @@ $(document).ready(function(){
 					});
 					break;
 				case "cm_grp_cd_del":
-					var data = grid_cm_grp.getCheckedData();
+					var data = grid_cm_grp_cd.getCheckedData();
 					console.log(data);
 					if (data.length <= 0) {
 						Message.alert('선택된 항목이 없습니다.');
@@ -350,10 +355,10 @@ $(document).ready(function(){
 							brRs : '',
 							IN_DATA : data
 						}
-						_this.send('rmCmGrpCd', param, function(data) {
+						_this.send('BR_CM_GRP_CD_RM', param, function(data) {
 							if(data) {
 								Message.alert('공통그룹이 삭제되었습니다.', function() {
-									cmGrpSearchForm.get("cm_grp_cd_search").trigger("click");
+									cmGrpCdSearchForm.get("cm_grp_cd_search").trigger("click");
 								});
 							}
 						});
@@ -379,7 +384,7 @@ $(document).ready(function(){
 						brRs : 'OUT_DATA',
 						IN_DATA : [ { GRP_CD : row.GRP_CD } ]
 					}
-					grid_cm_cd.loadData('findCmCd', param, function(data) {
+					grid_cm_cd.loadData('BR_CM_CD_FIND', param, function(data) {
 						console.log(data);
 						//gridLoadData에서 자동으로 로드됨..
 
@@ -421,7 +426,7 @@ $(document).ready(function(){
 							IN_DATA : data.createdRows,
 							UPDT_DATA : data.updatedRows
 						}
-						_this.send('saveCmCd', param, function(data) {
+						_this.send('BR_CM_CD_SAVE', param, function(data) {
 							if(data){
 								Message.alert('저장되었습니다.', function() {
 									cmCdSearchForm.get("cm_cd_search").trigger("click");
@@ -443,7 +448,7 @@ $(document).ready(function(){
 							brRs : '',
 							IN_DATA : data
 						}
-						_this.send('rmCmCd', param, function(data) {
+						_this.send('BR_CM_CD_RM', param, function(data) {
 							if(data) {
 								Message.alert('삭제되었습니다.', function() {
 									cmCdSearchForm.get("cm_cd_search").trigger("click");

@@ -55,10 +55,16 @@ $(document).ready(function(){
 				onUploadSuccess: function(id, data){
 				  // A file was successfully uploaded
 				  alert('onUploadSuccess');
+				  console.log('onUploadSuccess11')
+				  console.log(id)
+				  console.log(data)
+				  console.log('onUploadSuccess2')
 				  ui_add_log(div_el,'Server Response for file #' + id + ': ' + JSON.stringify(data));
 				  ui_add_log(div_el,'Upload of file #' + id + ' COMPLETED', 'success');
 				  ui_multi_update_file_status(div_el, 'success', 'Upload Complete');
 				  ui_multi_update_file_progress(div_el,id, 100, 'success', false);
+				  
+				  _this.close(data);
 				},
 				onUploadError: function(id, xhr, status, message){
 				  // Happens when an upload error happens

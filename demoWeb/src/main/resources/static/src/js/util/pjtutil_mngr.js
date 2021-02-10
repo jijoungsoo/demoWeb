@@ -1,6 +1,9 @@
 'use strict';
 class PjtUtil{
 	static isEmpty(param) {
+		if(null===param){
+			return true; 
+		}
 		if(undefined===param){
 			return true; 
 		}

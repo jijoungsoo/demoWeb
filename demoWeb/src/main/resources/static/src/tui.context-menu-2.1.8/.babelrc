@@ -1,0 +1,9 @@
+{
+    "presets": ["@babel/preset-env"],
+    "plugins": [
+        ["@babel/plugin-transform-classes", {"loose": true}],
+        ["@babel/plugin-transform-modules-commonjs", {"loose": true}],
+        "@babel/plugin-transform-property-literals",
+        "@babel/plugin-transform-member-expression-literals"
+    ]
+}

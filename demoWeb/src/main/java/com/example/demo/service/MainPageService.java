@@ -54,9 +54,6 @@ public class MainPageService {
 			String jsonOutString = goRestS.callAPI("BR_CM_MAIN_FIND_TREE", jsonInString);
 			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
 			OUT_DATA= outDs.get("OUT_DATA");
-		} catch (BizException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,14 +67,11 @@ public class MainPageService {
 		try {
 			HashMap<String,Object> IN_DS = new HashMap<String,Object>();
 			IN_DS.put("brRq","");
-			IN_DS.put("brRs","OUT_DATA,OUT_CHILD_DATA");
+			IN_DS.put("brRs","OUT_DATA");
 
 			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-			String jsonOutString = goRestS.callAPI("BR_CM_MAIN_FIND_PGM", jsonInString);
+			String jsonOutString = goRestS.callAPI("BR_CM_MAIN_PGM_FIND", jsonInString);
 			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
-		} catch (BizException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -87,14 +81,28 @@ public class MainPageService {
 		return OUT_DATA; 
     }
 
-    public HashMap<String, Object> findPgmList(){
-        HashMap<String, Object> pgmLink =new HashMap<String, Object>();
-        
-        ArrayList<HashMap<String, Object>> cmPgmList=this.findMainPgm();
-        for(int i=0;i<cmPgmList.size();i++) {
-            HashMap<String, Object> tmp =cmPgmList.get(i);
-            pgmLink.put(tmp.get("PGM_ID").toString(), tmp);
+    public HashMap<String, Object> findPgmList(String PGM_ID){
+        HashMap<String,ArrayList<HashMap<String,Object>>> outDs = new HashMap<String,ArrayList<HashMap<String,Object>>>();
+        try {
+            HashMap<String,Object> IN_DS = new HashMap<String,Object>();
+            IN_DS.put("brRq","IN_DATA");
+            IN_DS.put("brRs","OUT_DATA");
+            
+            ArrayList<HashMap<String,Object>> al  = new ArrayList<HashMap<String,Object>>();
+            HashMap<String,Object> IN_DATA_ROW = new HashMap<String,Object>();
+            IN_DATA_ROW.put("PGM_ID", PGM_ID);
+            al.add(IN_DATA_ROW);
+            IN_DS.put("IN_DATA",al);
+
+            String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
+            String jsonOutString = goRestS.callAPI("BR_CM_MAIN_PGM_FIND_BY_PGM_ID", jsonInString);
+            outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
+        } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-        return pgmLink;
+        HashMap<String, Object> pgmLink =new HashMap<String, Object>();
+        ArrayList<HashMap<String,Object>> OUT_DATA= outDs.get("OUT_DATA");
+        return OUT_DATA.get(0); 
     }
 }

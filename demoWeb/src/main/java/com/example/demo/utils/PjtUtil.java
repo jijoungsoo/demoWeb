@@ -10,6 +10,8 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.Queue;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -17,6 +19,8 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.codec.net.URLCodec;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +54,26 @@ public class PjtUtil {
         return dateformat1.format(inDate);
     }
 
-
+    
+    public static String getBrowser(HttpServletRequest request) {
+        String header = request.getHeader("User-Agent");
+        if (header != null) {
+         if (header.indexOf("Trident") > -1) {
+          return "MSIE";
+         } else if (header.indexOf("Chrome") > -1) {
+          return "Chrome";
+         } else if (header.indexOf("Opera") > -1) {
+          return "Opera";
+         } else if (header.indexOf("iPhone") > -1
+           && header.indexOf("Mobile") > -1) {
+          return "iPhone";
+         } else if (header.indexOf("Android") > -1
+           && header.indexOf("Mobile") > -1) {
+          return "Android";
+         }
+        }
+        return null;
+    }
 
     public static boolean isEmpty(String tmp) {
         if (tmp == null) {
@@ -209,17 +232,15 @@ public class PjtUtil {
         String EMAIL=userInfo.getEmail();
         HashMap<String,Object>  inDs= PjtUtil.JsonStringToObject(jsonInString, HashMap.class );
         /*세션은 하나이지만... 약속때문에..  list 에 담는다.*/
-        ArrayList<HashMap<String,Object>> ses_al = new ArrayList<HashMap<String,Object>>();
         HashMap<String,Object>  sess = new HashMap<String,Object>();
         sess.put("USER_NO", String.valueOf(USER_NO));
         sess.put("USER_ID", USER_ID);
-        ses_al.add(sess);
         String UUID = (String) inDs.get("UUID");
         String brRq=(String) inDs.get("brRq");
         brRq = brRq+",LSESSION";
         inDs.put("UUID", UUID);
         inDs.put("brRq", brRq);
-        inDs.put("LSESSION", ses_al);
+        inDs.put("LSESSION", sess);
         
 
         
@@ -236,4 +257,22 @@ public class PjtUtil {
         }
         return m;
       }
+    
+    
+
+    
+    public static void saveSesstionDebugMsg(MsgDebugInfo msg,String jsonOutString,HttpSession session ) {
+        if(msg.getUUID()!=null) {
+               msg.setOUT_DATA_JSON(jsonOutString);
+               Queue<MsgDebugInfo> que = (LinkedList<MsgDebugInfo>) session.getAttribute("UUID_DEBUG_LOG");
+               if(que==null) {
+                   que = new LinkedList<MsgDebugInfo>();
+               }
+               while(que.size()>10) {
+                   que.poll();
+               }
+               que.add(msg);
+               session.setAttribute("UUID_DEBUG_LOG",que);             
+           } 
+    }
 }

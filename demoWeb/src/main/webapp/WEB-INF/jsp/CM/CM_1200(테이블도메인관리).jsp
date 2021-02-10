@@ -23,8 +23,7 @@ $(document).ready(function(){
 	           width: 100,
 	           resizable: false,
 	           sortable: true,
-	           sortingType: 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-	           editor: 'text'
+	           sortingType: 'desc' /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
 	         },
 		       {
 		           header: '도메인명',
@@ -67,7 +66,7 @@ $(document).ready(function(){
 				  validation: {
 				    dataType: 'string',  /*string ,number*/
 				    required: true,    /*  true 필수, false 필수아님  */
-				    unique: true   /*true 데이터가 중복되면 빨간색 표시 */
+				    unique: false   /*true 데이터가 중복되면 빨간색 표시 */
 				  },
 				  editor: 'text'
 				 },
@@ -82,7 +81,7 @@ $(document).ready(function(){
 				   validation: {
 				     dataType: 'string',  /*string ,number*/
 				     required: true,    /*  true 필수, false 필수아님  */
-				     unique: true   /*true 데이터가 중복되면 빨간색 표시 */
+				     unique: false   /*true 데이터가 중복되면 빨간색 표시 */
 				   },
 				   editor: 'text'
 				 },
@@ -119,12 +118,8 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[{}]
 				}
-				console.log('aaaaaaaaaaaaaaaaaa')
-		    	grid.loadData('findDomain',param,function(data){
-		    		console.log('bbbbbbbbb')
-			    	console.log(data);
-			    	//gridLoadData에서 자동으로 로드됨..
-		        	
+		    	grid.loadData('BR_CM_DOMAIN_FIND',param,function(data){
+
 		    	});
                break;
            case 'add_row':
@@ -157,7 +152,7 @@ $(document).ready(function(){
 		    			,UPDT_DATA	: data.updatedRows
 					}
 				    _this.showProgress();
-		    		_this.send('saveDomain',param,function(data){
+		    		_this.send('BR_CM_DOMAIN_SAVE',param,function(data){
 			        	_this.hideProgress();
 			        	if(data){
 			        		Message.alert('저장되었습니다.',function()  {
@@ -179,17 +174,17 @@ $(document).ready(function(){
 			    for (var i=0;i<data.length;i++){
 			    	var row = data[i];
 			    	in_data.push({
-			    		DMN_CD 		: row.DMN_CD
+			    		DMN_NO 		: row.DMN_NO
 			    	});
 				}
 		        Message.confirm('삭제하시겠습니까?',function()  {
 			        var param ={
-						brRq : 'IN_DATA'
+						brRq : 'IN_DATA,LSESSION'
 						,brRs : ''
 						,IN_DATA: in_data
 					}
 			        _this.showProgress();
-			        _this.send('rmDomain',param,function(data){
+			        _this.send('BR_CM_DOMAIN_RM',param,function(data){
 			        	_this.hideProgress();
 			        	if(data){
 			        		Message.alert('삭제되었습니다.',function()  {

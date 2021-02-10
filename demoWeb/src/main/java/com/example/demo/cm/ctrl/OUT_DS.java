@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.exception.BizException;
 
-public class OUT_DS extends LinkedHashMap<String, ArrayList<HashMap<String,Object>>> {
+public class OUT_DS extends LinkedHashMap<String, ArrayList<LinkedHashMap<String,Object>>> {
 
 }
 

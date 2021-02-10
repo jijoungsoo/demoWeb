@@ -8,6 +8,47 @@ $(document).ready(function(){
 	var AV_1200 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
 	AV_1200.init(function(p_param) {
 		var _this = AV_1200;
+		var up_uploader_el = _this.get("excel_upld")
+		var fileMngr = new FileMngr(_this,up_uploader_el,{
+		    extFilter: ['xls','xlsx'],
+			onBeforeUpload: function(id){
+			  _this.showProgress();
+			},
+			onFileExtError: function(file){
+				console.log(file);
+				Message.alert("xls,xlsx 확장자만 업로드 가능합니다.");
+		        return;
+				
+			},
+			onUploadSuccess: function(id, data){
+				_this.hideProgress();
+				Message.confirm('xls,xlsx파일이 업로드 되었습니다. 엑셀 데이터를 반영하시겠습니까?',function()  {
+					console.log('aaaa');
+					console.log(data);
+					if(data.length>0){
+			        	var file_id = data[0].fileId;
+			        	_this.showProgress();
+			        	ExcelMngr.saveExcel(file_id, function(data2) {
+							if (data2) {
+								var param = {
+										brRq : 'IN_DATA',
+										brRs : 'OUT_DATA',
+										IN_DATA : [ { FILE_ID : file_id } ]
+								}
+								_this.send('BR_AV_MV_EXCEL_SAVE', param, function(data) {
+									if (data) {
+									}
+								});
+							
+								_this.hideProgress();
+								searchForm.get("search").trigger("click");
+							}
+						});
+			        }	
+				});
+			}
+		});
+		fileMngr.build();
 		var searchForm = new FormMngr(_this, "search_area");
 		var param = {
 				brRq : 'IN_DATA',
@@ -17,7 +58,7 @@ $(document).ready(function(){
 		}
 		//콤보박스 세팅
 		var grid_arr_data_msc_cd = []
-		_this.send_sync('findCmCd', param, function(data) {
+		_this.send_sync('BR_CM_CD_FIND', param, function(data) {
 			if (data) {
 				console.log(data.OUT_DATA);
 				if(data.OUT_DATA){
@@ -37,7 +78,7 @@ $(document).ready(function(){
 		}
 		//콤보박스 세팅
 		var grid_arr_data_cptn_yn = []
-		_this.send_sync('findCmCd', param, function(data) {
+		_this.send_sync('BR_CM_CD_FIND', param, function(data) {
 			if (data) {
 				console.log(data.OUT_DATA);
 				if(data.OUT_DATA){
@@ -185,7 +226,7 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[{}]
 				}
-		    	grid.loadData('findAvMv',param,function(data){
+		    	grid.loadData('BR_AV_MV_FIND',param,function(data){
 			    	console.log(data);
 			    	//gridLoadData에서 자동으로 로드됨..
 		        	
@@ -221,7 +262,7 @@ $(document).ready(function(){
 		    			,UPDT_DATA	: data.updatedRows
 					}
 		    		_this.showProgress();					
-		    		_this.send('saveAvMv',param,function(data){
+		    		_this.send('BR_AV_MV_SAVE',param,function(data){
 		    			_this.hideProgress();
 		    			if(data){
 		    				Message.alert('저장되었습니다.',function()  {
@@ -247,7 +288,7 @@ $(document).ready(function(){
 						,IN_DATA: data
 					}
 		        	_this.showProgress();
-			        _this.send('rmAvMv',param,function(data){
+			        _this.send('BR_AV_MV_RM',param,function(data){
 			        	_this.hideProgress();
 			        	if(data){
 			        		Message.alert('삭제되었습니다.',function()  {
@@ -258,6 +299,18 @@ $(document).ready(function(){
 			        });
 				});
 		  		break;
+		  	case "excel_dwnld":
+		  		var param ={
+						brRq 		: 'IN_DATA'
+						,brRs 		: 'OUT_DATA'
+						,IN_DATA	: [{}]
+				}
+		  		ExcelMngr.downExcel('BR_AV_MV_EXCEL_DWNLD',
+		  		param,
+		  		function(data){
+		  			
+		  		});
+	  			break;
 	  	   }
 	  	});
 	  	searchForm.get("search").trigger("click");

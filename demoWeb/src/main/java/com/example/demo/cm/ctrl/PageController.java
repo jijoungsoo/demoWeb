@@ -40,9 +40,7 @@ public class PageController {
 		//pageId를 가지고 PgmLink를 가져오도록 해야한다.
 		//login 페이지 가져올때 pgmList를 가져오니가 그걸 cache에 넣자.
 		String debug = hm.get("debug");
-		
-		HashMap<String, Object> cmPgmLink=mps.findPgmList();
-		HashMap<String, Object> pgmLinkMap = (HashMap<String, Object>) cmPgmLink.get(pageId);
+		HashMap<String, Object> pgmLinkMap = mps.findPgmList(pageId);
 		
 		if(pgmLinkMap==null) {
             //pageRouter로 값을 전달해서 페이지 없음 화면이 나와야한다.
@@ -72,10 +70,7 @@ public class PageController {
         //pageId를 가지고 PgmLink를 가져오도록 해야한다.
         //login 페이지 가져올때 pgmList를 가져오니가 그걸 cache에 넣자.
         System.out.println(pageId);
-        
-        HashMap<String, Object> cmPgmLink=mps.findPgmList();
-        HashMap<String, Object> pgmLinkMap = (HashMap<String, Object>) cmPgmLink.get(pageId);
-        
+        HashMap<String, Object> pgmLinkMap = mps.findPgmList(pageId);
         if(pgmLinkMap==null) {
             //pageRouter로 값을 전달해서 페이지 없음 화면이 나와야한다.
             model.addAttribute("pgmId", pageId);

@@ -7,6 +7,7 @@
 	<script>
     /*이건 공통적용인데 spring security로 보낼때 모두 체크해야하므로 !! 넣어준다.*/
     var csrf_headerName = '${_csrf.headerName}'; 
+    var csrf_parameterName = '${_csrf.parameterName}';
 	var csrf_token = '${_csrf.token}';
 	/*이거 ajax쪽에 넣었다.*/
 	</script>
@@ -52,11 +53,12 @@
 <!-- layout 설정 -->
 <link rel="stylesheet" type="text/css" href="/src/ax5layout/ax5layout.css" />
 <script type="text/javascript" src="/src/ax5layout/ax5layout.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/src/ax5grid/ax5grid.css" />
-<script type="text/javascript" src="/src/ax5grid/ax5grid.min.js"></script>
 
 <link rel="stylesheet" href="/src/tui.time-picker-2.0.3/dist/tui-time-picker.css">
 <script src="/src/tui.time-picker-2.0.3/dist/tui-time-picker.js"></script>
+
+<link rel="stylesheet" href="/src/tui.context-menu-2.1.8/dist/tui-context-menu.css">
+<script src="/src/tui.context-menu-2.1.8/dist/tui-context-menu.js"></script>
 
 
 <link rel="stylesheet" href="/src/tui.date-picker-4.1.0/dist/tui-date-picker.css">
@@ -72,24 +74,16 @@
 <link rel="stylesheet" href="/src/metismenujs-3.0.6/metisMenu.css">
 <script src="/src/metismenujs-3.0.6/metisMenu.js"></script>
 
-<script src="/src/js/util/Message.js"></script>
-<script src="/src/js/util/popup_mngr.js"></script>
-<script src="/src/js/util/inline_popup_mngr.js"></script>
-<script src="/src/js/util/ajax_mngr.js"></script>
-<script src="/src/js/util/tui_grid_mngr.js"></script>
-<script src="/src/js/util/progress_mngr.js"></script>
-<script src="/src/js/util/selectbox_mngr.js"></script>
-<script src="/src/js/util/form_mngr.js"></script>
-<script src="/src/js/util/app_mngr.js"></script>
-<script src="/src/js/util/pgmPage_mngr.js"></script>
-<script src="/src/js/util/pjtutil_mngr.js"></script>
-<script src="/src/js/util/metismenu_mngr.js"></script>
+
+
+
 <link rel="stylesheet" type="text/css" href="/src/common.css" />
 <link rel="stylesheet" type="text/css" href="/src/test.css" />
 <link rel="stylesheet" type="text/css" href="/src/mm-vertical.css" />
 <script src="/src/js/util/ax_grid_mngr.js"></script>
 <script src="/src/js/util/timepicker_mngr.js"></script>
 
+<script src="/src/js/tui-grid-renderer/imageRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/commaRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/commaStRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/dateRenderer.js"></script>
@@ -104,5 +98,26 @@
 <script src="/src/uploader-1.0.2/dist/js/ui-main.js"></script>
 <script src="/src/uploader-1.0.2/dist/js/ui-multiple.js"></script>
 <script src="/src/uploader-1.0.2/dist/js/ui-single.js"></script>
+
+<!-- https://github.com/fengyuanchen/viewerjs  -->
+<link href="/src/viewerjs-1.9.0/dist/viewer.min.css" rel="stylesheet">
+<script src="/src/viewerjs-1.9.0/dist/viewer.min.js"></script>
+
+
+
+<script src="/src/js/util/Message.js"></script>
+<script src="/src/js/util/popup_mngr.js"></script>
+<script src="/src/js/util/inline_popup_mngr.js"></script>
+<script src="/src/js/util/ajax_mngr.js"></script>
+<script src="/src/js/util/tui_grid_mngr.js"></script>
+<script src="/src/js/util/progress_mngr.js"></script>
+<script src="/src/js/util/selectbox_mngr.js"></script>
+<script src="/src/js/util/form_mngr.js"></script>
+<script src="/src/js/util/file_mngr.js"></script>
+<script src="/src/js/util/app_mngr.js"></script>
+<script src="/src/js/util/pgmPage_mngr.js"></script>
+<script src="/src/js/util/pjtutil_mngr.js"></script>
+<script src="/src/js/util/metismenu_mngr.js"></script>
+<script src="/src/js/util/excel_mngr.js"></script>
 </head>
 <body>

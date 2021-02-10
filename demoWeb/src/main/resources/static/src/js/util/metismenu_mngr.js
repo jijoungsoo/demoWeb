@@ -66,7 +66,7 @@ class MetismenuMngr {
 				IN_DATA : [ { MENU_NO : menu_no } ]
 		}
 		let _this=this;
-		AjaxMngr.send_api_post_ajax('createFavMenu', param,  function(data) {
+		AjaxMngr.send_api_post_ajax('BR_CM_FAV_MENU_CREATE', param,  function(data) {
 			if (data) {
 				Message.alert("즐겨찾기에 추가되었습니다.",function(data2){
 					_this.fav_menu_sync();
@@ -90,7 +90,7 @@ class MetismenuMngr {
 				IN_DATA : [ { FAV_NO : fav_no } ]
 		}
 		let _this =this;
-		AjaxMngr.send_api_post_ajax('rmFavMenu', param,  function(data) {
+		AjaxMngr.send_api_post_ajax('BR_CM_FAV_MENU_RM', param,  function(data) {
 			if (data) {
 				Message.alert("즐겨찾기가 삭제되었습니다.",function(data2){
 					_this.fav_menu_sync();

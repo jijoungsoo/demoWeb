@@ -98,7 +98,7 @@ $(document).ready(function(){
 			editable : true,
 			showRowStatus : true,
 			rowNum : true,
-			checkbox : false,
+			checkbox : true,
 			pageable : true,
 			pageSize : 300,
 			summary : grid_summary,
@@ -120,7 +120,11 @@ $(document).ready(function(){
 				width : 60,
 				resizable : false,
 				sortable : true,
-				sortingType : 'desc'
+				sortingType : 'desc',
+				validation : {
+					dataType : 'string', /*string ,number*/
+					required : true, /*  true 필수, false 필수아님  */
+				}
 			}, {
 				header : '주식명',
 				name : 'STOCK_NM',
@@ -130,6 +134,10 @@ $(document).ready(function(){
 					type : 'text',
 					showApplyBtn : true,
 					showClearBtn : true
+				},
+				validation : {
+					dataType : 'string', /*string ,number*/
+					required : true, /*  true 필수, false 필수아님  */
 				}
 			}, {
 				header : '구매주식단가',
@@ -141,7 +149,11 @@ $(document).ready(function(){
 				sortable : true,
 				align : "right",
 				sortingType : 'desc',
-				editor : 'text'
+				editor : 'text',
+				validation : {
+					dataType : 'string', /*string ,number*/
+					required : true, /*  true 필수, false 필수아님  */
+				}
 			}, {
 				header : '현재가',
 				name : 'CURR_AMT',
@@ -197,7 +209,11 @@ $(document).ready(function(){
 				sortable : true,
 				align : "right",
 				sortingType : 'desc',
-				editor : 'text'
+				editor : 'text',
+				validation : {
+					dataType : 'number', /*string ,number*/
+					required : true, /*  true 필수, false 필수아님  */
+				}
 			}, {
 				header : '팔기',
 				name : 'BTN_SELL',
@@ -311,7 +327,11 @@ $(document).ready(function(){
 			        usageStatistics: false
 			        
 			      }
-			    }
+			    },
+				validation : {
+					dataType : 'string', /*string ,number*/
+					required : true, /*  true 필수, false 필수아님  */
+				}
 			}, {
 				header : '비고',
 				name : 'RMK',
@@ -376,7 +396,7 @@ $(document).ready(function(){
 			        		console.log(data);
 			        		grid.setValue(rowKey, "STOCK_CD", data.STOCK_CD)
 			        		grid.setValue(rowKey, "STOCK_NM", data.STOCK_NM)
-			        		grid.setValue(rowKey, "AMT", data.CLS_AMT)
+			        		grid.setValue(rowKey, "BUY_AMT", data.CLS_AMT)
 			        		
 			        		
 			        	}
@@ -408,18 +428,18 @@ $(document).ready(function(){
 					row_data.SELL_DATE		 = moment(new Date()).format("yyyy-MM-DD hh:mm A");
 					
 					popupForm.setDataAll(row_data);
-					 $('[data-ax5formatter]').ax5formatter();
-						inline_popup = new InlinePopupManger(_this, 'popup_sell', {
-				          width: 500,
-				          heght: 700,
-				          title: "매도입력창"
-				        });
-						inline_popup.open(function(data){
-				        	if(data){
-				        		console.log(data);
-				        		popupForm.clearData()
-				        	}
-				        });
+					$('[data-ax5formatter]').ax5formatter();
+					inline_popup = new InlinePopupManger(_this, 'popup_sell', {
+			          width: 500,
+			          heght: 700,
+			          title: "매도입력창"
+			        });
+					inline_popup.open(function(data){
+			        	if(data){
+			        		console.log(data);
+			        		popupForm.clearData()
+			        	}
+			        });
 				}	
 			}
 		});
@@ -433,26 +453,22 @@ $(document).ready(function(){
 			*/
 			if (ev.rowKey >=0) {
 				if(ev.columnName=="CNT"
-					|| ev.columnName=="AMT"
+					|| ev.columnName=="BUY_AMT"
 						|| ev.columnName=="FEE"
 				){
 					var rowKey = ev.rowKey ;
 					var row_data=grid.getRow(ev.rowKey);
-					/*TOT_AMT 를 자동 계산하기 위해 사용
-					value 는 잘 넘어오지만
-					row_data로 다 하자.
-					*/
 					var cnt = row_data["CNT"];
-					var amt = row_data["AMT"];
+					var buy_amt = row_data["BUY_AMT"];
 					if(!PjtUtil.isNumeric(cnt)){
 						cnt=0;
 					}
 					
-					if(!PjtUtil.isNumeric(amt)){
-						amt=0;
+					if(!PjtUtil.isNumeric(buy_amt)){
+						buy_amt=0;
 					}
 					
-					var tot_amt = (cnt*amt);
+					var tot_amt = (cnt*buy_amt);
 					console.log(tot_amt);
 					grid.setValue(rowKey, "TOT_AMT", tot_amt)
 				}
@@ -495,11 +511,10 @@ $(document).ready(function(){
 				}
 				
 				var param = {
-					brRq : 'IN_DATA',
-					brRs : 'OUT_DATA',
-					IN_DATA : [ data ]
+					brRq : '',
+					brRs : 'OUT_DATA'
 				}
-				grid.loadData('findStckBuy',param,function(data) {
+				grid.loadData('BR_STCK_BUY_FIND',param,function(data) {
 					console.log(data);
 					
 					/*로딩이 되면 summary를 변경한다.*/
@@ -584,7 +599,7 @@ $(document).ready(function(){
 						IN_DATA : crt_data,
 						UPDT_DATA : updt_data
 					}
-					_this.send('saveStckBuy', param, function(data) {
+					_this.send('BR_STCK_BUY_SAVE', param, function(data) {
 						if(data){
 							Message.alert('내가 산 주식이 저장되었습니다.', function() {
 								searchForm.get("search").trigger("click");
@@ -607,7 +622,7 @@ $(document).ready(function(){
 						brRs : '',
 						IN_DATA : data
 					}
-					_this.send('rmStckBuy', param, function(data) {
+					_this.send('BR_STCK_BUY_RM', param, function(data) {
 						if(data) {
 							Message.alert('내가 산 주식이 삭제되었습니다.', function() {
 								searchForm.get("search").trigger("click");
@@ -671,7 +686,7 @@ $(document).ready(function(){
 							SELL_DATE : data.SELL_DATE,  
 						} ],
 					}
-					_this.send('createStckSell', param, function(data) {
+					_this.send('BR_STCK_SELL_CREATE', param, function(data) {
 						if(data){
 							Message.alert('저장되었습니다.', function() {
 								searchForm.get("search").trigger("click");

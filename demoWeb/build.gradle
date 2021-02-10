@@ -95,9 +95,12 @@ dependencies {
 	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
 	compile group: 'com.github.drapostolos', name: 'type-parser', version: '0.7.0'
 	compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.4.2'
-	
-	compile group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
 
+	implementation "io.springfox:springfox-boot-starter:3.0.0"
+	
+	
+	// https://mvnrepository.com/artifact/org.apache.poi/poi
+	compile group: 'org.apache.poi', name: 'poi', version: '5.0.0'
 	
 	
 }

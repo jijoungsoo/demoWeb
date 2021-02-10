@@ -17,8 +17,13 @@ class buttonRenderer {
     render(props) {
         this.el.innerText = this.txt;
         if(this.fn!=undefined){
-        	this.fn(this.el,props);
+        	var _this=this;
+        	this.el.addEventListener('click', event => {
+        		Message.confirm('다운로드 하시겠습니까?',function()  {
+		        	var row_data=props.grid.getRow(props.rowKey);
+        			_this.fn(row_data);
+				});
+			});
         }
-      
     }
 }

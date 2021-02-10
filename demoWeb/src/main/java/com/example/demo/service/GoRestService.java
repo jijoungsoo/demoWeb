@@ -1,6 +1,11 @@
 package com.example.demo.service;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Queue;
+
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -14,6 +19,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.example.demo.cm.ctrl.MsgDebugInfo;
 import com.example.demo.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class GoRestService {
     private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER");
 
-    public String callAPI(String br, String jsonInString) throws BizException {
+    public String callAPI(String br, String jsonInString) throws ResourceAccessException {
         log.info("br=>" + br);
         log.info("jsonInString=>" + jsonInString);
         String jsonOutString = null;
@@ -48,8 +54,9 @@ public class GoRestService {
             return jsonOutString;
         } catch (ResourceAccessException e) {
             e.printStackTrace();
-            throw new BizException("제한시간이 10초가 초과되었습니다.");
+            throw new ResourceAccessException("제한시간이 10초가 초과되었습니다.");
             // 이렇게 에러를 던지는게 아니라 결과셋을 보내야한다.
         }
     }
+    
 }

@@ -25,7 +25,6 @@
 
 //html파일이 안잃혀진다.  include file은 되었는데.. 가변이 안되고....
 //html 확장자를 빼버리고 ui.jsp로 파일명을 바꾸자.!!
-
 if(result.equals("ok"))  {
 %>
 <div id="<%=uuid%>">

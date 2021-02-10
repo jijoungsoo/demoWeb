@@ -128,7 +128,7 @@ $(document).ready(function(){
 					IN_DATA : [ { GRP_CD : 'USE_YN'
 						,USE_YN : 'Y' } ]
 			}
-			_this.send('findCmCd', param, function(data) {
+			_this.send('BR_CM_CD_FIND', param, function(data) {
 				_this.hideProgress();
 				if (data) {
 					//콤보박스 세팅
@@ -158,7 +158,7 @@ $(document).ready(function(){
 						brRs : 'OUT_DATA',
 						IN_DATA : [ {} ]
 					}
-					grid.loadData('findCmUser', param, function(data) {
+					grid.loadData('BR_CM_USER_FIND', param, function(data) {
 						console.log(data);
 						//gridLoadData에서 자동으로 로드됨..
 
@@ -179,7 +179,7 @@ $(document).ready(function(){
 							IN_DATA : data
 						}
 						_this.showProgress();
-						_this.send('rmCmUser', param, function(data) {
+						_this.send('BR_CM_USER_RM', param, function(data) {
 							_this.hideProgress();
 							if (data) {
 								Message.alert('삭제되었습니다.', function() {
@@ -226,7 +226,7 @@ $(document).ready(function(){
 							brRs : '',
 							IN_DATA : [ data ],
 						}
-						_this.send('saveCmUser', param, function(data) {
+						_this.send('BR_CM_USER_SAVE', param, function(data) {
 							if(data){
 								Message.alert('저장되었습니다.', function() {
 									searchForm.get("search").trigger("click");
@@ -265,7 +265,7 @@ $(document).ready(function(){
 							brRs : '',
 							IN_DATA : [ data ],
 						}
-						_this.send('changeUserPwd', param, function(data) {
+						_this.send('BR_CHANGE_USER_PWD', param, function(data) {
 							console.log('aaa');
 							console.log(data);
 							console.log('bbbb');

@@ -15,7 +15,7 @@ $(document).ready(function(){
 		}
 		//콤보박스 세팅
 		var grid_arr_data_category = []
-		_this.send_sync('findCmCd', param, function(data) {
+		_this.send_sync('BR_CM_CD_FIND', param, function(data) {
 			if (data) {
 				console.log(data.OUT_DATA);
 				if(data.OUT_DATA){
@@ -168,7 +168,7 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[{}]
 				}
-		    	grid.loadData('findPgm',param,function(data){
+		    	grid.loadData('BR_CM_PGM_FIND',param,function(data){
 			    	console.log(data);
 			    	//gridLoadData에서 자동으로 로드됨..
 		        	
@@ -204,7 +204,7 @@ $(document).ready(function(){
 		    			,UPDT_DATA	: data.updatedRows
 					}
 		    		_this.showProgress();					
-		    		_this.send('savePgm',param,function(data){
+		    		_this.send('BR_CM_PGM_SAVE',param,function(data){
 		    			_this.hideProgress();
 		    			if(data){
 		    				Message.alert('저장되었습니다.',function()  {
@@ -230,7 +230,7 @@ $(document).ready(function(){
 						,IN_DATA: data
 					}
 		        	_this.showProgress();
-			        _this.send('rmPgm',param,function(data){
+			        _this.send('BR_CM_PGM_RM',param,function(data){
 			        	_this.hideProgress();
 			        	if(data){
 			        		Message.alert('삭제되었습니다.',function()  {

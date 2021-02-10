@@ -168,9 +168,11 @@ $(document).ready(function(){
 						brRs : 'OUT_DATA',
 						IN_DATA : [ {} ]
 					}
-					grid.loadData('findCmSeq', param, function(data) {
+					grid.loadData('BR_CM_SEQ_FIND', param, function(data) {
 						console.log(data);
 						//gridLoadData에서 자동으로 로드됨..
+					
+						});
 
 					});
 					break;
@@ -202,10 +204,12 @@ $(document).ready(function(){
 							IN_DATA : data.createdRows,
 							UPDT_DATA : data.updatedRows
 						}
-						_this.send('saveCmSeq', param, function(data) {
-							Message.alert('저장되었습니다.', function() {
-								searchForm.get("search").trigger("click");
-							});
+						_this.send('BR_CM_SEQ_SAVE', param, function(data) {
+							if(data){
+								Message.alert('저장되었습니다.', function() {
+									searchForm.get("search").trigger("click");
+								});
+							}
 						});
 					});
 					break;
@@ -223,7 +227,7 @@ $(document).ready(function(){
 							brRs : '',
 							IN_DATA : data
 						}
-						_this.send('rmCmSeq', param, function(data) {
+						_this.send('BR_CM_SEQ_RM', param, function(data) {
 							Message.alert('삭제되었습니다.', function() {
 								searchForm.get("search").trigger("click");
 							});

@@ -13,6 +13,7 @@ class TuiGridMngr {
         ,scrollY: true
         ,bodyHeight: 700           /*그리드 높이지정 */
         ,editingEvent: 'dblclick'  /*더블클릭 수정 */
+        ,contextMenu: true 
         ,minBodyHeight: 30
         ,copyOptions: {
           useFormattedValue: true,   /*셀의 formatter와 함께 텍스트를 복사한다.*/
@@ -103,9 +104,8 @@ class TuiGridMngr {
     */
 
     grid.on('afterChange', ev => {
-      console.log('aaaaaa', ev);
           console.log('check!', ev);
-        });
+    });
 
     grid.on('editingFinish', ev => {
       /*수정이벤트가 일어나면 여기가 고고 한다.*/
@@ -126,44 +126,94 @@ class TuiGridMngr {
     });
     this.grid=grid;
     
-    if(this.options.pageable==false) {
-    	return;
+    if(this.options.pageable==true) {
+    	const page_element = `
+	    <div>
+	    	(<span name='curr_size'>0</span>/
+	    	<span name='total_size'>0</span>
+	    	)
+	    	<span name='page_num'>0</span>/
+	    	<span name='total_page'>0</span>
+	    	<input type='button' name='more' value='more' />
+	    	<input type='button' name='more_all' value='more all' />
+	    </div>
+		`
+		$(this.options.el).append(page_element);
+		let _this=this;
+		this.pgm_mngr.get('more')[0].addEventListener('click', function(event){
+				if(_this.total_size==0){
+					alert('조회버튼을 눌러주세요.');
+					return;
+				}
+				if(_this.curr_size>=_this.total_size){
+					alert('전체 검색되었습니다.');
+					return;
+				}
+			_this.appendLoadData('one');
+		});
+		this.pgm_mngr.get('more_all')[0].addEventListener('click', function(event){
+				if(_this.total_size==0){
+					alert('조회버튼을 눌러주세요.');
+					return;
+				}
+				if(_this.curr_size>=_this.total_size){
+					alert('전체 검색되었습니다.');
+					return;
+				}
+			_this.appendLoadData('all');
+		});  
     }
-    const page_element = `
-    <div>
-    	(<span name='curr_size'>0</span>/
-    	<span name='total_size'>0</span>
-    	)
-    	<span name='page_num'>0</span>/
-    	<span name='total_page'>0</span>
-    	<input type='button' name='more' value='more' />
-    	<input type='button' name='more_all' value='more all' />
+	
+	const context_menu_div = `
+    <div name='tui-context-menu-container'>
     </div>
 	`
-	$(this.options.el).append(page_element);
-	let _this=this;
-	this.pgm_mngr.get('more')[0].addEventListener('click', function(event){
-			if(_this.total_size==0){
-				alert('조회버튼을 눌러주세요.');
-				return;
-			}
-			if(_this.curr_size>=_this.total_size){
-				alert('전체 검색되었습니다.');
-				return;
-			}
-		_this.appendLoadData('one');
-	});
-	this.pgm_mngr.get('more_all')[0].addEventListener('click', function(event){
-			if(_this.total_size==0){
-				alert('조회버튼을 눌러주세요.');
-				return;
-			}
-			if(_this.curr_size>=_this.total_size){
-				alert('전체 검색되었습니다.');
-				return;
-			}
-		_this.appendLoadData('all');
-	});  
+	if(tmp.contextMenu==true){	/*context Menu 생성 */
+		$(this.options.el).append(context_menu_div);
+		const contextMenu = new tui.ContextMenu(this.pgm_mngr.get("tui-context-menu-container")[0]);
+		var _this =this;
+		function onClick(e, cmd) {
+            console.log(cmd);
+            var arr_header = {};
+            var arr_name = []
+            var arr_data = [];
+            if(cmd=='excel_download'){
+            	var data = _this.grid.getColumns();
+            	for(var i=0;i<data.length;i++){
+            		var name = data[i].name;
+            		var header = data[i].header;
+            		if(name !=undefined && name !='_ROW_STATUS'){
+            			arr_header[name] = header
+            			arr_name.push(name);
+            		}
+            	}
+            	arr_data.push(arr_header);
+            	var data = _this.grid.getData();
+        		for (var i=0;i<data.length;i++){
+        			var rowKey = data[i].rowKey
+        			var row_data = {}
+        			for (var j=0;j<arr_name.length;j++){
+        				var columnName 	= arr_name[j];
+        				var value 		= _this.grid.getFormattedValue(rowKey, columnName);
+        				row_data[columnName]=value;
+        			}
+        			arr_data.push(row_data);
+        		}
+        		console.log(arr_data);
+        		var param ={
+						brRq 		: 'IN_DATA'
+						,brRs 		: ''
+						,IN_DATA	: arr_data
+					}
+        		_this.download('BR_CM_GRID_DWNLD' ,param ,null);
+            }
+            
+        }
+   	    contextMenu.register(this.options.el, onClick , [
+            {title: '엑셀다운로드', command: 'excel_download'}
+        ]);
+
+	}
   }
  
   loadData(url,param, p_func){
@@ -171,9 +221,7 @@ class TuiGridMngr {
     this.param = _.cloneDeep(param);
     if(this.options.pageable==true){
 		param.brRq=(param.brRq+",PAGE_DATA");
-		var tmp=[];
-		tmp.push({PAGE_NUM:  0 , PAGE_SIZE: this.options.pageSize });
-		param.PAGE_DATA=tmp;
+		param.PAGE_DATA={PAGE_NUM:  0 , PAGE_SIZE: this.options.pageSize };
     }
     var mask = new ax5.ui.mask();
 	mask.open({
@@ -198,9 +246,9 @@ class TuiGridMngr {
       if(_this.options.pageable==true 
       		&& data !=undefined 
       		&& data["PAGE_DATA"]!=undefined) {
-      		 _this.total_size = data["PAGE_DATA"][0]["TOTAL_SIZE"]
-      		 _this.page_num   = data["PAGE_DATA"][0]["PAGE_NUM"]
-      		 _this.total_page   = data["PAGE_DATA"][0]["TOTAL_PAGE"]
+      		 _this.total_size = data["PAGE_DATA"]["TOTAL_SIZE"]
+      		 _this.page_num   = data["PAGE_DATA"]["PAGE_NUM"]
+      		 _this.total_page   = data["PAGE_DATA"]["TOTAL_PAGE"]
       		 _this.curr_size  = _this.grid.getRowCount()
       }
       mask.close();
@@ -380,7 +428,6 @@ class TuiGridMngr {
   }
   getSummaryValues(columnName) {
   		//return this.grid.getSummaryValues(columnName);
-  		console.log('aaaaa');
   		console.log(this.grid.getSummaryValues(columnName));
   		console.log('abbbb');
   		//위에꺼쓰면안된다. 한번 사용하고 거기에 위에 것을 넣어 html을 넣으면 그다음부터 못가져옴
@@ -394,5 +441,65 @@ class TuiGridMngr {
   		//return sum;
   		return this.grid.getSummaryValues(columnName);
   }
-  
+  download(br ,p_param,func){
+	/*데이터를 서버로 올리고   그걸 다운로드 하자.
+	  이렇게 해야 다운로드 로그를 남길수있다.
+	*/
+	 var req_url = '/GRID_DWNLD/'+br;
+	 $.ajax({
+	        url: req_url,
+	        method: 'POST',
+	       	contentType: "application/json; charset=utf-8",
+	    	accept: "application/json",
+	    	xhrFields: {
+	        	responseType: 'arraybuffer'
+	    	},
+			beforeSend : function(xhr)   /*이거 동작한다.  -- https://hyunsangwon93.tistory.com/28*/
+	        { 
+				xhr.setRequestHeader(csrf_headerName, csrf_token);
+	        },
+	        data: JSON.stringify(p_param) //이게 포인트 였다
+	    }).done(function(data, textStatus, jqXhr) {
+	        if (!data) {
+	            return;
+	        }
+	        try {
+	            var blob = new Blob([data], { type: jqXhr.getResponseHeader('content-type') });
+	            var fileName = FileMngr.getFileName(jqXhr.getResponseHeader('content-disposition'));
+	            fileName = decodeURI(fileName);
+	 
+	            if (window.navigator.msSaveOrOpenBlob) { // IE 10+
+	                window.navigator.msSaveOrOpenBlob(blob, fileName);
+	            } else { // not IE
+	                var link = document.createElement('a');
+	                var url = window.URL.createObjectURL(blob);
+	                link.href = url;
+	                link.target = '_self';
+	                if (fileName) link.download = fileName;
+	                document.body.append(link);
+	                link.click();
+	                link.remove();
+	                window.URL.revokeObjectURL(url);
+	            }
+	        } catch (e) {
+	            console.error(e)
+	        }
+	        
+	        if(func){
+	        	func(data);
+	        }
+	    }).fail(function (jqXHR, textStatus) {
+	        console.log(jqXHR)
+	        console.log(textStatus)
+	        if (textStatus == "error") {
+	            var msg = "Sorry but there was an error: ";
+	            console.log(msg + jqXHR.status + ",statusText: " + jqXHR.statusText+ ",responseText: " + jqXHR.responseText);
+	            Message.alert(msg + jqXHR.status + "<br />statusText: " + jqXHR.statusText+ "<br />responseText: " + jqXHR.responseText);
+	            
+	            if(func){
+	        		func(msg);
+	        	}
+	        }
+		});
+	}   
 }

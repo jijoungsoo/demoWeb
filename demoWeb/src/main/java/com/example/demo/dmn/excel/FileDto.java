@@ -13,4 +13,6 @@ public class FileDto {
     String svrFileNm;
     String svrDirPath;
     String fileStatusCd;
+    Long fileSize;
+    String contentType;
 }

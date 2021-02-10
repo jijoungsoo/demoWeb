@@ -76,11 +76,6 @@ public class UserService implements UserDetailsService {
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (BizException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			
-			throw  new UsernameNotFoundException(e.getMessage());
 		}
 		if(userInfo==null) {
 			throw new UsernameNotFoundException(userId+"사용자가 없거나 비밀번호가 다릅니다.[1]");
@@ -110,12 +105,8 @@ public class UserService implements UserDetailsService {
     ObjectMapper om = new ObjectMapper();
     String jsonString = om.writeValueAsString(userInfoDto);
 
-	try {
-		String tmp = goRestS.callAPI("saveUser", jsonString);
-	} catch (BizException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+	String tmp = goRestS.callAPI("saveUser", jsonString);
+	
   }	
 	   
 }

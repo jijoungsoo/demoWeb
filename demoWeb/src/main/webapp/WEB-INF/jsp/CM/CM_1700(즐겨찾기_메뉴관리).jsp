@@ -92,7 +92,7 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[{}]
 				}
-		    	grid.loadData('findFavMenu',param,function(data){
+		    	grid.loadData('BR_CM_FAV_MENU_FIND',param,function(data){
 			    	console.log(data);
 			    	//gridLoadData에서 자동으로 로드됨..
 		        	
