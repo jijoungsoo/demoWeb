@@ -8,6 +8,7 @@
 							<login class="login" style="color:000">
 								<br />
 								${user.username}(${user.userNm})님
+								${user.authorities}
 							</login>
 							</sec:authorize>			
 				<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="float:left;width: calc(100% - 200px);">

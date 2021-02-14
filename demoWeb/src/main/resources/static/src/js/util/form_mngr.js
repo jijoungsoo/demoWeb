@@ -73,6 +73,9 @@ class FormMngr {
 			this.get(element_name).select2({
 				data: arr_data
 			});
+			this.get(element_name).val('').select2();  //최초 빈값 설정
+			
+			this.initBinder()//바인딩을 한번 더 해준다.
 		}
 	}
 	reSyncSelect2(){

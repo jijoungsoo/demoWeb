@@ -172,8 +172,6 @@ $(document).ready(function(){
 						console.log(data);
 						//gridLoadData에서 자동으로 로드됨..
 					
-						});
-
 					});
 					break;
 				case 'add_row':

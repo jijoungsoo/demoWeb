@@ -1,10 +1,6 @@
 package com.example.demo.service;
 
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Queue;
-
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,8 +15,6 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.example.demo.cm.ctrl.MsgDebugInfo;
-import com.example.demo.exception.BizException;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

@@ -14,6 +14,7 @@ import lombok.Builder;
 
 @Builder
 public class UserInfo implements UserDetails {
+  private static final long serialVersionUID = 7215223513714781337L;            //Default serial version uid
 	/*
 	private String password;
 

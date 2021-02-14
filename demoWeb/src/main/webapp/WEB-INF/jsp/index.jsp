@@ -1,4 +1,6 @@
-﻿<%@ page import="java.util.*"%>
+﻿<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*"%>
 <%	ArrayList<HashMap<String, Object>> cmMenuList = (ArrayList<HashMap<String, Object>>)  request.getAttribute("cmMenuList");	%>
 <%
 	String debug = (String) session.getAttribute("debug");	
@@ -9,6 +11,17 @@ if("<%=debug%>"=="Y"){
 	AppMngr.debug_console="Y";
 }
 $(document).ready(function(){
+	var auth_list=[];
+	<sec:authentication var="user" property="principal" />
+	<sec:authorize access="isAuthenticated()">
+	<c:forEach var="tmp" items="${user.authorities}">
+	var tmp = '${tmp}';
+	auth_list.push(tmp);
+	</c:forEach>
+	//auth_list  = '${user.authorities}';
+	//console.log(auth_list);
+	</sec:authorize>	
+
 	/*상단 메뉴*/
 	var left_menu_3depth_list=[];
     var top_menu_item = [] 

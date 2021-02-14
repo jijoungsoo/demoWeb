@@ -89,6 +89,7 @@
 <script src="/src/js/tui-grid-renderer/dateRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/datetimeRenderer.js"></script>
 <script src="/src/js/tui-grid-renderer/buttonRenderer.js"></script>
+<script src="/src/js/tui-grid-renderer/colorCellRenderer.js"></script>
 
 
 <!--upload https://github.com/danielm/uploader -->
@@ -119,5 +120,6 @@
 <script src="/src/js/util/pjtutil_mngr.js"></script>
 <script src="/src/js/util/metismenu_mngr.js"></script>
 <script src="/src/js/util/excel_mngr.js"></script>
+<script src="/src/js/util/tab_mngr.js"></script>
 </head>
 <body>

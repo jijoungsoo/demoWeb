@@ -1,27 +1,15 @@
 package com.example.demo.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 
-import javax.servlet.http.HttpSession;
+import com.example.demo.cm.ctrl.MsgDebugInfo;
+import com.example.demo.utils.PjtUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-
-import com.example.demo.utils.PjtUtil;
-import com.example.demo.exception.BizException;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,7 +26,7 @@ public class MainPageService {
 	   * */
 	
 	//@Cacheable(value = "menuCache")
-    public ArrayList<HashMap<String, Object>>  findMainMenu(){
+    public ArrayList<HashMap<String, Object>>  BR_CM_ROLE_CD_MENU_FIND_TREE_BY_USER_NO(Authentication authentication){
 		HashMap<String,ArrayList<HashMap<String,Object>>> outDs = new HashMap<String,ArrayList<HashMap<String,Object>>>();
 		ArrayList<HashMap<String,Object>> OUT_DATA = new ArrayList<HashMap<String,Object>>(); 
 		try {
@@ -51,7 +39,8 @@ public class MainPageService {
 			IN_DS.put("brRq","");
 			IN_DS.put("brRs","OUT_DATA");
 			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-			String jsonOutString = goRestS.callAPI("BR_CM_MAIN_FIND_TREE", jsonInString);
+			MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_MAIN_FIND_TREE_BY_USER_NO",jsonInString,authentication);
+			String jsonOutString = goRestS.callAPI("BR_CM_MAIN_FIND_TREE_BY_USER_NO", msg.getIN_DATA_JSON());
 			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
 			OUT_DATA= outDs.get("OUT_DATA");
 		} catch (JsonProcessingException e) {

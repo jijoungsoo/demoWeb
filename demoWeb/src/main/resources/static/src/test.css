@@ -93,3 +93,8 @@ body {
   ol, ul {
     margin-bottom: 0;
   }
+
+
+  .selectedColor {
+     background-color: coral; 
+  }

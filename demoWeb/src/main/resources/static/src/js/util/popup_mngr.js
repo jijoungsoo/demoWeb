@@ -33,6 +33,8 @@ class PopupManger {
 		}
 		// Merge defaults and options, without modifying defaults
 		var settings = $.extend({}, defaults, options);
+		console.log('aaaa');
+		console.log(settings);
 		var tmp = `
     	<div id="`+ this.container_id+`">
     	</div>
@@ -48,7 +50,7 @@ class PopupManger {
 		this.dialog = this.el.dialog(settings);
 		var p_param = $.extend(p_param, { uuid: popup_uuid });
 		
-		PgmPageMngr.addReqMap(popup_uuid,{ popup_mngr : this });
+		PgmPageMngr.addReqMap(popup_uuid,{ popup_mngr : this,param : p_param });
 		AjaxMngr.get_page_ajax(this.el,page_id,p_param);
 	
 		this.dialog.on("dialogopen", function(event, ui) {

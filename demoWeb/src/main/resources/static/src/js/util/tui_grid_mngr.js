@@ -102,6 +102,35 @@ class TuiGridMngr {
           console.log(ev);
     });
     */
+   
+    grid.on('check', ev => {
+		console.log('check!', ev);
+		if(this.options.checkFunc!=null){
+			this.options.checkFunc(ev);
+		}
+	});
+
+	grid.on('checkAll', ev => {
+		console.log('checkAll!', ev);
+		if(this.options.checkAllFunc!=null){
+			this.options.checkAllFunc(ev);
+		}
+	});
+
+	grid.on('uncheckAll', ev => {
+		console.log('uncheckAll!', ev);
+		if(this.options.uncheckAllFunc!=null){
+			this.options.uncheckAllFunc(ev);
+		}
+	});
+
+	grid.on('uncheck', ev => {
+		console.log('uncheck!', ev);
+		if(this.options.uncheckFunc!=null){
+			this.options.uncheckFunc(ev);
+		}
+	});
+	
 
     grid.on('afterChange', ev => {
           console.log('check!', ev);
@@ -422,7 +451,49 @@ class TuiGridMngr {
   setValue(rowKey, columnName, value){
 		this.grid.setValue(rowKey, columnName, value, false);  
   }
-  
+  /*
+  removeCellClassName(rowKey, columnName, className) {
+	this.grid.removeCellClassName(rowKey,columnName, className);
+  }
+  addCellClassName(rowKey, columnName, className) {
+	this.grid.addCellClassName(rowKey,columnName, className);
+  }
+
+  removeRowClassName(rowKey, className){
+	this.grid.removeRowClassName(rowKey,className);
+  }
+
+  addRowClassName(rowKey, className){
+	this.grid.addRowClassName(rowKey,className);
+  }
+  */
+  check(columnName,columnValue){
+	var data = this.grid.getData();
+	for (var i=0;i<data.length;i++){
+		var row    = data[i];
+		if(row[columnName]==columnValue){
+			this.grid.check(row.rowKey);
+		}
+	}
+  }
+  getData(){
+	var data = this.grid.getData();
+	return data;
+  }
+  disableRowCheck(columnName,columnValue){
+	var data = this.grid.getData();
+	for (var i=0;i<data.length;i++){
+		var row    = data[i];
+		if(row[columnName]==columnValue){
+			this.grid.disableRowCheck(row.rowKey);
+		}
+	}
+  }
+
+  hideColumn(columnName){
+	this.grid.hideColumn(columnName);
+  }
+
   setSummaryColumnContent(columnName, columnContent){
   		this.grid.setSummaryColumnContent(columnName, columnContent);
   }
