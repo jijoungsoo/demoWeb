@@ -42,21 +42,22 @@ dependencies {
 		exclude group: "org.slf4j", module: "slf4j-simple"
 	}
 	
-	implementation('org.apache.httpcomponents:httpclient')   /*외부api 호출을 위해서 */
+	implementation('org.apache.httpcomponents:httpclient:4.5.13')   /*외부api 호출을 위해서 */
 	
-	implementation('org.springframework.security:spring-security-taglibs')   /*로그인 정보 jsp 출력을 위해 */
+	implementation('org.springframework.security:spring-security-taglibs:5.4.2')   /*로그인 정보 jsp 출력을 위해 */
 	
 	compile group: 'org.zalando', name: 'logbook-spring-boot-starter', version: '2.4.1'  /*restcontroller 로그 남기기 */
 	
-	implementation 'net.sf.ehcache:ehcache'  /*메뉴 프로그램 리스트 캐싱     
+	implementation 'net.sf.ehcache:ehcache:2.10.6'  /*메뉴 프로그램 리스트 캐싱     
 											  http://dveamer.github.io/backend/SpringCacheable.html
 	*/
 	
-   	   	
-	compileOnly 'org.projectlombok:lombok'
+	compileOnly 'org.projectlombok:lombok:1.18.16'    ///docker에서  gradlew build에서 안되서 아래 것을 하나 더 추가했다.
+	implementation 'org.projectlombok:lombok:1.18.16'
+	annotationProcessor 'org.projectlombok:lombok:1.18.16'
+	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
-	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	
 	
@@ -81,10 +82,7 @@ dependencies {
 	
 	/*js 배열복사 lodash*/
 	implementation 'org.webjars:lodash:4.17.15'
-	
-	/*select 박스 키워드 입력 */
-	implementation 'org.webjars:select2:4.0.13'
-	
+
 	/*클라이언트 템플릿 엔진으로 handlebars  사용하자 javascript 로 ui를 편하게 그리고 싶어서 그런다.*/
 	implementation 'org.webjars.bower:handlebars:4.7.6'
 	
@@ -101,6 +99,11 @@ dependencies {
 	
 	// https://mvnrepository.com/artifact/org.apache.poi/poi
 	compile group: 'org.apache.poi', name: 'poi', version: '5.0.0'
+
+
+
+		//oauth2 로그인
+	  implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	
 	
 }

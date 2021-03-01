@@ -1,7 +1,9 @@
 ﻿<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.util.*"%>
 <%@ include file="/WEB-INF/jsp/include/inner_top.jsp" %>
-<%	String pgmId = (String) request.getAttribute("pgmId");
+<%	
+	String parentUuid = (String) request.getAttribute("parentUuid");
+    String pgmId = (String) request.getAttribute("pgmId");
 	String uuid = (String) request.getAttribute("uuid");
 	String dirLink = (String) request.getAttribute("dirLink");
 	String pgmLink = (String) request.getAttribute("pgmLink");
@@ -14,16 +16,14 @@
 		System.out.println(pgmLink);
 
 %>
-<div id="<%=uuid%>">
+<div id="<%=uuid%>" parent_uuid='<%=parentUuid%>' pgm_id="<%=pgmId%>" uuid="<%=uuid%>" >
 	<jsp:include page="/WEB-INF/jsp/${dirLink}/${pgmLink}.ui.jsp" flush="true" >
-	  <jsp:param name="pgmId" value="<%=pgmId%>"/>
 	  <jsp:param name="uuid" value="<%=uuid%>"/>
 	  <jsp:param name="dirLink" value="<%=dirLink%>"/>
 	  <jsp:param name="pgmLink" value="<%=pgmLink%>"/>
 	  <jsp:param name="hm" value="<%=hm%>"/>
 	</jsp:include>
 	<jsp:include page="/WEB-INF/jsp/${dirLink}/${pgmLink}.jsp" flush="true" >
-	  <jsp:param name="pgmId" value="<%=pgmId%>"/>
 	  <jsp:param name="uuid" value="<%=uuid%>"/>
 	  <jsp:param name="dirLink" value="<%=dirLink%>"/>
 	  <jsp:param name="hm" value="<%=hm%>"/>

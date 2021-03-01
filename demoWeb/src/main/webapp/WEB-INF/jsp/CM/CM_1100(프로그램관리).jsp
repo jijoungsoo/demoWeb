@@ -1,33 +1,12 @@
-<%	String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
-%>
+<%	String uuid = (String) request.getAttribute("uuid"); %>
 <script>
 $(document).ready(function(){
-	var CM_1100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	var CM_1100 = new PgmPageMngr ('<%=uuid%>');
 	CM_1100.init(function(p_param) {
 		var _this = CM_1100;
 		var searchForm = new FormMngr(_this, "search_area");
-		var param = {
-				brRq : 'IN_DATA',
-				brRs : 'OUT_DATA',
-				IN_DATA : [ { GRP_CD : 'CATEGORY'
-					,USE_YN : 'Y' } ]
-		}
-		//콤보박스 세팅
-		var grid_arr_data_category = []
-		_this.send_sync('BR_CM_CD_FIND', param, function(data) {
-			if (data) {
-				console.log(data.OUT_DATA);
-				if(data.OUT_DATA){
-					for(var i =0;i<data.OUT_DATA.length;i++){
-						var tmp =data.OUT_DATA[i];
-						grid_arr_data_category.push({ value: tmp.CD , text: tmp.CD_NM  })
-					}
-				}
-			}
-		});
-		console.log(grid_arr_data_category)
-	
+		searchForm.initCombo("CATEGORY",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [  { GRP_CD : 'CATEGORY',  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+		
 		const grid = new TuiGridMngr(_this,'grid',{
 		      editable: true
 		      ,showRowStatus: true
@@ -83,14 +62,8 @@ $(document).ready(function(){
 		           width: 100,
 		           sortable: true,
 		           align: "center",
-		           filter: 'select',  /*콤보 카테고리 */
-		           formatter: 'listItemText',
-		           editor: {
-		               type: 'select',
-		               options: {
-		                 listItems: grid_arr_data_category
-		               }
-		             }
+				   type : "combo",
+				   comboData : _this.getComboData('BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'CATEGORY' , USE_YN: 'Y' }]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' })
 		         },
 		         {
 			           header: '폴더링크',
@@ -163,10 +136,11 @@ $(document).ready(function(){
 		   //console.log(el);
 	  	   switch(el.target.name){
            case 'search':
+			   var data = searchForm.getData();
         		var param ={
 					 brRq : 'IN_DATA'
 					,brRs : 'OUT_DATA'
-					,IN_DATA:[{}]
+					,IN_DATA:[data]
 				}
 		    	grid.loadData('BR_CM_PGM_FIND',param,function(data){
 			    	console.log(data);

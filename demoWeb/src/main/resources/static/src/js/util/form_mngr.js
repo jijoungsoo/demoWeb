@@ -4,6 +4,7 @@ class FormMngr {
 		this.arr_select2=[];
 		this.area_name = area_name;
 		this.uuid = pgm_mngr.getId();
+		this.pgm_mngr = pgm_mngr;
 		this.area_name = area_name;
 		this.container = $("#" + pgm_mngr.getId());
 		if (area_name != "") {
@@ -29,6 +30,12 @@ class FormMngr {
 		this.target_data = {};
 		let tgt_data = this.target_data;
 		var w = this.container_area[0];
+		console.log('aaaaaaaaaaaaaaaaaaaaaaa');
+		
+		console.log(this.pgm_mngr);
+		console.log(this.container_area);
+		console.log(w);
+		console.log(w.querySelectorAll('[data-model]'));
 		for (var i = 0; i < w.querySelectorAll('[data-model]').length; i++) {
 			var el = w.querySelectorAll('[data-model]')[i];
 			tgt_data[el.name] = '';
@@ -36,13 +43,45 @@ class FormMngr {
 		this.myModel = new ax5.ui.binder();
 		this.myModel.setModel(tgt_data, this.container_area);
 	}
-	getData() {
-		return this.myModel.get()
+	initCombo(name,br,param,option) {
+		try {
+				console.log('initCombo');
+				console.log(option);
+				let _this =this;
+				let _option =option;
+				var option_data = this.pgm_mngr.getComboData(br,param,option);
+				var el = _this.get(name)[0];
+				for(var i=0;i<option_data.length;i++){
+					var item_data = option_data[i];
+					var option = document.createElement("option");
+					option.value = item_data.VALUE;
+					option.text  = item_data.TEXT;
+					el.add(option);
+				}
+				if(option_data.length>0){
+					console.log(el);
+					el.options[0].selected = true;
+				}
+		} catch(e){
+			var tmp = name+"에 combo data 설정중 오류가 발생하였습니다."+name+" 요소가 있는지 확인해보세요."
+			alert(tmp);
+			console.log(e);
+			
+		}
+		this.initBinder()//바인딩을 한번 더 해준다.
+	}
+	getData(name) {
+		if(name){
+			return this.myModel.get()[name]	;
+		} else {
+			return this.myModel.get();
+		}
+		
 	}
 	setDataAll(data_all) {
 		this.myModel.setModel(data_all, this.container_area);
 		//select2 combobox 갱신
-		this.reSyncSelect2();
+		//this.reSyncSelect2();
 	}
 	setData(prop, value) {
 		this.myModel.set(prop, value);
@@ -63,12 +102,16 @@ class FormMngr {
 		var w = this.container_area[0];
 		if (w.querySelectorAll(el_sel)) {
 			w.querySelectorAll(el_sel).forEach(function(el) {
+				console.log(el)
+				console.log(event_name)
 				el.addEventListener(event_name, func);
 			});
 		}
 	}
+	/*  제거
 	addSelect2(element_name,arr_data){
 		if(this.arr_select2.indexOf(element_name)<0){	//배열에 없으면 추가
+			console.log('addSelect2');
 			this.arr_select2.push(element_name);
 			this.get(element_name).select2({
 				data: arr_data
@@ -77,30 +120,16 @@ class FormMngr {
 			
 			this.initBinder()//바인딩을 한번 더 해준다.
 		}
-	}
+	}*/
+	/* 제거
 	reSyncSelect2(){
 		for(var i=0;i<this.arr_select2.length;i++){
 			var tmp =this.arr_select2[i];
 			this.get(tmp).select2({});
 		}
 	}
+	*/
 	
-	addSelect(element_name,arr_data){
-		var tmp = this.get(element_name);
-		console.log(tmp);
-		for (var i=0;i<arr_data.length;i++) {
-			var data = arr_data[i];
-			console.log(data);
-			var t= "<option value='"+data.id+"'>"+data.text+"</option>";
-			
-			
-			console.log(t);
-			
-			
-            tmp.append(t);
-		}
-               
-	}
 	
 	valid(){
 		var t=this.container_area;

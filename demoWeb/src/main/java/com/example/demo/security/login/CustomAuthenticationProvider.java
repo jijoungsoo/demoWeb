@@ -1,7 +1,10 @@
 package com.example.demo.security.login;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
+
+import com.example.demo.user.domain.UserInfo;
+import com.example.demo.user.domain.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -10,14 +13,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.HttpServerErrorException;
-
-import com.example.demo.user.domain.UserInfo;
-import com.example.demo.user.domain.UserService;
 
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
@@ -28,6 +27,8 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+		///https://parandol.tistory.com/4
+
 		BCryptPasswordEncoder passEncoder = new BCryptPasswordEncoder();		
 		String admin =passEncoder.encode("admin");
 		
@@ -74,5 +75,4 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 	public boolean supports(Class<?> authentication) {
 		return true;
 	}
-	
 }

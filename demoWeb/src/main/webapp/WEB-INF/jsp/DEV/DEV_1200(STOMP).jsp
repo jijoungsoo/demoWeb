@@ -1,10 +1,7 @@
-
-<%	String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
-%>
+<%	String uuid = (String) request.getAttribute("uuid");	%>
 <script>
 $(document).ready(function(){
-	var DEV_1200 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	var DEV_1200 = new PgmPageMngr ('<%=uuid%>');
 		DEV_1200.init(function(p_param) {
 			var _this = DEV_1200;
 			var socketForm = new FormMngr(_this, "socket_area");

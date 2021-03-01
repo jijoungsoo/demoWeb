@@ -1,35 +1,12 @@
-<%
-    String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
-%>
+<%	String uuid = (String) request.getAttribute("uuid");	%>
 <script>
 $(document).ready(function(){
-	var CM_1300 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	var CM_1300 = new PgmPageMngr ('<%=uuid%>');
 		CM_1300.init(function(p_param) {
 			var _this = CM_1300;
 			var searchForm = new FormMngr(_this, "search_area");
+			searchForm.initCombo("PRNT_MENU_CD",'BR_CM_MENU_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  MENU_KIND  : 'M'  }]},{ USE_EMPTY_YN : 'Y' , VALUE :'MENU_CD' , TEXT :'MENU_NM' });
 
-			//콤보박스 세팅
-			var grid_arr_data_pgm = []
-			var param ={
-					 brRq : 'IN_DATA'
-					,brRs : 'OUT_DATA'
-					,IN_DATA:[{}]
-				}
-			_this.send_sync('BR_CM_PGM_FIND', param, function(data) {
-				if (data) {
-					console.log(data.OUT_DATA);
-					if(data.OUT_DATA){
-					grid_arr_data_pgm.push({ value: '' , text: "빈것" })
-						for(var i =0;i<data.OUT_DATA.length;i++){
-							var tmp =data.OUT_DATA[i];
-							grid_arr_data_pgm.push({ value: tmp.PGM_ID , text: "["+tmp.PGM_ID+"]"+tmp.PGM_NM  })
-						}
-					}
-				}
-			});
-			console.log(grid_arr_data_pgm)
-			
 			const grid_tree = new TuiGridMngr(_this, 'grid_tree', {
 				rowNum : true,
 					bodyHeight : 500,
@@ -59,10 +36,6 @@ $(document).ready(function(){
 
 			);
 			grid_tree.build();
-
-
-		
-
 
 			const grid = new TuiGridMngr(_this, 'grid', {
 				editable : true,
@@ -188,13 +161,8 @@ $(document).ready(function(){
 					showApplyBtn : true,
 					showClearBtn : true
 				},
-				formatter: 'listItemText',
-		           editor: {
-		               type: 'select',
-		               options: {
-		                 listItems: grid_arr_data_pgm
-		               }
-		             }
+				type : "combo",
+				comboData : _this.getComboData('BR_CM_PGM_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{}]},{ USE_EMPTY_YN : 'Y' , VALUE :'PGM_ID' , TEXT :'PGM_NM' })
 				}, {
 
 				header : 'PATH',
@@ -240,18 +208,58 @@ $(document).ready(function(){
 			} ]);
 			grid.build();
 
+
+			grid.on('click', (ev) => {
+				var rowKey = ev.rowKey;
+				if (rowKey >=0) {
+					if(ev.columnName=="PGM_ID"){
+						var row_data=grid.getRow(rowKey);
+						
+						var param = {
+								PGM_ID : row_data["PGM_ID"]
+						}
+						var popup = new PopupManger(_this, 'CM_1150', {
+						width: 560,
+						heght: 700
+						},
+						param
+						);
+						popup.open(function(data){
+							if(data){
+								console.log(data);
+								grid.setValue(rowKey, "PGM_ID", data.PGM_ID)
+							}
+						});
+					}	
+				}
+			});
+
+
+
+
+
+
+
+
 			searchForm.addEvent("click", "input[type=button]", function(el) {
 				switch (el.target.name) {
 				case 'search':
+					var data = searchForm.getData();
 					var param = {
-						brRq : '',
-						brRs : 'OUT_DATA'
+						brRq : 'IN_DATA',
+						brRs : 'OUT_DATA',
+						IN_DATA : [{ PRNT_MENU_CD : data['PRNT_MENU_CD']  }]
 					}
+					
 					grid.loadData('BR_CM_MENU_FIND', param, function(data) {
 						console.log(data);
 						//gridLoadData에서 자동으로 로드됨..
 
 					});
+					var param = {
+						brRq : '',
+						brRs : 'OUT_DATA'
+					}
 					_this.send('BR_CM_MENU_FIND_TREE', param, function(data) {
 						console.log(data);
 						grid_tree.resetData(data.OUT_DATA);

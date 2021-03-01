@@ -1,11 +1,8 @@
 
-<%
-String pgmId = (String) request.getAttribute("pgmId");
-String uuid = (String) request.getAttribute("uuid");
-%>
+<% String uuid = (String) request.getAttribute("uuid"); %>
 <script>
 $(document).ready(function(){
-	var AV_1100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	var AV_1100 = new PgmPageMngr ('<%=uuid%>');
 	AV_1100.init(function(p_param) {
 		var _this = AV_1100;
 		var up_uploader_el = _this.get("excel_upld")

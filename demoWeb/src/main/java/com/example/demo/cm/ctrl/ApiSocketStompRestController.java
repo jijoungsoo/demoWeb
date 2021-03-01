@@ -29,8 +29,6 @@ public class ApiSocketStompRestController {
     @Autowired
     SimpMessagingTemplate smt;
     
-	@Autowired
-	 private GoRestService goService;
 	 private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER"); 
 	/*소켓*/
     @MessageMapping("/socketApi")   /*보내는 이름*/

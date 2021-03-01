@@ -18,11 +18,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service
 public class GoRestService {
     private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER");
 
-    public String callAPI(String br, String jsonInString) throws ResourceAccessException {
+    public static String callAPI(String br, String jsonInString) throws ResourceAccessException {
         log.info("br=>" + br);
         log.info("jsonInString=>" + jsonInString);
         String jsonOutString = null;

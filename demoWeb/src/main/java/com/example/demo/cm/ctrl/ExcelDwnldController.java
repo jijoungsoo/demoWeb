@@ -1,50 +1,33 @@
 package com.example.demo.cm.ctrl;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.example.demo.service.GoRestService;
+import com.example.demo.utils.ExportExcelVOList;
+import com.example.demo.utils.PjtUtil;
+
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.core.io.Resource;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import com.example.demo.dmn.excel.FileDto;
-import com.example.demo.exception.BizException;
-import com.example.demo.service.FileService;
-import com.example.demo.service.GoRestService;
-import com.example.demo.utils.ExportExcelVOList;
-import com.example.demo.utils.PjtUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
 public class ExcelDwnldController {
-    @Autowired
-    private GoRestService goService;
+ 
 
     /*
      * consumes 입력타입 produces 리턴타입
@@ -57,7 +40,7 @@ public class ExcelDwnldController {
         MsgDebugInfo msg = PjtUtil.makeLSession(br, jsonInString, authentication);
         HashMap<String, Object> result = new HashMap<String, Object>();
         try {
-            jsonOutString = goService.callAPI(br, msg.IN_DATA_JSON);
+            jsonOutString = GoRestService.callAPI(br, msg.IN_DATA_JSON);
             PjtUtil.saveSesstionDebugMsg(msg, jsonOutString, session);
         } catch (HttpClientErrorException  e) {
             result.put("statusCode", e.getRawStatusCode());

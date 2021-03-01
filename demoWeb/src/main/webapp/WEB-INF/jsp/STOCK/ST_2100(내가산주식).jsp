@@ -1,7 +1,5 @@
 
-<%	String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
-%>
+<%	String uuid = (String) request.getAttribute("uuid"); %>
 <style>
 .tui-grid-summary-area .tui-grid-cell {
     text-align: right;
@@ -9,7 +7,7 @@
 </style>
 <script>
 $(document).ready(function(){
-	var ST_2100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	var ST_2100 = new PgmPageMngr ('<%=uuid%>');
 	var inline_popup;
 	ST_2100.init(function(p_param) {
 		var _this = ST_2100;

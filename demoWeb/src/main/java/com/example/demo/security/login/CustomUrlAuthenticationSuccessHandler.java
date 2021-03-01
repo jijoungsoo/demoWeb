@@ -56,6 +56,17 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 	    	String userId=request.getParameter(CustomUrlAuthenticationSuccessHandler.userId);
 	    	String userPwd=request.getParameter(CustomUrlAuthenticationSuccessHandler.userPwd);
 	    	String autoLoginYn=request.getParameter(CustomUrlAuthenticationSuccessHandler.autoLoginYn);
+
+			System.out.println("aaaaaaaa");
+			if(PjtUtil.isEmpty(userId)){
+				responseDataDTO.setItem(items);
+				response.setCharacterEncoding("UTF-8");
+				response.setContentType("application/json;charset=UTF-8");  //된다 한글  
+				response.setStatus(HttpServletResponse.SC_OK);
+				response.getWriter().print(mapper.writeValueAsString(responseDataDTO));
+				response.getWriter().flush();
+				return;
+			}
 	    	
 	    	log.info("BBBBB");
 	    	log.info(autoLoginYn);
@@ -92,8 +103,6 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 				}
 				
 			}
-	    	
-		    	
 
 	    	if(autoLoginYn.equals("Y")) {
 	    	   //원래 쿠키의 이름이 userInfo 이었다면, value를 null로 처리.

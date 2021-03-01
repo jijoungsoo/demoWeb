@@ -1,10 +1,7 @@
-<%
-	String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
-%>
+<%	String uuid = (String) request.getAttribute("uuid");	%>
 <script>
 $(document).ready(function(){
-	var CM_1500 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	var CM_1500 = new PgmPageMngr ('<%=uuid%>');
 		CM_1500.init(function(p_param) {
 			var _this = CM_1500;
 			var searchForm = new FormMngr(_this, "search_area");
@@ -36,23 +33,34 @@ $(document).ready(function(){
 				width : 'auto', /*너비 자동조절*/
 				width : 200,
 				sortable : true
-			},
-			{
+			},{
 				header : '사용자ID',
 				name : 'USER_ID',
+				width : 140,
+				sortable : true,
+				align : "center",
+				filter : 'select'
+			},{
+				header : 'SNS구분',
+				name : 'SNS_GUBUN',
 				width : 100,
 				sortable : true,
 				align : "center",
 				filter : 'select'
-			},
-			{
+			},{
+				header : 'SNS아이디',
+				name : 'SNS_ID',
+				width : 100,
+				sortable : true,
+				align : "center",
+				filter : 'select'
+			},{
 				header : '비밀번호',
 				name : 'USER_PWD',
 				width : 300,
 				sortable : true,
 				align : "center"
-			},
-			 {
+			},{
 				header : '이메일',
 				name : 'EMAIL',
 				width : 140,
@@ -62,6 +70,7 @@ $(document).ready(function(){
 	          name: 'USE_YN',
 	          formatter: 'listItemText',
 	          width : 80,
+			  align : "center",
 	          editor: {
 	            type: 'select',
 	            options: {

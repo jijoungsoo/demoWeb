@@ -3,17 +3,20 @@ package com.example.demo.user.domain;
 import java.beans.ConstructorProperties;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.DefaultOAuth2User;
 
 import lombok.Builder;
 
 
 @Builder
-public class UserInfo implements UserDetails {
+public class UserInfo extends DefaultOAuth2User implements UserDetails  {
   private static final long serialVersionUID = 7215223513714781337L;            //Default serial version uid
 	/*
 	private String password;
@@ -39,9 +42,48 @@ public class UserInfo implements UserDetails {
   private String userNm;
   private String email;
 
+
+        // 인터페이스의 추상 메소드의 실체 선언
+  public static Set<GrantedAuthority> getGrantedAuthority(String auth) 
+  {
+    Set<GrantedAuthority> roles = new HashSet<>();
+    if(auth!=null) {
+    	for (String role : auth.split(",")) {
+    	      roles.add(new SimpleGrantedAuthority(role));
+        }	
+    }  
+    //하나는 임시라도 들어가 있어야한다.
+    roles.add(new SimpleGrantedAuthority("ROLE_TMP"));
+    return roles;
+  }	
+
+  public static Map<String, Object> getAttributes(Long userNo) 
+  {
+    Map<String, Object>  m = new LinkedHashMap<String, Object> ();
+    m.put("userNo", userNo);
+    return m;
+  }	
+
   @Builder
   @ConstructorProperties({"userNo","userId", "userPwd", "auth" , "userNm" ,"email"})
   public UserInfo(long userNo,String userId, String userPwd, String auth,String userNm,String email) {
+    /*
+    Assert.notEmpty(authorities, "authorities cannot be empty");
+		Assert.notEmpty(attributes, "attributes cannot be empty");
+		Assert.hasText(nameAttributeKey, "nameAttributeKey cannot be empty");
+		if (!attributes.containsKey(nameAttributeKey)) {
+			throw new IllegalArgumentException("Missing attribute '" + nameAttributeKey + "' in attributes");
+		}
+		this.authorities = Collections.unmodifiableSet(new LinkedHashSet<>(this.sortAuthorities(authorities)));
+		this.attributes = Collections.unmodifiableMap(new LinkedHashMap<>(attributes));
+		this.nameAttributeKey = nameAttributeKey;
+
+    DefaultOAuth2User를 상속받고 아무거나라 채운 다음에 쓰지 말자
+*/
+    super(getGrantedAuthority(auth),getAttributes(userNo),"userNo");
+    
+
+    
     this.userNo = userNo;
     this.userId = userId;
     this.userPwd = userPwd;
@@ -49,7 +91,7 @@ public class UserInfo implements UserDetails {
     this.userNm =userNm;
     this.email =email;
   }
-  
+    
   public String getEmail() {
 	  return email;
   }
@@ -85,6 +127,7 @@ public class UserInfo implements UserDetails {
     	      roles.add(new SimpleGrantedAuthority(role));
         }	
     }    
+    roles.add(new SimpleGrantedAuthority("ROLE_TMP"));
     return roles;
   }
 

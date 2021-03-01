@@ -1,10 +1,7 @@
-
-<%	String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
-%>
+<%	String uuid = (String) request.getAttribute("uuid"); %>
 <script>
 $(document).ready(function(){
-	var ST_1100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	var ST_1100 = new PgmPageMngr ('<%=uuid%>');
 	ST_1100.init(function(p_param) {
 		var _this = ST_1100;
 		var ws = null

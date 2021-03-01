@@ -92,13 +92,10 @@ class PgmPageMngr {
 			        var pgm_mngr = PgmPageMngr.getPgmUuIdMap(item.config.id);
 			        if(pgm_mngr!=undefined){
 			        	pgm_mngr.fire('destory');
+						pgm_mngr.destory();
 			        } else {
 			        	console.log('error','pgm_mngr이 undefined 문제..')
 			        }
-			        sessionStorage.removeItem(item.config.id);
-			        PgmPageMngr.removePgmUuIdMap(item.config.id);
-			        PgmPageMngr.removeReqMap(item.config.id);
-			        //그때 id가져오는 걸 했었는데 기억이 안난다.
 			    })   //The middle mouse button
 			}
         } else if(p_param.WINDOW=='M'){
@@ -130,15 +127,19 @@ class PgmPageMngr {
         
     }
 
-    constructor(pgm_id, uuid) {
-        var _this = this;
+    constructor(uuid) {
+		console.log('PgmPageMngr-constructor');
         this.mask = new ax5.ui.mask();
-        this.container = $("#" + uuid);
-        this.pgm_id = pgm_id
-        this.uuid = uuid;
+		var _this = this;
+		this.container = $("#" + uuid);
+
+		//goldenlayout  스크롤 바스 생성
+		$(this.container).parent().css("overflow-y","auto");
+
+		this.pgm_id = this.container.attr("pgm_id");
+		this.parent_uuid = this.container.attr("parent_uuid");
+		this.uuid = uuid;
         PgmPageMngr.addPgmUuIdMap(uuid,this);
-        ///container가 있으니까 이벤트를 걸대는 여기다 걸자.!!!
-    	
     	if(AppMngr.debug_console=="Y") {
     		this.makeDebug(uuid);   
     	}
@@ -185,10 +186,30 @@ class PgmPageMngr {
             }
             func(p_param);
         }
-        
+
+		var config = {
+			'.chosen-select'           : {},
+			'.chosen-select-deselect'  : { allow_single_deselect: true },
+			'.chosen-select-no-single' : { disable_search_threshold: 10 },
+			'.chosen-select-no-results': { no_results_text: 'Oops, nothing found!' },
+			'.chosen-select-rtl'       : { rtl: true },
+			'.chosen-select-width'     : { width: '95%' }
+		  }
+		  var el =this.getEl();
+
+		  console.log(el);
+		  for (var selector in config) {
+			  
+			var tmp =el[0].querySelectorAll(selector);
+			$(tmp).chosen(config[selector]);
+		  }
     }
 
     getId() {
+        return this.uuid;    
+    }
+
+	getUuid() {
         return this.uuid;    
     }
 
@@ -228,20 +249,85 @@ class PgmPageMngr {
     	if(data.popup_mngr != undefined)  {
     		data.popup_mngr.close(p_param);
     	}
-    	PgmPageMngr.removeReqMap(uuid);
+		this.destory();
     }
     on(event_name,func){
 		// 이벤트 리슨.
-		console.log(this.container);
+		//console.log(this.container);
+		//console.log(func)
 		this.container[0].addEventListener(event_name,func, false);
 
 	}
 	
-	fire(event_name){
+	fire(event_name,data){
+		console.log('PgmPageMngr-fire-'+event_name);
+		console.log(data);
 		// 이벤트 디스패치.
-		var event = new Event(event_name);
-		console.log(this.container);
+		var event = new CustomEvent(event_name,data);
+		//console.log(this.container);
+		//console.log(data);
 		this.container[0].dispatchEvent(event);
+	}
+
+	getComboData(br,param,option) {
+		let _this =this;
+		let _option =option;
+		let option_data=[];
+		this.send_sync(br, param, function(data){
+			if(_option && _option.USE_EMPTY_YN){
+				if(_option.USE_EMPTY_YN=='Y'){
+					option_data.push({VALUE : '', TEXT : '빈것' });
+				}
+			} else {
+				if(_option.USE_EMPTY_YN=='Y'){
+					option_data.push({VALUE : '', TEXT : '빈것' });
+				}
+			}
+			if(data.OUT_DATA && data.OUT_DATA.length){
+				var value_name="value";
+				var text_name="text";
+				console.log(_option);
+				if(_option && _option.VALUE) {
+					value_name=_option.VALUE;
+				}
+				if(_option && _option.TEXT) {
+					text_name=_option.TEXT;
+				}
+				
+				for(var i=0;i<data.OUT_DATA.length;i++){
+					var item_data = data.OUT_DATA[i];
+					option.value = item_data[value_name];
+					option.text  = item_data[text_name];
+					option_data.push(
+						{
+							VALUE : item_data[value_name] , 
+							TEXT : item_data[text_name] 
+						}
+					);
+				}
+			}
+			
+		});
+		return option_data;
+	}
+
+	parentCall(CALL_METHOD){
+		console.log('PgmPageMngr-parentCall-'+ this.getPgmId());
+		var parent_uuid = this.parent_uuid;
+		console.log('parent_uuid');
+		console.log(parent_uuid);
+		var app = PgmPageMngr.getPgmUuIdMap(parent_uuid);
+		console.log('app');
+		console.log(app);
+		app.fire("remoteCall",CALL_METHOD);
+	}
+
+	destory(){
+			//원래는 navigator를 두어서 제거하면 지우려고 했는데 필요없음.
+			var uuid = this.uuid;
+			sessionStorage.removeItem(uuid);
+			PgmPageMngr.removePgmUuIdMap(uuid);
+			PgmPageMngr.removeReqMap(uuid);
 	}
 }
 

@@ -1,38 +1,14 @@
-<%
-    String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
-%>
+<%	String uuid = (String) request.getAttribute("uuid");	%>
 <script>
 	$(document).ready(function () {
-		var CM_2200 = new PgmPageMngr('<%=pgmId%>', '<%=uuid%>');
+		var CM_2200 = new PgmPageMngr('<%=uuid%>');
 		CM_2200.init(function (p_param) {
 			var _this = CM_2200;
 			var cmRoleCdSearchForm = new FormMngr(_this, "cm_role_cd_search_area");
 			var cmUserRoleCdSearchForm = new FormMngr(_this, "cm_user_role_cd_search_area");
 			var cmMenuTreeSearchForm = new FormMngr(_this, "cm_menu_tree_search_area");
-
-			var param = {
-					brRq : 'IN_DATA',
-					brRs : 'OUT_DATA',
-					IN_DATA : [ { USE_YN : 'Y' } ]
-			}
-			_this.send_sync('BR_CM_ROLE_CD_FIND', param, function(data) {
-				_this.hideProgress();
-				if (data) {
-					//콤보박스 세팅
-					var arr_data = []
-					console.log(data.OUT_DATA);
-					if(data.OUT_DATA){
-						for(var i =0;i<data.OUT_DATA.length;i++){
-							var tmp =data.OUT_DATA[i];
-							console.log(tmp);
-							arr_data.push({ id: tmp.ROLE_CD , text: tmp.ROLE_NM  })
-						}
-					}
-					cmMenuTreeSearchForm.addSelect2("ROLE_CD",arr_data);
-				}
-			});
-
+			cmMenuTreeSearchForm.initCombo("ROLE_CD",'BR_CM_ROLE_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'ROLE_CD' , TEXT :'ROLE_NM' });
+		
 			const grid_cm_role_cd = new TuiGridMngr(_this, 'grid_cm_role_cd', {
 					editable: true,
 					showRowStatus: true,
@@ -607,6 +583,7 @@
 				case 'cm_menu_tree_search':
 					var data = cmMenuTreeSearchForm.getData();
 					if (PjtUtil.isEmpty(data.ROLE_CD) == true) {
+						Message.alert("역할코드가 선택되지 않았습니다.0");
 						return;
 					}
 

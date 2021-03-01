@@ -7,7 +7,8 @@ https://yongblog.tistory.com/26
  	String userPwd  = request.getAttribute("userPwd").toString();
  	String autoLoginYn  = request.getAttribute("autoLoginYn").toString();
  %>
- <div id="app">
+ 
+  <div id="app">
 	 <form class name="binder-form" onsubmit="return false;" style="border: 1px solid #ccc;padding: 10px;border-radius: 10px;width:300px;margin:100px auto 0 auto">
 	    <div class="form-group">
 	        <label>아이디</label>
@@ -23,6 +24,12 @@ https://yongblog.tistory.com/26
 	            자동로그인
 	        </label>
 	        <button class="btn btn-default" data-btn="login">로그인</button>
+	    </div>
+		<div class="checkbox">
+			<a href="javascript:;" class="btn_social" data-social="facebook">페이스북 로그인</a><br/> 
+			<a href="javascript:;" class="btn_social" data-social="google">구글 로그인</a><br/> 
+			<a href="javascript:;" class="btn_social" data-social="kakao">카카오톡 로그인</a><br/> 
+			<a href="javascript:;" class="btn_social" data-social="naver">네이버 로그인</a><br/>
 	    </div>
 	</form>
 </div>
@@ -96,6 +103,16 @@ $(function () {
   		하지만 일단 쿠키로 한거 먼저 해놓자.
   
   */
-
 %>
+<script>
+let socials = document.getElementsByClassName("btn_social"); 
+for(let social of socials) { 
+	social.addEventListener('click', function(){ 
+		let socialType = this.getAttribute('data-social'); 
+		location.href="/oauth2/authorization/" + socialType; 
+	}) 
+}
+//oauth2  rest 로그인 고고
+//출처: https://engkimbs.tistory.com/849 [새로비]
+</script>
 <%@ include file="/WEB-INF/jsp/include/simple_bottom.jsp" %>

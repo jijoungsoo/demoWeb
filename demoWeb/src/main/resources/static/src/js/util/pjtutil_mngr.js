@@ -66,4 +66,26 @@ class PjtUtil{
 		var n = parseInt(str.replace(/,/g,""));
 		return n;
 	}
+
+	static isTelNo(strTelNum){
+		var regExp = /^(01[016789]{1}|02|0[3-9]{1}[0-9]{1})-?[0-9]{3,4}-?[0-9]{4}$/;
+		if( !regExp.test(strTelNum)) {
+			return false;
+	   	} else {
+			return true;
+		}
+	}
+
+	static isEmail(strEmail){
+		var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+		if (strEmail == '' || !re.test(strEmail)) {
+			
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+
+
 }

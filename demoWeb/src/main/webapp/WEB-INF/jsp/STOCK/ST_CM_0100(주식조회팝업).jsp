@@ -8,32 +8,8 @@ $(document).ready(function(){
 	ST_CM_0100.init(function(p_param) {
 		var _this = ST_CM_0100;
 		var searchForm = new FormMngr(_this,"search_area");
-		
-		var param = {
-				brRq : 'IN_DATA',
-				brRs : 'OUT_DATA',
-				IN_DATA : [ { GRP_CD : 'MARKET'
-					,USE_YN : 'Y' } ]
-		}
-		_this.send('BR_CM_CD_FIND', param, function(data) {
-			_this.hideProgress();
-			if (data) {
-				//콤보박스 세팅
-				var arr_data = []
-				console.log(data.OUT_DATA);
-				arr_data.push({ id: "" , text: "ALL"  });
-				if(data.OUT_DATA){
-					for(var i =0;i<data.OUT_DATA.length;i++){
-						var tmp =data.OUT_DATA[i];
-						arr_data.push({ id: tmp.CD , text: tmp.CD_NM  });
-					}
-				}
-				console.log(arr_data);
-				searchForm.addSelect("MARKET_CD",arr_data);
-			}
-
-		});
-		
+		searchForm.initCombo("MARKET_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'MARKET', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+			
 		const grid = new TuiGridMngr(_this, 'grid',
 		{
 			editable : false,

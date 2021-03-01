@@ -27,7 +27,7 @@ public class CustomAuthenticationFailureHandler  extends SimpleUrlAuthentication
 	    	ResponseDataDTO responseDataDTO = new ResponseDataDTO();
 	    	responseDataDTO.setCode(ResponseDataCode.ERROR);
 	    	responseDataDTO.setStatus(ResponseDataStatus.ERROR);
-	    	responseDataDTO.setMessage(exception.getMessage());
+	    	responseDataDTO.setMessage(exception.getMessage()+"gogo");
 	    	//responseDataDTO.setMessage("아이디 혹은 비밀번호가 일치하지 않습니다.");
 
 	    	

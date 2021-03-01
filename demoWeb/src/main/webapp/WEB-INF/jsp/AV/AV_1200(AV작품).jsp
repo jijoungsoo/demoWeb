@@ -1,13 +1,22 @@
-
-<%
-String pgmId = (String) request.getAttribute("pgmId");
-String uuid = (String) request.getAttribute("uuid");
-%>
+<% String uuid = (String) request.getAttribute("uuid"); %>
 <script>
 $(document).ready(function(){
-	var AV_1200 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	var AV_1200 = new PgmPageMngr ('<%=uuid%>');
 	AV_1200.init(function(p_param) {
+		var searchForm;
+		var grid_arr_data_msc_cd = [];
+		var search_arr_data_msc_cd = [];
+		var grid_arr_data_cptn_yn = [];
+		var grid_arr_data_vr_yn = [];
+		var search_arr_data_vr_yn = [];
+		var grid ;
+
 		var _this = AV_1200;
+		searchForm = new FormMngr(_this, "search_area");
+		searchForm.initCombo("MSC_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'MSC_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+		searchForm.initCombo("VR_YN",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'VR_YN', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+		searchForm.setData("MSC_CD","");
+		searchForm.setData("VR_YN","");
 		var up_uploader_el = _this.get("excel_upld")
 		var fileMngr = new FileMngr(_this,up_uploader_el,{
 		    extFilter: ['xls','xlsx'],
@@ -49,49 +58,9 @@ $(document).ready(function(){
 			}
 		});
 		fileMngr.build();
-		var searchForm = new FormMngr(_this, "search_area");
-		var param = {
-				brRq : 'IN_DATA',
-				brRs : 'OUT_DATA',
-				IN_DATA : [ { GRP_CD : 'MSC_CD'
-					,USE_YN : 'Y' } ]
-		}
-		//콤보박스 세팅
-		var grid_arr_data_msc_cd = []
-		_this.send_sync('BR_CM_CD_FIND', param, function(data) {
-			if (data) {
-				console.log(data.OUT_DATA);
-				if(data.OUT_DATA){
-					for(var i =0;i<data.OUT_DATA.length;i++){
-						var tmp =data.OUT_DATA[i];
-						grid_arr_data_msc_cd.push({ value: tmp.CD , text: tmp.CD_NM  })
-					}
-				}
-			}
-		});
 		
-		var param = {
-				brRq : 'IN_DATA',
-				brRs : 'OUT_DATA',
-				IN_DATA : [ { GRP_CD : 'CPTN_YN'
-					,USE_YN : 'Y' } ]
-		}
-		//콤보박스 세팅
-		var grid_arr_data_cptn_yn = []
-		_this.send_sync('BR_CM_CD_FIND', param, function(data) {
-			if (data) {
-				console.log(data.OUT_DATA);
-				if(data.OUT_DATA){
-					for(var i =0;i<data.OUT_DATA.length;i++){
-						var tmp =data.OUT_DATA[i];
-						grid_arr_data_cptn_yn.push({ value: tmp.CD , text: tmp.CD_NM  })
-					}
-				}
-			}
-		});
 		
-	
-		const grid = new TuiGridMngr(_this,'grid',{
+		grid = new TuiGridMngr(_this,'grid',{
 		      editable: true
 		      ,showRowStatus: true
 		      ,rowNum: true
@@ -103,53 +72,65 @@ $(document).ready(function(){
 			{
 		           header: 'AV_SEQ',
 		           name: 'AV_SEQ',
-		           width: 80,
+		           width: 60,
 		           resizable: false,
 		           sortable: true,
+				   align : "right",
 		           sortingType: 'desc'
 			  }, {
 			           header: '좋아요',
-			           width : 100,
-			           name: 'LK_CNT'
+			           width : 60,
+			           name: 'LK_CNT',
+					   align: "center"
+					}, {
+			           header: '싫어요',
+			           width : 60,
+			           name: 'DSLK_CNT',
+					   align: "center"
 			},{     
 					header : '모자이크상태',
 					name : 'MSC_CD',
-					width : 200,
+					width : 100,
 					sortable : true,
 					align : "center",
 					sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-					formatter: 'listItemText',
-		            editor: {
-		               type: 'select',
-		               options: {
-		                 listItems: grid_arr_data_msc_cd
-		               }
-		            }
-		            ,validation: {
+					type : "combo",
+					comboData : _this.getComboData('BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'MSC_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' }),
+		            validation: {
 		             dataType: 'string',  /*string ,number*/
 		             required: true,    /*  true 필수, false 필수아님  */
+		             unique: false   /*true 데이터가 중복되면 빨간색 표시 */
+		           	}
+				},{     
+					header : 'VR여부',
+					name : 'VR_YN',
+					width : 100,
+					sortable : true,
+					align : "center",
+					sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+					type : "combo",
+					comboData : _this.getComboData('BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'VR_YN', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' }),
+		            validation: {
+		             dataType: 'string',  /*string ,number*/
+		             required: false,    /*  true 필수, false 필수아님  */
 		             unique: false   /*true 데이터가 중복되면 빨간색 표시 */
 		           	}
 		       }, {
 		           header: '품번',
 		           name: 'AV_NM',
-		           width: 200,
+		           width: 140,
 		           resizable: false,
 		           sortable: true,
 		           sortingType: 'desc',
 		           editor: 'text'
 		         },{
-		           header: '자막유무',
-		           width: 100,
+		           header: '자막',
+		           width: 60,
 		           name: 'CPTN_YN',
-		           formatter: 'listItemText',
-		            editor: {
-		               type: 'select',
-		               options: {
-		                 listItems: grid_arr_data_cptn_yn
-		               }
-		            }
-		            ,validation: {
+				   type : "combo",
+				   align: "center",
+				   comboData : _this.getComboData('BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'CPTN_YN', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' }),
+                   validation: {
 		             dataType: 'string',
 		             required: true,
 		             unique: false
@@ -217,14 +198,39 @@ $(document).ready(function(){
 		);
 	  	grid.build();
 
+		grid.on('click', (ev) => {
+			if (ev.rowKey >=0) {
+				var row_data=grid.getRow(ev.rowKey);
+				console.log(row_data);
+
+				var param = {
+					AV_SEQ: row_data.AV_SEQ
+				}
+				var popup = new PopupManger(_this, 'AV_1210', {
+						width: 1100,
+						height: 900,
+						title: "AV작품상세"
+					},
+					param
+				);
+				popup.open(function (data) {
+					if (data) {
+
+					}
+				});
+				
+			}
+		});
+
 	  	searchForm.addEvent("click","input[type=button]",function(el){
 		   //console.log(el);
 	  	   switch(el.target.name){
            case 'search':
+			   var data = searchForm.getData();
         		var param ={
 					 brRq : 'IN_DATA'
 					,brRs : 'OUT_DATA'
-					,IN_DATA:[{}]
+					,IN_DATA:[ data ]
 				}
 		    	grid.loadData('BR_AV_MV_FIND',param,function(data){
 			    	console.log(data);

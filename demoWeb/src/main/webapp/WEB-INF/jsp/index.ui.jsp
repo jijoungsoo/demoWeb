@@ -43,7 +43,7 @@
 				<li class="mm-active"><div class="has-arrow" ><a href="#"><span class="fa fa-fw fa-star"></span>줄겨찾기</a></div>
 				<ul id='fav_menu'>
 				</ul>
-		<script id="fav_menu-template" type="text/x-handlebars-template">
+<script id="fav_menu-template" type="text/x-handlebars-template">
 {{#favMenuList}}
 <li>
 	<div>
@@ -55,7 +55,7 @@
 	</div>
 </li>
 {{/favMenuList}}
-	</script>
+</script>
 			</li/>
 		</ul>	
 		<div id="left_menu">

@@ -124,10 +124,17 @@
 .tal {text-align:left}
 .tac {text-align:center}
 
+.vat {vertical-align: top;}
+.vam {vertical-align: middle}
+.vab {vertical-align: bottom}
 
 .st_up_amt {
 	color:#f10808
 }
 .st_dn_amt {
 	color:#0080ff
+}
+
+.b2red {
+    border: solid 2px red;
 }

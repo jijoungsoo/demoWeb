@@ -22,8 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class FileService {
-    @Autowired
-    private GoRestService goService;
+
     
     public ArrayList<FileDto>  getFile(String FILE_ID, Authentication authentication) {
         HashMap<String, ArrayList<HashMap<String, Object>>> outDs = new HashMap<String, ArrayList<HashMap<String, Object>>>();
@@ -39,7 +38,7 @@ public class FileService {
 
             String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
             MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_FILE_FIND_BY_FILE_ID", jsonInString, authentication);
-            String jsonOutString = goService.callAPI("BR_CM_FILE_FIND_BY_FILE_ID", msg.getIN_DATA_JSON());
+            String jsonOutString = GoRestService.callAPI("BR_CM_FILE_FIND_BY_FILE_ID", msg.getIN_DATA_JSON());
             outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
@@ -70,7 +69,7 @@ public class FileService {
     }
     
 
-    public void createExcelFile(ArrayList<FileDto> al, Authentication authentication) throws BizException, JsonProcessingException {
+    public HashMap<String, ArrayList<HashMap<String, Object>>> createExcelFile(ArrayList<FileDto> al, Authentication authentication) throws BizException, JsonProcessingException {
         List<HashMap<String, Object>> all_list = new ArrayList<HashMap<String, Object>>();
         for (int i = 0; i < al.size(); i++) {
             FileDto fDto = al.get(i);
@@ -119,8 +118,9 @@ public class FileService {
         IN_DS.put("IN_DATA", all_list);
         String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
         MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_EXCEL_UPLD_CREATE", jsonInString, authentication);
-        String jsonOutString = goService.callAPI("BR_CM_EXCEL_UPLD_CREATE", msg.getIN_DATA_JSON());
+        String jsonOutString = GoRestService.callAPI("BR_CM_EXCEL_UPLD_CREATE", msg.getIN_DATA_JSON());
         outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
+        return outDs;
     }
 
     public void createFile(FileDto  tmp, Authentication authentication
@@ -147,7 +147,7 @@ public class FileService {
         String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
         MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_FILE_CREATE",jsonInString,authentication);
         
-        String jsonOutString = goService.callAPI("BR_CM_FILE_CREATE", msg.getIN_DATA_JSON());
+        String jsonOutString = GoRestService.callAPI("BR_CM_FILE_CREATE", msg.getIN_DATA_JSON());
         PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
         
     }
@@ -167,7 +167,7 @@ public class FileService {
 
         String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
         MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_FILE_RM", jsonInString, authentication);
-        String jsonOutString = goService.callAPI("BR_CM_FILE_RM", msg.getIN_DATA_JSON());
+        String jsonOutString = GoRestService.callAPI("BR_CM_FILE_RM", msg.getIN_DATA_JSON());
         outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
        
     }

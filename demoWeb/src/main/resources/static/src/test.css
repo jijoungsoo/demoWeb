@@ -1,6 +1,6 @@
 h2{
   font: 14px Arial, sans-serif;
-  color:#fff;
+  color:#000;
   padding: 10px;
 }
 
@@ -48,6 +48,7 @@ body {
   display:table;
   float:left;
   text-align:center;
+  word-break: break-all;
 }
 
 .login label{

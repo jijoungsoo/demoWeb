@@ -61,8 +61,8 @@ public class ExcelUpldFileController {
         if(PjtUtil.isEmpty(FILE_ID)==false) {
             try {
                 ArrayList<FileDto> OUT_DATA=fService.getFile(FILE_ID,  authentication);
-                fService.createExcelFile(OUT_DATA, authentication);
-                return ResponseEntity.created(null).body(OUT_DATA);
+                HashMap<String, ArrayList<HashMap<String, Object>>> OUT_DS= fService.createExcelFile(OUT_DATA, authentication);
+                return ResponseEntity.created(null).body(OUT_DS);
             } catch (Exception e) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(e.getMessage());

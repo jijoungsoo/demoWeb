@@ -1,4 +1,5 @@
-<div name="user_area" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+
+<form name="brd_modify_area" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
   <div class="container">
     <div class="row row-cols-4">
       <div class="col-sm">
@@ -6,7 +7,7 @@
           <div class="input-group">
             <span class="input-group-addon">게시판선택</span>
             
-            <select class="form-control" data-ax-path="GRP_SEQ"  name="GRP_SEQ" style="width:140px;" disabled>
+            <select class="form-control" data-ax-path="GRP_SEQ"  name="GRP_SEQ" style="width:140px;" >
             </select>
           </div>
         </div>
@@ -50,8 +51,11 @@
     </div>
     <div class="row">
       <div class="col">
-            <textarea class="form-control" rows="10"  data-ax-path="CNTNT"
-            name="CNTNT"></textarea>
+<!-- 에디터 컨테이너 시작 -->
+   <!-- The toolbar will be rendered in this container. -->
+   <div name="toolbar-container"></div>
+<div name="CNTNT"  data-ax-path="CNTNT"></div>
+<!-- 에디터 컨테이너 끝 -->
       </div>
     </div>
   </div>

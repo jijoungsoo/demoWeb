@@ -7,6 +7,7 @@ class PopupManger {
 	    https://gist.github.com/craigmccoy/3753941
 	    https://stackoverflow.com/questions/3837166/jquery-load-modal-dialog-contents-via-ajax
 	    */
+	    this.pgm_mngr 	= pgm_mngr;
 	    var uuid 	= pgm_mngr.getId();
 	    var popup_uuid	= AppMngr.makeUUID();
 	    this.container_id=(uuid + "-" + popup_uuid + "-popup");
@@ -70,7 +71,7 @@ class PopupManger {
 	close(data) {
 		//dialog를 삭제하는기능
 		this.dialog.dialog("destroy").remove();
-		
+		this.pgm_mngr.destory();
 		if(data!=undefined){
 			console.log(data);
 			this.func(data);

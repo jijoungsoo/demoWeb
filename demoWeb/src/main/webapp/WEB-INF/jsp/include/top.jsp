@@ -20,8 +20,6 @@
 	<script src="/webjars/lodash/4.17.15/lodash.js"></script>
 	
 		<!--select box js component-->
-	<link   href="/webjars/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
-	<script src="/webjars/select2/4.0.13/js/select2.min.js"></script>
 	<link   href="/webjars/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" >
 	<script src="/webjars/font-awesome/5.15.1/js/all.min.js"></script>
 	
@@ -121,5 +119,14 @@
 <script src="/src/js/util/metismenu_mngr.js"></script>
 <script src="/src/js/util/excel_mngr.js"></script>
 <script src="/src/js/util/tab_mngr.js"></script>
+<script src="/src/js/util/child_mngr.js"></script>
+
+
+
+
+<!--script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/classic/ckeditor.js"></script-->
+<script src="https://cdn.ckeditor.com/ckeditor5/25.0.0/decoupled-document/ckeditor.js"></script>
+  <link rel="stylesheet" href="/src/chosen_v1.8.7/chosen.css">
+  <script src="/src/chosen_v1.8.7/chosen.jquery.js" type="text/javascript" charset="utf-8"></script>
 </head>
 <body>

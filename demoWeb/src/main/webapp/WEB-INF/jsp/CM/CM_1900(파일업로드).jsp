@@ -1,10 +1,7 @@
-<%
-	String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
-%>
+<%	String uuid = (String) request.getAttribute("uuid");	%>
 <script>
 $(document).ready(function(){
-	var CM_1900 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	var CM_1900 = new PgmPageMngr ('<%=uuid%>');
 		CM_1900.init(function(p_param) {
 			var _this = CM_1900;
 			var API_SERVER = "/";

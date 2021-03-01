@@ -1,6 +1,8 @@
 class TabMngr {
 	constructor(pgm_mngr, area_name) {
+		this.appMap  = new Map();
 		var _this = this;
+		this.pgm_mngr = pgm_mngr;
 		this.uuid = pgm_mngr.getId();
 		this.container = $("#" + pgm_mngr.getId());
 		console.log(this.container)
@@ -32,6 +34,23 @@ class TabMngr {
 		}
 	}
 
+	remoteCall(PGM_ID,CALL_METHOD){
+		//console.log('remoteCall');
+		//console.log(PGM_ID);
+		//console.log(this.appMap);
+		var tab_uuid = this.appMap.get(PGM_ID)
+		//console.log('tab_uuid');
+		//console.log(tab_uuid);
+		var app = PgmPageMngr.getPgmUuIdMap(tab_uuid);
+		try {
+			app.fire("remoteCall",CALL_METHOD);
+		} catch(e){
+			alert(PGM_ID+'-tab 호출 오류가 발생하였습니다. 관리자에게 문의 부탁드립니다.')
+			console.log(e);
+		}
+		
+	}
+
 	loadContent(tabIndex){
 		var _this = this;
 
@@ -55,9 +74,11 @@ class TabMngr {
 				el2.append(tmp);  //윈도우창에 프로그래스 div를 추가한다.
 				let el3 =$("#" + container_id);
 				//ajax로 페이지 로딩해야한다.
-				var p_param = $.extend(p_param, { uuid: tab_uuid });
+				var p_param = $.extend(p_param, { uuid: tab_uuid ,parent_uuid : _this.pgm_mngr.getUuid() });
 				PgmPageMngr.addReqMap(tab_uuid,{ popup_mngr : this,param : p_param });			
+				_this.appMap.set(PGM_ID,tab_uuid);
 				AjaxMngr.get_page_ajax(el3,PGM_ID,p_param);
+
 		}
 	}
 

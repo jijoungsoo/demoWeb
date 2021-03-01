@@ -101,3 +101,26 @@ spring.cache.ehcache.config: classpath:ehcache.xml
 #      show-details: always
 #    shutdown.enabled: true
 
+
+##출처: https://engkimbs.tistory.com/849 [새로비]
+##oauth 용
+spring.security: 
+    oauth2: 
+      client: 
+        registration: 
+          google: 
+            client-id: 1013284899874-j55po4375ob25rpr8u0db0gvab4p3uod.apps.googleusercontent.com
+            client-secret: 6Tr9hiMs9uKCjUHrO9bxv0lL 
+          facebook: 
+            client-id: 680106585392054 
+            client-secret: da2b31555054ab973800eb26b38e3426 
+
+custom: 
+  oauth2: 
+    kakao: 
+      client-id: 19cf5b6db028ad395b915ddf55c256f4  ##rest api키
+      client-secret: RNsvKAj3suFVj4mq3m1U0dsGFjTcd8Iz   ##카카오 로그인>보안>client secret 키
+    naver: 
+      client-id: vGcwBDQyZraIizRdgFqy 
+      client-secret: g0pxjLs7mR
+

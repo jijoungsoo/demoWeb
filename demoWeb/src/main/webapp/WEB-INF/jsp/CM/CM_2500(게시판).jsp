@@ -1,61 +1,43 @@
-<%	String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
-%>
+<%	String uuid = (String) request.getAttribute("uuid"); %>
 <script>
 	$(document).ready(function () {
-		var CM_2400 = new PgmPageMngr('<%=pgmId%>', '<%=uuid%>');
-		CM_2400.init(function (p_param) {
-			var _this = CM_2400;
+		var CM_2500 = new PgmPageMngr('<%=uuid%>');
+		CM_2500.init(function (p_param) {
+			var _this = CM_2500;
 			var searchForm = new FormMngr(_this, "search_area");
-			console.log(_this)
+			searchForm.initCombo("GRP_SEQ",'BR_CM_BOARD_GROUP_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'GRP_SEQ' , TEXT :'GRP_NM' });
 			var tabForm = new TabMngr(_this, "tab_area");
-
 			tabForm.appendTab(
-				[	{INDEX : 0,  PGM_ID : 'CM_2700' ,PARAM : null } ]
+				[	{INDEX : 0,  PGM_ID : 'CM_2600' ,PARAM : null } ]
 			);
 
 			tabForm.build({
-				active: 1
+				active: 0
 			});		
-			
 
-			var param = {
-				brRq: 'IN_DATA',
-				brRs: 'OUT_DATA',
-				IN_DATA: [{
-					USE_YN: 'Y'
-				}]
-			}
-			_this.send_sync('BR_CM_BOARD_GROUP_FIND', param, function (data) {
-				_this.hideProgress();
-				if (data) {
-					//콤보박스 세팅
-					var arr_data = []
-					console.log(data.OUT_DATA);
-					if (data.OUT_DATA) {
-						for (var i = 0; i < data.OUT_DATA.length; i++) {
-							var tmp = data.OUT_DATA[i];
-							console.log(tmp);
-							arr_data.push({
-								id: tmp.GRP_SEQ,
-								text: tmp.GRP_NM
-							})
-						}
-					}
-					searchForm.addSelect2("GRP_SEQ", arr_data, true);
-					_this.get("GRP_SEQ").val('').select2(); //최초 빈값 설정
+			console.log(_this);
+
+			_this.on("remoteCall",function(data){
+				console.log('CM_2500-remoteCall  ---  vvvvvv')
+				var detail =data.detail; 
+				console.log(detail);
+				switch (detail.ACTION) {
+					case 'SEARCH':
+						var brd_Seq= detail.BRD_SEQ ;
+						searchForm.setData('BRD_SEQ',brd_Seq);
+						searchForm.get("search").trigger("click");
+					break;
 				}
 			});
 
-
-
+			
 			const grid = new TuiGridMngr(_this, 'grid', {
 					editable: false,
 					showRowStatus: false,
 					rowNum: true,
 					checkbox: false,
-					width: 1400 /*그리드 너비 조절 */ ,
-					bodyHeight: 700 /*그리드 높이지정 */ ,
+					width: 1000 /*그리드 너비 조절 */ ,
+					bodyHeight: 400 /*그리드 높이지정 */ ,
 					showDummyRows: false
 				},
 				[{
@@ -63,6 +45,16 @@
 						name: 'GRP_SEQ',
 						width: 100,
 						hidden: true
+					},{     
+						header : '게시판선택',
+						name : 'GRP_SEQ',
+						width : 200,
+						sortable : true,
+						align : "center",
+						sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+						type : "combo",
+						comboData : _this.getComboData('BR_CM_BOARD_GROUP_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'GRP_SEQ' , TEXT :'GRP_NM' }),
+
 					}, {
 						header: 'BRD_SEQ',
 						name: 'BRD_SEQ',
@@ -89,13 +81,8 @@
 						hidden: true
 					}, {
 						header: '제목',
-						name: 'TTL',
-						width: 200
-					}, {
-						header: '내용',
-						name: 'CNTNT',
-						width: 200,
-						resizable: false,
+						name: 'TTL_TEXT',
+						width: 300
 					}, {
 						header: '삭제여부',
 						name: 'DEL_YN',
@@ -125,6 +112,12 @@
 				if (ev.rowKey >=0) {
 					var row_data=grid.getRow(ev.rowKey);
 					console.log(row_data);
+
+					var param = {
+							ACTION  : 'SEARCH',
+							BRD_SEQ : row_data.BRD_SEQ
+					}
+					tabForm.remoteCall('CM_2600', { detail: param });
 					
 				}
 			});
@@ -132,20 +125,23 @@
 			searchForm.addEvent("click", "input[type=button]", function (el) {
 				switch (el.target.name) {
 					case 'search':
+						var data = searchForm.getData();
 						var param = {
 							brRq: 'IN_DATA',
 							brRs: 'OUT_DATA',
-							IN_DATA: [{}]
+							IN_DATA: [data]
 						}
 						grid.loadData('BR_CM_BOARD_FIND', param, function (data) {
 
 						});
 						break;
 					case 'add_row':
-						var data = _this.get("GRP_SEQ").select2('data')
+					console.log('add_row')
+						console.log(searchForm.get("GRP_SEQ"))
+						var data = searchForm.getData("GRP_SEQ")
 						console.log(data);
 
-						if (PjtUtil.isEmpty(data[0].id) == true) {
+						if (PjtUtil.isEmpty(data) == true) {
 
 							Message.alert("게시판선택을 선택해주세요.");
 							return;
@@ -153,8 +149,7 @@
 
 						Message.confirm('신규게시물을 등록하시겠습니까?', function () {
 							var param = {
-								GRP_SEQ: data[0].id,
-								GRP_NM: data[0].text,
+								GRP_SEQ: data
 							}
 							var popup = new PopupManger(_this, 'CM_2700', {
 									width: 1100,
@@ -172,76 +167,6 @@
 						});
 						break;
 
-					case 'save':
-						var data = grid.getModifiedRows();
-						console.log(data);
-						var crt_cnt = data.createdRows.length;
-						var updt_cnt = data.updatedRows.length;
-
-
-						if ((crt_cnt + updt_cnt) == 0) {
-							Message.alert("저장할 내용이 존재하지 않습니다.");
-							return;
-						}
-						if (grid.isValid() == false) {
-							grid.validMsg();
-							return;
-						}
-
-						Message.confirm('저장하시겠습니까?', function () {
-							var param = {
-								brRq: 'IN_DATA,UPDT_DATA',
-								brRs: '',
-								IN_DATA: data.createdRows,
-								UPDT_DATA: data.updatedRows
-							}
-							_this.showProgress();
-							_this.send('BR_CM_BOARD_SAVE', param, function (data) {
-								_this.hideProgress();
-								if (data) {
-									Message.alert('저장되었습니다.', function () {
-										searchForm.get("search").trigger(
-											"click");
-									});
-								}
-
-							});
-						});
-						break;
-					case "del":
-						var data = grid.getCheckedData();
-						console.log(data);
-						if (data.length <= 0) {
-							Message.alert('선택된 항목이 없습니다.');
-							return;
-						}
-						var in_data = [];
-						for (var i = 0; i < data.length; i++) {
-							var row = data[i];
-							in_data.push({
-								DMN_NO: row.DMN_NO
-							});
-						}
-						Message.confirm('삭제하시겠습니까?', function () {
-							var param = {
-								brRq: 'IN_DATA,LSESSION',
-								brRs: '',
-								IN_DATA: in_data
-							}
-							_this.showProgress();
-							_this.send('BR_CM_BOARD_RM', param, function (data) {
-								_this.hideProgress();
-								if (data) {
-									Message.alert('삭제되었습니다.', function () {
-										searchForm.get("search").trigger(
-											"click");
-									});
-								}
-							});
-						});
-						//실제로 서버에서 삭제하는로직 필요.
-						//grid.removeRow(0); 
-						break;
 				}
 			});
 		});

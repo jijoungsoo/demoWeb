@@ -1,9 +1,7 @@
-<%	String pgmId = (String) request.getAttribute("pgmId");
-	String uuid = (String) request.getAttribute("uuid");
-%>
+<%	String uuid = (String) request.getAttribute("uuid");	%>
 <script>
 $(document).ready(function(){
-	var CM_2100 = new PgmPageMngr ('<%=pgmId%>', '<%=uuid%>');
+	var CM_2100 = new PgmPageMngr ('<%=uuid%>');
 	CM_2100.init(function(p_param) {
 		var _this = CM_2100;
 		var fileMngr = new FileMngr(_this,{

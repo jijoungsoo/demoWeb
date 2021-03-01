@@ -59,14 +59,87 @@ class TuiGridMngr {
 	      }
 	      this.options.rowHeaders=arr_rowHeaders;
       } 
-      
-
 
       for (var i = 0; i < columns.length; i++) {
-        o_columns.push(columns[i]);
+		  	var tmp = columns[i];
+			if(tmp && tmp.type){
+				switch(tmp.type){
+					case "combo":
+						console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')
+						var item_data2 = [];
+						var item_data = tmp.comboData;
+						for(var j=0;j<item_data.length;j++){
+							item_data2.push({
+								value : item_data[j].VALUE,
+								text : item_data[j].TEXT
+							});
+						}
+						console.log(item_data2);
+						console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa2222222a')
+						tmp.formatter= 'listItemText';
+						tmp.editor = {
+							type: 'select',
+							options: {
+							  listItems: item_data2
+							}
+						}
+						break;									
+				}
+			}
+			o_columns.push(tmp);
       }
       this.options.el= pgm_mngr.get(grid_name)[0] /*타켓대상*/
       this.options.columns= o_columns;
+  }
+  initCombo(br,param,option) {
+	console.log('tui-initCombo');
+	console.log(option);
+	let _this =this;
+	let _option =option;
+	this.pgm_mngr.send_sync(br, param, function(data){
+		var tmp = _this.get(name);
+		console.log(tmp);
+		var el = _this.get(name)[0];
+		if(_option && _option.USE_EMPTY_YN){
+			if(_option.USE_EMPTY_YN=='Y'){
+				var option = document.createElement("option");
+				option.value = '';
+				option.text  = '빈것';
+				el.add(option);
+			}
+		} else {
+			if(_option.USE_EMPTY_YN=='Y'){
+				var option = document.createElement("option");
+				option.value = '';
+				option.text  = '빈것';
+				el.add(option);
+			}
+		}
+		if(data.OUT_DATA && data.OUT_DATA.length){
+			var value_name="value";
+			var text_name="text";
+			console.log(_option);
+			if(_option && _option.VALUE) {
+				value_name=_option.VALUE;
+			}
+			if(_option && _option.TEXT) {
+				text_name=_option.TEXT;
+			}
+			
+			for(var i=0;i<data.OUT_DATA.length;i++){
+				var item_data = data.OUT_DATA[i];
+				var option = document.createElement("option");
+				option.value = item_data[value_name];
+				option.text  = item_data[text_name];
+				console.log(value_name);
+				console.log(text_name);
+				console.log(item_data);
+				console.log(option);
+				el.add(option);
+			}
+		}
+		console.log(data);
+	});
   }
   build()  {
     var tmp =this.options;
@@ -266,6 +339,9 @@ class TuiGridMngr {
           for(var i=0;i<data[brRs].length;i++){
 	        	data[brRs][i]._ROW_STATUS=null;
 	      }
+		  console.log(_this.grid);
+		  console.log(brRs);
+		  console.log(data);
 	 	  _this.grid.resetData(data[brRs])
         } else {
           _this.grid.resetData(data[brRs])

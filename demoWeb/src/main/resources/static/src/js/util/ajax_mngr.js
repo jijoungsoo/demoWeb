@@ -95,12 +95,14 @@ class AjaxMngr {
 	    });
 	
 	    req.done(function (data, status) {
+			console.log("result:");
+	            console.log(JSON.stringify(data));
 	        if (hash.indexOf("#debug=Y") >= 0) {
 	            console.log("result:");
 	            console.log(JSON.stringify(data));
 	            
 	        }
-	        	        
+	        	console.log(p_function)        
 	        if(p_function){
 	        	p_function(data);
 	        }
@@ -165,7 +167,7 @@ class AjaxMngr {
 	    });   
 	}
 
-	static get_page_ajax(el,p_url, p_param) {
+	static get_page_ajax(el,p_url, p_param,func) {
 		p_url='/page/'+p_url
 	    var hash = window.location.hash;
 	    if (hash.indexOf("#debug=Y") >= 0) {
@@ -198,11 +200,17 @@ class AjaxMngr {
 	    });
 	
 	    req.done(function (data, status) {
+			
+
 	        if (hash.indexOf("#debug=Y") >= 0) {
 	            console.log("result:");
 	            console.log(JSON.stringify(data));
 	        }
 	        el.html(data);
+
+			if(func){
+				func();
+			}
 	    });
 	
 	    req.fail(function (jqXHR, textStatus) {

@@ -4,7 +4,7 @@
 %>
 <script>
 	$(document).ready(function () {
-		var CM_2300 = new PgmPageMngr('<%=pgmId%>', '<%=uuid%>');
+		var CM_2300 = new PgmPageMngr('<%=uuid%>');
 		CM_2300.init(function (p_param) {
 			var _this = CM_2300;
 			var searchForm = new FormMngr(_this, "search_area");

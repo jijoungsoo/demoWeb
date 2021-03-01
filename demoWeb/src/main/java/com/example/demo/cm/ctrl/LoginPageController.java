@@ -51,30 +51,35 @@ public class LoginPageController {
 			Cookie[] arrCookie =request.getCookies();
 			try {
 				
-				for(int i=0;i<arrCookie.length;i++) {
-					Cookie ck =arrCookie[i];
-					String cookieName = ck.getName();
-					//암호화된 문자열이 82자리였다. 
-					//여유있게 이름이 40자가 넘으면 대상이라고 보면 되겠다.
-					//생각해보니 key값이 똑같으니까 82개로 하면 되겠다.
-					//82가 아니네.. 대략 60으로 하자.
-					log.info("cookieName.length()=>"+cookieName.length());
-					if(cookieName.length()>60) {
-						String tmp =PjtUtil.decAES256AndUrl(cookieName);
-						if(tmp.equals(CustomUrlAuthenticationSuccessHandler.userId)) {
-							v_userId=ck.getValue();
-							v_userId =PjtUtil.decAES256AndUrl(v_userId);
-						}
-						if(tmp.equals(CustomUrlAuthenticationSuccessHandler.userPwd)) {
-							v_userPwd=ck.getValue();
-							v_userPwd =PjtUtil.decAES256AndUrl(v_userPwd);
-						}
-						if(tmp.equals(CustomUrlAuthenticationSuccessHandler.autoLoginYn)) {
-							v_autoLoginYn=ck.getValue();
-							v_autoLoginYn =PjtUtil.decAES256AndUrl(v_autoLoginYn);
+				if(arrCookie!=null){
+					for(int i=0;i<arrCookie.length;i++) {
+						Cookie ck =arrCookie[i];
+						String cookieName = ck.getName();
+						//암호화된 문자열이 82자리였다. 
+						//여유있게 이름이 40자가 넘으면 대상이라고 보면 되겠다.
+						//생각해보니 key값이 똑같으니까 82개로 하면 되겠다.
+						//82가 아니네.. 대략 60으로 하자.
+						log.info("cookieName.length()=>"+cookieName.length());
+						if(cookieName.length()>60) {
+							String tmp =PjtUtil.decAES256AndUrl(cookieName);
+							if(tmp.equals(CustomUrlAuthenticationSuccessHandler.userId)) {
+								v_userId=ck.getValue();
+								v_userId =PjtUtil.decAES256AndUrl(v_userId);
+							}
+							if(tmp.equals(CustomUrlAuthenticationSuccessHandler.userPwd)) {
+								v_userPwd=ck.getValue();
+								v_userPwd =PjtUtil.decAES256AndUrl(v_userPwd);
+							}
+							if(tmp.equals(CustomUrlAuthenticationSuccessHandler.autoLoginYn)) {
+								v_autoLoginYn=ck.getValue();
+								v_autoLoginYn =PjtUtil.decAES256AndUrl(v_autoLoginYn);
+							}
 						}
 					}
 				}
+				
+
+				
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -90,7 +95,20 @@ public class LoginPageController {
 			model.addAttribute(CustomUrlAuthenticationSuccessHandler.autoLoginYn, v_autoLoginYn);
 	        return "login"; 
 	    }
+
+		@PostMapping("/kakaoLogin")
+		public String kakaoLogin(UserInfoDto infoDto) { // 회원 추가
+		    try {
+				userService.save(infoDto);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		  return "redirect:/login";
+		}
+
 		
+	
 		  // 추가
 		  @GetMapping(value = "/logout")
 		  public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
