@@ -111,6 +111,13 @@ $(document).ready(function(){
 			  	window.open('https://github.com/jijoungsoo/stockdataloader','stockdataloader');
 			}); 
 			break;
+		case 'marcap':
+			Message.confirm("marcap github를 열겠습니까?",function(data){
+			  	window.open('https://github.com/FinanceData/marcap','marcap');
+			}); 
+			break;
+			
+			
 			
 		case 'swagger-ui':
 			Message.confirm("stockdataloader github를 열겠습니까?",function(data){

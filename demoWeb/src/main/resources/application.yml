@@ -15,13 +15,6 @@ spring.mandatory-file-encoding: UTF-8
 ####HTML 한글깨짐을 고칠수가 없었다.
       
 spring:
-  redis:
-    host: localhost
-    port: 6379
-  session:
-    redis:
-      flush-mode: on-save
-      namespace: spring:session
   profiles:
     active: dev
 #https://gofnrk.tistory.com/36

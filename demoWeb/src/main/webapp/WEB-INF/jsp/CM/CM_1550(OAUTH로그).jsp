@@ -5,128 +5,71 @@ $(document).ready(function(){
 	CM_1550.init(function(p_param) {
 		var _this = CM_1550;
 		var searchForm = new FormMngr(_this, "search_area");
-		searchForm.initCombo("CATEGORY",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [  { GRP_CD : 'CATEGORY',  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
-		
+	
 		const grid = new TuiGridMngr(_this,'grid',{
-		      editable: true
-		      ,showRowStatus: true
+		      editable: false
+		      ,showRowStatus: false
 		      ,rowNum: true
-		      ,checkbox: true      
+		      ,checkbox: false      
 		  	}
 		,[
-			{
-		           header: 'PGM_NO',
-		           name: 'PGM_NO',
-		           width: 80,
+				{
+		           header: 'SEQ_NO',
+		           name: 'SEQ_NO',
+		           width: 100,
+				   resizable: false,
+		           sortable: true,
+				   align:"right",
+		           sortingType: 'desc'
+				},{
+		           header: '구분ID',
+		           name: 'GBN_ID',
+				   width : 100,
+		           sortable : true
+				},{
+		           header: '인증ID',
+		           name: 'AUTH_ID',
+				   width : 200,
+		           sortable : true		
+				},{
+		           header: '닉네임',
+		           name: 'NCK_NM',
+		           width: 300,
+		           sortable: true
+		         },{
+		           header: '프로필이미지',
+		           name: 'PRF_IMG',
+		           width: 200,
 		           resizable: false,
 		           sortable: true,
-		           sortingType: 'desc' /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-		         },
-		       {
-		           header: '프로그램',
-		           name: 'PGM_ID',
-		           width: 100,
-		           resizable: false,
-		           sortable: true,
-		           sortingType: 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-		           filter: { type: 'text', showApplyBtn: true, showClearBtn: true },   /*text, number, select, date 4가지가 있다.*/
-		           validation: {
-		             dataType: 'string',  /*string ,number*/
-		             required: true,    /*  true 필수, false 필수아님  */
-		             unique: true   /*true 데이터가 중복되면 빨간색 표시 */
-		           },
-		           editor: 'text'
-		         },
-		         {
-		           header: '프로그램명',
-		           name: 'PGM_NM',
-		           width: 'auto',   /*너비 자동조절*/
-		           sortable: true,
-		           filter: { type: 'text', showApplyBtn: true, showClearBtn: true },
-		           editor: 'text'
-		               /*
-		 https://github.com/nhn/tui.grid/tree/master/packages/toast-ui.grid/docs/ko 설명서              
-		 내장에디터 종료
-		 https://github.com/nhn/tui.grid/blob/master/packages/toast-ui.grid/docs/ko/custom-editor.md              
-		 text : Text input (input[type=text])
-		 password : Password input (input[type=password])
-		 checkbox : Check box (input[type=checkbox])
-		 radio : Radio button (input[type=radio])
-		 select : Select box (select)
-		               */
-		         },
-		         
-		         {
-		           header: '카테고리',
-		           name: 'CATEGORY',
-		           width: 100,
-		           sortable: true,
-		           align: "center",
-				   type : "combo",
-				   comboData : _this.getComboData('BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'CATEGORY' , USE_YN: 'Y' }]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' })
-		         },
-		         {
-			           header: '폴더링크',
-			           name: 'DIR_LINK',
-			           editor: 'text',
-			           filter: {
-			               type: 'text',
-			               operator: 'OR'
-			             },    /*자동검색*/
-			           validation: {
-			               dataType: 'string',  /*string ,number*/
-			               required: true,    /*  true 필수, false 필수아님  */
-			               unique: false   /*true 데이터가 중복되면 빨간색 표시 */
-			             },
-			           
-			         },
-		         {
-		           header: '프로그램링크',
-		           name: 'PGM_LINK',
-		           editor: 'text',
-		           filter: {
-		               type: 'text',
-		               operator: 'OR'
-		             },    /*자동검색*/
-		           validation: {
-		               dataType: 'string',  /*string ,number*/
-		               required: true,    /*  true 필수, false 필수아님  */
-		               unique: true   /*true 데이터가 중복되면 빨간색 표시 */
-		             },
-		           
-		         },
-		         {
-						header : '정렬',
-						name : 'ORD',
-						width : 100,
-						sortable : true,
-						align : "center",
-						sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-						filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}, /*text, number, select, date 4가지가 있다.*/
-						editor : 'text'
-					},
-		         {
-		           header: '비고',
-		           name: 'RMK',
-		           editor: 'text'
-		         },
-		         {
+		           sortingType: 'desc'
+		         },{
+		           header: '썸네일',
+		           name: 'THUMB_IMG',
+		           width: 200,
+		           sortable: true
+		         },{
+			           header: '이메일',
+			           name: 'EML',
+					   width : 200,
+					   sortable: true
+				},{
+		           header: '생일(MMDD)',
+		           name: 'BRTH_DAY',
+				   width : 100,
+				   align: "center",
+				   sortable: true
+				},{
+					header : '성별',
+					name : 'GNDR',
+					width : 100,
+					sortable : true
+		        },{
 		             header: '생성일',
 		             name: 'CRT_DTM',
 		             width: 140,
 		             sortable: true,
 		             align: "center"
-		         },
-		         {
-		             header: '수정일',
-		             name: 'UPDT_DTM',
-		             width: 140,
-		             sortable: true,
-		             align: "center" 
 		         }
 		    ]
 		);

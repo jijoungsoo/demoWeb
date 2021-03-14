@@ -32,15 +32,18 @@ dependencies {
    	implementation 'org.springframework.boot:spring-boot-starter-security:2.4.0' /*패스워드 암호화 때문에 사용*/
 
 	/*외부 레디스 세션을 사용하기 위해*/
-	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
-	implementation 'org.springframework.session:spring-session-data-redis'
+	//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	//implementation 'org.springframework.session:spring-session-data-redis'
 	
 	implementation 'org.springframework.boot:spring-boot-starter-aop'  /*aop 를 써서 로그인이 안된걸 공통으로 걸러준다.*/
 	
     //embedded-redis --로컬용 --- redis 서버를 띄우지 않아도 된다.   https://jojoldu.tistory.com/297
-    compile ('it.ozimov:embedded-redis:0.7.3') {  /*spring 이랑 slf4j-simple이  중복 classpath가 되므로 제거해야한다.*/
+	/*spring 이랑 slf4j-simple이  중복 classpath가 되므로 제거해야한다.*/
+	/*
+    compile ('it.ozimov:embedded-redis:0.7.3') {  
 		exclude group: "org.slf4j", module: "slf4j-simple"
 	}
+	*/
 	
 	implementation('org.apache.httpcomponents:httpclient:4.5.13')   /*외부api 호출을 위해서 */
 	
@@ -106,6 +109,18 @@ dependencies {
 	  implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	
 	
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	//html 파서
+	//https://offbyone.tistory.com/116
+	//html태그를 제거하기위해서 쓰려고함 
+	//https://java2020.com/q/hwprbhse
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	implementation "org.jsoup:jsoup:1.13.1"
+
+	// https://mvnrepository.com/artifact/org.zalando/faux-pas
+	implementation 'org.zalando:faux-pas:0.9.0'
+
+
 }
 
 test {

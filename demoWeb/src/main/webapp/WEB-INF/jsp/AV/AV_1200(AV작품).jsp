@@ -118,7 +118,7 @@ $(document).ready(function(){
 		       }, {
 		           header: '품번',
 		           name: 'AV_NM',
-		           width: 140,
+		           width: 400,
 		           resizable: false,
 		           sortable: true,
 		           sortingType: 'desc',
@@ -306,10 +306,11 @@ $(document).ready(function(){
 				});
 		  		break;
 		  	case "excel_dwnld":
+			  var data = searchForm.getData();
 		  		var param ={
 						brRq 		: 'IN_DATA'
 						,brRs 		: 'OUT_DATA'
-						,IN_DATA	: [{}]
+						,IN_DATA	: [ data ]
 				}
 		  		ExcelMngr.downExcel('BR_AV_MV_EXCEL_DWNLD',
 		  		param,
