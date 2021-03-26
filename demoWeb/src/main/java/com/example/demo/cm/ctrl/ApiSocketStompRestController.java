@@ -1,18 +1,28 @@
 package com.example.demo.cm.ctrl;
 
+import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import com.example.demo.WebSocketEventListener;
 import com.example.demo.service.GoRestService;
+import com.example.demo.utils.PjtUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.HttpServerErrorException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -34,47 +44,69 @@ public class ApiSocketStompRestController {
     @MessageMapping("/socketApi")   /*보내는 이름*/
     @SendTo("/topic/message")  /*받는 이름*/
     public String callSocketAPI(SimpMessageHeaderAccessor simpMessageHeaderAccessor, 
-            String inputMsg
+            String jsonInString,
+            Principal p
             ) throws Exception  {
         log.info("simpMessageHeaderAccessor=>"+simpMessageHeaderAccessor);
         Map nativeHeaders = (Map) simpMessageHeaderAccessor.getHeader("nativeHeaders");
         String UUID = nativeHeaders.get("UUID").toString();// 클라이언트가 보낸 값 
         log.info("Uuid=>"+nativeHeaders.get("UUID"));
+        log.info("p.getName()=>"+p.getName());
         String SessionId = simpMessageHeaderAccessor.getSessionId();
         int cnt = wsel.getSessionCnt();
-        String msg ="["+cnt+"]["+SessionId+"]"+inputMsg; 
-        log.info("msg=>"+msg);
+        //String msg ="["+cnt+"]["+SessionId+"]"+jsonInString; 
+        //log.info("msg=>"+msg);
         //String jsonOutString="aaa";
-
-       return msg;
+        log.info("jsonInString=>"+jsonInString);
+        System.out.println(jsonInString);
+        String jsonOutString=null;
+        HashMap<String,Object>  inDs= PjtUtil.JsonStringToObject(jsonInString, HashMap.class );
+        String br =inDs.get("br").toString();
+        HashMap<String, Object> result = new HashMap<String, Object>();
+       try {
+           jsonOutString = GoRestService.callAPI(br, jsonInString);
+       } catch (HttpClientErrorException e) {
+            e.printStackTrace();           
+       }	catch (HttpServerErrorException e) {
+            e.printStackTrace();
+       }
+       //https://withseungryu.tistory.com/136
+       smt.convertAndSendToUser(p.getName(), "/topic/message", jsonOutString);//동작을 안함.
+       System.out.println(jsonOutString);
+       return jsonOutString;
     }
     
     @MessageMapping("/socketApiToMe")   /*보내는 이름*/
-    public void callSocketAPIToMe(SimpMessageHeaderAccessor headerAccessor, 
-            String inputMsg
+    public void callSocketAPIToMe(SimpMessageHeaderAccessor simpMessageHeaderAccessor, 
+    String jsonInString,
+    Principal p
             ) throws Exception  {
-        log.info("headerAccessor=>"+headerAccessor);
-        String SessionId = headerAccessor.getSessionId();
-        int cnt = wsel.getSessionCnt();
-        String msg ="["+cnt+"]["+SessionId+"]"+inputMsg; 
-        log.info("msg=>"+msg);
-        
-        //내꺼 구분은 SessionId로 가능한데
-        //내꺼 내에서 프로그램 구분을 하기위해서 UUID를 사용
-        
-        Map nativeHeaders = (Map) headerAccessor.getHeader("nativeHeaders");
-        String UUID = nativeHeaders.get("UUID").toString();// 클라이언트가 보낸 값
-        
-        //String jsonOutString="aaa";
-        /*
-         * user는 나하고 동일하게 보내면 되고
-         * detination 주소를 만들때 
-         * /topic/message  에다가 /  client에서 만든 uuid 를 넣어서 보내면
-         * 그사람만 구독하게 된다. 
-         * */
-        ///smt.convertAndSendToUser(user, destination, payload);
-        //그러면 아래만 써도 특정이만 보낼수있게 할수있다.
-        //smt.convertAndSend(destination, payload);
+                log.info("simpMessageHeaderAccessor=>"+simpMessageHeaderAccessor);
+                Map nativeHeaders = (Map) simpMessageHeaderAccessor.getHeader("nativeHeaders");
+                String UUID = nativeHeaders.get("UUID").toString();// 클라이언트가 보낸 값 
+                log.info("Uuid=>"+nativeHeaders.get("UUID"));
+                log.info("p.getName()=>"+p.getName());
+                String SessionId = simpMessageHeaderAccessor.getSessionId();
+                int cnt = wsel.getSessionCnt();
+                //String msg ="["+cnt+"]["+SessionId+"]"+jsonInString; 
+                //log.info("msg=>"+msg);
+                //String jsonOutString="aaa";
+                log.info("jsonInString=>"+jsonInString);
+                System.out.println(jsonInString);
+                String jsonOutString=null;
+                HashMap<String,Object>  inDs= PjtUtil.JsonStringToObject(jsonInString, HashMap.class );
+                String br =inDs.get("br").toString();
+                HashMap<String, Object> result = new HashMap<String, Object>();
+               try {
+                   jsonOutString = GoRestService.callAPI(br, jsonInString);
+               } catch (HttpClientErrorException e) {
+                    e.printStackTrace();           
+               }	catch (HttpServerErrorException e) {
+                    e.printStackTrace();
+               }
+               //https://withseungryu.tistory.com/136
+               System.out.println(jsonOutString);
+               smt.convertAndSendToUser(p.getName(), "/topic/message", jsonOutString);//동작을 안함.
     }
  
 }

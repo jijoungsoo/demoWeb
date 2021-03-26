@@ -382,10 +382,10 @@ class TuiGridMngr {
 	    }
 	    var param= _.cloneDeep(this.param);
    		param.brRq=(param.brRq+",PAGE_DATA");
-		var tmp=[];
-		this.page_num = this.page_num+1;
-		tmp.push({PAGE_NUM: this.page_num, PAGE_SIZE: this.options.pageSize });
-		param.PAGE_DATA=tmp;
+		//var tmp=[];
+		this.page_num = Number(this.page_num)+1;
+		//tmp.push({PAGE_NUM: this.page_num, PAGE_SIZE: this.options.pageSize });
+		param.PAGE_DATA={PAGE_NUM: this.page_num, PAGE_SIZE: this.options.pageSize };
 	    
 	    var mask = new ax5.ui.mask();
 		mask.open({
@@ -409,9 +409,9 @@ class TuiGridMngr {
 	      if(_this.options.pageable==true 
 	      		&& data !=undefined 
 	      		&& data["PAGE_DATA"]!=undefined) {
-	      		_this.total_page  = data["PAGE_DATA"][0]["TOTAL_PAGE"];
-	      		_this.total_size  = data["PAGE_DATA"][0]["TOTAL_SIZE"];
-	      		_this.page_num    = data["PAGE_DATA"][0]["PAGE_NUM"];
+	      		_this.total_page  = data["PAGE_DATA"]["TOTAL_PAGE"];
+	      		_this.total_size  = data["PAGE_DATA"]["TOTAL_SIZE"];
+	      		_this.page_num    = data["PAGE_DATA"]["PAGE_NUM"];
 	      		_this.curr_size   = _this.grid.getRowCount();
 	      }
 	      _this.pgm_mngr.get("curr_size")[0].innerText=_this.curr_size;

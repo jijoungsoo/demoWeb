@@ -95,14 +95,14 @@ class AjaxMngr {
 	    });
 	
 	    req.done(function (data, status) {
-			console.log("result:");
-	            console.log(JSON.stringify(data));
+			//console.log("result:");
+	            //console.log(JSON.stringify(data));
 	        if (hash.indexOf("#debug=Y") >= 0) {
 	            console.log("result:");
 	            console.log(JSON.stringify(data));
 	            
 	        }
-	        	console.log(p_function)        
+	        	//console.log(p_function)        
 	        if(p_function){
 	        	p_function(data);
 	        }
@@ -222,6 +222,8 @@ class AjaxMngr {
 	        }
 	    });   
 	}
+
+	
 
 	static bind_one_ajax(area_mngr, p_url, p_param ,p_function) {
 	    send_post_ajax(p_url, p_param, function (data) {

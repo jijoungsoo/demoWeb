@@ -20,8 +20,8 @@ class FormMngr {
 	getPgmId() {
 		return this.pgm_id;
 	}
-	getAreaName() {
-		return this.area_name;
+	getEl() {
+		return this.container;
 	}
 	get(name) {
 		return this.container_area.find("[name=" + name + "]");
@@ -30,12 +30,11 @@ class FormMngr {
 		this.target_data = {};
 		let tgt_data = this.target_data;
 		var w = this.container_area[0];
-		console.log('aaaaaaaaaaaaaaaaaaaaaaa');
 		
-		console.log(this.pgm_mngr);
-		console.log(this.container_area);
-		console.log(w);
-		console.log(w.querySelectorAll('[data-model]'));
+		//console.log(this.pgm_mngr);
+		//console.log(this.container_area);
+		//console.log(w);
+		//console.log(w.querySelectorAll('[data-model]'));
 		for (var i = 0; i < w.querySelectorAll('[data-model]').length; i++) {
 			var el = w.querySelectorAll('[data-model]')[i];
 			tgt_data[el.name] = '';
@@ -102,8 +101,8 @@ class FormMngr {
 		var w = this.container_area[0];
 		if (w.querySelectorAll(el_sel)) {
 			w.querySelectorAll(el_sel).forEach(function(el) {
-				console.log(el)
-				console.log(event_name)
+				//console.log(el)
+				//console.log(event_name)
 				el.addEventListener(event_name, func);
 			});
 		}

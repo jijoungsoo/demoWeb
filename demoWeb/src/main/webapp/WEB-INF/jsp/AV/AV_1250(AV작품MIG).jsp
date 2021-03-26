@@ -88,11 +88,19 @@ $(document).ready(function(){
 		           name: 'SYNC',				   
 		           width: 100,
 				   sortingType: 'desc'
-				}, {
+				},{
 					header: 'BEST_YN',
-		           name: 'BEST_YN',				   
-		           width: 100,
-				   sortingType: 'desc'
+		           name: 'BEST_YN',		
+		           width: 150,
+				   align : 'center',
+				   filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				   },
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
 				}, {
 					header: 'SERIES',
 		           name: 'SERIES',				   
@@ -127,6 +135,32 @@ $(document).ready(function(){
 		    ]
 		);
 	  	grid.build();
+
+		  
+		grid.on('click', (ev) => {
+			if (ev.rowKey >=0) {
+				var row_data=grid.getRow(ev.rowKey);
+				console.log(row_data);
+
+				var param = {
+					DVD_IDX: row_data.DVD_IDX,
+					ACTOR_IDX: row_data.MAIN_ACTOR_IDX,
+				}
+				var popup = new PopupManger(_this, 'AV_1251', {
+						width: 1000,
+						height: 800,
+						title: "(MIG)DVD 상세"
+					},
+					param
+				);
+				popup.open(function (data) {
+					if (data) {
+
+					}
+				});
+				
+			}
+		});
 
 	  	searchForm.addEvent("click","input[type=button]",function(el){
 		   //console.log(el);

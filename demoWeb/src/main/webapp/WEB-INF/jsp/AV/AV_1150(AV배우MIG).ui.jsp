@@ -1,6 +1,23 @@
 <div name="search_area">
   <table>
     <tr>
+      <td>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">나이</span> 
+              <select class="form-control" data-ax-path="AGE"  name="AGE" style="width:140px;">
+              </select>
+            </div>
+          </div>
+      </td>
+      <td>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">이름</span> 
+            <input type="text" class="form-control" data-ax-path="SEARCH_NM"  name="SEARCH_NM" style="width:140px;" />
+          </div>
+        </div>
+    </td>
       <td><input type="button" name="search" value="조회" /></td>
     </tr>
   </table>

@@ -27,8 +27,8 @@ public class GoRestService {
         String jsonOutString = null;
         HashMap<String, Object> result = new HashMap<String, Object>();
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-        factory.setConnectTimeout(10000); // 타임아웃 설정 5초
-        factory.setReadTimeout(10000);// 타임아웃 설정 5초
+        factory.setConnectTimeout(100000); // 타임아웃 설정 5초
+        factory.setReadTimeout(100000);// 타임아웃 설정 5초
         RestTemplate restTemplate = new RestTemplate(factory);
 
         HttpHeaders headers = new HttpHeaders();
@@ -47,9 +47,8 @@ public class GoRestService {
             return jsonOutString;
         } catch (ResourceAccessException e) {
             e.printStackTrace();
-            throw new ResourceAccessException("제한시간이 10초가 초과되었습니다.");
+            throw new ResourceAccessException("제한시간이 100초가 초과되었습니다.");
             // 이렇게 에러를 던지는게 아니라 결과셋을 보내야한다.
         }
     }
-    
 }

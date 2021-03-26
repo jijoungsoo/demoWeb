@@ -1,0 +1,104 @@
+<div class="container" name="dvd_area">
+  <div class="row align-items-start">
+    <input type="button" name="external_dvd" value="DVD원본" style="width:100px">&nbsp;
+    <input type="button" name="external_actor" value="배우원본" style="width:100px">&nbsp;
+    <input type="button" name="sync_dvd" value="DVDsync" style="width:100px">&nbsp;
+    <input type="button" name="sync_actor" value="배우sync" style="width:100px">&nbsp;
+    <input type="button" name="go_avsecret" value="avsecret(토)" style="width:140px">&nbsp;
+    <input type="button" name="go_javzoa" value="javzoa(토)" style="width:140px">&nbsp;
+    <input type="button" name="go_sukebei" value="sukebei(VR-토)" style="width:140px">&nbsp;
+
+    
+  </div>
+  <div class="row align-items-start">
+    
+    <!--화보-->
+    <div class="col">
+      <div class="row align-items-start">
+        <!--화보-->
+        <div class="col">
+          <div class="card" style="width: 18rem;">
+            <img src="" name="IMG_L"  class="card-img-top">
+            <div class="card-body tal">
+              <h5 class="card-title">품번<span name="MV_NM" data-ax-path="MV_NM"></span></h5>
+              <p class="card-text">
+                <span name="TITLE_KR" data-ax-path="TITLE_KR"></span>
+              </p>
+    
+              <p class="card-text">
+                출시 :<span name="OPEN_DT" data-ax-path="OPEN_DT"></span><br />
+                출연 :<span name="ACTR_NM" data-ax-path="ACTR_NM"></span><br />
+                제작사 :<span name="COMP_NM" data-ax-path="COMP_NM"></span><br />
+                레이블 :<span name="LABEL" data-ax-path="LABEL"></span><br />
+                시리즈 :<span name="SERIES" data-ax-path="SERIES"></span>
+                감독 :<span name="DIRECTOR" data-ax-path="DIRECTOR"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <!--중간-->
+        <div class="col-8 b2red">
+          <div class="container b2red">
+            <div class="row b2red">
+              <h2>작품설명</h2>
+              <span name="STORY_KR" data-ax-path="STORY_KR"></span>
+            </div>
+            <div class="row b2red">
+              <!--장르-->
+              <div name="gen_area"></div>
+            </div>
+          </div>
+        </div>
+    </div>
+</div>
+
+<!--GALLERY-->
+<div class="container">
+  <!--AV_1164 베스트 작품 -->
+  <div name="best_area" class="container">
+    <div class="row">
+      <div class="col-sm-2">
+        베스트 작품
+      </div>
+      <div class="col-sm-9">
+        <div class="row row-cols-5" name="best_list">
+          <div class="col">Column</div>
+          <div class="col">Column</div>
+          <div class="col">Column</div>
+          <div class="col">Column</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script name="best_list-template" type="text/x-handlebars-template">
+    {{#bestList}}  
+    <div class="card" style="width: 10rem;">
+      <img src="/DVD_IDX_IMG/LS/{{DVD_IDX}}"  class="card-img-top"  data-idx="{{DVD_IDX}}">
+      <div class="card-body" tal>
+        <h5 class="card-title">{{MV_NM}}</h5>
+        <p class="card-text" style="font-size: 13px;width:100px;word-break: break-all;overflow-y: hidden;overflow-x: hidden;text-overflow: clip;height: 40px;">{{TTL_KR}}</p>
+      </div>
+    </div>
+    {{/bestList}}  
+    </script>
+</div>
+
+<!--전체작품-->
+<div class="container">
+  <!--AV_1165 전체작품 -->
+  <div name="dvd_area" class="container">
+    <div class="row row-cols-6" name="dvd_list">      
+    </div>
+  </div>
+  <script name="dvd_list-template" type="text/x-handlebars-template">
+  {{#dvdList}}  
+  <div class="card" style="width: 10rem;">
+    <img src="/DVD_IDX_IMG/LS/{{DVD_IDX}}"  class="card-img-top" data-idx="{{DVD_IDX}}">
+    <div class="card-body" tal>
+      <h5 class="card-title">{{MV_NM}}</h5>
+      <p class="card-text" style="font-size: 13px;width:100px;word-break: break-all;overflow-y: hidden;overflow-x: hidden;text-overflow: clip;height: 40px;">{{OPEN_DT}}</p>    
+    </div>
+  </div>
+  {{/dvdList}}  
+  </script>
+</div>

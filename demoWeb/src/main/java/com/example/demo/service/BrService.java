@@ -90,7 +90,11 @@ public class BrService {
         }
         HashMap<String, Object> pgmLink =new HashMap<String, Object>();
         ArrayList<HashMap<String,Object>> OUT_DATA= outDs.get("OUT_DATA");
-        return OUT_DATA.get(0); 
+		if(OUT_DATA.size()>0){
+			return OUT_DATA.get(0); 
+		}
+		return null;
+        
     }
 
 

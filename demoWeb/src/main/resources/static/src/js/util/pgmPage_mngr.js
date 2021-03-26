@@ -1,4 +1,11 @@
 class PgmPageMngr {
+
+	static printPgm(){
+
+		var len = Object.keys(PgmPageMngr.pgmUuidMap).length;
+		//console.log("pgm list => "+len);
+	}
+	
     static pgmNmMap={};
     static addPgmPageMap(_component_name,_title) {
         PgmPageMngr.pgmNmMap[_component_name]=_title;
@@ -127,8 +134,20 @@ class PgmPageMngr {
         
     }
 
-    constructor(uuid) {
-		console.log('PgmPageMngr-constructor');
+	
+	getChildPgmMap(){
+		return this.childPgmMap;
+	}
+
+	addChildPgmMap(pgm_mngr){
+		//console.log('addChildPgmMap------------------');
+		this.childPgmMap.push(pgm_mngr)
+	}
+	
+	constructor(uuid) {
+		
+		this.childPgmMap =[];
+		//console.log('PgmPageMngr-constructor');
         this.mask = new ax5.ui.mask();
 		var _this = this;
 		this.container = $("#" + uuid);
@@ -139,10 +158,23 @@ class PgmPageMngr {
 		this.pgm_id = this.container.attr("pgm_id");
 		this.parent_uuid = this.container.attr("parent_uuid");
 		this.uuid = uuid;
+		//console.log('aaaaa');
+		//console.log(uuid);
         PgmPageMngr.addPgmUuIdMap(uuid,this);
     	if(AppMngr.debug_console=="Y") {
     		this.makeDebug(uuid);   
     	}
+		
+		if(this.parent_uuid!="ROOT"){
+			//부모 것이 있으면
+			//자식이 로드 될때 
+			//부모의 차일드 맵에
+			//내 uuid를 넣는다.
+			var p = PgmPageMngr.getPgmUuIdMap(this.parent_uuid);
+			//console.log(p)
+			p.addChildPgmMap(this);
+		}
+
     }
     getEl(){
     	return this.container;
@@ -158,7 +190,7 @@ class PgmPageMngr {
 			, drag: function( event, ui ) {
 				var screenRelativeTop =  $("#"+uuid+"_draggable").offset().top - (window.scrollY || window.pageYOffset || document.body.scrollTop);
 				$("#"+uuid+"_debug_log").offset({top : screenRelativeTop-div_height });
-			 	console.log(ui.position);
+			 	//console.log(ui.position);
 				}	
 		});
 		$("#"+uuid+"_debug_log").hide();
@@ -180,7 +212,7 @@ class PgmPageMngr {
         if(func!=undefined){
             var p_param={};
             var reqData=PgmPageMngr.getReqMap(this.getId());   /*페이지 호출을 했을때 입력된 req값을 기준으로 얻어온다. */
-            console.log(reqData);
+            //console.log(reqData);
             if(reqData!=undefined){           
                 $.extend(p_param, reqData);
             }
@@ -197,7 +229,7 @@ class PgmPageMngr {
 		  }
 		  var el =this.getEl();
 
-		  console.log(el);
+		  //console.log(el);
 		  for (var selector in config) {
 			  
 			var tmp =el[0].querySelectorAll(selector);
@@ -240,13 +272,70 @@ class PgmPageMngr {
     	console.log('p_funtion=>'+p_funtion);
     	AjaxMngr.send_api_post_ajax_sync(p_url, p_param, p_funtion);
     }
+	send_socket(p_url, p_param, p_funtion){
+		var _this = this;
+		console.log('send_socket');
+		console.log(_this);
+		
+
+		/*
+		var param = {
+			br: "BR_FIND"
+			brRq: 'IN_DATA',
+			brRs: 'OUT_DATA',
+			IN_DATA: [{
+				ACTOR_IDX : p_param.param.ACTOR_IDX
+			}]
+		}
+		param.br=p_url;
+		*/
+		p_param.br=p_url;
+		var ws_stomp  = new SockJS("/ws-stomp");
+		var stomp_client = Stomp.over(ws_stomp)
+		var header = {UUID : _this.getId()}			
+		function send(){
+				//전송
+				var p_p=JSON.stringify(p_param) ; //json을 string 으로 변환
+				//stomp_client.send('/socketApi',header,p_p);
+				stomp_client.send('/socketApiToMe',header,p_p);
+				
+				//받기
+				//stomp_client.subscribe('/topic/message',function (msg){  --전체 구독시
+				stomp_client.subscribe('/user/topic/message',function (msg){   //user 구독시
+					console.log('aaa',msg);
+
+					if(p_funtion){
+						var tmp = JSON.parse(msg.body);
+						console.log(tmp);
+						p_funtion(tmp);
+					}
+
+					stomp_client.disconnect()
+					ws_stomp.close();
+				});
+		}	
+		stomp_client.connect(header,function(frame){
+			console.log("Info: connected stomp.");
+			console.log(frame)
+			send();
+		})
+
+		ws_stomp.onclose = function(event) {
+			console.log('Info: connection closed.');
+		}
+
+		ws_stomp.onerror = function(err) {
+			console.log('Info: Error.', err);
+		}
+    }
     
     close(p_param){
-    	var uuid=this.getId();
+	   	var uuid=this.getId();
     	var data = PgmPageMngr.getReqMap(uuid);
-    	console.log(data);
-    	console.log(data.popup_mngr);
+    	//console.log(data);
+    	//console.log(data.popup_mngr);
     	if(data.popup_mngr != undefined)  {
+			alert("hhh")
     		data.popup_mngr.close(p_param);
     	}
 		this.destory();
@@ -260,8 +349,8 @@ class PgmPageMngr {
 	}
 	
 	fire(event_name,data){
-		console.log('PgmPageMngr-fire-'+event_name);
-		console.log(data);
+		//console.log('PgmPageMngr-fire-'+event_name);
+		//console.log(data);
 		// 이벤트 디스패치.
 		var event = new CustomEvent(event_name,data);
 		//console.log(this.container);
@@ -312,19 +401,31 @@ class PgmPageMngr {
 	}
 
 	parentCall(CALL_METHOD){
-		console.log('PgmPageMngr-parentCall-'+ this.getPgmId());
+		//console.log('PgmPageMngr-parentCall-'+ this.getPgmId());
 		var parent_uuid = this.parent_uuid;
-		console.log('parent_uuid');
-		console.log(parent_uuid);
+		//console.log('parent_uuid');
+		//console.log(parent_uuid);
 		var app = PgmPageMngr.getPgmUuIdMap(parent_uuid);
-		console.log('app');
-		console.log(app);
+		//console.log('app');
+		//console.log(app);
 		app.fire("remoteCall",CALL_METHOD);
 	}
 
 	destory(){
 			//원래는 navigator를 두어서 제거하면 지우려고 했는데 필요없음.
 			var uuid = this.uuid;
+			//console.log("destory");
+			//console.log(uuid);
+			//console.log(this)
+			var tmp =this.getChildPgmMap()
+			for(var i=0;i<tmp.length;i++){
+				//child가 있으면 child의 것들도 destory 해줘야한다.
+				var p = tmp[i];
+				//console.log(p)
+				p.destory();
+			}
+
+
 			sessionStorage.removeItem(uuid);
 			PgmPageMngr.removePgmUuIdMap(uuid);
 			PgmPageMngr.removeReqMap(uuid);
