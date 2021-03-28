@@ -50,10 +50,11 @@ class PopupManger {
 		//console.log(this.el);
 		this.el.css('display', 'none');
 		this.dialog = this.el.dialog(settings);
-		var p_param = $.extend(p_param, { uuid: popup_uuid });
+		var p_param = $.extend(p_param, { uuid: popup_uuid , parent_uuid : uuid  });
 		
 		PgmPageMngr.addReqMap(popup_uuid,{ popup_mngr : this,param : p_param });
 		AjaxMngr.get_page_ajax(this.el,page_id,p_param);
+
 	
 		this.dialog.on("dialogopen", function(event, ui) {
 			var a = $("#" + uuid)

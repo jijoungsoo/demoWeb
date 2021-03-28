@@ -23,7 +23,6 @@ import org.springframework.stereotype.Controller;
  * server.servlet.session.timeout=30s   (30초)
  * 
  * */
-@EnableScheduling  //스케줄실행
 public class DemoApplication {
 
 	public static void main(String[] args) {

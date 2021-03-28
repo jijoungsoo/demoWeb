@@ -151,6 +151,7 @@ class PgmPageMngr {
         this.mask = new ax5.ui.mask();
 		var _this = this;
 		this.container = $("#" + uuid);
+		console.log(uuid);
 
 		//goldenlayout  스크롤 바스 생성
 		$(this.container).parent().css("overflow-y","auto");
@@ -164,14 +165,16 @@ class PgmPageMngr {
     	if(AppMngr.debug_console=="Y") {
     		this.makeDebug(uuid);   
     	}
-		
-		if(this.parent_uuid!="ROOT"){
+
+		console.log(this.uuid)
+		console.log(this.parent_uuid)
+		if(this.parent_uuid!="ROOT" && !PjtUtil.isEmpty(this.parent_uuid)){
 			//부모 것이 있으면
 			//자식이 로드 될때 
 			//부모의 차일드 맵에
 			//내 uuid를 넣는다.
 			var p = PgmPageMngr.getPgmUuIdMap(this.parent_uuid);
-			//console.log(p)
+			console.log(p)
 			p.addChildPgmMap(this);
 		}
 
@@ -335,7 +338,6 @@ class PgmPageMngr {
     	//console.log(data);
     	//console.log(data.popup_mngr);
     	if(data.popup_mngr != undefined)  {
-			alert("hhh")
     		data.popup_mngr.close(p_param);
     	}
 		this.destory();

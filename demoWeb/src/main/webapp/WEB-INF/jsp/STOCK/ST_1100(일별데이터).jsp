@@ -183,21 +183,7 @@ $(document).ready(function(){
 			sortable : true,
 			align : "center",
 			sortingType : 'desc'
-		}, {
-			header : '외국인 보유주식수',
-			name : 'FRGN_CNT',
-			width : 100,
-			sortable : true,
-			align : "center",
-			sortingType : 'desc'
-		}, {
-			header : '외국인 지분율(%) ',
-			name : 'FRGN_RT',
-			width : 100,
-			sortable : true,
-			align : "center",
-			sortingType : 'desc'
-		}, {
+			}, {
 			header : '순위',
 			name : 'RNK',
 			width : 100,
@@ -238,6 +224,7 @@ $(document).ready(function(){
 	        popup.open(function(data){
 	        	if(data){
 	        		console.log(data);
+					searchForm.setData('STOCK_CD',data.STOCK_CD);
 	        	}
 	        });
 		});
@@ -257,7 +244,7 @@ $(document).ready(function(){
 					brRs : 'OUT_DATA',
 					IN_DATA : [ data ]
 				}
-				grid.loadData('findStckMarcap',param,function(data) {
+				grid.loadData('BR_STCK_MARCAP_FIND',param,function(data) {
 					console.log(data);
 				});
 				break;

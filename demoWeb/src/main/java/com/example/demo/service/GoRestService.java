@@ -27,8 +27,8 @@ public class GoRestService {
         String jsonOutString = null;
         HashMap<String, Object> result = new HashMap<String, Object>();
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
-        factory.setConnectTimeout(100000); // 타임아웃 설정 5초
-        factory.setReadTimeout(100000);// 타임아웃 설정 5초
+        //factory.setConnectTimeout(100000); // 타임아웃 설정 5초
+        //factory.setReadTimeout(100000);// 타임아웃 설정 5초
         RestTemplate restTemplate = new RestTemplate(factory);
 
         HttpHeaders headers = new HttpHeaders();

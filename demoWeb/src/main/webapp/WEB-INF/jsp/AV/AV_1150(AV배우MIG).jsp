@@ -242,7 +242,7 @@ $(document).ready(function(){
 				var popup = new PopupManger(_this, 'AV_1160', {
 						width: 1200,
 						height: 700,
-						title: "(MIG)배우상세"
+						title: "(MIG)배우상세["+row_data.ACTOR_IDX+"]"
 					},
 					param
 				);
