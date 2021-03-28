@@ -14,7 +14,7 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-war {                        //bootWar Task시 이름 지정
+buildWar {                        //bootWar Task시 이름 지정
 	baseName="demoJpa"
     version = '0.0.1-'+ new Date().format('yyyyMMdd-HHmmss')
     exclude("build/**")
