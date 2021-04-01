@@ -65,7 +65,7 @@ $(document).ready(function(){
 							,brRs : 'OUT_DATA'
 							,IN_DATA: [{
 								ACTOR_IDX : data["ACTOR_IDX"]
-								,SYNC_YN : "N"
+								,SYNC_YN : "Y"
 							}]
 						}
 					_this.showProgress();

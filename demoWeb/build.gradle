@@ -14,15 +14,6 @@ group = 'com.example'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
-buildWar {                        //bootWar Task시 이름 지정
-	baseName="demoJpa"
-    version = '0.0.1-'+ new Date().format('yyyyMMdd-HHmmss')
-    exclude("build/**")
-}
-
-// war 플러그인 적용
-apply plugin: "war"
-
 configurations {
 	compileOnly {
 		extendsFrom annotationProcessor
@@ -141,4 +132,9 @@ compileJava.options.encoding = 'UTF-8'
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+
+bootBuildImage{ 
+  imageName='tailender'
 }
