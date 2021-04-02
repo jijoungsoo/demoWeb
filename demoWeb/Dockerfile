@@ -1,5 +1,7 @@
 FROM openjdk:11.0.10-jre
 VOLUME /tmp
+RUN chmod +x ./gradlew
+RUN ./gradlew build
 #ARG JAR_FILE=demoWeb/build/libs/*.war
 COPY demoWeb/build/libs/*.war app.war
 EXPOSE 8090
