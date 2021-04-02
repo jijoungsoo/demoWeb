@@ -134,7 +134,8 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-
+/*gradle로만 docker 띄우고 싶을때.
 bootBuildImage{ 
   imageName='tailender'
 }
+*/
