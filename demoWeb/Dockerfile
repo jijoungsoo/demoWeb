@@ -1,9 +1,14 @@
 FROM openjdk:11.0.10-jre
 VOLUME /tmp
 RUN pwd
-RUN chmod +x gradlew
-RUN pwd
-RUN gradlew build
+#RUN chmod +x gradlew
+#RUN pwd
+#내가 계속 착각했었다.
+#docker 컴파일이 실행되는 곳은 jenkins가 설치된 서버이다.
+#RUN gradlew build
+#jenkins 스크립트에 넣자.
+#도커는 실행환경만이다.
+
 #ARG JAR_FILE=demoWeb/build/libs/*.war
 COPY build/libs/*.war app.war
 EXPOSE 8090
