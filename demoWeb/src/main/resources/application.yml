@@ -137,4 +137,4 @@ logging:
     root: info
 
 env:
-  serverfilepath: /home/jijs/avdbs.com
+  server-file-path: /home/jijs/avdbs.com
