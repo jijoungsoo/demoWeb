@@ -13,4 +13,8 @@ public class YmlConfig {
     public String getServerfilepath() {
         return serverfilepath;
     }
+
+    public void setServerfilepath(String serverfilepath) {
+        this.serverfilepath = serverfilepath;
+    }
 }
