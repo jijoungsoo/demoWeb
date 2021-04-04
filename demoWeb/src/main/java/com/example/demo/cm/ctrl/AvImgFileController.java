@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 
+import com.example.demo.YmlConfig;
 import com.example.demo.dmn.excel.FileDto;
 import com.example.demo.service.FileService;
 import com.example.demo.service.GoRestService;
@@ -33,6 +34,9 @@ public class AvImgFileController {
 
     @Autowired
     private FileService fService;
+
+    @Autowired
+    private YmlConfig yc;
     
     @GetMapping(value = "/ACTOR_IDX_PF_IMG/{IMG_GUBUN}/{ACTOR_IDX}")
     public  ResponseEntity<Resource> ACTOR_IDX_PF_IMG(
@@ -81,7 +85,7 @@ public class AvImgFileController {
             return null;
         }
 
-        String FILE_PULL_PATH = "d:/avdbs.com"+IMG_SRC;
+        String FILE_PULL_PATH = yc.getServerFilePath()+IMG_SRC;
         System.out.println(FILE_PULL_PATH);
         String OsFilePath = FILE_PULL_PATH.replace("/", Matcher.quoteReplacement(File.separator));
         System.out.println(OsFilePath);
@@ -150,7 +154,7 @@ public class AvImgFileController {
             return null;
         }
 
-        String FILE_PULL_PATH = "d:/avdbs.com"+IMG_SRC;
+        String FILE_PULL_PATH = yc.getServerFilePath()+IMG_SRC;
         System.out.println(FILE_PULL_PATH);
         String OsFilePath = FILE_PULL_PATH.replace("/", Matcher.quoteReplacement(File.separator));
         System.out.println(OsFilePath);
@@ -225,7 +229,7 @@ public class AvImgFileController {
             return null;
         }
 
-        String FILE_PULL_PATH = "d:/avdbs.com"+IMG_SRC;
+        String FILE_PULL_PATH = yc.getServerFilePath()+IMG_SRC;
         System.out.println(FILE_PULL_PATH);
         String OsFilePath = FILE_PULL_PATH.replace("/", Matcher.quoteReplacement(File.separator));
         System.out.println(OsFilePath);
