@@ -85,7 +85,7 @@ public class AvImgFileController {
             return null;
         }
 
-        String FILE_PULL_PATH = yc.getServerFilePath()+IMG_SRC;
+        String FILE_PULL_PATH = yc.getServerfilepath()+IMG_SRC;
         System.out.println(FILE_PULL_PATH);
         String OsFilePath = FILE_PULL_PATH.replace("/", Matcher.quoteReplacement(File.separator));
         System.out.println(OsFilePath);
@@ -154,7 +154,7 @@ public class AvImgFileController {
             return null;
         }
 
-        String FILE_PULL_PATH = yc.getServerFilePath()+IMG_SRC;
+        String FILE_PULL_PATH = yc.getServerfilepath()+IMG_SRC;
         System.out.println(FILE_PULL_PATH);
         String OsFilePath = FILE_PULL_PATH.replace("/", Matcher.quoteReplacement(File.separator));
         System.out.println(OsFilePath);
@@ -229,7 +229,7 @@ public class AvImgFileController {
             return null;
         }
 
-        String FILE_PULL_PATH = yc.getServerFilePath()+IMG_SRC;
+        String FILE_PULL_PATH = yc.getServerfilepath()+IMG_SRC;
         System.out.println(FILE_PULL_PATH);
         String OsFilePath = FILE_PULL_PATH.replace("/", Matcher.quoteReplacement(File.separator));
         System.out.println(OsFilePath);

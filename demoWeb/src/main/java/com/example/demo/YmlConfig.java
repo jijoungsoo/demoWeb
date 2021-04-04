@@ -10,7 +10,7 @@ public class YmlConfig {
     
     private String serverfilepath;
     
-    public String getServerFilePath() {
+    public String getServerfilepath() {
         return serverfilepath;
     }
 }
