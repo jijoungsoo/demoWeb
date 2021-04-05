@@ -62,12 +62,14 @@ public class PageController {
 		String filePath =  "/WEB-INF/jsp/"+dirLink+"/"+pgmLink+".ui.jsp";
 		System.out.println(filePath);
 		
+		/*
 		String filePullPath =	request.getSession().getServletContext().getRealPath(filePath); // war 파일의 경우 동작하지 않음;
 		System.out.println(filePullPath);
 		String oFilePullPath = filePullPath.replaceAll("/", Matcher.quoteReplacement(File.separator));
 		String reverseSlashPath  = oFilePullPath.replaceAll(Matcher.quoteReplacement(File.separator), "/");
 		System.out.println(filePullPath);
-		System.out.println(reverseSlashPath);
+		Sytem.out.println(reverseSlashPath);
+		*/
 
 		/* WAR파일 적용이 안됨.
 		File f = new File(reverseSlashPath);
@@ -86,14 +88,14 @@ public class PageController {
 		InputStream in = request.getSession().getServletContext().getResourceAsStream(filePath);
 		
 		if(in ==null) {
-			System.out.println("[파일 없음]"+reverseSlashPath);     
+			System.out.println("[파일 없음]"+filePath);     
 			model.addAttribute("parentUuid", parentUuid);
 			model.addAttribute("pgmId", pageId);
 			model.addAttribute("uuid", hm.get("uuid").toString());
 			model.addAttribute("result", "no-file-"+dirLink+"/"+pgmLink+".ui.jsp");
 			return  "pageRouter"; 
 		} else {
-			System.out.println("[파일 존재]"+reverseSlashPath);
+			System.out.println("[파일 존재]"+filePath);
 		}
 		
 		model.addAttribute("parentUuid", parentUuid);
