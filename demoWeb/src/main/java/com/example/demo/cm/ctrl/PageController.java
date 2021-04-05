@@ -62,7 +62,7 @@ public class PageController {
 		String filePath =  "/WEB-INF/jsp/"+dirLink+"/"+pgmLink+".ui.jsp";
 		System.out.println(filePath);
 		
-		String filePullPath =	request.getSession().getServletContext().getRealPath(filePath);  war 파일의 경우 동작하지 않음;
+		String filePullPath =	request.getSession().getServletContext().getRealPath(filePath); // war 파일의 경우 동작하지 않음;
 		System.out.println(filePullPath);
 		String oFilePullPath = filePullPath.replaceAll("/", Matcher.quoteReplacement(File.separator));
 		String reverseSlashPath  = oFilePullPath.replaceAll(Matcher.quoteReplacement(File.separator), "/");
