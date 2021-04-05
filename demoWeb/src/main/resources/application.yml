@@ -107,7 +107,7 @@ custom:
       client-secret: g0pxjLs7mR
 env:
   serverfilepath: /home/jijs/avdbs.com
-  apiurl: http://demojpa:8091/api/
+  apiurl: http://demoJpa:8091/api/
 
 
 --- #local 환경 

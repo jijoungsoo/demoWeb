@@ -120,6 +120,12 @@ dependencies {
 	// https://mvnrepository.com/artifact/org.zalando/faux-pas
 	implementation 'org.zalando:faux-pas:0.9.0'
 
+	// https://mvnrepository.com/artifact/org.json/json
+	//java.lang.NoClassDefFoundError: org/springframework/boot/configurationprocessor/json/JSONException,
+	///https://seongbindb.tistory.com/134
+	///  org.springframework.boot.configurationprocessor.json ==>org.json
+	implementation group: 'org.json', name: 'json', version: '20210307'
+
 
 }
 
