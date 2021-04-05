@@ -1,8 +1,7 @@
 package com.example.demo.cm.ctrl;
 
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -62,23 +61,15 @@ public class PageController {
 		//====>/WEB-INF/jsp/${dirLink}/${pgmLink}.ui.jsp
 		String filePath =  "/WEB-INF/jsp/"+dirLink+"/"+pgmLink+".ui.jsp";
 		System.out.println(filePath);
-		//String filePullPath =	request.getSession().getServletContext().getRealPath(filePath);  war 파일의 경우 동작하지 않음;
-		URL url;
-		String filePullPath = null;
-		try {
-			url = request.getSession().getServletContext().getResource(filePath);
-			filePullPath =url.getFile();
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
+		String filePullPath =	request.getSession().getServletContext().getRealPath(filePath);  war 파일의 경우 동작하지 않음;
 		System.out.println(filePullPath);
 		String oFilePullPath = filePullPath.replaceAll("/", Matcher.quoteReplacement(File.separator));
 		String reverseSlashPath  = oFilePullPath.replaceAll(Matcher.quoteReplacement(File.separator), "/");
 		System.out.println(filePullPath);
 		System.out.println(reverseSlashPath);
 
+		/* WAR파일 적용이 안됨.
 		File f = new File(reverseSlashPath);
 		if(f.isFile()) {
 			System.out.println("[파일 존재]"+reverseSlashPath);
@@ -91,28 +82,19 @@ public class PageController {
 			model.addAttribute("result", "no-file-"+dirLink+"/"+pgmLink+".ui.jsp");
 			return  "pageRouter"; 
 		}
-
-		filePath =  "/WEB-INF/jsp/"+dirLink+"/"+pgmLink+".jsp";
-		filePullPath =	request.getSession().getServletContext().getRealPath(filePath);
-		oFilePullPath = filePullPath.replaceAll("/", Matcher.quoteReplacement(File.separator));
-		reverseSlashPath  = oFilePullPath.replaceAll(Matcher.quoteReplacement(File.separator), "/");
-		System.out.println(reverseSlashPath);
-
-		f = new File(reverseSlashPath);
-		if(f.isFile()) {
-			System.out.println("[파일 존재]"+reverseSlashPath);
-		} else {
-			System.out.println("[파일 없음]"+reverseSlashPath);            
-
+		*/
+		InputStream in = request.getSession().getServletContext().getResourceAsStream(filePath);
+		
+		if(in ==null) {
+			System.out.println("[파일 없음]"+reverseSlashPath);     
 			model.addAttribute("parentUuid", parentUuid);
 			model.addAttribute("pgmId", pageId);
 			model.addAttribute("uuid", hm.get("uuid").toString());
-			model.addAttribute("result", "no-file-"+dirLink+"/"+pgmLink+".jsp");
+			model.addAttribute("result", "no-file-"+dirLink+"/"+pgmLink+".ui.jsp");
 			return  "pageRouter"; 
+		} else {
+			System.out.println("[파일 존재]"+reverseSlashPath);
 		}
-
-		
-
 		
 		model.addAttribute("parentUuid", parentUuid);
 		model.addAttribute("pgmId", pageId);
