@@ -13,6 +13,7 @@ import com.example.demo.utils.ExportExcelVOList;
 import com.example.demo.utils.PjtUtil;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class ExcelDwnldController {
- 
+ @Autowired
+ GoRestService goS;
 
     /*
      * consumes 입력타입 produces 리턴타입
@@ -40,7 +42,7 @@ public class ExcelDwnldController {
         MsgDebugInfo msg = PjtUtil.makeLSession(br, jsonInString, authentication);
         HashMap<String, Object> result = new HashMap<String, Object>();
         try {
-            jsonOutString = GoRestService.callAPI(br, msg.IN_DATA_JSON);
+            jsonOutString = goS.callAPI(br, msg.IN_DATA_JSON);
             PjtUtil.saveSesstionDebugMsg(msg, jsonOutString, session);
         } catch (HttpClientErrorException  e) {
             result.put("statusCode", e.getRawStatusCode());

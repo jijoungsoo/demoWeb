@@ -12,6 +12,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,10 +20,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Service
 public class GoRestService {
-    private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER");
-
-    public static String callAPI(String br, String jsonInString) throws ResourceAccessException {
+    public String callAPI(String br, String jsonInString) throws ResourceAccessException {
         log.info("br=>" + br);
         log.info("jsonInString=>" + jsonInString);
         String jsonOutString = null;

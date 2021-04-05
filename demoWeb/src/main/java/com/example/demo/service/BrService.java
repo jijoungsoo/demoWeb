@@ -14,8 +14,11 @@ import org.springframework.stereotype.Service;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
+@Service
 public class BrService {
 
+	@Autowired
+	GoRestService goS;
 	  
 	  /*
 	   * 캐싱처리 참고
@@ -24,7 +27,7 @@ public class BrService {
 	   * */
 	
 	//@Cacheable(value = "menuCache")
-    public static ArrayList<HashMap<String, Object>>  BR_CM_ROLE_CD_MENU_FIND_TREE_BY_USER_NO(Authentication authentication){
+    public  ArrayList<HashMap<String, Object>>  BR_CM_ROLE_CD_MENU_FIND_TREE_BY_USER_NO(Authentication authentication){
 		HashMap<String,ArrayList<HashMap<String,Object>>> outDs = new HashMap<String,ArrayList<HashMap<String,Object>>>();
 		ArrayList<HashMap<String,Object>> OUT_DATA = new ArrayList<HashMap<String,Object>>(); 
 		try {
@@ -38,7 +41,7 @@ public class BrService {
 			IN_DS.put("brRs","OUT_DATA");
 			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
 			MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_MAIN_FIND_TREE_BY_USER_NO",jsonInString,authentication);
-			String jsonOutString = GoRestService.callAPI("BR_CM_MAIN_FIND_TREE_BY_USER_NO", msg.getIN_DATA_JSON());
+			String jsonOutString = goS.callAPI("BR_CM_MAIN_FIND_TREE_BY_USER_NO", msg.getIN_DATA_JSON());
 			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
 			OUT_DATA= outDs.get("OUT_DATA");
 		} catch (JsonProcessingException e) {
@@ -49,7 +52,7 @@ public class BrService {
     }
 	
 	//@Cacheable(value = "pgmCache")
-    public static ArrayList<HashMap<String, Object>>  findMainPgm(){
+    public  ArrayList<HashMap<String, Object>>  findMainPgm(){
 		HashMap<String,ArrayList<HashMap<String,Object>>> outDs = new HashMap<String,ArrayList<HashMap<String,Object>>>();
 		try {
 			HashMap<String,Object> IN_DS = new HashMap<String,Object>();
@@ -57,7 +60,7 @@ public class BrService {
 			IN_DS.put("brRs","OUT_DATA");
 
 			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-			String jsonOutString = GoRestService.callAPI("BR_CM_MAIN_PGM_FIND", jsonInString);
+			String jsonOutString = goS.callAPI("BR_CM_MAIN_PGM_FIND", jsonInString);
 			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
@@ -68,7 +71,7 @@ public class BrService {
 		return OUT_DATA; 
     }
 
-    public static HashMap<String, Object> findPgmList(String PGM_ID){
+    public  HashMap<String, Object> findPgmList(String PGM_ID){
         HashMap<String,ArrayList<HashMap<String,Object>>> outDs = new HashMap<String,ArrayList<HashMap<String,Object>>>();
         try {
             HashMap<String,Object> IN_DS = new HashMap<String,Object>();
@@ -82,7 +85,7 @@ public class BrService {
             IN_DS.put("IN_DATA",al);
 
             String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-            String jsonOutString = GoRestService.callAPI("BR_CM_MAIN_PGM_FIND_BY_PGM_ID", jsonInString);
+            String jsonOutString = goS.callAPI("BR_CM_MAIN_PGM_FIND_BY_PGM_ID", jsonInString);
             outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
@@ -101,7 +104,7 @@ public class BrService {
 	  
 
 		//@Cacheable(value = "menuCache")
-		public static ArrayList<HashMap<String, Object>>  BR_CM_LOGIN_SNS(HashMap<String,Object>  IN_DATA_ROW){
+		public  ArrayList<HashMap<String, Object>>  BR_CM_LOGIN_SNS(HashMap<String,Object>  IN_DATA_ROW){
 			HashMap<String,ArrayList<HashMap<String,Object>>> outDs = new HashMap<String,ArrayList<HashMap<String,Object>>>();
 			ArrayList<HashMap<String,Object>> OUT_DATA = new ArrayList<HashMap<String,Object>>(); 
 			try {
@@ -119,7 +122,7 @@ public class BrService {
 				IN_DS.put("IN_DATA",al);
 				
 				String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-				String jsonOutString = GoRestService.callAPI("BR_CM_LOGIN_SNS",jsonInString);
+				String jsonOutString = goS.callAPI("BR_CM_LOGIN_SNS",jsonInString);
 				outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
 				OUT_DATA= outDs.get("OUT_DATA");
 			} catch (JsonProcessingException e) {

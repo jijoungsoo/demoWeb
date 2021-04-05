@@ -32,6 +32,9 @@ public class ApiSocketStompRestController {
 	
     @Autowired
     WebSocketEventListener wsel;
+
+    @Autowired
+ GoRestService goS;
     
     /*https://tech.osci.kr/2019/12/23/86033468/ 
      * 이아저씨 예제가 좋다. 
@@ -64,7 +67,7 @@ public class ApiSocketStompRestController {
         String br =inDs.get("br").toString();
         HashMap<String, Object> result = new HashMap<String, Object>();
        try {
-           jsonOutString = GoRestService.callAPI(br, jsonInString);
+           jsonOutString = goS.callAPI(br, jsonInString);
        } catch (HttpClientErrorException e) {
             e.printStackTrace();           
        }	catch (HttpServerErrorException e) {
@@ -98,7 +101,7 @@ public class ApiSocketStompRestController {
                 String br =inDs.get("br").toString();
                 HashMap<String, Object> result = new HashMap<String, Object>();
                try {
-                   jsonOutString = GoRestService.callAPI(br, jsonInString);
+                   jsonOutString = goS.callAPI(br, jsonInString);
                } catch (HttpClientErrorException e) {
                     e.printStackTrace();           
                }	catch (HttpServerErrorException e) {

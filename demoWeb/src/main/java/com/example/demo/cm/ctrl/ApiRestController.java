@@ -26,7 +26,9 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 public class ApiRestController {
-	
+
+	@Autowired
+	GoRestService goS;
 
 	 private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER"); 
 	 
@@ -102,7 +104,7 @@ public class ApiRestController {
 
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
-			jsonOutString = GoRestService.callAPI(br, msg.IN_DATA_JSON);
+			jsonOutString = goS.callAPI(br, msg.IN_DATA_JSON);
 		} catch (HttpClientErrorException e) {
                 result.put("statusCode", "999");
                 result.put("body"  , e.getMessage());

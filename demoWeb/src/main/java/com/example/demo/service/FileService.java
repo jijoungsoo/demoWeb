@@ -5,10 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
-
 import com.example.demo.cm.ctrl.MsgDebugInfo;
 import com.example.demo.dmn.excel.ExcelDto;
 import com.example.demo.dmn.excel.FileDto;
@@ -16,12 +12,18 @@ import com.example.demo.exception.BizException;
 import com.example.demo.utils.ExcelUtils;
 import com.example.demo.utils.PjtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
 public class FileService {
+    @Autowired
+    GoRestService goS;
 
     
     public ArrayList<FileDto>  getFile(String FILE_ID, Authentication authentication) {
@@ -38,7 +40,7 @@ public class FileService {
 
             String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
             MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_FILE_FIND_BY_FILE_ID", jsonInString, authentication);
-            String jsonOutString = GoRestService.callAPI("BR_CM_FILE_FIND_BY_FILE_ID", msg.getIN_DATA_JSON());
+            String jsonOutString = goS.callAPI("BR_CM_FILE_FIND_BY_FILE_ID", msg.getIN_DATA_JSON());
             outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
@@ -118,7 +120,7 @@ public class FileService {
         IN_DS.put("IN_DATA", all_list);
         String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
         MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_EXCEL_UPLD_CREATE", jsonInString, authentication);
-        String jsonOutString = GoRestService.callAPI("BR_CM_EXCEL_UPLD_CREATE", msg.getIN_DATA_JSON());
+        String jsonOutString = goS.callAPI("BR_CM_EXCEL_UPLD_CREATE", msg.getIN_DATA_JSON());
         outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
         return outDs;
     }
@@ -147,7 +149,7 @@ public class FileService {
         String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
         MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_FILE_CREATE",jsonInString,authentication);
         
-        String jsonOutString = GoRestService.callAPI("BR_CM_FILE_CREATE", msg.getIN_DATA_JSON());
+        String jsonOutString = goS.callAPI("BR_CM_FILE_CREATE", msg.getIN_DATA_JSON());
         PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
         
     }
@@ -167,7 +169,7 @@ public class FileService {
 
         String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
         MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_FILE_RM", jsonInString, authentication);
-        String jsonOutString = GoRestService.callAPI("BR_CM_FILE_RM", msg.getIN_DATA_JSON());
+        String jsonOutString = goS.callAPI("BR_CM_FILE_RM", msg.getIN_DATA_JSON());
         outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
        
     }

@@ -33,6 +33,9 @@ import lombok.extern.slf4j.Slf4j;
 public class AvImgFileController {
 
     @Autowired
+    GoRestService goS;
+
+    @Autowired
     private FileService fService;
 
     @Autowired
@@ -58,7 +61,7 @@ public class AvImgFileController {
 
             String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
             MsgDebugInfo msg = PjtUtil.makeLSession("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", jsonInString, authentication);
-            String jsonOutString = GoRestService.callAPI("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", msg.getIN_DATA_JSON());
+            String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", msg.getIN_DATA_JSON());
             outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
@@ -127,7 +130,7 @@ public class AvImgFileController {
 
             String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
             MsgDebugInfo msg = PjtUtil.makeLSession("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", jsonInString, authentication);
-            String jsonOutString = GoRestService.callAPI("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", msg.getIN_DATA_JSON());
+            String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", msg.getIN_DATA_JSON());
             outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
@@ -196,7 +199,7 @@ public class AvImgFileController {
 
             String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
             MsgDebugInfo msg = PjtUtil.makeLSession("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", jsonInString, authentication);
-            String jsonOutString = GoRestService.callAPI("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", msg.getIN_DATA_JSON());
+            String jsonOutString = goS.callAPI("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", msg.getIN_DATA_JSON());
             outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block

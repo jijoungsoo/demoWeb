@@ -21,7 +21,8 @@ import lombok.RequiredArgsConstructor;
 @Service
 public class UserService implements UserDetailsService {
 	
-
+	@Autowired
+	GoRestService goS;
   /**
    * Spring Security 필수 메소드 구현
    *
@@ -44,7 +45,7 @@ public class UserService implements UserDetailsService {
 			IN_DS.put("IN_DATA", IN_DATA);
 			
 			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-			String jsonOutString = GoRestService.callAPI("BR_CM_LOGIN_LOAD_USER_BY_USER_NAME",jsonInString);
+			String jsonOutString = goS.callAPI("BR_CM_LOGIN_LOAD_USER_BY_USER_NAME",jsonInString);
 			HashMap<String, Object> rs= PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
 			ArrayList<HashMap<String,String>> OUT_DATA = (ArrayList<HashMap<String,String>>) rs.get("OUT_DATA");
 			System.out.println("aaaaa1");
@@ -97,7 +98,7 @@ public class UserService implements UserDetailsService {
     ObjectMapper om = new ObjectMapper();
     String jsonString = om.writeValueAsString(userInfoDto);
 
-	String tmp = GoRestService.callAPI("saveUser", jsonString);
+	String tmp = goS.callAPI("saveUser", jsonString);
 	
   }	
 	   

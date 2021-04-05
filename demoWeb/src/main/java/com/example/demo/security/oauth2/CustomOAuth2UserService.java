@@ -10,6 +10,7 @@ import com.example.demo.user.domain.UserInfo;
 import com.example.demo.utils.PjtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.http.RequestEntity;
@@ -31,6 +32,8 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
+    @Autowired
+    BrService brS;
     // https://github.com/engkimbs/spring-boot-oauth2
     // https://engkimbs.tistory.com/849
     private static final String MISSING_USER_INFO_URI_ERROR_CODE = "missing_user_info_uri";
@@ -153,7 +156,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         IN_DATA_ROW.put("BRTHDAY", attr.getBirthday());
         IN_DATA_ROW.put("GNDR", attr.getGender());
 
-        ArrayList<HashMap<String,Object>> OUT_DATA = BrService.BR_CM_LOGIN_SNS(IN_DATA_ROW);
+        ArrayList<HashMap<String,Object>> OUT_DATA = brS.BR_CM_LOGIN_SNS(IN_DATA_ROW);
 
         if(OUT_DATA.size()>1) {
             throw new UsernameNotFoundException("사용자정보가 2개이상입니다. 관리자에게 문의하세요");

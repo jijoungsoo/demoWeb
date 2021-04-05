@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import com.example.demo.service.BrService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class MainPageController {
-
+	@Autowired
+	BrService brS;
 	  
 	   
 	   @CacheEvict(value = {"pgmLinkCache","pgmCache","menuCache"},allEntries=true)
@@ -46,15 +48,15 @@ public class MainPageController {
 	    //디버그 모드 항상 on
 	    session.setAttribute("debug", "Y");
 	    
-	    ArrayList<HashMap<String, Object>>  cmMenuList = BrService.BR_CM_ROLE_CD_MENU_FIND_TREE_BY_USER_NO(authentication);
+	    ArrayList<HashMap<String, Object>>  cmMenuList = brS.BR_CM_ROLE_CD_MENU_FIND_TREE_BY_USER_NO(authentication);
 	    if(cmMenuList==null) {
 	        cacheRefresh();
-	        cmMenuList = BrService.BR_CM_ROLE_CD_MENU_FIND_TREE_BY_USER_NO(authentication);
+	        cmMenuList = brS.BR_CM_ROLE_CD_MENU_FIND_TREE_BY_USER_NO(authentication);
 	    }
-	    ArrayList<HashMap<String, Object>>  cmPgmList = BrService.findMainPgm();
+	    ArrayList<HashMap<String, Object>>  cmPgmList = brS.findMainPgm();
 	    if(cmPgmList==null) {
             cacheRefresh();
-            cmPgmList = BrService.findMainPgm();
+            cmPgmList = brS.findMainPgm();
         }
 		model.addAttribute("cmMenuList", cmMenuList);
 		model.addAttribute("cmPgmList", cmPgmList);
