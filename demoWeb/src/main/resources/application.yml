@@ -105,11 +105,6 @@ custom:
     naver: 
       client-id: vGcwBDQyZraIizRdgFqy 
       client-secret: g0pxjLs7mR
-
-logging: 
-  level: 
-    root: info
-
 env:
   serverfilepath: /home/jijs/avdbs.com
   apiurl: http://demojpa:8091/api/
@@ -140,4 +135,7 @@ spring:
       max-request-size: 100MB
 server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초
 
+logging: 
+  level: 
+    root: info
 
