@@ -1,6 +1,8 @@
 package com.example.demo.cm.ctrl;
 
 import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -60,7 +62,17 @@ public class PageController {
 		//====>/WEB-INF/jsp/${dirLink}/${pgmLink}.ui.jsp
 		String filePath =  "/WEB-INF/jsp/"+dirLink+"/"+pgmLink+".ui.jsp";
 		System.out.println(filePath);
-		String filePullPath =	request.getSession().getServletContext().getRealPath(filePath);
+		//String filePullPath =	request.getSession().getServletContext().getRealPath(filePath);  war 파일의 경우 동작하지 않음;
+		URL url;
+		String filePullPath = null;
+		try {
+			url = request.getSession().getServletContext().getResource(filePath);
+			filePullPath =url.getFile();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		System.out.println(filePullPath);
 		String oFilePullPath = filePullPath.replaceAll("/", Matcher.quoteReplacement(File.separator));
 		String reverseSlashPath  = oFilePullPath.replaceAll(Matcher.quoteReplacement(File.separator), "/");
