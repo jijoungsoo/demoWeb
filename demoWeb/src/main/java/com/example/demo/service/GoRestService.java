@@ -6,6 +6,7 @@ import com.example.demo.YmlConfig;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -19,9 +20,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import lombok.extern.slf4j.Slf4j;
 
+
 @Slf4j
 @Service
 public class GoRestService {
+    @Autowired
+    YmlConfig ymlC;
     public String callAPI(String br, String jsonInString) throws ResourceAccessException {
         log.info("br=>" + br);
         log.info("jsonInString=>" + jsonInString);
@@ -35,8 +39,7 @@ public class GoRestService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<?> entity = new HttpEntity<>(jsonInString, headers);
-        YmlConfig y = new YmlConfig();
-        String url = y.getApiurl() + br;
+        String url = ymlC.getApiurl() + br;
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
 
         try {
