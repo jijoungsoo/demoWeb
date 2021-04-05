@@ -39,6 +39,7 @@ public class GoRestService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<?> entity = new HttpEntity<>(jsonInString, headers);
+        log.info("ymlC.getApiurl() =>" + ymlC.getApiurl() );
         String url = ymlC.getApiurl() + br;
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
 
