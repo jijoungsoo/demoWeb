@@ -138,3 +138,4 @@ logging:
 
 env:
   serverfilepath: /home/jijs/avdbs.com
+  apiurl: http://demojpa:8091/api/

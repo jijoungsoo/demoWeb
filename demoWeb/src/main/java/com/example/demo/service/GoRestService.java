@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import java.util.HashMap;
 
+import com.example.demo.YmlConfig;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
@@ -10,7 +12,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
-import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -34,7 +35,8 @@ public class GoRestService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<?> entity = new HttpEntity<>(jsonInString, headers);
-        String url = "http://localhost:8091/api/" + br;
+        YmlConfig y = new YmlConfig();
+        String url = y.getApiurl() + br;
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
 
         try {

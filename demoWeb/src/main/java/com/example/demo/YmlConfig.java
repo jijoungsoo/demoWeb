@@ -17,4 +17,14 @@ public class YmlConfig {
     public void setServerfilepath(String serverfilepath) {
         this.serverfilepath = serverfilepath;
     }
+
+    private String apiurl;
+    
+    public String getApiurl() {
+        return apiurl;
+    }
+
+    public void setApiurl(String apiurl) {
+        this.apiurl = apiurl;
+    }
 }
