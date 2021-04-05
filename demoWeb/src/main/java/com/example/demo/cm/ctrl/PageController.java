@@ -59,7 +59,9 @@ public class PageController {
 		//====>C:\Users\jijsx\git\demoWeb\demoWeb\src\main\webapp\
 		//====>/WEB-INF/jsp/${dirLink}/${pgmLink}.ui.jsp
 		String filePath =  "/WEB-INF/jsp/"+dirLink+"/"+pgmLink+".ui.jsp";
+		System.out.println(filePath);
 		String filePullPath =	request.getSession().getServletContext().getRealPath(filePath);
+		System.out.println(filePullPath);
 		String oFilePullPath = filePullPath.replaceAll("/", Matcher.quoteReplacement(File.separator));
 		String reverseSlashPath  = oFilePullPath.replaceAll(Matcher.quoteReplacement(File.separator), "/");
 		System.out.println(filePullPath);
