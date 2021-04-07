@@ -2,7 +2,7 @@
 <configuration debug="true">
 
 <!-- 여기 변수명을 가져다 쓰려고 한다.--> 
-  <property resource="application.yml"/>
+  <property resource="application.yaml"/>
 
 
   <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
