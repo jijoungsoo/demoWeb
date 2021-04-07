@@ -48,8 +48,9 @@ dependencies {
 	implementation('org.apache.httpcomponents:httpclient:4.5.13')   /*외부api 호출을 위해서 */
 	
 	implementation('org.springframework.security:spring-security-taglibs:5.4.2')   /*로그인 정보 jsp 출력을 위해 */
-	
-	compile group: 'org.zalando', name: 'logbook-spring-boot-starter', version: '2.4.1'  /*restcontroller 로그 남기기 */
+	/*
+	compile group: 'org.zalando', name: 'logbook-spring-boot-starter', version: '2.4.1'  
+	*/  /*restcontroller 로그 남기기 */
 	
 	implementation 'net.sf.ehcache:ehcache:2.10.6'  /*메뉴 프로그램 리스트 캐싱     
 											  http://dveamer.github.io/backend/SpringCacheable.html
