@@ -41,7 +41,7 @@ public class LoginPageController {
 			//Cookie[] arrCookie =request.getCookies();
 			//모든 키를 문자열로
 			//String tmp =Arrays.stream(arrCookie).map(c -> c.getName()+"="+c.getValue()).collect(Collectors.joining(","));
-			
+			long start = System.currentTimeMillis();
 			//이거 없었으면 겁나 for문 돌렸을 텐데.
 			String v_userId="";
 			String v_userPwd="";
@@ -89,6 +89,9 @@ public class LoginPageController {
 			log.info("v_userPwd=>"+v_userPwd);
 			log.info("v_autoLoginYn=>"+v_autoLoginYn);
 			log.info("v_autoLoginYn=>"+v_autoLoginYn);
+
+			long end = System.currentTimeMillis();
+			System.out.println("쿠키출력 속도 실행시간 : " + (end - start)/1000.0);
 						
 			model.addAttribute(CustomUrlAuthenticationSuccessHandler.userId, v_userId);
 			model.addAttribute(CustomUrlAuthenticationSuccessHandler.userPwd, v_userPwd);

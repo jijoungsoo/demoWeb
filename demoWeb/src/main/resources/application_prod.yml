@@ -1,0 +1,84 @@
+spring:
+  profiles:
+    active: default
+#local, dev, prod 공통 설정
+server.port: 8090    
+spring.mvc.view.prefix: /WEB-INF/jsp/
+spring.mvc.view.suffix: .jsp
+       
+
+####HTML 한글깨짐을 고칠수가 없었다.
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8   
+#    additional-tld-skip-patterns: '*.jar'  #xml-apis.jar   그래들 익세션 문제 예외 https://stackoverflow.com/questions/44606914/embedded-tomcat-giving-failed-to-scan-jars-from-classloader-hierarchy
+spring.mandatory-file-encoding: UTF-8
+####HTML 한글깨짐을 고칠수가 없었다.
+
+logging:
+  config: classpath:logback-spring.xml 
+  
+logging.level:
+  org.zalando.logbook: TRACE
+  org.springframework.web.client: DEBUG   #restTemplate에서 로그 남기기
+
+#메뉴, 프로그램 리스트 캐싱
+spring.cache.ehcache.config: classpath:ehcache.xml  
+
+spring.security: 
+    oauth2: 
+      client: 
+        registration: 
+          google: 
+            client-id: 1013284899874-j55po4375ob25rpr8u0db0gvab4p3uod.apps.googleusercontent.com
+            client-secret: 6Tr9hiMs9uKCjUHrO9bxv0lL 
+          facebook: 
+            client-id: 680106585392054 
+            client-secret: da2b31555054ab973800eb26b38e3426 
+
+custom: 
+  oauth2: 
+    kakao: 
+      client-id: 19cf5b6db028ad395b915ddf55c256f4  ##rest api키
+      client-secret: RNsvKAj3suFVj4mq3m1U0dsGFjTcd8Iz   ##카카오 로그인>보안>client secret 키
+    naver: 
+      client-id: vGcwBDQyZraIizRdgFqy 
+      client-secret: g0pxjLs7mR
+env:
+  serverfilepath: /home/jijs/avdbs.com
+  apiurl: http://demoJpa:8091/api/
+
+
+--- #local 환경 
+spring: 
+  profiles: local 
+  servlet:      
+    multipart:
+      file-size-threshold: 1MB    #1M이하면 메모리에 
+      location: C:/Temp           #1M이상이면 이경로에 이걸 안해주면  System.getProperty("java.io.tmpdir"); 
+      max-file-size: 100MB
+      max-request-size: 100MB
+server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초  
+logging: 
+  level: 
+    root: debug 
+
+--- #dev 환경 
+spring: 
+  profiles: default 
+  servlet:      
+    multipart:
+      file-size-threshold: 1MB    #1M이하면 메모리에 
+      location: /tmp           #1M이상이면 이경로에 이걸 안해주면  System.getProperty("java.io.tmpdir"); 
+      max-file-size: 100MB
+      max-request-size: 100MB
+server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초
+
+logging: 
+  level: 
+    root: info
