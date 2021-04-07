@@ -30,29 +30,6 @@ logging.level:
 #메뉴, 프로그램 리스트 캐싱
 spring.cache.ehcache.config: classpath:ehcache.xml  
 
-#https://github.com/zalando/logbook
-logbook:
-  include:
-    - /api/**
-    - /actuator/**
-  exclude:
-    - /actuator/healthlo
-    - /api/admin/**
-  filter.enabled: true
-  secure-filter.enabled: true
-  format.style: json
-  strategy: default
-  minimum-status: 400
-  obfuscate:
-    headers:
-      - Authorization
-      - X-Secret
-    parameters:
-      - access_token
-      - password
-    write:
-      chunk-size: 0
-
 #스프링액츄에이터 ==> 모니터링 프로그램
 #spring.boot.admin:
 #        client:
