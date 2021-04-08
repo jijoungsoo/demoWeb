@@ -153,7 +153,7 @@ public class PjtUtil {
 	    // Password-Based Key Derivation function 2
 	    SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
 	    // 70000번 해시하여 256 bit 길이의 키를 만든다.
-	    PBEKeySpec spec = new PBEKeySpec(key.toCharArray(), saltBytes, 1000, 256); //첫번째 1000이 기존에 70000이었는데 너무 느려서 1000으로 변경
+	    PBEKeySpec spec = new PBEKeySpec(key.toCharArray(), saltBytes, 100, 256); //첫번째 100 기존에 70000이었는데 너무 느려서 1000으로 변경
 	    SecretKey secretKey = factory.generateSecret(spec);
 	    SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
 	    // 알고리즘/모드/패딩
@@ -182,7 +182,7 @@ public class PjtUtil {
 	    byte[] encryoptedTextBytes = new byte[buffer.capacity() - saltBytes.length - ivBytes.length];
 	    buffer.get(encryoptedTextBytes);
 	    SecretKeyFactory factory = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA1");
-	    PBEKeySpec spec = new PBEKeySpec(key.toCharArray(), saltBytes, 1000, 256); //첫번째 1000이 기존에 70000이었는데 너무 느려서 1000으로 변경
+	    PBEKeySpec spec = new PBEKeySpec(key.toCharArray(), saltBytes, 100, 256); //첫번째 100 기존에 70000이었는데 너무 느려서 1000으로 변경 보통 너무 적은 숫자면 해킹에 위험이 있다고 한다.  0.2초에 맞추는게 좋다고 한다.
 	    SecretKey secretKey = factory.generateSecret(spec);
 	    SecretKeySpec secret = new SecretKeySpec(secretKey.getEncoded(), "AES");
 	    cipher.init(Cipher.DECRYPT_MODE, secret, new IvParameterSpec(ivBytes));
