@@ -5,11 +5,8 @@ import java.security.AlgorithmParameters;
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -22,21 +19,17 @@ import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.commons.codec.net.URLCodec;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.configurationprocessor.json.JSONArray;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Service;
-
-import com.example.demo.cm.ctrl.ApiResultMap;
 import com.example.demo.cm.ctrl.MsgDebugInfo;
 import com.example.demo.user.domain.UserInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+
+import org.apache.commons.codec.net.URLCodec;
+import org.springframework.boot.configurationprocessor.json.JSONArray;
+import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.security.core.Authentication;
 
 
 public class PjtUtil {
@@ -103,20 +96,20 @@ public class PjtUtil {
 
 	public static  <T> T JsonStringToObject(String JsonInString, Class<T> valueType) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper omOut = new ObjectMapper();
-    	omOut.enable(SerializationFeature.INDENT_OUTPUT);
+    	//omOut.enable(SerializationFeature.INDENT_OUTPUT); 느려짐
 		return omOut.readValue(JsonInString,valueType);		
 	}
 	
 	public static String ObjectToJsonString(Object value) throws JsonProcessingException {
 		ObjectMapper om = new ObjectMapper();
-		om.enable(SerializationFeature.INDENT_OUTPUT);
+		//om.enable(SerializationFeature.INDENT_OUTPUT); 느려짐
 		return om.writeValueAsString(value);
 	}
 	
 	public static String jsonBeautifier(String InJsonString) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+            //objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true); //느려짐
             JsonNode tree;
             tree = objectMapper.readTree(InJsonString);
             String formattedJson = objectMapper.writeValueAsString(tree);
