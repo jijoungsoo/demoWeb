@@ -1,6 +1,6 @@
-spring:
-  profiles:
-    active: default
+#spring:
+#  profiles:
+#    active: default
 #local, dev, prod 공통 설정
 server.port: 8090    
 spring.mvc.view.prefix: /WEB-INF/jsp/
@@ -22,10 +22,10 @@ spring.mandatory-file-encoding: UTF-8
 
 logging:
   config: classpath:logback-spring.xml 
-  
-logging.level:
-  org.zalando.logbook: TRACE
-  org.springframework.web.client: DEBUG   #restTemplate에서 로그 남기기
+  level:
+    root: info
+    org.zalando.logbook: TRACE
+    org.springframework.web.client: DEBUG   #restTemplate에서 로그 남기기
 
 #메뉴, 프로그램 리스트 캐싱
 spring.cache.ehcache.config: classpath:ehcache.xml  
@@ -53,22 +53,6 @@ env:
   serverfilepath: /home/jijs/avdbs.com
   apiurl: http://demoJpa:8091/api/
 
-
---- #local 환경 
-spring: 
-  profiles: local 
-  servlet:      
-    multipart:
-      file-size-threshold: 1MB    #1M이하면 메모리에 
-      location: C:/Temp           #1M이상이면 이경로에 이걸 안해주면  System.getProperty("java.io.tmpdir"); 
-      max-file-size: 100MB
-      max-request-size: 100MB
-server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초  
-logging: 
-  level: 
-    root: debug 
-
---- #dev 환경 
 spring: 
   profiles: default 
   servlet:      
@@ -78,7 +62,4 @@ spring:
       max-file-size: 100MB
       max-request-size: 100MB
 server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초
-
-logging: 
-  level: 
-    root: info
+ 

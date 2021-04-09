@@ -16,16 +16,11 @@ server:
       force: true
   tomcat:
     uri-encoding: UTF-8   
-#    additional-tld-skip-patterns: '*.jar'  #xml-apis.jar   그래들 익세션 문제 예외 https://stackoverflow.com/questions/44606914/embedded-tomcat-giving-failed-to-scan-jars-from-classloader-hierarchy
 spring.mandatory-file-encoding: UTF-8
 ####HTML 한글깨짐을 고칠수가 없었다.
 
 logging:
   config: classpath:logback-spring.xml 
-  
-logging.level:
-  org.zalando.logbook: TRACE
-  org.springframework.web.client: DEBUG   #restTemplate에서 로그 남기기
 
 #메뉴, 프로그램 리스트 캐싱
 spring.cache.ehcache.config: classpath:ehcache.xml  
@@ -99,5 +94,5 @@ spring:
 server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초  
 logging: 
   level: 
-    root: debug 
+    root: info 
 
