@@ -81,9 +81,9 @@ public class PageController {
 		model.addAttribute("debug", debug);
         model.addAttribute("req_hm", hm);
 		long end = System.currentTimeMillis();
-		log.error("start",(start));
-		log.error("end",(end));
-		log.error("걸린시간",((end-start)/1000));
+		log.error("start","start=>"+start);
+		log.error("end","end=>"+end);
+		log.error("걸린시간","걸린시간=>"+((end-start)/1000));
 
 		
 		return "pageRouter"; 
