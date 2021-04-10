@@ -5,7 +5,9 @@ spring:
 server.port: 8090    
 spring.mvc.view.prefix: /WEB-INF/jsp/
 spring.mvc.view.suffix: .jsp
-       
+devtools.livereload.enabled: false
+
+
 
 ####HTML 한글깨짐을 고칠수가 없었다.
 server:
