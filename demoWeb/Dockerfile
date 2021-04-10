@@ -13,4 +13,4 @@ RUN pwd
 COPY build/libs/*.war app.war
 EXPOSE 8090
 # 외부에 노출할 포트 지정
-ENTRYPOINT ["java","-jar","/app.war"]
+ENTRYPOINT ["java","-jar","-Xms1024m","-Xmx1024m","/app.war"]
