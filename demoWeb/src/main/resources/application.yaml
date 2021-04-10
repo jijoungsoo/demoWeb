@@ -6,6 +6,7 @@ server.port: 8090
 spring.mvc.view.prefix: /WEB-INF/jsp/
 spring.mvc.view.suffix: .jsp
 
+
 ####HTML 한글깨짐을 고칠수가 없었다.
 server:
   servlet:
@@ -13,6 +14,9 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+    jsp:
+      init-parameters:
+        development: true
   tomcat:
     uri-encoding: UTF-8   
 spring.mandatory-file-encoding: UTF-8
