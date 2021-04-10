@@ -18,6 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 public class PageController {
 	@Autowired
@@ -29,6 +32,7 @@ public class PageController {
 			, Model model
 			, HttpServletRequest request
 			){
+		long start = System.currentTimeMillis();
 	    String uuid ="";
 		String parentUuid ="ROOT";
 	    if(hm.get("uuid")!=null) {
@@ -37,10 +41,7 @@ public class PageController {
 		if(hm.get("parent_uuid")!=null) {
 	        parentUuid = hm.get("parent_uuid").toString();
 	    }
-		
-		//pageId를 가지고 하는 것도 문제가 있다.
-		//pageId를 가지고 PgmLink를 가져오도록 해야한다.
-		//login 페이지 가져올때 pgmList를 가져오니가 그걸 cache에 넣자.
+
 		String debug = hm.get("debug");
 		HashMap<String, Object> pgmLinkMap = brS.findPgmList(pageId);
 		
@@ -56,35 +57,8 @@ public class PageController {
 		String dirLink =pgmLinkMap.get("DIR_LINK").toString();
 		String pgmLink =pgmLinkMap.get("PGM_LINK").toString();
 
-		
-		//====>C:\Users\jijsx\git\demoWeb\demoWeb\src\main\webapp\
-		//====>/WEB-INF/jsp/${dirLink}/${pgmLink}.ui.jsp
 		String filePath =  "/WEB-INF/jsp/"+dirLink+"/"+pgmLink+".ui.jsp";
 		System.out.println(filePath);
-		
-		/*
-		String filePullPath =	request.getSession().getServletContext().getRealPath(filePath); // war 파일의 경우 동작하지 않음;
-		System.out.println(filePullPath);
-		String oFilePullPath = filePullPath.replaceAll("/", Matcher.quoteReplacement(File.separator));
-		String reverseSlashPath  = oFilePullPath.replaceAll(Matcher.quoteReplacement(File.separator), "/");
-		System.out.println(filePullPath);
-		Sytem.out.println(reverseSlashPath);
-		*/
-
-		/* WAR파일 적용이 안됨.
-		File f = new File(reverseSlashPath);
-		if(f.isFile()) {
-			System.out.println("[파일 존재]"+reverseSlashPath);
-		} else {
-			System.out.println("[파일 없음]"+reverseSlashPath);     
-
-			model.addAttribute("parentUuid", parentUuid);
-			model.addAttribute("pgmId", pageId);
-			model.addAttribute("uuid", hm.get("uuid").toString());
-			model.addAttribute("result", "no-file-"+dirLink+"/"+pgmLink+".ui.jsp");
-			return  "pageRouter"; 
-		}
-		*/
 		InputStream in = request.getSession().getServletContext().getResourceAsStream(filePath);
 		
 		if(in ==null) {
@@ -106,6 +80,12 @@ public class PageController {
 		model.addAttribute("result", "ok");
 		model.addAttribute("debug", debug);
         model.addAttribute("req_hm", hm);
+		long end = System.currentTimeMillis();
+		log.error("start",(start));
+		log.error("end",(end));
+		log.error("걸린시간",((end-start)/1000));
+
+		
 		return "pageRouter"; 
     }
 	
