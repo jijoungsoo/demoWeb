@@ -78,7 +78,7 @@ custom:
       client-id: vGcwBDQyZraIizRdgFqy 
       client-secret: g0pxjLs7mR
 env:
-  serverfilepath: c:\avdbs.com
+  serverfilepath: d:\avdbs.com
   apiurl: http://localhost:8091/api/
 
 

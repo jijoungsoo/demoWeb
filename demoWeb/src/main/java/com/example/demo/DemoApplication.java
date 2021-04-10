@@ -1,12 +1,18 @@
 package com.example.demo;
 
+import java.text.NumberFormat;
+
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Controller;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @EnableAspectJAutoProxy
 @SpringBootApplication
@@ -33,6 +39,34 @@ public class DemoApplication {
 		
 		SpringApplication.run(DemoApplication.class, args);
 		
+	}
+
+	@Bean
+	InitializingBean sendDatabase() {
+	    return () -> {
+	    	
+	    	//t.loadData();
+	    	/*
+	        userRepository.save(new User("John"));
+	        userRepository.save(new User("Rambo"));
+	        */
+
+			Runtime runtime = Runtime.getRuntime();
+			final NumberFormat format = NumberFormat.getInstance();
+
+			final long maxMemory = runtime.maxMemory();
+			final long allocatedMemory = runtime.totalMemory();
+			final long freeMemory = runtime.freeMemory();
+			final long mb = 1024 * 1024;
+			final String mega = " MB";
+
+			log.info("========================== Memory Info ==========================");
+			log.info("Free memory: " + format.format(freeMemory / mb) + mega);
+			log.info("Allocated memory: " + format.format(allocatedMemory / mb) + mega);
+			log.info("Max memory: " + format.format(maxMemory / mb) + mega);
+			log.info("Total free memory: " + format.format((freeMemory + (maxMemory - allocatedMemory)) / mb) + mega);
+			log.info("=================================================================\n");
+	   };
 	}
 	
 
