@@ -1,6 +1,5 @@
 package com.example.demo.cm.ctrl;
 
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import com.example.demo.service.BrService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class PageController {
 	@Autowired
 	BrService brS;
+
+	@Autowired
+	ResourceLoader resourceLoader;  
 			
 	@PostMapping(path= "/page/{pageId}")
 	public String pagePost(@PathVariable("pageId") String pageId
@@ -52,11 +56,10 @@ public class PageController {
 		String dirLink =pgmLinkMap.get("DIR_LINK").toString();
 		String pgmLink =pgmLinkMap.get("PGM_LINK").toString();
 
-		String filePath =  "/WEB-INF/views/"+dirLink+"/"+pgmLink+".ui.html";
-		System.out.println(filePath);
-		InputStream in = request.getSession().getServletContext().getResourceAsStream(filePath);
+		String filePath =  "classpath:/templates/"+dirLink+"/"+pgmLink+".ui.html";
+		Resource resource = resourceLoader.getResource(filePath);
 		
-		if(in ==null) {
+		if(!resource.exists()) {
 			System.out.println("[파일 없음]"+filePath);     
 			model.addAttribute("parentUuid", parentUuid);
 			model.addAttribute("pgmId", pageId);
