@@ -4,22 +4,15 @@ import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpSession;
-
 import com.example.demo.WebSocketEventListener;
 import com.example.demo.service.GoRestService;
 import com.example.demo.utils.PjtUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
@@ -41,8 +34,6 @@ public class ApiSocketStompRestController {
      * */
     @Autowired
     SimpMessagingTemplate smt;
-    
-	 private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER"); 
 	/*소켓*/
     @MessageMapping("/socketApi")   /*보내는 이름*/
     @SendTo("/topic/message")  /*받는 이름*/

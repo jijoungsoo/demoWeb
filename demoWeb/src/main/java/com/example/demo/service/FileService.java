@@ -17,9 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service
 public class FileService {
     @Autowired
@@ -140,7 +137,6 @@ public class FileService {
         m.put("CONTENT_TYPE",tmp.getContentType());
         in_al.add(m);
 
-        FileDto fDto = new FileDto();
         HashMap<String,Object> IN_DS = new HashMap<String,Object>();
         IN_DS.put("brRq","IN_DATA");
         IN_DS.put("brRs","OUT_DATA");
@@ -156,8 +152,7 @@ public class FileService {
 
     public void rmFile(FileDto fDto, Authentication authentication
             ) throws JsonProcessingException, BizException {
-        HashMap<String, ArrayList<HashMap<String, Object>>> outDs = new HashMap<String, ArrayList<HashMap<String, Object>>>();
-         HashMap<String, Object> IN_DS = new HashMap<String, Object>();
+        HashMap<String, Object> IN_DS = new HashMap<String, Object>();
         IN_DS.put("brRq", "IN_DATA");
         IN_DS.put("brRs", "OUT_DATA");
         ArrayList<HashMap<String, Object>> in_date = new ArrayList<HashMap<String, Object>>();
@@ -170,7 +165,5 @@ public class FileService {
         String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
         MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_FILE_RM", jsonInString, authentication);
         String jsonOutString = goS.callAPI("BR_CM_FILE_RM", msg.getIN_DATA_JSON());
-        outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
-       
     }
 }

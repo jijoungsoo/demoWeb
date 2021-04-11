@@ -1,10 +1,8 @@
 package com.example.demo.cm.ctrl;
 
-import java.io.File;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.Matcher;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,9 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 public class PageController {
 	@Autowired

@@ -1,13 +1,15 @@
 package com.example.demo.cm.ctrl;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.example.demo.security.login.CustomUrlAuthenticationSuccessHandler;
+import com.example.demo.user.domain.UserInfoDto;
+import com.example.demo.user.domain.UserService;
+import com.example.demo.utils.PjtUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,13 +18,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.util.WebUtils;
-
-import com.example.demo.utils.PjtUtil;
-import com.example.demo.security.login.CustomUrlAuthenticationSuccessHandler;
-import com.example.demo.user.domain.UserInfoDto;
-import com.example.demo.user.domain.UserService;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.extern.slf4j.Slf4j;
 

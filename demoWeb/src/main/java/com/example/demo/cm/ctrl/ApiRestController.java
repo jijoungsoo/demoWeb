@@ -7,8 +7,6 @@ import javax.servlet.http.HttpSession;
 import com.example.demo.service.GoRestService;
 import com.example.demo.utils.PjtUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
@@ -29,8 +27,6 @@ public class ApiRestController {
 
 	@Autowired
 	GoRestService goS;
-
-	 private static Logger logger = LoggerFactory.getLogger("MLS_LOGGER"); 
 	 
 	 	/*
 		 @RequestMapping("/index")  

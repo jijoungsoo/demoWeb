@@ -3,14 +3,12 @@ package com.example.demo.av.ctrl;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import com.example.demo.service.FileService;
 import com.example.demo.utils.PjtUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,14 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @RestController
 public class AvdbsRestController {
-    
-    @Autowired
-    private FileService fService;
     @GetMapping(value = "/ACTOR_LIST")
     public  ResponseEntity<Object> actor_list() throws Exception {
       ArrayList<String> al_yymmdd= getActordebutYYMM();
@@ -45,7 +37,6 @@ public class AvdbsRestController {
 
     
     public ArrayList<String> getActordebutYYMM(){
-      HashMap<String, Object> result = new HashMap<String, Object>();
       HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
       factory.setConnectTimeout(10000); // 타임아웃 설정 5초
       factory.setReadTimeout(10000);// 타임아웃 설정 5초
@@ -73,7 +64,6 @@ public class AvdbsRestController {
 
    public ArrayList<HashMap<String, Object>>  getActorList(String YYMMDD){
        //https://www.avdbs.com/menu/actor_list.php
-        HashMap<String, Object> result = new HashMap<String, Object>();
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
         factory.setConnectTimeout(10000); // 타임아웃 설정 5초
         factory.setReadTimeout(10000);// 타임아웃 설정 5초

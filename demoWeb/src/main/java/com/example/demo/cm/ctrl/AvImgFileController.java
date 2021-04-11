@@ -10,7 +10,6 @@ import java.util.regex.Matcher;
 
 import com.example.demo.YmlConfig;
 import com.example.demo.dmn.excel.FileDto;
-import com.example.demo.service.FileService;
 import com.example.demo.service.GoRestService;
 import com.example.demo.utils.PjtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -26,17 +25,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Controller
 public class AvImgFileController {
 
     @Autowired
     GoRestService goS;
-
-    @Autowired
-    private FileService fService;
 
     @Autowired
     private YmlConfig yc;
