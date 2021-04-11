@@ -10,7 +10,7 @@ RUN pwd
 #도커는 실행환경만이다.
 
 #ARG JAR_FILE=demoWeb/build/libs/*.war
-COPY build/libs/*.war app.war
+COPY build/libs/*.jar app.jar
 EXPOSE 8090
 # 외부에 노출할 포트 지정
-ENTRYPOINT ["java","-jar","-Xms1024m","-Xmx1024m","/app.war"]
+ENTRYPOINT ["java","-jar","-Xms1024m","-Xmx1024m","/app.jar"]
