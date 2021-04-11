@@ -1,0 +1,129 @@
+<script>
+$(document).ready(function(){
+	var CM_3310 = new PgmPageMngr('[[${uuid}]]');
+	var myEditor;
+	CM_3310.init(function(p_param) {
+		console.log(p_param);
+		var _this = CM_3310;
+		var arr_rcv_list = [];
+		var msgForm = new FormMngr(_this, "msg_snd_area");
+		msgForm.initCombo("SND_TYPE_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'SND_TYPE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+		msgForm.setData("SND_TYPE_CD","");
+		$('[data-ax5formatter]').ax5formatter();
+
+		function rcvList(){
+			$( _this.getEl()[0].querySelector("[name=rcv_list]") ).empty();
+			var rcv_list_template_html = $(_this.getEl()[0].querySelector("[name=rcv-list-template]")).html();
+			var rcv_list_template = Handlebars.compile(rcv_list_template_html);
+			var rcv_data = { rcvList : arr_rcv_list };
+			var tmp =rcv_list_template(rcv_data);
+			//console.log(tmp);
+			$( _this.getEl()[0].querySelector("[name=rcv_list]") ).append(tmp);
+			msgForm.addEvent("click", "input[type=button]", function(el) {
+				//console.log(el);
+				switch (el.target.name) {
+					case "rcvDel":
+					var tmp =el.target;
+					var key = $(tmp).attr("key");
+
+					Message.confirm('받는 사람을 삭제하시겠습니까?', function() {
+						var sel_index=-1;
+						for(var i=0;i<arr_rcv_list.length;i++){							
+								if(key==i){
+									sel_index=i;
+								}
+						}
+						delete arr_rcv_list[sel_index];
+						rcvList();
+					});					
+					break;		
+				}
+			});
+		}
+		
+		msgForm.addEvent("click", "input[type=button]", function(el) {
+			//console.log(el);
+			switch (el.target.name) {
+			case "rcvAdd":
+				var data = msgForm.getData();
+				console.log('rcvAdd');
+				console.log(msgForm);
+				console.log(data);
+				var rcv_nm = data["RCV_NM"];
+				var rcv_addr = data["RCV_ADDR"];
+				if(PjtUtil.isEmpty(rcv_addr)){
+					Message.alert("받는 주소는 필수입니다.");
+					return;
+				}
+
+				if (PjtUtil.isEmail(rcv_addr)) {
+					Message.alert("받는 주소에 올바른 이메일 주소를 입력해주세요.");
+					return;
+				}
+
+				arr_rcv_list.push({
+					RCV_NM : rcv_nm,
+					RCV_ADDR: rcv_addr
+				})
+				rcvList();
+				msgForm.setData("RCV_NM","");
+				msgForm.setData("RCV_ADDR","");
+				break;
+			case "snd":
+				var data = msgForm.getData();
+				console.log(data);
+
+				
+				if(PjtUtil.isEmpty(data.SND_TYPE_CD)){
+					Message.alert("발송타입을 입력해주세요.");
+					return;
+				}
+
+				if(PjtUtil.isEmpty(data.SNDR_ADDR)){
+					Message.alert("보내는 주소를 입력해주세요.");
+					return;
+				}
+				
+				if (PjtUtil.isEmail(data.SNDR_ADDR)) {
+					Message.alert("받는 주소에 올바른 이메일 주소를 입력해주세요.");
+					return;
+				}
+
+				if(arr_rcv_list.length==0){
+					Message.alert("받는 주소를 등록해주세요.");
+					return;
+				}
+
+				if(PjtUtil.isEmpty(data.TTL)){
+					Message.alert("제목을 입력해주세요.");
+					return;
+				}
+
+				if(PjtUtil.isEmpty(data.CNTNT)){
+					Message.alert("내용을 입력해주세요.");
+					return;
+				}
+
+				Message.confirm('발송하시겠습니까?', function() {
+					var param = {
+						brRq : 'IN_DATA,RCV_DATA',
+						brRs : '',
+						IN_DATA : [ data ],
+						RCV_DATA : arr_rcv_list,
+					}
+					_this.send('BR_CM_EML_SND_SAVE', param, function(data2) {
+						if(data2){
+							Message.alert('발송되었습니다.', function() {
+								console.log(data2);
+								msgForm.clearData();
+								_this.close({});
+							});
+						}
+					});
+				});					
+				break;		
+			}
+		});
+	});
+});
+</script>

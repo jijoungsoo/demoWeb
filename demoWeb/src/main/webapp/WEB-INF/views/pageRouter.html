@@ -1,0 +1,41 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorator="/layout/inner_page">
+<!--
+String parentUuid = (String) request.getAttribute("parentUuid");
+    String pgmId = (String) request.getAttribute("pgmId");
+	String uuid = (String) request.getAttribute("uuid");
+	String dirLink = (String) request.getAttribute("dirLink");
+	String pgmLink = (String) request.getAttribute("pgmLink");
+	String result = (String) request.getAttribute("result");
+	String debug = (String) session.getAttribute("debug");
+	HashMap<String, String> hm = (HashMap<String, String>) request.getAttribute("req_hm");
+
+-->
+
+	<div th:block layout:fragment="content"  th:attr="id=${uuid},parent_uuid=${parentUuid},pgm_id=${pgmId},uuid=${uuid}">
+		<th:block th:if="${result=='ok'}">
+			<th:block th:include="'/'+${dirLink}+'/'+${pgmLink}+'.ui.html'" th:remove="tag"></th:block>
+			<th:block th:include="'/'+${dirLink}+'/'+${pgmLink}+'.js.html'" th:remove="tag"></th:block>
+			<th:block th:if="${debug=='Y' and pgmId!='CM_1800'}">
+
+				<div th:attr="id=|${uuid}_debug_log|" style="width:300px;height:200px;border: solid 2px red;z-index:999;background:#efefef;color:#000;margin-bottom:10px;overflow:auto;text-align:left;">
+					<ul th:attr="id=|${uuid}_debug_log_ul|"><p th:text="${pgmLink}">pgmLink</p>
+					</ul>
+				</div>
+				<div  th:attr="id=|${uuid}_draggable|" style="width:80px;height:30px;border:solid 2px red;position: relative;z-index:999;background:#efefef;color:#000;">
+					<div style="position: absolute;bottom: 0;width: 80px;">
+					<a href="#"  th:attr="id=|${uuid}_debug_bottom_a|"  ><i class="fas fa-eye"></i></a>
+					</div>
+				</div>
+			</th:block>
+
+
+	
+		</th:block>  			
+		<th:block th:unless="${result=='ok'}">
+			<h1 th:text="${result}">result</h1>
+		</th:block>  
+	</div>	
+</html>

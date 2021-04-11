@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lagn="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+    <!-- 공통 헤더-->
+    <th:block th:replace="/include/top.html :: f-header"></th:block>
+    <body>
+            <!-- 본문-->
+            <th:block layout:fragment="content"></th:block>
+    </body>
+</html>

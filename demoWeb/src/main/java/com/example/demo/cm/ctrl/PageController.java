@@ -57,7 +57,7 @@ public class PageController {
 		String dirLink =pgmLinkMap.get("DIR_LINK").toString();
 		String pgmLink =pgmLinkMap.get("PGM_LINK").toString();
 
-		String filePath =  "/WEB-INF/jsp/"+dirLink+"/"+pgmLink+".ui.jsp";
+		String filePath =  "/WEB-INF/views/"+dirLink+"/"+pgmLink+".ui.html";
 		System.out.println(filePath);
 		InputStream in = request.getSession().getServletContext().getResourceAsStream(filePath);
 		
@@ -66,7 +66,7 @@ public class PageController {
 			model.addAttribute("parentUuid", parentUuid);
 			model.addAttribute("pgmId", pageId);
 			model.addAttribute("uuid", hm.get("uuid").toString());
-			model.addAttribute("result", "no-file-"+dirLink+"/"+pgmLink+".ui.jsp");
+			model.addAttribute("result", "no-file-"+dirLink+"/"+pgmLink+".ui.html");
 			return  "pageRouter"; 
 		} else {
 			System.out.println("[파일 존재]"+filePath);

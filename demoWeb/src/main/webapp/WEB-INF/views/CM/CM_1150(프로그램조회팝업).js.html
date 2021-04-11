@@ -1,0 +1,76 @@
+<%	String uuid = (String) request.getAttribute("uuid"); %>
+<script>
+$(document).ready(function(){
+	var CM_1100 = new PgmPageMngr('[[${uuid}]]');
+	CM_1100.init(function(p_param) {
+		var _this = CM_1100;
+		var searchForm = new FormMngr(_this, "search_area");
+		searchForm.initCombo("CATEGORY",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [  { GRP_CD : 'CATEGORY',  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+		
+		const grid = new TuiGridMngr(_this,'grid',{
+		      editable: false
+		      ,showRowStatus: false
+		      ,rowNum: true
+		      ,checkbox: false 
+			  ,bodyHeight : 500  
+		  	}
+		,[
+				{
+		           header: 'PGM_NO',
+		           name: 'PGM_NO',
+		           width: 80,
+				   align:"center"
+		        },{
+		           header: '프로그램',
+		           name: 'PGM_ID',
+		           width: 100,
+				   align:"center"
+		        },{
+		           header: '프로그램명',
+		           name: 'PGM_NM',
+		           width: 'auto',
+				   align:"center"
+		        },{
+		           header: '카테고리',
+		           name: 'CATEGORY',
+		           width: 100,
+		           sortable: true,
+		           align: "center",
+				   type : "combo",
+				   comboData : _this.getComboData('BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'CATEGORY' , USE_YN: 'Y' }]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' })
+		         }		       
+		    ]
+		);
+	  	grid.build();
+
+		grid.on('dblclick', (ev) => {
+			if (ev.rowKey >=0) {
+				var row_data=grid.getRow(ev.rowKey);
+				console.log(row_data);
+				_this.close(row_data);
+			}
+		});
+
+	  	searchForm.addEvent("click","input[type=button]",function(el){
+		   //console.log(el);
+	  	   switch(el.target.name){
+           case 'search':
+			   var data = searchForm.getData();
+        		var param ={
+					 brRq : 'IN_DATA'
+					,brRs : 'OUT_DATA'
+					,IN_DATA:[data]
+				}
+		    	grid.loadData('BR_CM_PGM_FIND',param,function(data){
+			    	console.log(data);
+			    	//gridLoadData에서 자동으로 로드됨..
+		        	
+		    	});
+               break;
+         	}
+	  	});
+	  	searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

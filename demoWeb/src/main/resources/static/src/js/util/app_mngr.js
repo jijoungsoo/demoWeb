@@ -18,7 +18,7 @@ class AppMngr {
 	    });
 	}
 	
-	static debug_console ="N";
+	static debug_console ="Y";
 	
 	static openLog(uuid,seq){
 		var param = {

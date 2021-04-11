@@ -1,0 +1,104 @@
+﻿<%@ include file="/WEB-INF/jsp/include/simple_top.jsp" %>
+<!--  include 참고
+https://yongblog.tistory.com/26
+ -->
+ <%
+ 	String userId 	= request.getAttribute("userId").toString();
+ 	String userPwd  = request.getAttribute("userPwd").toString();
+ 	String autoLoginYn  = request.getAttribute("autoLoginYn").toString();
+ %>
+ 
+  <div id="app">
+	 <form class name="binder-form" onsubmit="return false;" style="border: 1px solid #ccc;padding: 10px;border-radius: 10px;width:300px;margin:100px auto 0 auto">
+	    <div class="form-group">
+	        <label>아이디</label>
+	        <input type="text" class="form-control" data-ax-path="userId" >
+	    </div>
+	    <div class="form-group">
+	        <label>PWD</label>
+	        <input type="password" class="form-control" data-ax-path="userPwd">
+	    </div>
+	    <div class="checkbox">
+	        <label>
+	            <input type="checkbox" data-ax-path="autoLoginYn" value="Y">
+	            자동로그인
+	        </label>
+	        <button class="btn btn-default" data-btn="login">로그인</button>
+	    </div>
+		<div class="checkbox">
+			<a href="javascript:;" class="btn_social" data-social="facebook">페이스북 로그인</a><br/> 
+			<a href="javascript:;" class="btn_social" data-social="google">구글 로그인</a><br/> 
+			<a href="javascript:;" class="btn_social" data-social="kakao">카카오톡 로그인</a><br/> 
+			<a href="javascript:;" class="btn_social" data-social="naver">네이버 로그인</a><br/>
+	    </div>
+	</form>
+</div>
+
+<script type="text/javascript">
+$(function () {
+	var myModel = new ax5.ui.binder();
+    myModel.setModel({
+        userId      : "${name}",
+        userPwd     : "${userPwd}",
+        autoLoginYn : "${autoLoginYn}",
+    }, $(document["binder-form"]));
+    
+    $('[data-btn]').click(function () {
+		var act = this.getAttribute("data-btn");
+        switch (act) {
+            case "login":
+				var data = myModel.get();
+				console.log(data);
+				//var param =JSON.stringify(data);
+				  var param = {
+			    	      userId		: data.userId,
+			    	      userPwd		: data.userPwd,
+			    	      autoLoginYn	: data.autoLoginYn,
+			    	      ${_csrf.parameterName}:'${_csrf.token}'
+				  };
+                Message.confirm("로그인하시겠습니까?", function(data){
+					$.ajax({
+						type: "post",
+					    url: "/doLogin", /*이게 로그인 처리로 이동이 안되었다. */
+					    contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+					    data: param,    
+					    /*이거 동작한다.  -- https://hyunsangwon93.tistory.com/28*/
+						beforeSend : function(xhr) { 
+							xhr.setRequestHeader(csrf_headerName, csrf_token);
+					    },
+					    success: function(data) {
+					    	console.log(data);
+					        if(data) {
+						    	if(data.code==="999"  /*실패*/)  {
+							    	Message.alert(data.message);
+							    	return;
+							    } else {
+							    	Message.alert("로그인 되었습니다.",function (data){
+							    		window.location.href="/";
+								    });
+							    	return;
+							    }
+					        }
+					    },
+					    error: function(e){
+					    	Message.alert("로그인에 실패하였습니다.");
+					    }
+					});
+			  	});
+				break;
+        }
+    });
+});
+</script>
+<script>
+let socials = document.getElementsByClassName("btn_social"); 
+for(let social of socials) { 
+	social.addEventListener('click', function(){ 
+		let socialType = this.getAttribute('data-social'); 
+		location.href="/oauth2/authorization/" + socialType; 
+	}) 
+}
+//oauth2  rest 로그인 고고
+//출처: https://engkimbs.tistory.com/849 [새로비]
+</script>
+<%@ include file="/WEB-INF/jsp/include/simple_bottom.jsp" %>

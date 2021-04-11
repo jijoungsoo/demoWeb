@@ -27,9 +27,20 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	
-	implementation 'javax.servlet:jstl'
-   	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	//implementation 'javax.servlet:jstl'
+   	//implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'  --리눅스 서버 배포시 초기 4초 느림 현상 때문에 전환
+	//implementation 'org.springframework.boot:spring-boot-starter-mustache'   --클라이언트에서양한 handerbar와 구분이 되지 않음.
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'	//기본적으로  페이지 inlucde 같은 기능이 됨.
+	implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'		//asp.net 의 마스터 페이지처럼 layout을 잡고 싶을때 사용
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'	//thymeleaf 용 스프링시큐리티 태크 사용
+	//implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+
    	implementation 'org.springframework.boot:spring-boot-starter-security:2.4.0' /*패스워드 암호화 때문에 사용*/
+
+	   // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
+   implementation 'ch.qos.logback:logback-classic:1.2.3'
+
+
 
 	/*외부 레디스 세션을 사용하기 위해*/
 	//implementation 'org.springframework.boot:spring-boot-starter-data-redis'
@@ -47,7 +58,7 @@ dependencies {
 	
 	implementation('org.apache.httpcomponents:httpclient:4.5.13')   /*외부api 호출을 위해서 */
 	
-	implementation('org.springframework.security:spring-security-taglibs:5.4.2')   /*로그인 정보 jsp 출력을 위해 */
+	//implementation('org.springframework.security:spring-security-taglibs:5.4.2')   /*로그인 정보 jsp 출력을 위해 */
 	/*
 	compile group: 'org.zalando', name: 'logbook-spring-boot-starter', version: '2.4.1'  
 	*/  /*restcontroller 로그 남기기 */

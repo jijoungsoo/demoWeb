@@ -3,8 +3,24 @@ spring:
     active: default
 #local, dev, prod 공통 설정
 server.port: 8090    
-spring.mvc.view.prefix: /WEB-INF/jsp/
-spring.mvc.view.suffix: .jsp
+#spring.mvc.view.prefix: /WEB-INF/jsp/
+#spring.mvc.view.suffix: .jsp
+
+spring.thymeleaf:
+        prefix : /WEB-INF/views/
+        suffix : .html
+        cache : false
+
+
+#클라이언트 handbar와 구분이 되지 않아서 mustach는 사용 보류
+#spring.mustache.enabled: true
+#spring.mustache.prefix: /WEB-INF/views/
+#spring.mustache.suffix: .html
+#spring.mustache.expose-request-attributes: true #_csrf를 쓰려면 이설정을 해줘야한다.
+
+spring.devtools:
+    livereload:
+      enabled: true
 
 
 ####HTML 한글깨짐을 고칠수가 없었다.
