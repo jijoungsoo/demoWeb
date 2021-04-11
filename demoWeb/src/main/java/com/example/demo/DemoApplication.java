@@ -5,6 +5,8 @@ import java.text.NumberFormat;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -29,7 +31,14 @@ import lombok.extern.slf4j.Slf4j;
  * server.servlet.session.timeout=30s   (30초)
  * 
  * */
-public class DemoApplication {
+public class DemoApplication extends SpringBootServletInitializer {
+
+
+	@Override
+	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+		return builder.sources(DemoApplication.class);
+	}
+
 
 	public static void main(String[] args) {
 		/*https://haviyj.tistory.com/11 라이브 리로딩*/

@@ -16,7 +16,9 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class GoRestService {
     @Autowired

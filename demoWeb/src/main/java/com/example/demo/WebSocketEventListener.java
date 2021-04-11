@@ -1,8 +1,9 @@
 package com.example.demo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+
+import com.example.demo.utils.PjtUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,12 +12,8 @@ import org.springframework.context.event.EventListener;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.stereotype.Component;
-import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
-
-import com.example.demo.utils.PjtUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 
 @Component
 public class WebSocketEventListener {
