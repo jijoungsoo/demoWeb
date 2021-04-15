@@ -40,7 +40,7 @@ public class WebSocketStompConfig implements WebSocketMessageBrokerConfigurer {
        //registry.addEndpoint("/stompMethod").setAllowedOrigins("*").withSockJS();
         //아래와 같은 이유로 주소로 써주어야한다.
        //registry.addEndpoint("/ws-stomp").setAllowedOrigins("http://localhost:8090").setHandshakeHandler(new CustomHandshakeHandler()).withSockJS();
-       registry.addEndpoint("/ws-stomp").setAllowedOrigins("*").setHandshakeHandler(new CustomHandshakeHandler()).withSockJS();
+       registry.addEndpoint("/ws-stomp").setAllowedOrigins("http://localhost:8090","http://st.com","http://www.st.com").setHandshakeHandler(new CustomHandshakeHandler()).withSockJS();
        
        /*
        Servlet.service() for servlet 
