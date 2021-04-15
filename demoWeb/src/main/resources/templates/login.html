@@ -71,7 +71,6 @@ $(function () {
 						 autoLoginYn	: data.autoLoginYn,
 						 [[${_csrf.parameterName}]]:'[[${_csrf.token}]]'
 				 };
-			   Message.confirm("로그인하시겠습니까?", function(data){
 				   $.ajax({
 					   type: "post",
 					   url: "/doLogin", /*이게 로그인 처리로 이동이 안되었다. */
@@ -96,7 +95,6 @@ $(function () {
 						   Message.alert("로그인에 실패하였습니다.");
 					   }
 				   });
-				 });
 			   break;
 	   }
    });
