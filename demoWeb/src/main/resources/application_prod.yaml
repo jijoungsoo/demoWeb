@@ -19,6 +19,9 @@ spring.data:
       host: mongdbserver
       port: 27017
       database: tutorial
+      authentication-database: admin
+      username: admin
+      password: admin
 spring.session:
     timeout: 600
     store-type: mongodb
@@ -54,7 +57,7 @@ spring.mandatory-file-encoding: UTF-8
 logging:
   config: classpath:logback-spring.xml 
   level:
-    root: debug
+    root: info
     org.zalando.logbook: TRACE
     org.springframework.web.client: DEBUG   #restTemplate에서 로그 남기기
 
