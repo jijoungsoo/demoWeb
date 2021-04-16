@@ -54,7 +54,7 @@ spring.mandatory-file-encoding: UTF-8
 logging:
   config: classpath:logback-spring.xml 
   level:
-    root: info
+    root: debug
     org.zalando.logbook: TRACE
     org.springframework.web.client: DEBUG   #restTemplate에서 로그 남기기
 
