@@ -2,6 +2,8 @@ package com.example.demo;
 
 import java.text.NumberFormat;
 
+import javax.servlet.http.HttpSessionListener;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -40,6 +42,13 @@ public class DemoApplication extends SpringBootServletInitializer {
 	}
 
 
+	@Bean
+	public HttpSessionListener httpSessionListener(){
+  
+	  return new CustomHttpSessionListner();
+  
+   }
+   
 	public static void main(String[] args) {
 		/*https://haviyj.tistory.com/11 라이브 리로딩*/
 		//System.setProperty("spring.devtools.restart.enabled","false");  // 나는 spa여서 쓸일이 없는데..

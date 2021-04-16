@@ -6,6 +6,17 @@ server.port: 8090
 #spring.mvc.view.prefix: /WEB-INF/jsp/
 #spring.mvc.view.suffix: .jsp
 
+#몽고 db 세션 사용하기 https://gofnrk.tistory.com/44
+spring.data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: tutorial
+spring.session:
+    timeout: 600
+    store-type: mongodb
+    mongodb:
+      collection-name: sessions
 
 #출처: https://blog.thjang.net/33 [Taehee Jang Blog]
 spring.thymeleaf.enabled: true

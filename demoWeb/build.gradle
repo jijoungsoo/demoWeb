@@ -33,6 +33,9 @@ dependencies {
 	implementation ('org.springframework.boot:spring-boot-starter-websocket'){
 		exclude group: "org.springframework.boot", module: "spring-boot-starter-tomcat"
     }
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'	//몽고db를 세션으로 쓸거야
+	implementation 'org.springframework.session:spring-session-data-mongodb'	//몽고db를 세션으로 쓸거야
 	
 	//implementation 'javax.servlet:jstl'
    	//implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'  --리눅스 서버 배포시 초기 4초 느림 현상 때문에 전환
