@@ -16,7 +16,7 @@ spring.thymeleaf.check-template-location: true
 #몽고 db 세션 사용하기 https://gofnrk.tistory.com/44
 spring.data:
     mongodb:
-      host: mongdb_server
+      host: mongdbserver
       port: 27017
       database: tutorial
 spring.session:
