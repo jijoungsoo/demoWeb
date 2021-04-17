@@ -40,14 +40,6 @@ public class DemoApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(DemoApplication.class);
 	}
-
-
-	@Bean
-	public HttpSessionListener httpSessionListener(){
-  
-	  return new CustomHttpSessionListner();
-  
-   }
    
 	public static void main(String[] args) {
 		/*https://haviyj.tistory.com/11 라이브 리로딩*/

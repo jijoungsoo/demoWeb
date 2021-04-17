@@ -12,21 +12,22 @@ spring.thymeleaf.cache : false
 spring.thymeleaf.check-template: true
 spring.thymeleaf.check-template-location: true
 
+spring.session.timeout: 3m
 
 #몽고 db 세션 사용하기 https://gofnrk.tistory.com/44
-spring.data:
-    mongodb:
-      host: mongdbserver
-      port: 27017
-      database: tutorial
-      authentication-database: admin
-      username: admin
-      password: admin
-spring.session:
-    timeout: 600
-    store-type: mongodb
-    mongodb:
-      collection-name: sessions
+#spring.data:
+#    mongodb:
+#      host: mongdbserver
+#      port: 27017
+#      database: tutorial
+#      authentication-database: admin
+#      username: admin
+#      password: admin
+#spring.session:
+#    timeout: 600
+#    store-type: mongodb
+#    mongodb:
+#      collection-name: sessions
 
 #클라이언트 handbar와 구분이 되지 않아서 mustach는 사용 보류
 #spring.mustache.enabled: true
