@@ -27,4 +27,14 @@ public class YmlConfig {
     public void setApiurl(String apiurl) {
         this.apiurl = apiurl;
     }
+
+    private Integer timeout;
+    
+    public Integer getTimeout() {
+        return timeout;
+    }
+
+    public void setTimeout(Integer timeout) {
+        this.timeout = timeout;
+    }
 }

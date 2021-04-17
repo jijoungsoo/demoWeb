@@ -30,8 +30,9 @@ import org.apache.commons.codec.net.URLCodec;
 import org.springframework.boot.configurationprocessor.json.JSONArray;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Service;
 
-
+@Service
 public class PjtUtil {
 	public static String key = "demo exmaple key";
 	static DateFormat dateformat1 = new SimpleDateFormat("yyyyMMddHHmmss");

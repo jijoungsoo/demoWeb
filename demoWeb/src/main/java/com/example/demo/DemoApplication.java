@@ -2,12 +2,11 @@ package com.example.demo;
 
 import java.text.NumberFormat;
 
-import javax.servlet.http.HttpSessionListener;
-
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Controller
+//https://www.baeldung.com/httpsessionlistener_with_metrics
 @EnableAspectJAutoProxy
 @SpringBootApplication
 //@EnableRedisHttpSession(maxInactiveIntervalInSeconds = (60*60*3))
@@ -46,8 +46,9 @@ public class DemoApplication extends SpringBootServletInitializer {
 		//System.setProperty("spring.devtools.restart.enabled","false");  // 나는 spa여서 쓸일이 없는데..
 		//System.setProperty("spring.devtools.livereload.enabled","true");
 		/*https://haviyj.tistory.com/11 라이브 리로딩*/
+		SpringApplication application = new SpringApplication(DemoApplication.class);
 		
-		SpringApplication.run(DemoApplication.class, args);
+		application.run(args);
 		
 	}
 

@@ -1,9 +1,13 @@
-package com.example.demo.security.login;
+package com.example.demo;
 
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+import com.example.demo.security.login.CustomAuthenticationFailureHandler;
+import com.example.demo.security.login.CustomAuthenticationProvider;
+import com.example.demo.security.login.CustomAuthenticationSuccessHandler;
+import com.example.demo.security.login.CustomLogoutSuccessHandler;
 import com.example.demo.security.oauth2.CustomOAuth2Provider;
 import com.example.demo.security.oauth2.CustomOAuth2UserService;
 import com.example.demo.security.oauth2.SocialType;
@@ -11,6 +15,7 @@ import com.example.demo.security.oauth2.SocialType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.security.oauth2.client.OAuth2ClientProperties;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,7 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.registration.ClientRegistration;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import lombok.RequiredArgsConstructor;
@@ -46,7 +51,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
  * https://jungeunlee95.github.io/java/2019/07/18/8-Spring-Security-ajax-%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%9B%84-json%EC%9D%91%EB%8B%B5%EB%B0%9B%EA%B8%B0/
  * */
 	@Autowired
-	private AuthenticationSuccessHandler customUrlAuthenticationSuccessHandler;
+	private CustomAuthenticationSuccessHandler customUrlAuthenticationSuccessHandler;
 	
 	@Autowired
 	private CustomAuthenticationFailureHandler  customAuthenticationFailureHandler;
@@ -209,5 +214,19 @@ anyRequest는 anyMatchers에서 설정하지 않은 나머지 경로를 의미�
 			}
 	
 			return null;
+		}
+
+		//http://dveamer.github.io/backend/PreventDuplicatedLogin.html
+		/*
+		<listener>
+		<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+		</listener>
+		SessionCreateListener.java
+		SessionDestoryListener.java
+		가 구동되려면 아래 것을 적어줘야한다.
+		*/
+		@Bean
+		public ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+			return new ServletListenerRegistrationBean<HttpSessionEventPublisher>(new HttpSessionEventPublisher());
 		}
 }
