@@ -85,7 +85,7 @@ custom:
 env:
   serverfilepath: /home/jijs/avdbs.com
   apiurl: http://demoJpa:8091/api/
-  timeout: 10 #초위 10==>  10초 
+  timeout: 3600 #초위 10==>  10초 
 
 spring: 
   profiles: default 
