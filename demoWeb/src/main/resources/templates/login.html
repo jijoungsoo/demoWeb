@@ -65,6 +65,18 @@ $(function () {
 			   var data = myModel.get();
 			   console.log(data);
 			   //var param =JSON.stringify(data);
+			   	if(data.userId==null || data.userId==''){
+					Message.alert("아이디를 입력해주세요");
+					return;
+				}
+				if(data.userPwd==null || data.userPwd==''){
+					Message.alert("비밀번호를 입력해주세요");
+					return;
+				}
+
+			   	var mask = new ax5.ui.mask();
+        		mask.open();
+		 		
 				 var param = {
 						 userId		: data.userId,
 						 userPwd		: data.userPwd,
@@ -81,6 +93,7 @@ $(function () {
 						   xhr.setRequestHeader(csrf_headerName, csrf_token);
 					   },
 					   success: function(data) {
+							mask.close();
 						   console.log(data);
 						   if(data) {
 							   if(data.code==="999"  /*실패*/)  {
@@ -92,6 +105,7 @@ $(function () {
 						   }
 					   },
 					   error: function(e){
+							mask.close();
 						   Message.alert("로그인에 실패하였습니다.");
 					   }
 				   });
