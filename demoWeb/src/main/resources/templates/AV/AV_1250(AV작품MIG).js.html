@@ -7,6 +7,8 @@ $(document).ready(function(){
 
 		var _this = AV_1250;
 		searchForm = new FormMngr(_this, "search_area");
+		searchForm.initCombo("AGE",'BS_MIG_AV_ACTR_AGE_FIND', {brRq: '',brRs: 'OUT_DATA'},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+
 		grid = new TuiGridMngr(_this,'grid',{
 		      editable: false
 		      ,showRowStatus: false
@@ -20,72 +22,141 @@ $(document).ready(function(){
 		           header: 'DVD_IDX',
 		           name: 'DVD_IDX',
 		           width: 60,
+				   sortable : true,
+				   resizable: true,
 		           sortingType: 'desc'
-			}, {
-					header: 'IMG_A',
-					name: 'IMG_A',
-					width : 60,
-					sortingType: 'desc'
 			}, {
 					header: 'IMG_AS',
 					name: 'IMG_AS',
-					width : 60,					
+					width : 60,		
+					sortable : true,
+				   resizable: true,			
 					sortingType: 'desc'
-			},{     
-					header : 'IMG_N',
-					name : 'IMG_N',
-					width : 100,
-					sortingType : 'desc'
 			},{     
 					header : 'IMG_NS',
 					name : 'IMG_NS',
 					width : 100,
+					sortable : true,
+				   resizable: true,
 					sortingType : 'desc'
+				}, {
+		           header: 'AGE',
+		           name: 'AGE',
+		           width: 100,
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
 		       }, {
 		           header: 'MV_NM',
 		           name: 'MV_NM',
-		           width: 400,
+		           width: 200,
+				   sortable : true,
+				   resizable: true,
 		           sortingType: 'desc'
 		         },{
-		           header: 'TITLE_KR',
-		           name: 'TITLE_KR',				   
+		           header: 'TTL_KR',
+		           name: 'TTL_KR',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'			
-		         },{
-					header: 'MAIN_ACTOR_NM',
-		           name: 'MAIN_ACTOR_NM',				   
-		           width: 100,
-				   sortingType: 'desc'
 		         },{  
 					header: 'MAIN_ACTOR_IDX',
 		           name: 'MAIN_ACTOR_IDX',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'
-		         },
-		         {
+				},{  
+					header: 'MAIN_ACTOR_NM',
+		           name: 'MAIN_ACTOR_NM',				   
+		           width: 100,
+				   sortable : true,
+				   resizable: true,
+				   sortingType: 'desc'
+
+
+
+
+
+
+
+
+
+				},{
+		           header: 'DVD',
+		           name: 'DVD_CNT',
+		           width: 60,
+				   align : 'center',
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
+				},{
+		           header: 'CMT',
+		           name: 'ACTOR_CMT_CNT',
+		           width: 60,
+				   align : 'center',
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
+				},{
+		           header: 'LK',
+		           name: 'ACTOR_LK_CNT',
+		           width: 60,
+				   align : 'center',
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
+				},{
+		           header: 'DSLK',
+		           name: 'ACTOR_DSLK_CNT',
+		           width: 60,
+				   align : 'center',
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
+
+
+
+
+
+
+
+
+		         },{
 				   header: 'ACTR_NM',
 		           name: 'ACTR_NM',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'		       
 		         }, {
 					header: 'OPEN_DT',
 		           name: 'OPEN_DT',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'
 				}, {
-					header: 'COMP_NM',
-		           name: 'COMP_NM',				   
+					header: 'CMP_NM',
+		           name: 'CMP_NM',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'
 				}, {
-					header: 'LABEL',
-		           name: 'LABEL',				   
+					header: 'LBL',
+		           name: 'LBL',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'
 				}, {
 					header: 'SYNC',
 		           name: 'SYNC',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'
 				},{
 					header: 'BEST_YN',
@@ -104,31 +175,43 @@ $(document).ready(function(){
 					header: 'SERIES',
 		           name: 'SERIES',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'
 				}, {
-					header: 'DIRECTOR',
-		           name: 'DIRECTOR',				   
+					header: 'DRCTR',
+		           name: 'DRCTR',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'
 				}, {
-					header: 'RUN_TIME',
-		           name: 'RUN_TIME',				   
+					header: 'RN_TM',
+		           name: 'RN_TM',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'
 				}, {
-					header: 'STORY_KR',
-		           name: 'STORY_KR',				   
+					header: 'STRY_KR',
+		           name: 'STRY_KR',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'
 				}, {
-					header: 'GEN_LIST',
-		           name: 'GEN_LIST',				   
+					header: 'GEN_LST',
+		           name: 'GEN_LST',				   
 		           width: 100,
+				   sortable : true,
+				   resizable: true,
 				   sortingType: 'desc'
 		         }, {
 		             header: '생성일',
 		             name: 'CRT_DTM',
 		             width: 140,
+					 sortable : true,
+				   resizable: true,
 					 sortingType: 'desc' 
 		        }
 		    ]

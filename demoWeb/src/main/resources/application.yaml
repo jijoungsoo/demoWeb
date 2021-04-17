@@ -115,7 +115,7 @@ custom:
 env:
   serverfilepath: d:\avdbs.com
   apiurl: http://localhost:8091/api/
-  timeout: 10 #초위 10==>  10초 
+  timeout: 3600 #초위 10==>  10초 
 
 #spring.session.timeout: 10s    안되서 env=>timout으로 변경했다.
 

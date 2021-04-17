@@ -149,7 +149,10 @@ $(document).ready(function(){
     /*[# th:each="hm, iter  : ${cmPgmList}"]*/
     PgmPageMngr.addPgmPageMap("[(${hm.PGM_ID})]","[(${hm.PGM_NM})]");
 	myLayout.registerComponent("[(${hm.PGM_ID})]", function (container, state) {
-		var p_param = {		uuid : container._config.id	}
+		//console.log(queryParams);
+		//var p_param = {		uuid : container._config.id	}
+		queryParams["uuid"]=container._config.id;
+		var p_param = queryParams;
 		AjaxMngr.get_page_ajax(container.getElement(),container._config.pg,p_param);
 	});
     /*[/]*/      

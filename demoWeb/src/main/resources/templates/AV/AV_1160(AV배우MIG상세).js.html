@@ -72,6 +72,16 @@ $(document).ready(function(){
 					});
 				}	
 
+				if(data.OUT_DATA_GEN.length==0){
+				} else {
+					$( _this.getEl()[0].querySelector("[name=gen_list]") ).empty();
+					var gen_list_template_html = $(_this.getEl()[0].querySelector("[name=gen_list-template]")).html();
+					var gen_list_template = Handlebars.compile(gen_list_template_html);
+					var gen_data = { genList : data.OUT_DATA_GEN };
+					var tmp =gen_list_template(gen_data);
+					$( _this.getEl()[0].querySelector("[name=gen_list]") ).append(tmp);
+				}
+
 				if(data.OUT_DATA_DVD.length==0){
 				} else {
 					$( _this.getEl()[0].querySelector("[name=dvd_list]") ).empty();

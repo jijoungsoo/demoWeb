@@ -94,6 +94,16 @@
 
 <!--전체작품-->
 <div class="container">
+    <!--AV_1165 장르 -->
+    <div name="gen_area" class="container">
+      <div name="gen_list">      
+      </div>
+    </div>
+    <script name="gen_list-template" type="text/x-handlebars-template">
+      {{#genList}}  
+      <button>{{CATE_NM}}</button>
+      {{/genList}}  
+      </script>
     <!--AV_1165 전체작품 -->
     <div name="dvd_area" class="container">
       <div class="row row-cols-6" name="dvd_list">      
