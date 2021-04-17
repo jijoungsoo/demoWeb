@@ -23,6 +23,11 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	GoRestService goS;
+
+	@Autowired
+	PjtUtil pjtU;
+
+
   /**
    * Spring Security 필수 메소드 구현
    *
@@ -44,9 +49,9 @@ public class UserService implements UserDetailsService {
 			IN_DATA.add(IN_DATA_ROW);
 			IN_DS.put("IN_DATA", IN_DATA);
 			
-			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
+			String jsonInString=pjtU.ObjectToJsonString(IN_DS);
 			String jsonOutString = goS.callAPI("BR_CM_LOGIN_LOAD_USER_BY_USER_NAME",jsonInString);
-			HashMap<String, Object> rs= PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
+			HashMap<String, Object> rs= pjtU.JsonStringToObject(jsonOutString, HashMap.class);
 			ArrayList<HashMap<String,String>> OUT_DATA = (ArrayList<HashMap<String,String>>) rs.get("OUT_DATA");
 			System.out.println("aaaaa1");
 			System.out.println(OUT_DATA);
@@ -55,8 +60,8 @@ public class UserService implements UserDetailsService {
 
 			if(OUT_DATA.size()==1) {
 				HashMap<String,String> OUT_DATA_ROW=OUT_DATA.get(0);
-				String tmp2  =PjtUtil.ObjectToJsonString(OUT_DATA_ROW);   
-				UserInfo tmp3 = PjtUtil.JsonStringToObject(tmp2,UserInfo.class);
+				String tmp2  =pjtU.ObjectToJsonString(OUT_DATA_ROW);   
+				UserInfo tmp3 = pjtU.JsonStringToObject(tmp2,UserInfo.class);
 				userInfo.add(tmp3);
 			}
 			if(OUT_DATA.size()>1) {

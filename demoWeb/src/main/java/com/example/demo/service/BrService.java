@@ -16,6 +16,9 @@ public class BrService {
 
 	@Autowired
 	GoRestService goS;
+
+	@Autowired
+	PjtUtil pjtU;
 	  
 	  /*
 	   * 캐싱처리 참고
@@ -36,10 +39,10 @@ public class BrService {
 			HashMap<String,Object> IN_DS = new HashMap<String,Object>();
 			IN_DS.put("brRq","");
 			IN_DS.put("brRs","OUT_DATA");
-			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
-			MsgDebugInfo msg = PjtUtil.makeLSession("BR_CM_MAIN_FIND_TREE_BY_USER_NO",jsonInString,authentication);
+			String jsonInString=pjtU.ObjectToJsonString(IN_DS);
+			MsgDebugInfo msg = pjtU.makeLSession("BR_CM_MAIN_FIND_TREE_BY_USER_NO",jsonInString,authentication);
 			String jsonOutString = goS.callAPI("BR_CM_MAIN_FIND_TREE_BY_USER_NO", msg.getIN_DATA_JSON());
-			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
+			outDs=pjtU.JsonStringToObject(jsonOutString, HashMap.class);
 			OUT_DATA= outDs.get("OUT_DATA");
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
@@ -56,9 +59,9 @@ public class BrService {
 			IN_DS.put("brRq","");
 			IN_DS.put("brRs","OUT_DATA");
 
-			String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
+			String jsonInString=pjtU.ObjectToJsonString(IN_DS);
 			String jsonOutString = goS.callAPI("BR_CM_MAIN_PGM_FIND", jsonInString);
-			outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
+			outDs=pjtU.JsonStringToObject(jsonOutString, HashMap.class);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,9 +84,9 @@ public class BrService {
             al.add(IN_DATA_ROW);
             IN_DS.put("IN_DATA",al);
 
-            String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
+            String jsonInString=pjtU.ObjectToJsonString(IN_DS);
             String jsonOutString = goS.callAPI("BR_CM_MAIN_PGM_FIND_BY_PGM_ID", jsonInString);
-            outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
+            outDs=pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -118,9 +121,9 @@ public class BrService {
 				al.add(IN_DATA_ROW);
 				IN_DS.put("IN_DATA",al);
 				
-				String jsonInString=PjtUtil.ObjectToJsonString(IN_DS);
+				String jsonInString=pjtU.ObjectToJsonString(IN_DS);
 				String jsonOutString = goS.callAPI("BR_CM_LOGIN_SNS",jsonInString);
-				outDs=PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
+				outDs=pjtU.JsonStringToObject(jsonOutString, HashMap.class);
 				OUT_DATA= outDs.get("OUT_DATA");
 			} catch (JsonProcessingException e) {
 				// TODO Auto-generated catch block

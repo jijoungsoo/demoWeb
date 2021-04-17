@@ -1,12 +1,12 @@
 package com.example.demo.utils;
 
 import java.io.IOException;
-
 import java.net.URLEncoder;
-import javax.servlet.ServletOutputStream;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import org.apache.poi.hssf.usermodel.HSSFFont;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
@@ -17,17 +17,21 @@ import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.VerticalAlignment;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 //https://haenny.tistory.com/103
 public class DownloadExcel {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadExcel.class);
     private HttpServletResponse response;
     private HSSFWorkbook wb;
+
+    @Autowired
+	PjtUtil pjtU;
     
     public DownloadExcel(String filename, HttpServletRequest request, HttpServletResponse response, HSSFWorkbook wb) { 
         this.response = response; 
         this.wb = wb; 
         try { 
-            String browser = PjtUtil.getBrowser(request); 
+            String browser = pjtU.getBrowser(request); 
             // 브라우저 확인하는 메서드 
             String encodedFilename = null; 
             if (browser.equals("MSIE")) { 

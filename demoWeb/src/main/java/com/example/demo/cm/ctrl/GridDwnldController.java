@@ -11,6 +11,7 @@ import com.example.demo.utils.ExportExcelVOList;
 import com.example.demo.utils.PjtUtil;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Controller
 public class GridDwnldController {
-
+    @Autowired
+	PjtUtil pjtU;
 
     @RequestMapping(value = "/GRID_DWNLD/{br}", method = RequestMethod.POST, consumes = "application/json", produces="text/plain;Charset=UTF-8")
     public void exceldownload(@PathVariable("br") String br, @RequestBody String jsonInString, HttpServletRequest req,
@@ -31,7 +33,7 @@ public class GridDwnldController {
         log.info("jsonInString=>" + jsonInString);
         try {
             
-            IN_DS inDS= PjtUtil.JsonStringToObject(jsonInString, IN_DS.class);
+            IN_DS inDS= pjtU.JsonStringToObject(jsonInString, IN_DS.class);
             ExportExcelVOList exl = new ExportExcelVOList(req, res);
             ArrayList<LinkedHashMap<String,Object>>  al= (ArrayList<LinkedHashMap<String,Object>>) inDS.get("IN_DATA");
             HSSFSheet st = exl.setDataToExcelList(al, "sheet0");

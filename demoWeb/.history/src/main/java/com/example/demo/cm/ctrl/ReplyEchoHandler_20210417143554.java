@@ -17,7 +17,9 @@ import org.springframework.web.socket.handler.TextWebSocketHandler;
 public class ReplyEchoHandler extends TextWebSocketHandler {
 
     @Autowired
-	PjtUtil pjtU;    
+	PjtUtil pjtU;
+
+    
 	List<WebSocketSession> sessions = new ArrayList<WebSocketSession>();
 	
 	/*http 세션에 저장된 정보를 가져와 쓴다고 하다면 */

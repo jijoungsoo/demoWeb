@@ -24,7 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 public class ApiRestController {
-
+	@Autowired
+	PjtUtil pjtU;
 	@Autowired
 	GoRestService goS;
 	 
@@ -96,7 +97,7 @@ public class ApiRestController {
 		 log.info("jsonInString=>"+jsonInString);
 		 String jsonOutString=null;
 		 
-		MsgDebugInfo msg = PjtUtil.makeLSession(br,jsonInString,authentication);
+		MsgDebugInfo msg = pjtU.makeLSession(br,jsonInString,authentication);
 
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
@@ -107,7 +108,7 @@ public class ApiRestController {
                 e.printStackTrace();
                 //https://owin2828.github.io/devlog/2019/12/30/spring-16.html
                 
-                PjtUtil.saveSesstionDebugMsg(msg,PjtUtil.ObjectToJsonString(result),session);
+                pjtU.saveSesstionDebugMsg(msg,pjtU.ObjectToJsonString(result),session);
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 		.body(e.getMessage());
             
@@ -116,11 +117,11 @@ public class ApiRestController {
             result.put("body"  , e.getStatusText());
             e.printStackTrace();
             //https://owin2828.github.io/devlog/2019/12/30/spring-16.html
-            PjtUtil.saveSesstionDebugMsg(msg,PjtUtil.ObjectToJsonString(result),session);
+            pjtU.saveSesstionDebugMsg(msg,pjtU.ObjectToJsonString(result),session);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(e.getMessage());
         }
-		PjtUtil.saveSesstionDebugMsg(msg,jsonOutString,session);		
+		pjtU.saveSesstionDebugMsg(msg,jsonOutString,session);		
 		
 	    return ResponseEntity.ok(jsonOutString);
 	 }

@@ -33,6 +33,9 @@ public class AvImgFileController {
 
     @Autowired
     private YmlConfig yc;
+
+    @Autowired
+    PjtUtil pjtU;
     
     @GetMapping(value = "/ACTOR_IDX_PF_IMG/{IMG_GUBUN}/{ACTOR_IDX}")
     public  ResponseEntity<Resource> ACTOR_IDX_PF_IMG(
@@ -52,10 +55,10 @@ public class AvImgFileController {
             in_date.add(tmp);
             IN_DS.put("IN_DATA", in_date);
 
-            String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
-            MsgDebugInfo msg = PjtUtil.makeLSession("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", jsonInString, authentication);
+            String jsonInString = pjtU.ObjectToJsonString(IN_DS);
+            MsgDebugInfo msg = pjtU.makeLSession("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", jsonInString, authentication);
             String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", msg.getIN_DATA_JSON());
-            outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
+            outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -77,7 +80,7 @@ public class AvImgFileController {
             IMG_SRC = String.valueOf(tmp2.get("IMG_LS"));
         }
 
-        if(PjtUtil.isEmpty(IMG_SRC)){
+        if(pjtU.isEmpty(IMG_SRC)){
             return null;
         }
 
@@ -121,10 +124,10 @@ public class AvImgFileController {
             in_date.add(tmp);
             IN_DS.put("IN_DATA", in_date);
 
-            String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
-            MsgDebugInfo msg = PjtUtil.makeLSession("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", jsonInString, authentication);
+            String jsonInString = pjtU.ObjectToJsonString(IN_DS);
+            MsgDebugInfo msg = pjtU.makeLSession("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", jsonInString, authentication);
             String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", msg.getIN_DATA_JSON());
-            outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
+            outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -146,7 +149,7 @@ public class AvImgFileController {
             IMG_SRC = String.valueOf(tmp2.get("IMG_LS"));
         }
 
-        if(PjtUtil.isEmpty(IMG_SRC)){
+        if(pjtU.isEmpty(IMG_SRC)){
             return null;
         }
 
@@ -190,10 +193,10 @@ public class AvImgFileController {
             in_date.add(tmp);
             IN_DS.put("IN_DATA", in_date);
 
-            String jsonInString = PjtUtil.ObjectToJsonString(IN_DS);
-            MsgDebugInfo msg = PjtUtil.makeLSession("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", jsonInString, authentication);
+            String jsonInString = pjtU.ObjectToJsonString(IN_DS);
+            MsgDebugInfo msg = pjtU.makeLSession("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", jsonInString, authentication);
             String jsonOutString = goS.callAPI("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", msg.getIN_DATA_JSON());
-            outDs = PjtUtil.JsonStringToObject(jsonOutString, HashMap.class);
+            outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -221,7 +224,7 @@ public class AvImgFileController {
             }
         }
 
-        if(PjtUtil.isEmpty(IMG_SRC)){
+        if(pjtU.isEmpty(IMG_SRC)){
             return null;
         }
 

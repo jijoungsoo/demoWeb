@@ -31,6 +31,9 @@ public class ExcelDwnldController {
  @Autowired
  GoRestService goS;
 
+ @Autowired
+ PjtUtil pjtU;
+
     /*
      * consumes 입력타입 produces 리턴타입
      */
@@ -39,35 +42,35 @@ public class ExcelDwnldController {
             HttpServletResponse res, Authentication authentication, HttpSession session) throws Exception {
         log.info("jsonInString=>" + jsonInString);
         String jsonOutString = null;
-        MsgDebugInfo msg = PjtUtil.makeLSession(br, jsonInString, authentication);
+        MsgDebugInfo msg = pjtU.makeLSession(br, jsonInString, authentication);
         HashMap<String, Object> result = new HashMap<String, Object>();
         try {
             jsonOutString = goS.callAPI(br, msg.IN_DATA_JSON);
-            PjtUtil.saveSesstionDebugMsg(msg, jsonOutString, session);
+            pjtU.saveSesstionDebugMsg(msg, jsonOutString, session);
         } catch (HttpClientErrorException  e) {
             result.put("statusCode", e.getRawStatusCode());
             result.put("body", e.getStatusText());
             e.printStackTrace();
-            PjtUtil.saveSesstionDebugMsg(msg, PjtUtil.ObjectToJsonString(result), session);
+            pjtU.saveSesstionDebugMsg(msg, pjtU.ObjectToJsonString(result), session);
             throw  e;
         } catch (HttpServerErrorException e) {
             result.put("statusCode", e.getRawStatusCode());
             result.put("body", e.getStatusText());
             e.printStackTrace();
-            PjtUtil.saveSesstionDebugMsg(msg, PjtUtil.ObjectToJsonString(result), session);
+            pjtU.saveSesstionDebugMsg(msg, pjtU.ObjectToJsonString(result), session);
             throw  e;
         } catch (Exception e) {
             result.put("statusCode", "999");
             result.put("body", "excpetion오류");
             e.printStackTrace();
-            PjtUtil.saveSesstionDebugMsg(msg, PjtUtil.ObjectToJsonString(result), session);
+            pjtU.saveSesstionDebugMsg(msg, pjtU.ObjectToJsonString(result), session);
             throw  e;
         }
         try {
             
-            IN_DS inDS= PjtUtil.JsonStringToObject(jsonInString, IN_DS.class);
+            IN_DS inDS= pjtU.JsonStringToObject(jsonInString, IN_DS.class);
             System.out.println(jsonOutString);
-            OUT_DS outDS= PjtUtil.JsonStringToObject(jsonOutString, OUT_DS.class);
+            OUT_DS outDS= pjtU.JsonStringToObject(jsonOutString, OUT_DS.class);
             /*
              * var param = {
                         brRq : 'IN_DATA',
@@ -83,7 +86,7 @@ public class ExcelDwnldController {
                 for(int i=0;i<arrBrRs.length;i++) {
                     String tmp = arrBrRs[i];
                     System.out.println(tmp);
-                    if(!PjtUtil.isEmpty(tmp)) {
+                    if(!pjtU.isEmpty(tmp)) {
                         ArrayList<LinkedHashMap<String,Object>>  al= outDS.get(tmp);
                         HSSFSheet st = exl.setDataToExcelList(al, "sheet" + i);
                         exl.setSheetArray(i, st);

@@ -27,6 +27,9 @@ public class LoginPageController {
 	  @Autowired
 	  private UserService userService;
 
+	  @Autowired
+	PjtUtil pjtU;
+
 		@GetMapping("/login")
 	    public String login(
 	    		HttpServletRequest request
@@ -56,18 +59,18 @@ public class LoginPageController {
 						//82가 아니네.. 대략 60으로 하자.
 						log.info("cookieName.length()=>"+cookieName.length());
 						if(cookieName.length()>60) {
-							String tmp =PjtUtil.decAES256AndUrl(cookieName);
+							String tmp =pjtU.decAES256AndUrl(cookieName);
 							if(tmp.equals(CustomUrlAuthenticationSuccessHandler.userId)) {
 								v_userId=ck.getValue();
-								v_userId =PjtUtil.decAES256AndUrl(v_userId);
+								v_userId =pjtU.decAES256AndUrl(v_userId);
 							}
 							if(tmp.equals(CustomUrlAuthenticationSuccessHandler.userPwd)) {
 								v_userPwd=ck.getValue();
-								v_userPwd =PjtUtil.decAES256AndUrl(v_userPwd);
+								v_userPwd =pjtU.decAES256AndUrl(v_userPwd);
 							}
 							if(tmp.equals(CustomUrlAuthenticationSuccessHandler.autoLoginYn)) {
 								v_autoLoginYn=ck.getValue();
-								v_autoLoginYn =PjtUtil.decAES256AndUrl(v_autoLoginYn);
+								v_autoLoginYn =pjtU.decAES256AndUrl(v_autoLoginYn);
 							}
 						}
 					}

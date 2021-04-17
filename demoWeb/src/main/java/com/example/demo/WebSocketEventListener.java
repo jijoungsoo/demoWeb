@@ -17,6 +17,9 @@ import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 @Component
 public class WebSocketEventListener {
+    @Autowired
+    PjtUtil pjtU;
+
 /*https://ratseno.tistory.com/71
  * 여기서 펍 하고 싶었던 것은 stomp 의 접속 세션수를 알고 싶었다.
  * */
@@ -47,7 +50,7 @@ public class WebSocketEventListener {
         String sessionId = headerAccessor.getSessionId();
         sessions.remove(sessionId);
         logger.info("Received web socket disconnected");
-        logger.info(PjtUtil.ObjectToJsonString(headerAccessor.getSessionAttributes()));
+        logger.info(pjtU.ObjectToJsonString(headerAccessor.getSessionAttributes()));
         String username = (String) headerAccessor.getSessionAttributes().get("username");
         if(username != null) {
             logger.info("User Disconnected : " + username);

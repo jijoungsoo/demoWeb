@@ -9,6 +9,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,6 +24,10 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 public class AvdbsRestController {
+
+  @Autowired
+  PjtUtil pjtU;
+
     @GetMapping(value = "/ACTOR_LIST")
     public  ResponseEntity<Object> actor_list() throws Exception {
       ArrayList<String> al_yymmdd= getActordebutYYMM();
@@ -439,7 +444,7 @@ public class AvdbsRestController {
           for(Element r : rows) {
               HashMap<String, Object>  cmt = new HashMap<String, Object>();
               String cmt_idx=r.attr("data-idx");
-              if(PjtUtil.isEmpty(cmt_idx)==false) {
+              if(pjtU.isEmpty(cmt_idx)==false) {
                 String cmt_dvd_idx =r.getElementsByClass("comment").select("a").attr("href");
                 String cmt_txt =r.getElementsByClass("comment").text();
                 String writer =r.getElementsByClass("writer").text();
@@ -479,7 +484,7 @@ public class AvdbsRestController {
             for(Element r : rows2) {
               HashMap<String, Object>  cmt = new HashMap<String, Object>();
               String cmt_idx=r.attr("data-idx");
-              if(PjtUtil.isEmpty(cmt_idx)==false) {
+              if(pjtU.isEmpty(cmt_idx)==false) {
                 String cmt_dvd_idx =r.getElementsByClass("comment").select("a").attr("href");
                 String cmt_txt =r.getElementsByClass("comment").text();
                 String writer =r.getElementsByClass("writer").text();
@@ -532,7 +537,7 @@ public class AvdbsRestController {
           for(Element r : rows) {
               HashMap<String, Object>  cmt = new HashMap<String, Object>();
               String cmt_idx=r.attr("data-idx");
-              if(PjtUtil.isEmpty(cmt_idx)==false) {
+              if(pjtU.isEmpty(cmt_idx)==false) {
                 String cmt_txt =r.getElementsByClass("comment").text();
                 String writer =r.getElementsByClass("writer").text();
                 String blue_cnt =r.getElementsByClass("blue").text();
@@ -570,7 +575,7 @@ public class AvdbsRestController {
             for(Element r : rows2) {
               HashMap<String, Object>  cmt = new HashMap<String, Object>();
               String cmt_idx=r.attr("data-idx");
-              if(PjtUtil.isEmpty(cmt_idx)==false) {
+              if(pjtU.isEmpty(cmt_idx)==false) {
                 String cmt_txt =r.getElementsByClass("comment").text();
                 String writer =r.getElementsByClass("writer").text();
                 String blue_cnt =r.getElementsByClass("cnt blue").text();

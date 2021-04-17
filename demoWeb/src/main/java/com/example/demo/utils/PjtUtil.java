@@ -44,12 +44,12 @@ public class PjtUtil {
     
     
     
-    public static String getYyyyMMddHHMMSS(java.util.Date inDate) {
+    public  String getYyyyMMddHHMMSS(java.util.Date inDate) {
         return dateformat1.format(inDate);
     }
 
     
-    public static String getBrowser(HttpServletRequest request) {
+    public  String getBrowser(HttpServletRequest request) {
         String header = request.getHeader("User-Agent");
         if (header != null) {
          if (header.indexOf("Trident") > -1) {
@@ -69,7 +69,7 @@ public class PjtUtil {
         return null;
     }
 
-    public static boolean isEmpty(String tmp) {
+    public  boolean isEmpty(String tmp) {
         if (tmp == null) {
             return true;
         }
@@ -79,7 +79,7 @@ public class PjtUtil {
         return false;
     }
 
-    public static String str(Object tmp) {
+    public  String str(Object tmp) {
         if (tmp == null) {
             return "";
         }
@@ -87,7 +87,7 @@ public class PjtUtil {
         return tmp2;
     }
 
-    public static String nvl(String first, String second) {
+    public  String nvl(String first, String second) {
         if (isEmpty(first)) {
             return second;
         }
@@ -95,19 +95,19 @@ public class PjtUtil {
         return first;
     }
 
-	public static  <T> T JsonStringToObject(String JsonInString, Class<T> valueType) throws JsonMappingException, JsonProcessingException {
+	public   <T> T JsonStringToObject(String JsonInString, Class<T> valueType) throws JsonMappingException, JsonProcessingException {
 		ObjectMapper omOut = new ObjectMapper();
     	//omOut.enable(SerializationFeature.INDENT_OUTPUT); 느려짐
 		return omOut.readValue(JsonInString,valueType);		
 	}
 	
-	public static String ObjectToJsonString(Object value) throws JsonProcessingException {
+	public  String ObjectToJsonString(Object value) throws JsonProcessingException {
 		ObjectMapper om = new ObjectMapper();
 		//om.enable(SerializationFeature.INDENT_OUTPUT); 느려짐
 		return om.writeValueAsString(value);
 	}
 	
-	public static String jsonBeautifier(String InJsonString) {
+	public  String jsonBeautifier(String InJsonString) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             //objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true); //느려짐
@@ -122,7 +122,7 @@ public class PjtUtil {
         }
 	}
 	
-	public static String encAES256AndUrl(String msg) throws Exception {
+	public  String encAES256AndUrl(String msg) throws Exception {
 		/*https://aaboo.home.blog/2019/11/29/aes-256-%EC%95%94%EB%B3%B5%ED%98%B8%ED%99%94/
 		 * url Encode를 하지 않으면 문자열이  cookie에 valid 하지 않다고 나온다.
 		 * 
@@ -132,13 +132,13 @@ public class PjtUtil {
 		return codec.encode(tmp);
 	}
 	
-	public static String decAES256AndUrl(String msg) throws Exception {
+	public  String decAES256AndUrl(String msg) throws Exception {
 		URLCodec codec = new URLCodec();
 		String tmp =codec.decode(msg);
 		return decryptAES256( tmp,  PjtUtil.key);
 	}
 	
-	public static String encryptAES256(String msg, String key) throws Exception {
+	public  String encryptAES256(String msg, String key) throws Exception {
 		/*출처: https://offbyone.tistory.com/286 [쉬고 싶은 개발자]*/
 	    SecureRandom random = new SecureRandom();
 	    byte bytes[] = new byte[20];
@@ -165,7 +165,7 @@ public class PjtUtil {
 	    return Base64.getEncoder().encodeToString(buffer);
 	}
 	
-	public static String decryptAES256(String msg, String key) throws Exception {
+	public  String decryptAES256(String msg, String key) throws Exception {
 		/*	출처: https://offbyone.tistory.com/286 [쉬고 싶은 개발자]*/
 	    Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
 	    ByteBuffer buffer = ByteBuffer.wrap(Base64.getDecoder().decode(msg));
@@ -185,7 +185,7 @@ public class PjtUtil {
 	}
 	
 
-    public static JSONObject convertExceptionToJSON(Throwable e) throws Exception {
+    public  JSONObject convertExceptionToJSON(Throwable e) throws Exception {
         JSONObject responseBody = new JSONObject();
         JSONObject errorTag = new JSONObject();
         responseBody.put("error", errorTag);
@@ -216,7 +216,7 @@ public class PjtUtil {
         return responseBody;
     }
     
-    public static MsgDebugInfo makeLSession(String br, String jsonInString,Authentication authentication) throws JsonMappingException, JsonProcessingException {
+    public  MsgDebugInfo makeLSession(String br, String jsonInString,Authentication authentication) throws JsonMappingException, JsonProcessingException {
         /*
         출처: https://itstory.tk/entry/Spring-Security-현재-로그인한-사용자-정보-가져오기 [덕's IT Story]
        */
@@ -224,7 +224,7 @@ public class PjtUtil {
         long USER_NO=userInfo.getUserNo();
         String USER_ID=userInfo.getUserNm();
         String EMAIL=userInfo.getEmail();
-        HashMap<String,Object>  inDs= PjtUtil.JsonStringToObject(jsonInString, HashMap.class );
+        HashMap<String,Object>  inDs= this.JsonStringToObject(jsonInString, HashMap.class );
         /*세션은 하나이지만... 약속때문에..  list 에 담는다.*/
         HashMap<String,Object>  sess = new HashMap<String,Object>();
         sess.put("USER_NO", String.valueOf(USER_NO));
@@ -238,7 +238,7 @@ public class PjtUtil {
         
 
         
-        String sessionJsonInString  = PjtUtil.ObjectToJsonString(inDs);
+        String sessionJsonInString  = this.ObjectToJsonString(inDs);
         
         MsgDebugInfo  m = new MsgDebugInfo();
         m.setBr(br);
@@ -255,7 +255,7 @@ public class PjtUtil {
     
 
     
-    public static void saveSesstionDebugMsg(MsgDebugInfo msg,String jsonOutString,HttpSession session ) {
+    public  void saveSesstionDebugMsg(MsgDebugInfo msg,String jsonOutString,HttpSession session ) {
         if(msg.getUUID()!=null) {
                msg.setOUT_DATA_JSON(jsonOutString);
                Queue<MsgDebugInfo> que = (LinkedList<MsgDebugInfo>) session.getAttribute("UUID_DEBUG_LOG");

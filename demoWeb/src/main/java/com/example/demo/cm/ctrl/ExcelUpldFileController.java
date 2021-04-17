@@ -26,7 +26,8 @@ public class ExcelUpldFileController {
      */
     @Autowired
     private FileService fService;
-    
+    @Autowired
+	PjtUtil pjtU;
 
     @PostMapping(path= "/EXCEL_CREATE_DATA", consumes=MediaType.APPLICATION_FORM_URLENCODED_VALUE,  produces = "application/json")
     public ResponseEntity<Object> excelCreateData(
@@ -35,7 +36,7 @@ public class ExcelUpldFileController {
              HttpSession session 
             )
             throws Exception {
-        if(PjtUtil.isEmpty(FILE_ID)==false) {
+        if(pjtU.isEmpty(FILE_ID)==false) {
             try {
                 ArrayList<FileDto> OUT_DATA=fService.getFile(FILE_ID,  authentication);
                 HashMap<String, ArrayList<HashMap<String, Object>>> OUT_DS= fService.createExcelFile(OUT_DATA, authentication);

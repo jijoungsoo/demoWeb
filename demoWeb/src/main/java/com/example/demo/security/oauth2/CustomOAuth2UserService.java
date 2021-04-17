@@ -33,6 +33,9 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
+    PjtUtil pjtU;
+
+    @Autowired
     BrService brS;
     // https://github.com/engkimbs/spring-boot-oauth2
     // https://engkimbs.tistory.com/849
@@ -168,8 +171,8 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
 
         if(OUT_DATA.size()==1) {
             HashMap<String,Object> OUT_DATA_ROW=OUT_DATA.get(0);
-            String tmp2  =PjtUtil.ObjectToJsonString(OUT_DATA_ROW);   
-            tmp3 = PjtUtil.JsonStringToObject(tmp2,UserInfo.class);            
+            String tmp2  =pjtU.ObjectToJsonString(OUT_DATA_ROW);   
+            tmp3 = pjtU.JsonStringToObject(tmp2,UserInfo.class);            
         }
 
         return tmp3;

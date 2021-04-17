@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.example.demo.utils.PjtUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+
+	@Autowired
+ PjtUtil pjtU;
+
+ 
 	public static String userId="userId";
 	public static String userPwd="userPwd";
 	public static String autoLoginYn="autoLoginYn";
@@ -57,7 +63,7 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 	    	String autoLoginYn=request.getParameter(CustomUrlAuthenticationSuccessHandler.autoLoginYn);
 
 			System.out.println("aaaaaaaa");
-			if(PjtUtil.isEmpty(userId)){
+			if(pjtU.isEmpty(userId)){
 				responseDataDTO.setItem(items);
 				response.setCharacterEncoding("UTF-8");
 				response.setContentType("application/json;charset=UTF-8");  //된다 한글  
@@ -78,13 +84,13 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 	    	String v_userPwd		= userPwd;
 	    	String v_autoLoginYn	= autoLoginYn;
 	    	try {
-	    		k_userId			= PjtUtil.encAES256AndUrl("userId");
-	    		k_userPwd			= PjtUtil.encAES256AndUrl("userPwd");
-	    		k_autoLoginYn		= PjtUtil.encAES256AndUrl("autoLoginYn");
+	    		k_userId			= pjtU.encAES256AndUrl("userId");
+	    		k_userPwd			= pjtU.encAES256AndUrl("userPwd");
+	    		k_autoLoginYn		= pjtU.encAES256AndUrl("autoLoginYn");
 	    		
-	    		v_userId			= PjtUtil.encAES256AndUrl(v_userId);
-	    		v_userPwd			= PjtUtil.encAES256AndUrl(v_userPwd);
-	    		v_autoLoginYn		= PjtUtil.encAES256AndUrl(v_autoLoginYn);
+	    		v_userId			= pjtU.encAES256AndUrl(v_userId);
+	    		v_userPwd			= pjtU.encAES256AndUrl(v_userPwd);
+	    		v_autoLoginYn		= pjtU.encAES256AndUrl(v_autoLoginYn);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -24,6 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ApiSocketStompRestController {
 	
     @Autowired
+    PjtUtil pjtU;
+    @Autowired
     WebSocketEventListener wsel;
 
     @Autowired
@@ -54,7 +56,7 @@ public class ApiSocketStompRestController {
         log.info("jsonInString=>"+jsonInString);
         System.out.println(jsonInString);
         String jsonOutString=null;
-        HashMap<String,Object>  inDs= PjtUtil.JsonStringToObject(jsonInString, HashMap.class );
+        HashMap<String,Object>  inDs= pjtU.JsonStringToObject(jsonInString, HashMap.class );
         String br =inDs.get("br").toString();
         HashMap<String, Object> result = new HashMap<String, Object>();
        try {
@@ -88,7 +90,7 @@ public class ApiSocketStompRestController {
                 log.info("jsonInString=>"+jsonInString);
                 System.out.println(jsonInString);
                 String jsonOutString=null;
-                HashMap<String,Object>  inDs= PjtUtil.JsonStringToObject(jsonInString, HashMap.class );
+                HashMap<String,Object>  inDs= pjtU.JsonStringToObject(jsonInString, HashMap.class );
                 String br =inDs.get("br").toString();
                 HashMap<String, Object> result = new HashMap<String, Object>();
                try {

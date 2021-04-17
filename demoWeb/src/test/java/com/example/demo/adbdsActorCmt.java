@@ -10,6 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -23,7 +24,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class adbdsActorCmt {
-
+  @Autowired
+  PjtUtil pjtU;
     @Test
     public void testActor(){
       //https://www.avdbs.com/w2017/page/dvd/dvd_mention.php?actor_idx=2583&page=1
@@ -68,7 +70,7 @@ public class adbdsActorCmt {
        for(Element r : rows) {
           HashMap<String, Object>  cmt = new HashMap<String, Object>();
           String cmt_idx=rows.attr("data-idx");
-          if(PjtUtil.isEmpty(cmt_idx)==false) {
+          if(pjtU.isEmpty(cmt_idx)==false) {
             String cmt_actor_idx =r.getElementsByClass("comment").select("a").attr("href");
             String cmt_txt =r.getElementsByClass("comment").text();
             String writer =r.getElementsByClass("writer").text();
@@ -107,7 +109,7 @@ public class adbdsActorCmt {
            HashMap<String, Object>  cmt = new HashMap<String, Object>();
            String cmt_idx=r.attr("data-idx");
 
-           if(PjtUtil.isEmpty(cmt_idx)==false) {
+           if(pjtU.isEmpty(cmt_idx)==false) {
             String cmt_actor_idx =r.getElementsByClass("comment").select("a").attr("href");
             String cmt_txt =r.getElementsByClass("comment").text();
             String writer =r.getElementsByClass("writer").text();
