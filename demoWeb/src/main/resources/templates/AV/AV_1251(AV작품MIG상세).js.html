@@ -187,7 +187,7 @@ $(document).ready(function(){
 						IN_DATA: [data]
 					}
 			   		_this.showProgress();
-					_this.send('BR_MIG_AV_MV_SV_FILE_PATH_DEL_YN', param2, function(data) {
+					_this.send('BR_MIG_AV_MV_SV_EXTRA', param2, function(data) {
 						_this.hideProgress();
 						if (data) {
 							//상세 재조회
