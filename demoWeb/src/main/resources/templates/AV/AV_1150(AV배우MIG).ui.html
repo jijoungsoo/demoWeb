@@ -1,6 +1,15 @@
 <div name="search_area">
   <table>
-    <tr>
+  <tr>
+      <td>
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">데뷔년월</span> 
+            <select class="form-control" data-ax-path="DEBUT_DT_YYMM"  name="DEBUT_DT_YYMM" style="width:140px;">
+            </select>
+          </div>
+        </div>
+      </td>
       <td>
           <div class="form-group">
             <div class="input-group">
@@ -18,8 +27,9 @@
           </div>
         </div>
     </td>
-      <td><input type="button" name="search" value="조회" /></td>
-    </tr>
+    <td><input type="button" name="search" value="조회" /></td>
+    <td><input type="button" name="getACtorYYMM" value="데뷔월SYNC" /></td>
+  </tr>
   </table>
 </div>
 <div name="grid"></div>

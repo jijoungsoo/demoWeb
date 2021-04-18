@@ -6,6 +6,7 @@ $(document).ready(function(){
 		var _this = AV_1150;
 		var searchForm = new FormMngr(_this, "search_area");
 		searchForm.initCombo("AGE",'BS_MIG_AV_ACTR_AGE_FIND', {brRq: '',brRs: 'OUT_DATA'},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+		searchForm.initCombo("DEBUT_DT_YYMM",'BS_MIG_AV_ACTR_DEBUT_DT_YYMM', {brRq: '',brRs: 'OUT_DATA'},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
 		
 		const grid = new TuiGridMngr(_this,'grid',{
 		      editable: false
