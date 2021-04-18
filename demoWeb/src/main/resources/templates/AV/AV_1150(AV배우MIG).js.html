@@ -271,6 +271,46 @@ $(document).ready(function(){
 		        	
 		    	});
                break;
+			   case 'SYNC_ACTOR_YYMM':
+					var data = searchForm.getData();
+
+					if(PjtUtil.isEmpty(data.DEBUT_YYMM)){
+						Message.alert("데뷔월을 선택해주세요1.");
+		        		return;
+					}
+
+					if(data.DEBUT_YYMM.length!=6){
+						Message.alert("YYYY년MM월 형식의 데뷔월을 선택해주세요2.");
+		        		return;
+					}
+
+					var param ={
+						brRq : 'IN_DATA'
+						,brRs : 'OUT_DATA'
+						,IN_DATA:[ data ]
+					}
+					_this.showProgress();
+					_this.send_socket('BR_MIG_AV_ACTR_SYNC_YYYYMM', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							searchForm.get("search").trigger("click");
+						}
+					});	
+		       break;
+			   case 'SYNC_ACTOR_AUTO':
+					var param ={
+						brRq : ''
+						,brRs : 'OUT_DATA'
+					}
+					_this.showProgress();
+					_this.send_socket('BR_MIG_AV_ACTR_SYNC_AUTO', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							searchForm.get("search").trigger("click");
+						}
+					});	
+		       break;
+			   
         	}
 	  	});
 	  	searchForm.get("search").trigger("click");
