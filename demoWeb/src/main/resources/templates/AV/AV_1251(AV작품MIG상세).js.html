@@ -175,8 +175,15 @@ $(document).ready(function(){
                break;
 			   case 'go_sukebei':
 			   		var data= dvdForm.getData();
-			   		window.open("https://sukebei.nyaa.si/?f=0&c=0_0&q="+data["MV_NM"],"javzoa");
+			   		window.open("https://sukebei.nyaa.si/?f=0&c=0_0&q="+data["MV_NM"],"sukebei");
                break;
+			   case 'myjavbay':
+			   		var data= dvdForm.getData();
+			   		window.open("https://myjavbay.com/?s="+data["MV_NM"],"myjavbay");
+               break;
+
+			   
+    
 
 			   case 'save':
 			   		var data= dvdForm.getData();

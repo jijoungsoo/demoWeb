@@ -22,8 +22,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
+
 
 @Controller
 public class AvImgFileController {
@@ -36,7 +39,9 @@ public class AvImgFileController {
 
     @Autowired
     PjtUtil pjtU;
-    
+
+
+    @CrossOrigin("*") // 추가
     @GetMapping(value = "/ACTOR_IDX_PF_IMG/{IMG_GUBUN}/{ACTOR_IDX}")
     public  ResponseEntity<Resource> ACTOR_IDX_PF_IMG(
             @PathVariable("IMG_GUBUN") String IMG_GUBUN
@@ -56,8 +61,8 @@ public class AvImgFileController {
             IN_DS.put("IN_DATA", in_date);
 
             String jsonInString = pjtU.ObjectToJsonString(IN_DS);
-            MsgDebugInfo msg = pjtU.makeLSession("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", jsonInString, authentication);
-            String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", msg.getIN_DATA_JSON());
+            //MsgDebugInfo msg = pjtU.makeLSession("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", jsonInString, authentication);
+            String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", jsonInString);
             outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
