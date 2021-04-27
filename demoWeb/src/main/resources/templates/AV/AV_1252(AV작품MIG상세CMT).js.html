@@ -44,7 +44,7 @@
 								}]
 							}
 						_this.showProgress();
-						_this.send('BS_MIG_AV_MV_CMT_SYNC_ACTOR_IDX', param, function(data) {
+						_this.send_socket('BS_MIG_AV_MV_CMT_SYNC_ACTOR_IDX', param, function(data) {
 							_this.hideProgress();
 							if (data) {
 								searchForm.get("search").trigger("click");
@@ -68,7 +68,7 @@
 								}]
 							}
 						_this.showProgress();
-						_this.send('BS_MIG_AV_MV_CMT_SYNC_ACTOR_IDX', param, function(data) {
+						_this.send_socket('BS_MIG_AV_MV_CMT_SYNC_ACTOR_IDX', param, function(data) {
 							_this.hideProgress();
 							if (data) {
 								searchForm.get("search").trigger("click");

@@ -44,7 +44,7 @@ $(document).ready(function(){
 							}]
 						}
 					_this.showProgress();
-					_this.send('BS_MIG_AV_ACTR_CMT_SYNC_ACTOR_IDX', param, function(data) {
+					_this.send_socket('BS_MIG_AV_ACTR_CMT_SYNC_ACTOR_IDX', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							searchForm.get("search").trigger("click");
@@ -68,7 +68,7 @@ $(document).ready(function(){
 							}]
 						}
 					_this.showProgress();
-					_this.send('BS_MIG_AV_ACTR_CMT_SYNC_ACTOR_IDX', param, function(data) {
+					_this.send_socket('BS_MIG_AV_ACTR_CMT_SYNC_ACTOR_IDX', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							searchForm.get("search").trigger("click");
