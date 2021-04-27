@@ -15,7 +15,8 @@ class PopupManger {
 		var _this=this;
 		var defaults = {
 			dialogClass: "no-close",
-			appendTo: "#layoutContainer",   /* 팝업은 무조건 루트에 붙자. */
+			  appendTo: "#layoutContainer",/*   팝업은 무조건 루트에 붙자.-- */
+			 /*appendTo: "#"+uuid,*/
 			autoOpen: false,        /*초기화 즉시 다이얼로그를 열지 */
 			closeOnEscape: false,   /*esc  를 누를때 닫히게 할지*/
 			resizable: true,       /*사이즈 조절을 가능하게 할지 */
@@ -23,7 +24,8 @@ class PopupManger {
 			draggable: true,   /*false면 창이 안움직인다. */
 			height: 700,
 			width: 600,
-			open: function() {
+			open: function(event, ui) {
+				$(this).parent().css({'top': 10});
 			},
 			beforeClose: function() {
 			},
