@@ -6,7 +6,8 @@ $(document).ready(function(){
 		var actorForm = new FormMngr(_this, "actor_area");
 		var bestForm = new FormMngr(_this, "best_area");
 		var dvdForm = new FormMngr(_this, "dvd_area");
-		var pageCmtForm = new ChildMngr(_this, "page_cmt_area",'AV_1165');
+		var pageActorCmtForm = new ChildMngr(_this, "page_actor_cmt_area",'AV_1165');
+		var pageMvCmtForm = new ChildMngr(_this, "page_mv_cmt_area",'AV_1252');
 
 		var param = {
 			brRq: 'IN_DATA',
@@ -132,22 +133,36 @@ $(document).ready(function(){
 
 			var b_call_1164 =false;
 			var b_call_1165 =false;
+			var b_call_1252 =false;
 
 		   switch(detail.ACTION){
            case 'ON_LOAD':
 				switch(detail.PGM_ID){
 				case 'AV_1165':
 					if(b_call_1165==true){
-						pageCmtForm.remoteCall({ detail: param });
+						pageActorCmtForm.remoteCall({ detail: param });
 					}
 					b_call_1165=true;
 					break;
+				case 'AV_1252':
+					if(b_call_1252==true){
+						pageMvCmtForm.remoteCall({ detail: param });
+					}
+					b_call_1252=true;
+					break;
+
+					
 				}
 			case 'CALL':
 				switch(detail.PGM_ID){
 				case 'AV_1165':
 					if(b_call_1165==true){
-						pageCmtForm.remoteCall({ detail: param });
+						pageActorCmtForm.remoteCall({ detail: param });
+					}
+					break;
+				case 'AV_1252':
+					if(b_call_1252==true){
+						pageMvCmtForm.remoteCall({ detail: param });
 					}
 					break;
 				}
@@ -176,7 +191,8 @@ $(document).ready(function(){
 					_this.send_socket('BS_MIG_AV_ACTR_BY_ACTOR_IDX', param2, function(data) {
 						_this.hideProgress();
 						if (data) {
-							pageCmtForm.remoteCall({ detail: param });
+							pageActorCmtForm.remoteCall({ detail: param });
+							pageMvCmtForm.remoteCall({ detail: param });
 						}
 					});	
                break;
