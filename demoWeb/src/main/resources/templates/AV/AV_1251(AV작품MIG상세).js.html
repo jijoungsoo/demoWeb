@@ -165,6 +165,12 @@ $(document).ready(function(){
 						}
 					});	
                break;
+			   
+			   case 'go_yaburi':
+			   		var data= dvdForm.getData();
+					   
+			   		window.open("https://yaburi03.com/posts-index/19?search_key=title&search="+data["MV_NM"],"yaburi");
+               break;
 			   case 'go_avsecret':
 			   		var data= dvdForm.getData();
 			   		window.open("https://www1.avsecret.net/search?skeyword="+data["MV_NM"],"avsecret");
