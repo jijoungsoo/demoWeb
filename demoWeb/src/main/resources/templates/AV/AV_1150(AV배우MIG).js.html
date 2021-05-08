@@ -336,6 +336,15 @@ $(document).ready(function(){
 						Message.alert('선택된 항목이 없습니다.');
 						return;
 					}
+					var tmp =[];
+					for(var i=0;i<data.length;i++){
+						var tmp2=data[i];
+						tmp.push(
+							{
+								ACTOR_IDX : tmp2["ACTOR_IDX"]
+							}
+						)
+					}
 			   		var param2 = {
 						brRq: 'IN_DATA',
 						brRs: 'OUT_DATA',
@@ -344,7 +353,7 @@ $(document).ready(function(){
 							ACTOR_IDX : p_param.param.ACTOR_IDX
 						}]
 						*/
-						IN_DATA: data
+						IN_DATA: tmp
 					}
 			   		_this.showProgress();
 					_this.send_socket('BS_MIG_AV_ACTR_BY_ACTOR_IDX', param2, function(data) {
