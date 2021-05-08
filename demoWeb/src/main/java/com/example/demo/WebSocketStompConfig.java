@@ -5,6 +5,7 @@ import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.WebSocketTransportRegistration;
 
 @Configuration
 @EnableWebSocketMessageBroker
@@ -55,5 +56,16 @@ list them explicitly or consider using "allowedOriginPatterns" instead.]
  with root cause
 */
     }
+    @Override
+    public void configureWebSocketTransport(WebSocketTransportRegistration registry) {
+        //message:STOMP 'content-length' header value 67690 exceeds configured buffer size limit 65536
+        //소켓을 보내는데 사이즈 제한 에러가 발생했다.
+        // 그래서 아래 사이트 참고해서 늘림
+        //https://stackoverflow.com/questions/34343235/stomp-spring-websocket-message-exceeds-size-limit
+        //
+        registry.setMessageSizeLimit(200000); // default : 64 * 1024
+        registry.setSendTimeLimit(20 * 10000); // default : 10 * 10000
+        registry.setSendBufferSizeLimit(3* 512 * 1024); // default : 512 * 1024
+	}
 }
  
