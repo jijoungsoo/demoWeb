@@ -12,7 +12,7 @@ $(document).ready(function(){
 		      editable: false
 		      ,showRowStatus: false
 		      ,rowNum: true
-		      ,checkbox: false
+		      ,checkbox: true
 			  ,pageable: true
 		  	}
 		,[
@@ -249,7 +249,8 @@ $(document).ready(function(){
 
 		grid.on('click', (ev) => {
 			if (ev.rowKey >=0) {
-				var row_data=grid.getRow(ev.rowKey);
+				if(ev.columnName=="ACTOR_IDX"){
+					var row_data=grid.getRow(ev.rowKey);
 				console.log(row_data);
 
 				var param = {
@@ -267,6 +268,8 @@ $(document).ready(function(){
 
 					}
 				});
+				}
+				
 				
 			}
 		});
@@ -287,7 +290,7 @@ $(document).ready(function(){
 		        	
 		    	});
                break;
-			   case 'SYNC_ACTOR_YYMM':
+			   case 'SYNC_ACTOR_YYMM_LIST_UPDATE':
 					var data = searchForm.getData();
 
 					if(PjtUtil.isEmpty(data.DEBUT_YYMM)){
@@ -306,26 +309,83 @@ $(document).ready(function(){
 						,IN_DATA:[ data ]
 					}
 					_this.showProgress();
-					_this.send_socket('BR_MIG_AV_ACTR_SYNC_YYYYMM', param, function(data) {
+					_this.send_socket('BR_MIG_AV_ACTOR_YYMM_LIST_UPDATE', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							searchForm.get("search").trigger("click");
 						}
 					});	
 		       break;
-			   case 'SYNC_ACTOR_AUTO':
+			   case 'SYNC_ACTOR_ALL_LIST_UPDATE':
 					var param ={
 						brRq : ''
 						,brRs : 'OUT_DATA'
 					}
 					_this.showProgress();
-					_this.send_socket('BR_MIG_AV_ACTR_SYNC_AUTO', param, function(data) {
+					_this.send_socket('BR_MIG_AV_ACTOR_ALL_LIST_UPDATE', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							searchForm.get("search").trigger("click");
 						}
 					});	
 		       break;
+			   case 'SYNC_ACTOR':
+					var data = grid.getCheckedData();
+					console.log(data);
+					if(data.length<=0) {
+						Message.alert('선택된 항목이 없습니다.');
+						return;
+					}
+			   		var param2 = {
+						brRq: 'IN_DATA',
+						brRs: 'OUT_DATA',
+						/*
+						IN_DATA: [{
+							ACTOR_IDX : p_param.param.ACTOR_IDX
+						}]
+						*/
+						IN_DATA: data
+					}
+			   		_this.showProgress();
+					_this.send_socket('BS_MIG_AV_ACTR_BY_ACTOR_IDX', param2, function(data) {
+						_this.hideProgress();
+						if (data) {
+							searchForm.get("search").trigger("click");
+						}
+					});	
+		       break;
+			   case 'SYNC_M_CMT':
+					var data = grid.getCheckedData();
+					console.log(data);
+					if(data.length<=0) {
+						Message.alert('선택된 항목이 없습니다.');
+						return;
+					}
+					var tmp =[];
+					for(var i=0;i<data.length;i++){
+						var tmp2=data[i];
+						tmp.push(
+							{
+								ACTOR_IDX : tmp2["ACTOR_IDX"]
+								,SYNC_YN : "N"
+							}
+						)
+					}
+			   		var param2 = {
+						brRq: 'IN_DATA',
+						brRs: 'OUT_DATA',
+						IN_DATA: tmp
+					}
+			   		_this.showProgress();
+					_this.send_socket('BS_MIG_AV_MV_CMT_SYNC_ACTOR_IDX', param2, function(data) {
+						_this.hideProgress();
+						if (data) {
+							searchForm.get("search").trigger("click");
+						}
+					});	
+		       break;
+
+			   
 			   
         	}
 	  	});
