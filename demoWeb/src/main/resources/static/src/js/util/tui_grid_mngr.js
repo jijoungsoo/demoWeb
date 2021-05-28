@@ -226,6 +226,17 @@ class TuiGridMngr {
           }
         }
     });
+
+	grid.on('beforeSort', function(ev) {
+		console.log('beforeSort 발생한 경우')
+		console.log(ev)
+	});
+
+	grid.on('afterSort', function(ev) {
+		console.log('afterSort 발생한 경우')
+		console.log(ev)
+	});
+
     this.grid=grid;
     
     if(this.options.pageable==true) {
