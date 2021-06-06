@@ -33,6 +33,7 @@ public class MainPageController {
 			 Authentication authentication
             ){
 	    String debug = request.getParameter("debug");
+		debug ="Y";
 	    if(debug==null) {
 	        session.setAttribute("debug", "N");
 	    } else {

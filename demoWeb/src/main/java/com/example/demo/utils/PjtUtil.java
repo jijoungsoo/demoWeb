@@ -25,6 +25,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import org.apache.commons.codec.net.URLCodec;
 import org.json.JSONArray;
@@ -110,7 +111,7 @@ public class PjtUtil {
 	public  String jsonBeautifier(String InJsonString) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            //objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true); //느려짐
+            objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true); //느려짐 --- 이뻐지게 하려면 이거 넣어야한다.
             JsonNode tree;
             tree = objectMapper.readTree(InJsonString);
             String formattedJson = objectMapper.writeValueAsString(tree);

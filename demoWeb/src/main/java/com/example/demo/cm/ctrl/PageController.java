@@ -1,9 +1,12 @@
 package com.example.demo.cm.ctrl;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Queue;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import com.example.demo.service.BrService;
 
@@ -29,6 +32,7 @@ public class PageController {
 	public String pagePost(@PathVariable("pageId") String pageId
 			, @RequestBody Map<String,String> hm
 			, Model model
+			, HttpSession session 
 			, HttpServletRequest request
 			){
 		long start = System.currentTimeMillis();
@@ -42,6 +46,7 @@ public class PageController {
 	    }
 
 		String debug = hm.get("debug");
+		debug = "Y";  //모조건 디버그
 		HashMap<String, Object> pgmLinkMap = brS.findPgmList(pageId);
 		
 		if(pgmLinkMap==null) {
@@ -69,7 +74,23 @@ public class PageController {
 		} else {
 			System.out.println("[파일 존재]"+filePath);
 		}
+
+		String UUID = hm.get("UUID");// 디버깅창에서 넘겨받는  대상 UUID
+		String SEQ = hm.get("SEQ");  // 보내진 함수 일련번호
+
+		//uuid하고 seq로  서버 세션에 있는 값가지고 온다.
+		Queue<MsgDebugInfo> que=(Queue<MsgDebugInfo>)session.getAttribute("UUID_DEBUG_LOG");
+		MsgDebugInfo gl_tmp=null;
+    	Iterator<MsgDebugInfo> it= que.iterator();
+    	while(it.hasNext()) {
+        	MsgDebugInfo tmp = it.next();
+        	if(tmp.getUUID().equals(UUID) && String.valueOf(tmp.getSEQ()).equals(SEQ)) {
+            	gl_tmp=tmp;
+            	break;
+        	}
+    	}
 		
+		model.addAttribute("gl_tmp", gl_tmp);
 		model.addAttribute("parentUuid", parentUuid);
 		model.addAttribute("pgmId", pageId);
 		model.addAttribute("dirLink", dirLink);
