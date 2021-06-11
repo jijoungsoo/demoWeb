@@ -42,13 +42,25 @@ class PjtUtil{
 
 	static numberComma(tmp){
 	  if(PjtUtil.isNumeric(tmp)) {
-	  	tmp = String(tmp);
-	  	var tmp2 = tmp.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	  	return tmp2;	
+	  	//tmp = String(tmp);
+	  	//var tmp2 = tmp.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		var parts = tmp.toString().split("."); 
+		return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : ""); 
 	  } else {
-	  	return tmp2;
+	  	return tmp;
 	  }
 	}
+
+	static numberCommaRemoveDot(tmp){
+		if(PjtUtil.isNumeric(tmp)) {
+			//tmp = String(tmp);
+			//var tmp2 = tmp.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+		  var parts = tmp.toString().split("."); 
+		  return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
+		} else {
+			return tmp;
+		}
+	  }
 	
 
 	static addEvent(el, event_name, el_sel, func) {

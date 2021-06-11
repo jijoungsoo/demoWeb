@@ -1,0 +1,37 @@
+<div name="search_area">
+  <table>
+  <tr>
+    <td>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">업비트 통화코드</span> 
+          <select class="form-control" data-ax-path="MARKET_CD"  name="MARKET_CD" style="width:140px;">
+          </select>
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">검색</span> 
+          <input type="text" class="form-control" data-ax-path="SEARCH_NM"  name="SEARCH_NM" style="width:140px;" />
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">유의 종목 여부</span> 
+          <select class="form-control" data-ax-path="MARKET_WARNING"  name="MARKET_WARNING" style="width:140px;">
+          </select>
+        </div>
+      </div>
+    </td>
+    <td><input type="button" name="search" value="조회" /></td>
+    <td><input type="button" name="BTN_UPBIT_CANDLES_MINUTES_SYNC" value="종목 1분 싱크" /></td>
+    <td><input type="button" name="BTN_UPBIT_CANDLES_DAYS_SYNC" value="종목 1일 싱크(30일 이전)" /></td>
+    <td>업비트는 오전 9시에 종가 초기화</td>
+  </tr>
+  </table>
+</div>
+<div name="grid"></div>
