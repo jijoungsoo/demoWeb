@@ -1,9 +1,9 @@
 
 <script>
 $(document).ready(function(){
-	var UPBIT_0120 = new PgmPageMngr('[[${uuid}]]');
-	UPBIT_0120.init(function(p_param) {
-		var _this = UPBIT_0120;
+	var UPBIT_0140 = new PgmPageMngr('[[${uuid}]]');
+	UPBIT_0140.init(function(p_param) {
+		var _this = UPBIT_0140;
 		var searchForm = new FormMngr(_this, "search_area");
 		searchForm.initCombo("MARKET_WARNING",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_WARNING', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
 		searchForm.initCombo("MARKET_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
@@ -13,7 +13,7 @@ $(document).ready(function(){
 		      ,showRowStatus: false
 		      ,rowNum: true
 		      ,checkbox: false
-			  ,pageable: false
+			  ,pageable: true
 			   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
 		  	}
 		,[
@@ -157,9 +157,33 @@ $(document).ready(function(){
 					},
 		           sortingType: 'desc'
 				},{
-		           header: '분 단위(유닛)',
-		           name: 'UNIT',
+		           header: '전일 종가(UTC 0시 기준)',
+		           name: 'PREV_CLOSING_PRICE',
+		           width: 200,
+				   align : 'center',
+				   sortable : true,
+				   resizable: true,				   
+		           sortingType: 'desc'
+				},{
+		           header: '전일 종가 대비 변화 금액',
+		           name: 'CHANGE_PRICE',
+		           width: 200,
+				   align : 'center',
+				   sortable : true,
+				   resizable: true,				   
+		           sortingType: 'desc'
+				},{
+		           header: '전일 종가 대비 변화량',
+		           name: 'CHANGE_RATE',
 		           width: 100,
+				   align : 'center',
+				   sortable : true,
+				   resizable: true,				   
+		           sortingType: 'desc'
+				},{
+		           header: '종가 환산 화폐 단위로 환산된 가격',
+		           name: 'CONVERTED_TRADE_PRICE',
+		           width: 200,
 				   align : 'center',
 				   sortable : true,
 				   resizable: true,				   
@@ -218,27 +242,12 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[ data ]
 				}
-		    	grid.loadData('BR_UPBIT_CANDLES_FIND',param,function(data){
+		    	grid.loadData('BR_UPBIT_CANDLES_DAYS_FIND',param,function(data){
 			    	console.log(data);
 			    	//gridLoadData에서 자동으로 로드됨..
 		        	
 		    	});
                break;
-			   case 'BTN_UPBIT_CANDLES_MINUTES_SYNC':
-					var data = searchForm.getData();
-					var param ={
-						brRq : 'IN_DATA'
-						,brRs : 'OUT_DATA'
-						,IN_DATA:[ data ]
-					}
-					_this.showProgress();
-					_this.send_socket('BR_UPBIT_CANDLES_MINUTES_SYNC', param, function(data) {
-						_this.hideProgress();
-						if (data) {
-							searchForm.get("search").trigger("click");
-						}
-					});	
-		       break;
 			   case 'BTN_UPBIT_CANDLES_DAYS_SYNC':
 					var data = searchForm.getData();
 					var param ={

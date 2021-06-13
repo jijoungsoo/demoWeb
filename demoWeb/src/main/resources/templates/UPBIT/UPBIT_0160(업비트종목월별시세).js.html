@@ -1,15 +1,12 @@
 
 <script>
 $(document).ready(function(){
-	var UPBIT_0130 = new PgmPageMngr('[[${uuid}]]');
-	UPBIT_0130.init(function(p_param) {
-		var _this = UPBIT_0130;
+	var UPBIT_0160 = new PgmPageMngr('[[${uuid}]]');
+	UPBIT_0160.init(function(p_param) {
+		var _this = UPBIT_0160;
 		var searchForm = new FormMngr(_this, "search_area");
 		searchForm.initCombo("MARKET_WARNING",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_WARNING', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
 		searchForm.initCombo("MARKET_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
-		searchForm.initCombo("UNIT",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_UNIT', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
-
-		
 
 		const grid = new TuiGridMngr(_this,'grid',{
 		      editable: false
@@ -158,11 +155,11 @@ $(document).ready(function(){
 				   renderer : {
 					type: commaRendererRemoveDot
 					},
-		           sortingType: 'desc'
+		           sortingType: 'desc'	       
 				},{
-		           header: '분 단위(유닛)',
-		           name: 'UNIT',
-		           width: 100,
+		           header: '캔들 기간의 가장 첫 날',
+		           name: 'FIRST_DAY_OF_PERIOD',
+		           width: 200,
 				   align : 'center',
 				   sortable : true,
 				   resizable: true,				   
@@ -221,13 +218,13 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[ data ]
 				}
-		    	grid.loadData('BR_UPBIT_CANDLES_MINUTES_FIND',param,function(data){
+		    	grid.loadData('BR_UPBIT_CANDLES_MONTHS_FIND',param,function(data){
 			    	console.log(data);
 			    	//gridLoadData에서 자동으로 로드됨..
 		        	
 		    	});
                break;
-			   case 'BTN_UPBIT_CANDLES_MINUTES_SYNC':
+			   case 'BTN_UPBIT_CANDLES_MONTHS_SYNC':
 					var data = searchForm.getData();
 					var param ={
 						brRq : 'IN_DATA'
@@ -235,22 +232,7 @@ $(document).ready(function(){
 						,IN_DATA:[ data ]
 					}
 					_this.showProgress();
-					_this.send_socket('BR_UPBIT_CANDLES_MINUTES_SYNC', param, function(data) {
-						_this.hideProgress();
-						if (data) {
-							searchForm.get("search").trigger("click");
-						}
-					});	
-		       break;
-			   case 'BTN_UPBIT_CANDLES_DAYS_SYNC':
-					var data = searchForm.getData();
-					var param ={
-						brRq : 'IN_DATA'
-						,brRs : 'OUT_DATA'
-						,IN_DATA:[ data ]
-					}
-					_this.showProgress();
-					_this.send_socket('BR_UPBIT_CANDLES_DAYS_SYNC', param, function(data) {
+					_this.send_socket('BR_UPBIT_CANDLES_MONTHS_SYNC', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							searchForm.get("search").trigger("click");

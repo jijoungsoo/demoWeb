@@ -1,15 +1,12 @@
 
 <script>
 $(document).ready(function(){
-	var UPBIT_0130 = new PgmPageMngr('[[${uuid}]]');
-	UPBIT_0130.init(function(p_param) {
-		var _this = UPBIT_0130;
+	var UPBIT_0120 = new PgmPageMngr('[[${uuid}]]');
+	UPBIT_0120.init(function(p_param) {
+		var _this = UPBIT_0120;
 		var searchForm = new FormMngr(_this, "search_area");
 		searchForm.initCombo("MARKET_WARNING",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_WARNING', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
 		searchForm.initCombo("MARKET_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
-		searchForm.initCombo("UNIT",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_UNIT', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
-
-		
 
 		const grid = new TuiGridMngr(_this,'grid',{
 		      editable: false
@@ -70,56 +67,32 @@ $(document).ready(function(){
 				   resizable: true,
 		           sortingType: 'desc'
 				 },{
-		           header: '캔들 기준 시각(UTC 기준)',
-		           name: 'CANDLE_DATE_TIME_UTC',
+		           header: '체결 일자(UTC 기준)',
+		           name: 'TRADE_DATE_UTC',
 		           width: 200,
 				   align : 'center',
 				   sortable : true,
 				   resizable: true,
 		           sortingType: 'desc'
 				},{
-		           header: '캔들 기준 시각(KST 기준)',
-		           name: 'CANDLE_DATE_TIME_KST',
+		           header: '체결 시각(UTC 기준)',
+		           name: 'TRADE_TIME_UTC',
 		           width: 200,
 				   align : 'center',
 				   sortable : true,
 				   resizable: true,
 		           sortingType: 'desc'
 				},{
-		           header: '시가',
-		           name: 'OPENING_PRICE',
-		           width: 100,
-				   align : 'right',
+		           header: '체결 타임스탬프',
+		           name: 'TIMESTAMP',
+		           width: 200,
+				   align : 'center',
 				   sortable : true,
 				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
 		           sortingType: 'desc'
+		       
 				},{
-		           header: '고가',
-		           name: 'HIGH_PRICE',
-		           width: 100,
-				   align : 'right',
-				   sortable : true,
-				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
-		           sortingType: 'desc'
-				},{
-		           header: '저가',
-		           name: 'LOW_PRICE',
-		           width: 100,
-				   align : 'right',
-				   sortable : true,
-				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
-		           sortingType: 'desc'
-				},{
-		           header: '종가',
+		           header: '체결 가격',
 		           name: 'TRADE_PRICE',
 		           width: 200,
 				   align : 'right',
@@ -130,16 +103,16 @@ $(document).ready(function(){
 					},
 		           sortingType: 'desc'
 				},{
-		           header: '해당 캔들에서 마지막 틱이 저장된 시각',
-		           name: 'TIMESTAMP',
+		           header: '체결량',
+		           name: 'TRADE_VOLUME',
 		           width: 200,
 				   align : 'center',
 				   sortable : true,
 				   resizable: true,
 		           sortingType: 'desc'
 				},{
-		           header: '누적 거래 금액',
-		           name: 'CANDLE_ACC_TRADE_PRICE',
+		           header: '전일 종가',
+		           name: 'PREV_CLOSING_PRICE',
 		           width: 200,
 				   align : 'right',
 				   sortable : true,
@@ -149,8 +122,8 @@ $(document).ready(function(){
 					},
 		           sortingType: 'desc'
 				},{
-		           header: '누적 거래량',
-		           name: 'CANDLE_ACC_TRADE_VOLUME',
+		           header: '변화량',
+		           name: 'CHANGE_PRICE',
 		           width: 200,
 				   align : 'right',
 				   sortable : true,
@@ -158,11 +131,19 @@ $(document).ready(function(){
 				   renderer : {
 					type: commaRendererRemoveDot
 					},
+		           sortingType: 'desc'	       
+				},{
+		           header: '매도/매수',
+		           name: 'ASK_BID',
+		           width: 200,
+				   align : 'center',
+				   sortable : true,
+				   resizable: true,				   
 		           sortingType: 'desc'
 				},{
-		           header: '분 단위(유닛)',
-		           name: 'UNIT',
-		           width: 100,
+		           header: '체결 번호(Unique)',
+		           name: 'SEQUENTIAL_ID',
+		           width: 200,
 				   align : 'center',
 				   sortable : true,
 				   resizable: true,				   
@@ -221,13 +202,13 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[ data ]
 				}
-		    	grid.loadData('BR_UPBIT_CANDLES_MINUTES_FIND',param,function(data){
+		    	grid.loadData('BR_UPBIT_TRADES_TICKS_FIND',param,function(data){
 			    	console.log(data);
 			    	//gridLoadData에서 자동으로 로드됨..
 		        	
 		    	});
                break;
-			   case 'BTN_UPBIT_CANDLES_MINUTES_SYNC':
+			   case 'BTN_UPBIT_TRADES_TICKS_SYNC':
 					var data = searchForm.getData();
 					var param ={
 						brRq : 'IN_DATA'
@@ -235,22 +216,7 @@ $(document).ready(function(){
 						,IN_DATA:[ data ]
 					}
 					_this.showProgress();
-					_this.send_socket('BR_UPBIT_CANDLES_MINUTES_SYNC', param, function(data) {
-						_this.hideProgress();
-						if (data) {
-							searchForm.get("search").trigger("click");
-						}
-					});	
-		       break;
-			   case 'BTN_UPBIT_CANDLES_DAYS_SYNC':
-					var data = searchForm.getData();
-					var param ={
-						brRq : 'IN_DATA'
-						,brRs : 'OUT_DATA'
-						,IN_DATA:[ data ]
-					}
-					_this.showProgress();
-					_this.send_socket('BR_UPBIT_CANDLES_DAYS_SYNC', param, function(data) {
+					_this.send_socket('BR_UPBIT_TRADES_TICKS_SYNC', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							searchForm.get("search").trigger("click");
