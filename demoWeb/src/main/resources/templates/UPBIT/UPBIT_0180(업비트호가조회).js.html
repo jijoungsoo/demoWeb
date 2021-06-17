@@ -1,9 +1,9 @@
 
 <script>
 $(document).ready(function(){
-	var UPBIT_0120 = new PgmPageMngr('[[${uuid}]]');
-	UPBIT_0120.init(function(p_param) {
-		var _this = UPBIT_0120;
+	var UPBIT_0180 = new PgmPageMngr('[[${uuid}]]');
+	UPBIT_0180.init(function(p_param) {
+		var _this = UPBIT_0180;
 		var searchForm = new FormMngr(_this, "search_area");
 		searchForm.initCombo("MARKET_WARNING",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_WARNING', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
 		searchForm.initCombo("MARKET_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
@@ -67,94 +67,42 @@ $(document).ready(function(){
 				   resizable: true,
 		           sortingType: 'desc'
 				 },{
-		           header: '체결 일자(UTC 기준)',
-		           name: 'TRADE_DATE_UTC',
+		           header: '호가 매도 총 잔량',
+		           name: 'TOTAL_ASK_SIZE',
 		           width: 200,
-				   align : 'center',
+				   align : 'right',
+				   renderer : {
+					type: commaRenderer
+					},
 				   sortable : true,
 				   resizable: true,
 		           sortingType: 'desc'
 				},{
-		           header: '체결 시각(UTC 기준)',
-		           name: 'TRADE_TIME_UTC',
+		           header: '호가 매수 총 잔량',
+		           name: 'TOTAL_BID_SIZE',
 		           width: 200,
-				   align : 'center',
+				   align : 'right',
+				   renderer : {
+					type: commaRenderer
+					},
 				   sortable : true,
 				   resizable: true,
 		           sortingType: 'desc'
 				},{
-		           header: '체결 타임스탬프',
+		           header: '호가 생성 시각',
 		           name: 'TIMESTAMP',
 		           width: 200,
 				   align : 'center',
 				   sortable : true,
 				   resizable: true,
-		           sortingType: 'desc'
-		       
+		           sortingType: 'desc'	      
 				},{
-		           header: '체결 가격',
-		           name: 'TRADE_PRICE',
-		           width: 200,
-				   align : 'right',
-				   sortable : true,
-				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
-		           sortingType: 'desc'
-				},{
-		           header: '체결량',
-		           name: 'TRADE_VOLUME',
-		           width: 200,
-				   align : 'center',
-				   sortable : true,
-				   resizable: true,
-		           sortingType: 'desc'
-				},{
-		           header: '전일 종가',
-		           name: 'PREV_CLOSING_PRICE',
-		           width: 200,
-				   align : 'right',
-				   sortable : true,
-				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
-		           sortingType: 'desc'
-				},{
-		           header: '변화량',
-		           name: 'CHANGE_PRICE',
-		           width: 200,
-				   align : 'right',
-				   sortable : true,
-				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
-		           sortingType: 'desc'	       
-				},{
-		           header: '매도/매수',
-		           name: 'ASK_BID',
-		           width: 200,
-				   align : 'center',
-				   sortable : true,
-				   resizable: true,				   
-		           sortingType: 'desc'
-				},{
-		           header: '체결 번호(Unique)',
-		           name: 'SEQUENTIAL_ID',
-		           width: 200,
-				   align : 'center',
-				   sortable : true,
-				   resizable: true,				   
-		           sortingType: 'desc'
-				 },{
 		             header: '생성일',
 		             name: 'CRT_DTM',
 		             width: 200,
 		             sortable: true,
 		             align: "center"
-					},{
+				},{
 		             header: '수정일',
 		             name: 'UPDT_DTM',
 		             width: 200,
@@ -167,26 +115,29 @@ $(document).ready(function(){
 
 		grid.on('click', (ev) => {
 			if (ev.rowKey >=0) {
-				if(ev.columnName=="MARKET"){
+				/*if(ev.columnName=="MARKET"){*/
 					var row_data=grid.getRow(ev.rowKey);
-				console.log(row_data);
+					console.log(row_data);
 
-				var param = {
-					MARKET: row_data.MARKET
-				}
-				var popup = new PopupManger(_this, 'UPBIT_0150', {
-						width: 1200,
-						height: 700,
-						title: "업비트종목상세["+row_data.MARKET+"]"
-					},
-					param
-				);
-				popup.open(function (data) {
-					if (data) {
-
+					var param = {
+						MARKET: row_data.MARKET,
+						TIMESTAMP: row_data.TIMESTAMP,
+						EN_NM: row_data.EN_NM,
+						KR_NM: row_data.KR_NM,
 					}
-				});
-				}
+					var popup = new PopupManger(_this, 'UPBIT_0185', {
+							width: 1200,
+							height: 700,
+							title: "업비트호가상세["+row_data.MARKET+"]"
+						},
+						param
+					);
+					popup.open(function (data) {
+						if (data) {
+
+						}
+					});
+				/*}*/
 				
 				
 			}
@@ -202,13 +153,13 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[ data ]
 				}
-		    	grid.loadData('BR_UPBIT_TRADES_TICKS_FIND',param,function(data){
+		    	grid.loadData('BR_UPBIT_ORDER_BOOK_FIND',param,function(data){
 			    	console.log(data);
 			    	//gridLoadData에서 자동으로 로드됨..
 		        	
 		    	});
                break;
-			   case 'BTN_UPBIT_TRADES_TICKS_SYNC':
+			   case 'BTN_UPBIT_ORDER_BOOK_SYNC':
 					var data = searchForm.getData();
 					var param ={
 						brRq : 'IN_DATA'
@@ -216,7 +167,7 @@ $(document).ready(function(){
 						,IN_DATA:[ data ]
 					}
 					_this.showProgress();
-					_this.send_socket('BR_UPBIT_TRADES_TICKS_SYNC', param, function(data) {
+					_this.send_socket('BR_UPBIT_ORDER_BOOK_SYNC', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							searchForm.get("search").trigger("click");
