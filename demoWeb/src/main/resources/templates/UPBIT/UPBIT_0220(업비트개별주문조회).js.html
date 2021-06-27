@@ -1,0 +1,141 @@
+
+<script>
+	$(document).ready(function(){
+		var UPBIT_0220 = new PgmPageMngr('[[${uuid}]]');
+		UPBIT_0220.init(function(p_param) {
+			var _this = UPBIT_0220;
+			console.log(p_param.param.P_UUID);
+			var uuid = p_param.param.P_UUID;
+			
+
+			var orderAreaForm = new FormMngr(_this, "order_area");
+		    $('[data-ax5formatter]').ax5formatter();
+		
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  ,bodyHeight : 300
+				  /*
+				  
+				  ,width : 700
+				  */ 
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: '마켓의 유일 키',
+					   name: 'MARKET',
+					   width: 200,
+					   align : 'center',
+					   filter : {
+						type : 'text',
+						showApplyBtn : true,
+						showClearBtn : true
+						}
+					},{
+					   header: '체결의 고유 아이디',
+					   name: 'UUID',
+					   width: 100,
+					   align : 'center',
+					   filter : {
+						type : 'text',
+						showApplyBtn : true,
+						showClearBtn : true
+						}
+					},{
+					   header: '체결 가격',
+					   name: 'PRICE',
+					   width: 100,
+					   align : 'center',
+					   filter : {
+						type : 'text',
+						showApplyBtn : true,
+						showClearBtn : true
+					   },
+					   resizable: true,
+					   sortable : true,
+					   sortingType: 'desc'
+					},{
+					   header: '체결 양',
+					   name: 'VOLUME',
+					   width: 100,
+					   align : 'center',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: '체결된 총 가격',
+					   name: 'FUNDS',
+					   width: 200,
+					   align : 'center',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					 },{
+						 header: '체결 종류',
+						 name: 'SIDE',
+						 width: 100,
+						 sortable: true,
+						 align: "center"
+						},{
+						 header: '체결 시각',
+						 name: 'CREATED_AT',
+						 width: 140,
+						 sortable: true,
+						 align: "center"
+					 }
+				]
+			);
+			grid.build();
+			
+
+			
+			orderAreaForm.addEvent("click","input[type=button]",function(el){
+				//console.log(el);
+				switch(el.target.name){
+					case 'btn_search':
+						var param ={
+							brRq : 'IN_DATA'
+							,brRs : 'OUT_DATA'
+							,IN_DATA:[ {
+								UUID : uuid
+							} ]
+						}
+						_this.showProgress();
+						_this.send('BR_UPBIT_EXCHANGE_GET_ORDER', param, function(data) {
+							_this.hideProgress();
+							if (data) {
+								orderAreaForm.setDataAll(data.OUT_DATA[0]);		
+								grid.resetData(data.OUT_DATA_TRADES);
+							}
+						});	
+					break;
+					case 'btn_delete_order':
+						var param ={
+							brRq : 'IN_DATA'
+							,brRs : 'OUT_DATA'
+							,IN_DATA: [ {
+								UUID : uuid
+							} ]
+						}						
+						alert('주문취소');
+						_this.showProgress();
+						_this.send('BR_UPBIT_EXCHANGE_DELETE_ORDER', param, function(data) {
+							_this.hideProgress();
+							if (data) {
+								orderAreaForm.get("btn_search").trigger("click");
+							}
+						});	
+
+						break;
+					}
+				});
+				orderAreaForm.get("btn_search").trigger("click");
+
+		});	
+	});
+	
+	</script>

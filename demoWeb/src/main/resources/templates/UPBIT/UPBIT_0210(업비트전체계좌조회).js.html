@@ -1,0 +1,111 @@
+
+<script>
+$(document).ready(function(){
+	var UPBIT_0210 = new PgmPageMngr('[[${uuid}]]');
+	UPBIT_0210.init(function(p_param) {
+		var _this = UPBIT_0210
+		var searchForm = new FormMngr(_this, "search_area");
+		console.log(p_param);
+		
+		const grid = new TuiGridMngr(_this,'grid',{
+		      editable: false
+		      ,showRowStatus: false
+		      ,rowNum: true
+		      ,checkbox: false
+			  ,pageable: false
+			   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+		  	}
+		,[
+				{
+		           header: '화폐',
+		           name: 'CURRENCY',
+		           width: 100,
+				   align : 'center',
+				   filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				   },
+				   resizable: true,
+				   sortable : true,
+		           sortingType: 'desc'
+				 },{
+		           header: '주문가능 금액/수량',
+		           name: 'BALANCE',
+		           width: 200,
+				   align : 'right',
+				   renderer : {
+					type: commaRenderer
+					},
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
+				},{
+		           header: '주문 중 묶여있는 금액/수량',
+		           name: 'LOCKED',
+		           width: 200,
+				   align : 'right',
+				   renderer : {
+					type: commaRenderer
+					},
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
+				},{    
+				   header: '매수평균가',
+		           name: 'AVG_BUY_PRICE',
+		           width: 100,
+				   align : 'right',
+				   renderer : {
+					type: commaRenderer
+					},
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
+				},{
+		           header: '매수평균가 수정 여부',
+		           name: 'AVG_BUY_PRICE_MODIFIED',
+		           width: 200,
+				   align : 'right',
+				   renderer : {
+					type: commaRenderer
+					},
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
+				},{
+		           header: '평단가 기준 화폐',
+		           name: 'UNIT_CURRENCY',
+		           width: 200,
+				   align : 'center',
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'	      
+				}
+		    ]
+		);
+	  	grid.build();
+
+	  	searchForm.addEvent("click","input[type=button]",function(el){
+		   //console.log(el);
+	  	   switch(el.target.name){
+           case 'search':
+			   var data = searchForm.getData();
+        		var param ={
+					 brRq : 'IN_DATA'
+					,brRs : 'OUT_DATA'
+					,IN_DATA:[ data ]
+				}
+		    	grid.loadData('BR_UPBIT_EXCHANGE_GET_ACCOUNTS',param,function(data){
+			    	console.log(data);
+			    	//gridLoadData에서 자동으로 로드됨..
+		        	
+		    	});
+               break;
+			}
+	  	});
+	  	searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

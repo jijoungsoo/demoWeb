@@ -12,6 +12,10 @@ class FormMngr {
 		} else {
 			this.container_area = this.container;
 		}
+		if(this.container_area[0] == undefined){
+			alert("form을 찾을수 없습니다.["+area_name+"] 코드를 확인해주세요.");
+			return;
+		}
 		this.initBinder();
 	}
 	getUUID() {
@@ -33,7 +37,7 @@ class FormMngr {
 		
 		//console.log(this.pgm_mngr);
 		//console.log(this.container_area);
-		//console.log(w);
+		console.log(w);
 		//console.log(w.querySelectorAll('[data-model]'));
 		for (var i = 0; i < w.querySelectorAll('[data-model]').length; i++) {
 			var el = w.querySelectorAll('[data-model]')[i];

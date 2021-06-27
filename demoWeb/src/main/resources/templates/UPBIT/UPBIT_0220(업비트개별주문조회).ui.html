@@ -1,0 +1,149 @@
+
+<div name="order_area">
+  <input type="button" name="btn_search" value="조회" />  
+  <input type="button" name="btn_delete_order" value="주문취소" />    
+  <div class="container" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+    <div class="row row-cols-3">
+      <div class="col-sm">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">주문의 고유 아이디</span> <input type="text"
+              disabled class="form-control"  data-ax-path="UUID"  name="UUID">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">주문 종류</span> <input type="text"
+            disabled class="form-control"  data-ax-path="SIDE" name="SIDE">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">주문 방식</span> <input type="text"
+            disabled class="form-control" data-ax-path="ORD_TYPE" name="ORD_TYPE">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">주문 당시 화폐 가격</span> <input type="text"
+            disabled  class="form-control"  data-ax-path="PRICE" name="PRICE">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">주문 상태</span> <input type="text"
+            disabled class="form-control" data-ax-path="STATE"  name="STATE">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-cols-3">
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">마켓의 유일키</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="MARKET"  name="MARKET">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">주문 생성 시간</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="CREATED_AT"  name="CREATED_AT">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">사용자가 입력한 주문 양</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="VOLUME"  name="VOLUME">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-cols-3">        
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">체결 후 남은 주문 양</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="REMAINING_VOLUME"  name="REMAINING_VOLUME">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">수수료로 예약된 비용</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="RESERVED_FEE"  name="RESERVED_FEE">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">남은 수수료</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="REMAINING_FEE"  name="REMAINING_FEE">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-cols-3">  
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">사용된 수수료</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="PAID_FEE"  name="PAID_FEE">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">거래에 사용중인 비용</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="LOCKED"  name="LOCKED">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-cols-3">  
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">체결된 양</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="EXECUTED_VOLUME"  name="EXECUTED_VOLUME">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">해당 주문에 걸린 체결 수</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="TRADE_COUNT"  name="TRADE_COUNT">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div name="grid"></div>

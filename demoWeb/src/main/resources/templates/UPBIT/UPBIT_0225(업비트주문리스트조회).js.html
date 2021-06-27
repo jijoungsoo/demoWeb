@@ -1,0 +1,187 @@
+
+<script>
+	$(document).ready(function(){
+		var UPBIT_0225 = new PgmPageMngr('[[${uuid}]]');
+		UPBIT_0225.init(function(p_param) {
+			var _this = UPBIT_0225;
+			var searchForm = new FormMngr(_this, "search_area");
+			searchForm.initCombo("STATE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_ORDER_STATE', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+			
+
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: '주문의 고유 아이디',
+					   name: 'UUID',
+					   width: 140,
+					   align : 'center',
+					   filter : {
+						type : 'text',
+						showApplyBtn : true,
+						showClearBtn : true
+						}
+					},{
+					   header: '주문 종류',
+					   name: 'SIDE',
+					   width: 100,
+					   align : 'center',
+					   filter : {
+						type : 'text',
+						showApplyBtn : true,
+						showClearBtn : true
+						}
+					},{
+					   header: '주문 방식',
+					   name: 'ORD_TYPE',
+					   width: 100,
+					   align : 'center',
+					   filter : {
+						type : 'text',
+						showApplyBtn : true,
+						showClearBtn : true
+					   },
+					   resizable: true,
+					   sortable : true,
+					   sortingType: 'desc'
+					},{
+					   header: '주문 당시 화폐 가격',
+					   name: 'PRICE',
+					   width: 140,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: '주문 상태',
+					   name: 'STATE',
+					   width: 100,
+					   align : 'center',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					 },{
+						 header: '마켓의 유일키',
+						 name: 'MARKET',
+						 width: 200,
+						 sortable: true,
+						 align: "center"
+					},{
+						 header: '주문 생성 시간',
+						 name: 'CREATED_AT',
+						 width: 200,
+						 sortable: true,
+						 align: "center"
+					 },{
+						 header: '사용자가 입력한 주문 양',
+						 name: 'VOLUME',
+						 width: 140,
+						 sortable: true,
+						 align: "right"
+					 },{
+						 header: '체결 후 남은 주문 양',
+						 name: 'REMAINING_VOLUME',
+						 width: 140,
+						 align : 'right',
+						 sortable: true
+					},{
+						 header: '수수료로 예약된 비용',
+						 name: 'RESERVED_FEE',
+						 width: 140,
+						 align : 'right',
+						 sortable: true
+					 },{
+						 header: '남은 수수료',
+						 name: 'REMAINING_FEE',
+						 width: 140,
+						 sortable: true,
+						 align: "center"
+					 },{
+						 header: '사용된 수수료',
+						 name: 'PAID_FEE',
+						 width: 140,
+						 align : 'right',
+						 sortable: true
+					 },{
+						 header: '거래에 사용중인 비용',
+						 name: 'LOCKED',
+						 width: 140,
+						 sortable: true,
+						 align: "center"
+					 },{
+						 header: '체결된 양',
+						 name: 'EXECUTED_VOLUME',
+						 width: 200,
+						 align : 'right',
+						 sortable: true
+					 },{
+						 header: '해당 주문에 걸린 체결 수',
+						 name: 'TRADE_COUNT',
+						 width: 140,
+						 align : 'right',
+						 sortable: true
+					 }
+				]
+			);
+
+			
+			
+			  grid.build();
+
+			  grid.on('click', (ev) => {
+					if (ev.rowKey >=0) {
+						var row_data=grid.getRow(ev.rowKey);
+						console.log(row_data);
+
+						var param = {
+							P_UUID: row_data.UUID
+						}
+						var popup = new PopupManger(_this, 'UPBIT_0220', {
+								width: 1100,
+								height: 900,
+								title: "개별주문조회"
+							},
+							param
+						);
+						popup.open(function (data) {
+							if (data) {
+
+							}
+						});
+						
+					}
+				});
+	
+			  searchForm.addEvent("click","input[type=button]",function(el){
+			   //console.log(el);
+				 switch(el.target.name){
+			   case 'search':
+				   var data = searchForm.getData();
+					var param ={
+						 brRq : 'IN_DATA'
+						,brRs : 'OUT_DATA'
+						,IN_DATA:[ data ]
+					}
+					grid.loadData('BR_UPBIT_EXCHANGE_GET_ORDERS',param,function(data){
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+						
+					});
+				   break;
+				 }
+			  });
+			  searchForm.get("search").trigger("click");
+		});	
+	});
+	
+	</script>

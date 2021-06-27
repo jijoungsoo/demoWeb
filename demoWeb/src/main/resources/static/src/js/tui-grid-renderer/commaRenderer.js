@@ -12,7 +12,11 @@ class commaRenderer {
 
     render(props) {
    	    if(props.value){
-   	    	var tmp=String(props.value);
+          var tmp;
+          tmp=String(props.value);
+           
+
+   	    	  
             var tmp2 = PjtUtil.numberComma(tmp);
             this.el.innerText = tmp2;
 		}  else {
