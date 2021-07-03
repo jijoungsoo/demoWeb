@@ -327,23 +327,43 @@ $(document).ready(function(){
 			if (ev.rowKey >=0) {
 				if(ev.columnName=="MARKET"){
 					var row_data=grid.getRow(ev.rowKey);
-				console.log(row_data);
+					console.log(row_data);
 
-				var param = {
-					MARKET: row_data.MARKET
-				}
-				var popup = new PopupManger(_this, 'UPBIT_0150', {
-						width: 1200,
-						height: 700,
-						title: "업비트종목상세["+row_data.MARKET+"]"
-					},
-					param
-				);
-				popup.open(function (data) {
-					if (data) {
-
+					var param = {
+						MARKET: row_data.MARKET
 					}
-				});
+					var popup = new PopupManger(_this, 'UPBIT_0150', {
+							width: 1200,
+							height: 700,
+							title: "업비트종목상세["+row_data.MARKET+"]"
+						},
+						param
+					);
+					popup.open(function (data) {
+						if (data) {
+
+						}
+					});
+				}
+				if(ev.columnName=="KR_NM"){
+					var row_data=grid.getRow(ev.rowKey);
+					console.log(row_data);
+
+					var param = {
+						MARKET: row_data.MARKET
+					}
+					var popup = new PopupManger(_this, 'UPBIT_0215', {
+							width: 1200,
+							height: 700,
+							title: "업비트주문가능정보["+row_data.MARKET+"]"
+						},
+						param
+					);
+					popup.open(function (data) {
+						if (data) {
+
+						}
+					});
 				}
 				
 				

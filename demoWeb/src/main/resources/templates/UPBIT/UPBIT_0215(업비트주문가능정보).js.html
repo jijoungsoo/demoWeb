@@ -4,154 +4,28 @@
 		var UPBIT_0215 = new PgmPageMngr('[[${uuid}]]');
 		UPBIT_0215.init(function(p_param) {
 			var _this = UPBIT_0215;
-			var searchForm = new FormMngr(_this, "search_area");
-			searchForm.initCombo("MARKET_WARNING",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_WARNING', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
-			searchForm.initCombo("MARKET_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+
+			console.log(p_param.param.MARKET);
+			var market = p_param.param.MARKET;
 
 			var orderChanceAreaForm = new FormMngr(_this, "order_chance_area");
 		    $('[data-ax5formatter]').ax5formatter();
 		
-			const grid = new TuiGridMngr(_this,'grid',{
-				  editable: false
-				  ,showRowStatus: false
-				  ,rowNum: true
-				  ,checkbox: false
-				  ,pageable: false
-				  ,bodyHeight : 700
-				  ,width : 700
-				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
-				  }
-			,[
-					{
-					   header: '통화코드',
-					   name: 'MARKET_CD',
-					   width: 100,
-					   align : 'center',
-					   filter : {
-						type : 'text',
-						showApplyBtn : true,
-						showClearBtn : true
-						}
-					},{
-					   header: '종목명',
-					   name: 'MARKET',
-					   width: 100,
-					   align : 'center',
-					   filter : {
-						type : 'text',
-						showApplyBtn : true,
-						showClearBtn : true
-						}
-					},{
-					   header: '영문명',
-					   name: 'EN_NM',
-					   width: 200,
-					   align : 'center',
-					   filter : {
-						type : 'text',
-						showApplyBtn : true,
-						showClearBtn : true
-					   },
-					   resizable: true,
-					   sortable : true,
-					   sortingType: 'desc'
-					},{
-					   header: '한글명',
-					   name: 'KR_NM',
-					   width: 200,
-					   align : 'center',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: '유의 종목 여부',
-					   name: 'MARKET_WARNING',
-					   width: 200,
-					   align : 'center',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc'
-					 },{
-						 header: '생성일',
-						 name: 'CRT_DTM',
-						 width: 200,
-						 sortable: true,
-						 align: "center"
-						},{
-						 header: '수정일',
-						 name: 'UPDT_DTM',
-						 width: 200,
-						 sortable: true,
-						 align: "center"
-					 }
-				]
-			);
-			  grid.build();
-	
-			grid.on('click', (ev) => {
-				if (ev.rowKey >=0) {
-					if(ev.columnName=="MARKET"){
-						var row_data=grid.getRow(ev.rowKey);
-						console.log(row_data.MARKET);
-
-
-						var param ={
-							brRq : 'IN_DATA'
-							,brRs : 'OUT_DATA'
-							,IN_DATA:[ {
-
-								MARKET : row_data.MARKET
-
-							} ]
-						}
-						_this.showProgress();
-						_this.send('BR_UPBIT_EXCHANGE_GET_ORDERS_CHANCE', param, function(data) {
-							_this.hideProgress();
-							if (data) {
-								console.log(data.OUT_DATA[0]);
-								orderChanceAreaForm.setDataAll(data.OUT_DATA[0]);		
-							}
-						});	
-						
-					}
+			var param ={
+				brRq : 'IN_DATA'
+				,brRs : 'OUT_DATA'
+				,IN_DATA:[ {
+					MARKET : market
+				} ]
+			}
+			_this.showProgress();
+			_this.send('BR_UPBIT_EXCHANGE_GET_ORDERS_CHANCE', param, function(data) {
+				_this.hideProgress();
+				if (data) {
+					console.log(data.OUT_DATA[0]);
+					orderChanceAreaForm.setDataAll(data.OUT_DATA[0]);		
 				}
-			});
-	
-			  searchForm.addEvent("click","input[type=button]",function(el){
-			   //console.log(el);
-				 switch(el.target.name){
-			   case 'search':
-				   var data = searchForm.getData();
-					var param ={
-						 brRq : 'IN_DATA'
-						,brRs : 'OUT_DATA'
-						,IN_DATA:[ data ]
-					}
-					grid.loadData('BR_UPBIT_MARKET_FIND',param,function(data){
-						console.log(data);
-						//gridLoadData에서 자동으로 로드됨..
-						
-					});
-				   break;
-				   case 'BTN_UPBIT_MARKET_SYNC':
-						var data = searchForm.getData();
-						var param ={
-							brRq : 'IN_DATA'
-							,brRs : 'OUT_DATA'
-							,IN_DATA:[ {} ]
-						}
-						_this.showProgress();
-						_this.send_socket('BR_UPBIT_MARKET_SYNC', param, function(data) {
-							_this.hideProgress();
-							if (data) {
-								searchForm.get("search").trigger("click");
-							}
-						});	
-				   break;
-				}
-			  });
-			  searchForm.get("search").trigger("click");
+			});				
 		});	
-	});
-	
+	});	
 	</script>
