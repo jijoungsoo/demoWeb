@@ -7,6 +7,9 @@ $(document).ready(function(){
 		var searchForm = new FormMngr(_this, "search_area");
 		searchForm.initCombo("MARKET_WARNING",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_WARNING', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
 		searchForm.initCombo("MARKET_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+		searchForm.initCombo("DEL_YN",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'DEL_YN', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+
+		
 		
 		const grid = new TuiGridMngr(_this,'grid',{
 		      editable: false
@@ -62,6 +65,14 @@ $(document).ready(function(){
 		           header: '유의 종목 여부',
 		           name: 'MARKET_WARNING',
 		           width: 200,
+				   align : 'center',
+				   sortable : true,
+				   resizable: true,
+		           sortingType: 'desc'
+				},{
+		           header: '삭제유무',
+		           name: 'DEL_YN',
+		           width: 100,
 				   align : 'center',
 				   sortable : true,
 				   resizable: true,

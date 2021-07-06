@@ -141,4 +141,23 @@ class FormMngr {
 		
 	}
 
+	disable(el_name){
+		var w = this.container_area[0];
+		var tmp_el_sel = "[name="+el_name+"]";
+		if (w.querySelectorAll(tmp_el_sel)) {
+			w.querySelectorAll(tmp_el_sel).forEach(function(el) {
+				el.setAttribute("disabled", "");
+			});
+		}
+	}
+	enable(el_name){
+		var w = this.container_area[0];
+		var tmp_el_sel = "[name="+el_name+"]";
+		if (w.querySelectorAll(tmp_el_sel)) {
+			w.querySelectorAll(tmp_el_sel).forEach(function(el) {
+				el.removeAttribute("disabled");     
+			});
+		}
+	}
+
 }

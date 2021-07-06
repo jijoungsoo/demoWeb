@@ -83,11 +83,14 @@ public class PageController {
 		MsgDebugInfo gl_tmp=null;
     	Iterator<MsgDebugInfo> it= que.iterator();
     	while(it.hasNext()) {
+		
         	MsgDebugInfo tmp = it.next();
-        	if(tmp.getUUID().equals(UUID) && String.valueOf(tmp.getSEQ()).equals(SEQ)) {
-            	gl_tmp=tmp;
-            	break;
-        	}
+			if(tmp!=null){
+				if(tmp.getUUID().equals(UUID) && String.valueOf(tmp.getSEQ()).equals(SEQ)) {
+					gl_tmp=tmp;
+					break;
+				}
+			}
     	}
 		
 		model.addAttribute("gl_tmp", gl_tmp);

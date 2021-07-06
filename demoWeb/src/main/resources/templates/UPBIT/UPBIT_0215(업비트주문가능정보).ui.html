@@ -1,3 +1,98 @@
+<div name="search_area">
+  <input type="button" name="btn_search" value="조회" />  
+  <div name="grid"></div>
+</div>
+
+<div class="container" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+  <div class="row row-cols-2">
+    <div class="col-sm">
+      <div name="order_buy_area">매수
+        <div name="grid_orderbook_units_bid"></div>
+        <div class="container" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+          <div class="row row-cols-1">
+            <div class="col-sm">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">마켓</span> 
+                  <input type="text" disabled class="form-control"  data-ax-path="MARKET"  name="MARKET">
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">주문타입</span> 
+                  <select class="form-control"  data-ax-path="ORD_TYPE" name="ORD_TYPE"></select>
+                </div>
+              </div>
+            </div>      
+            <div class="col">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">주문가격</span> 
+                  <input type="text" class="form-control"  data-ax-path="PRICE" name="PRICE">
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">주문량</span> 
+                  <input type="text"  class="VOLUME" data-ax-path="VOLUME" name="VOLUME">
+                </div>
+              </div>
+            </div>
+            <input type="button" name="btn_buy" value="사자" />  
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div name="order_sell_area">매도
+        <div name="grid_orderbook_units_ask"></div>
+        <div class="container" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+          <div class="row row-cols-1">
+            <div class="col-sm">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">마켓</span> 
+                  <input type="text" class="form-control"  data-ax-path="MARKET"  name="MARKET">
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">주문타입</span> 
+                  <select class="form-control"  data-ax-path="ORD_TYPE" name="ORD_TYPE"></select>
+                </div>
+              </div>
+            </div>  
+            <div class="col">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">주문가격</span> 
+                  <input type="text" class="form-control"  data-ax-path="PRICE" name="PRICE">
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="form-group">
+                <div class="input-group">
+                  <span class="input-group-addon">주문량</span> 
+                  <input type="text" class="VOLUME" data-ax-path="VOLUME" name="VOLUME">
+                </div>
+              </div>
+            </div>   
+            <input type="button" name="btn_sell" value="팔자" />  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>  
+
+
 <div name="order_chance_area">
   <div class="container" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
     <div class="row row-cols-3">
@@ -114,7 +209,7 @@
     </div>
   </div>
   <div class="container" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
-    <div class="row row-cols-3">  
+    <div class="row row-cols-4">  
       <div class="col">
         <div class="form-group">
           <div class="input-group">

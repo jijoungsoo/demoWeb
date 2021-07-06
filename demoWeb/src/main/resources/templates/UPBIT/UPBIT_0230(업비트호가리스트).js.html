@@ -5,7 +5,7 @@
 		UPBIT_0225.init(function(p_param) {
 			var _this = UPBIT_0225;
 			var searchForm = new FormMngr(_this, "search_area");
-			searchForm.initCombo("AL_STATES",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_ORDER_STATES', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+			searchForm.initCombo("STATE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_ORDER_STATE', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
 			
 
 			const grid = new TuiGridMngr(_this,'grid',{
