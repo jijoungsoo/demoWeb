@@ -86,6 +86,57 @@ $(document).ready(function(){
 		);
 	  	grid.build();
 
+		grid.on('click', (ev) => {
+				if (ev.rowKey >=0) {
+					if(ev.columnName=="CURRENCY"){
+						var row_data=grid.getRow(ev.rowKey);
+						console.log(row_data);
+						if(row_data.CURRENCY=='KRW'){
+							var param = {
+							P_CURRENCY: row_data.CURRENCY,
+							P_AMOUNT: row_data.BALANCE
+							}
+							var popup = new PopupManger(_this, 'UPBIT_0250', {
+									width: 1000,
+									height: 400,
+									title: "업비트원화출금하기"
+								},
+								param
+							);
+							popup.open(function (data) {
+								if (data) {
+
+								}
+							});
+						} else {
+							var param = {
+							P_CURRENCY: row_data.CURRENCY,
+							P_AMOUNT: row_data.BALANCE
+							}
+							var popup = new PopupManger(_this, 'UPBIT_0245', {
+									width: 1000,
+									height: 400,
+									title: "업비트코인출금하기"
+								},
+								param
+							);
+							popup.open(function (data) {
+								if (data) {
+
+								}
+							});
+						}
+						
+						
+
+					}
+					
+					
+				}
+			});
+
+		
+
 	  	searchForm.addEvent("click","input[type=button]",function(el){
 		   //console.log(el);
 	  	   switch(el.target.name){

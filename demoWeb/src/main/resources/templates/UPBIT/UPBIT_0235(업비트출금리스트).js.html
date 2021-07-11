@@ -1,0 +1,159 @@
+
+<script>
+	$(document).ready(function(){
+		var UPBIT_0225 = new PgmPageMngr('[[${uuid}]]');
+		UPBIT_0225.init(function(p_param) {
+			var _this = UPBIT_0225;
+			var searchForm = new FormMngr(_this, "search_area");
+			searchForm.initCombo("STATE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_WITHDRAWS_STATE', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+			
+
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: '입출금 종류',
+					   name: 'TYPE',
+					   width: 140,
+					   align : 'center',
+					   filter : {
+						type : 'text',
+						showApplyBtn : true,
+						showClearBtn : true
+						}
+					},{
+					   header: '출금의 고유 아이디',
+					   name: 'UUID',
+					   width: 140,
+					   align : 'center',
+					   filter : {
+						type : 'text',
+						showApplyBtn : true,
+						showClearBtn : true
+						}
+					},{
+					   header: '화폐를 의미하는 영문 대문자 코드',
+					   name: 'CURRENCY',
+					   width: 100,
+					   align : 'center',
+					   filter : {
+						type : 'text',
+						showApplyBtn : true,
+						showClearBtn : true
+					   },
+					   resizable: true,
+					   sortable : true,
+					   sortingType: 'desc'
+					},{
+					   header: '출금의 트랜잭션 아이디',
+					   name: 'TXID',
+					   width: 140,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: '출금 상태',
+					   name: 'STATE',
+					   width: 100,
+					   align : 'center',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					 },{
+						 header: '출금 생성 시간',
+						 name: 'CREATED_AT',
+						 width: 200,
+						 sortable: true,
+						 align: "center"
+					},{
+						 header: '출금 완료 시간',
+						 name: 'DONE_AT',
+						 width: 200,
+						 sortable: true,
+						 align: "center"
+					 },{
+						 header: '출금 금액/수량',
+						 name: 'AMOUNT',
+						 width: 140,
+						 align : 'right',
+						 sortable: true
+					},{
+						 header: '출금 수수료',
+						 name: 'FEE',
+						 width: 140,
+						 align : 'right',
+						 sortable: true
+					 },{
+						 header: '출금 유형',
+						 name: 'TRANSACTION_TYPE',
+						 width: 140,
+						 sortable: true,
+						 align: "center"
+					 }
+				]
+			);
+
+			
+			
+			  grid.build();
+
+			  grid.on('click', (ev) => {
+			if (ev.rowKey >=0) {
+				var row_data=grid.getRow(ev.rowKey);
+				console.log(row_data);
+
+				var param = {
+					P_UUID: row_data.UUID
+					,P_TXID: row_data.TXID
+					,P_CURRENCY: row_data.CURRENCY
+				}
+				var popup = new PopupManger(_this, 'UPBIT_0240', {
+						width: 1100,
+						height: 400,
+						title: "개별출금조회"
+					},
+					param
+				);
+				popup.open(function (data) {
+					if (data) {
+
+					}
+				});
+				
+			}
+		});
+	
+			  searchForm.addEvent("click","input[type=button]",function(el){
+			   //console.log(el);
+				 switch(el.target.name){
+			   case 'search':
+				   var data = searchForm.getData();
+					var param ={
+						 brRq : 'IN_DATA'
+						,brRs : 'OUT_DATA'
+						,IN_DATA:[ data ]
+					}
+					grid.loadData('BR_UPBIT_EXCHANGE_GET_WITHDRAWS',param,function(data){
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+						
+					});
+				   break;
+				 }
+			  });
+			  searchForm.get("search").trigger("click");
+		});	
+	});
+	
+	</script>
