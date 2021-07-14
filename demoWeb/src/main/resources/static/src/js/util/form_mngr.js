@@ -39,10 +39,13 @@ class FormMngr {
 		//console.log(this.container_area);
 		console.log(w);
 		//console.log(w.querySelectorAll('[data-model]'));
+		console.log('aaaaaaaaaaaaaaaaa');
 		for (var i = 0; i < w.querySelectorAll('[data-model]').length; i++) {
 			var el = w.querySelectorAll('[data-model]')[i];
+			console.log(el.name);
 			tgt_data[el.name] = '';
 		}
+		console.log('bbbbbbbbbbbbb');
 		this.myModel = new ax5.ui.binder();
 		this.myModel.setModel(tgt_data, this.container_area);
 	}
@@ -75,6 +78,7 @@ class FormMngr {
 	}
 	getData(name) {
 		if(name){
+			console.log(this.myModel.get());
 			return this.myModel.get()[name]	;
 		} else {
 			return this.myModel.get();
@@ -158,6 +162,17 @@ class FormMngr {
 				el.removeAttribute("disabled");     
 			});
 		}
+	}
+	show(){
+		console.log(this.container_area);
+		console.log('show()');
+		this.container_area.show();
+	}
+
+	hide(){
+		console.log(this.container_area);
+		console.log('hide()');
+		this.container_area.hide();
 	}
 
 }

@@ -1,0 +1,98 @@
+
+<script>
+	$(document).ready(function(){
+		var UPBIT_0245 = new PgmPageMngr('[[${uuid}]]');
+		UPBIT_0245.init(function(p_param) {
+			var _this = UPBIT_0245;
+			var currency = p_param.param.P_CURRENCY;
+			var withdrawChanceMemberLevelForm = new FormMngr(_this, "withdraws_chance_member_level_area");
+			var withdrawChanceCurrencyForm = new FormMngr(_this, "withdraws_chance_currency_area");
+			var withdrawChanceAccountForm = new FormMngr(_this, "withdraws_chance_account_area");
+			var withdrawChanceWithdrawLimitForm = new FormMngr(_this, "withdraws_chance_withdraw_limit_area");
+			
+			
+			
+			var withdrawCoinForm = new FormMngr(_this, "withdraw_coin_area");
+			var withdrawKrwForm = new FormMngr(_this, "withdraw_krw_area");
+		    $('[data-ax5formatter]').ax5formatter();
+			
+			
+			var param ={
+				brRq : 'IN_DATA'
+				,brRs : 'OUT_DATA'
+				,IN_DATA:[ {
+					CURRENCY : currency
+				} ]
+			}
+			_this.showProgress();
+			_this.send('BR_UPBIT_EXCHANGE_GET_WITHDRAWS_CHANCE', param, function(data) {
+				_this.hideProgress();
+				if (data) {
+					console.log(data);
+					withdrawChanceMemberLevelForm.setDataAll(data.OUT_DATA_MEMBER_LEVEL[0]);
+					withdrawChanceCurrencyForm.setDataAll(data.OUT_DATA_CURRENCY[0]);
+					withdrawChanceAccountForm.setDataAll(data.OUT_DATA_ACCOUNT[0]);
+					withdrawChanceWithdrawLimitForm.setDataAll(data.OUT_DATA_WITHDRAW_LIMIT[0]);
+
+					var currency = withdrawChanceAccountForm.getData('CURRENCY');
+					if(currency=='KRW'){
+						withdrawCoinForm.hide();
+						withdrawKrwForm.show();
+						var withdraw_fee = withdrawChanceCurrencyForm.getData('WITHDRAW_FEE');
+						var balance = withdrawChanceAccountForm.getData('BALANCE');
+						withdrawKrwForm.setData('WITHDRAW_FEE',withdraw_fee);
+						withdrawKrwForm.setData('BALANCE',balance);
+						withdrawKrwForm.setData('CURRENCY',currency);
+						withdrawKrwForm.setData('AMOUNT',(balance-withdraw_fee));
+					} else {
+						withdrawCoinForm.show();
+						withdrawKrwForm.hide();
+					}
+				}
+			});	
+			
+			withdrawKrwForm.addEvent("click","input[type=button]",function(el){
+			   //console.log(el);
+				 switch(el.target.name){
+			   case 'save_krw':
+				   var data = withdrawKrwForm.getData();
+					var param ={
+						 brRq : 'IN_DATA'
+						,brRs : 'OUT_DATA'
+						,IN_DATA:[ data ]
+					}
+					_this.showProgress();
+					_this.send('BR_UPBIT_EXCHANGE_POST_WITHDRAWS_KRW', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							
+						}
+					});	
+				   break;
+				 }
+			  });
+
+			  withdrawCoinForm.addEvent("click","input[type=button]",function(el){
+			   //console.log(el);
+				 switch(el.target.name){
+			   case 'save_coin':
+				   var data = withdrawCoinForm.getData();
+					var param ={
+						 brRq : 'IN_DATA'
+						,brRs : 'OUT_DATA'
+						,IN_DATA:[ data ]
+					}
+					_this.showProgress();
+					_this.send('BR_UPBIT_EXCHANGE_POST_WITHDRAWS_COIN', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							
+						}
+					});	
+				   break;
+				 }
+			  });
+		});	
+	});
+	
+	</script>

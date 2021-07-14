@@ -1,6 +1,6 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.0'
-	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'org.springframework.boot' version '2.5.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
 
@@ -45,7 +45,7 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'	//thymeleaf 용 스프링시큐리티 태크 사용
 	//implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
-   	implementation 'org.springframework.boot:spring-boot-starter-security:2.4.0' /*패스워드 암호화 때문에 사용*/
+   	implementation 'org.springframework.boot:spring-boot-starter-security:2.5.2' /*패스워드 암호화 때문에 사용*/
 
 	   // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
    implementation 'ch.qos.logback:logback-classic:1.2.3'
@@ -77,9 +77,9 @@ dependencies {
 											  http://dveamer.github.io/backend/SpringCacheable.html
 	*/
 	
-	compileOnly 'org.projectlombok:lombok:1.18.16'    ///docker에서  gradlew build에서 안되서 아래 것을 하나 더 추가했다.
-	implementation 'org.projectlombok:lombok:1.18.16'
-	annotationProcessor 'org.projectlombok:lombok:1.18.16'
+	compileOnly 'org.projectlombok:lombok:1.18.20'    ///docker에서  gradlew build에서 안되서 아래 것을 하나 더 추가했다.
+	implementation 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
 	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
@@ -89,8 +89,8 @@ dependencies {
 	/*스프링 상태 모니터링
 	/actuator  로 접근
 	 */
-	implementation "org.springframework.boot:spring-boot-starter-actuator:2.4.1"
-	implementation 'de.codecentric:spring-boot-admin-starter-client:2.3.1'
+	implementation "org.springframework.boot:spring-boot-starter-actuator:2.5.2"
+	implementation 'de.codecentric:spring-boot-admin-starter-client:2.4.3'
 	
 
 	
@@ -135,7 +135,7 @@ dependencies {
 	//html태그를 제거하기위해서 쓰려고함 
 	//https://java2020.com/q/hwprbhse
 	// https://mvnrepository.com/artifact/org.jsoup/jsoup
-	implementation "org.jsoup:jsoup:1.13.1"
+	implementation "org.jsoup:jsoup:1.14.1"
 
 	// https://mvnrepository.com/artifact/org.zalando/faux-pas
 	implementation 'org.zalando:faux-pas:0.9.0'
