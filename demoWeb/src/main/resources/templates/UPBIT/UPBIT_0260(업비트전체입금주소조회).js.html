@@ -1,0 +1,104 @@
+
+<script>
+	$(document).ready(function(){
+		var UPBIT_0250 = new PgmPageMngr('[[${uuid}]]');
+		UPBIT_0250.init(function(p_param) {
+			var _this = UPBIT_0250;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: '화폐를 의미하는 영문 대문자 코드',
+					   name: 'CURRENCY',
+					   width: 100,
+					   align : 'left',
+					   filter : {
+						type : 'text',
+						showApplyBtn : true,
+						showClearBtn : true
+					   },
+					   resizable: true,
+					   sortable : true,
+					   sortingType: 'desc'
+					},{
+					   header: '입금 주소',
+					   name: 'DEPOSIT_ADDRESS',
+					   width: 400,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: '2차 입금 주소',
+					   name: 'SECONDARY_ADDRESS',
+					   width: 300,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					 }
+				]
+			);
+
+			
+			
+			  grid.build();
+
+			  grid.on('click', (ev) => {
+			if (ev.rowKey >=0) {
+				var row_data=grid.getRow(ev.rowKey);
+				console.log(row_data);
+
+				var param = {
+					P_CURRENCY: row_data.CURRENCY
+				}
+				var popup = new PopupManger(_this, 'UPBIT_0265', {
+						width: 1100,
+						height: 400,
+						title: "개별입금주소조회"
+					},
+					param
+				);
+				popup.open(function (data) {
+					if (data) {
+
+					}
+				});
+				
+			}
+		});
+	
+			  searchForm.addEvent("click","input[type=button]",function(el){
+			   //console.log(el);
+				 switch(el.target.name){
+			   case 'search':
+				   var data = searchForm.getData();
+					var param ={
+						 brRq : 'IN_DATA'
+						,brRs : 'OUT_DATA'
+						,IN_DATA:[  ]
+					}
+					grid.loadData('BR_UPBIT_EXCHANGE_GET_DEPOSITS_COIN_ADDRESSES',param,function(data){
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+						
+					});
+				   break;
+				 }
+			  });
+			  searchForm.get("search").trigger("click");
+		});	
+	});
+	
+	</script>

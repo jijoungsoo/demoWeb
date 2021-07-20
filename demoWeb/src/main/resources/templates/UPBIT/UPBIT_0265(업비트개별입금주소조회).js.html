@@ -1,0 +1,51 @@
+
+<script>
+	$(document).ready(function(){
+		var UPBIT_0265 = new PgmPageMngr('[[${uuid}]]');
+		UPBIT_0265.init(function(p_param) {
+			var _this = UPBIT_0265;
+			console.log(p_param.param.P_CURRENCY);
+			var currency = p_param.param.P_CURRENCY;
+
+			var depositCoinAddressForm = new FormMngr(_this, "deposit_coin_address_area");
+		    $('[data-ax5formatter]').ax5formatter();
+
+			var param ={
+				brRq : 'IN_DATA'
+				,brRs : 'OUT_DATA'
+				,IN_DATA:[ {
+					CURRENCY : currency
+				} ]
+			}
+			_this.showProgress();
+			_this.send('BR_UPBIT_EXCHANGE_GET_DEPOSITS_COIN_ADDRESS', param, function(data) {
+				_this.hideProgress();
+				if (data) {
+					depositCoinAddressForm.setDataAll(data.OUT_DATA[0]);		
+				}
+			});	
+
+			depositCoinAddressForm.addEvent("click","input[type=button]",function(el){
+			   //console.log(el);
+				 switch(el.target.name){
+			   case 'deposits_generate_coin_address':
+				   var data = depositCoinAddressForm.getData();
+					var param ={
+						 brRq : 'IN_DATA'
+						,brRs : 'OUT_DATA'
+						,IN_DATA:[ {CURRENCY : data.CURRENCY } ]
+					}
+					_this.showProgress();
+					_this.send('BR_UPBIT_EXCHANGE_POST_DEPOSITS_GENERATE_COIN_ADDRESS', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							
+						}
+					});	
+				   break;
+				 }
+			  });
+		});	
+	});
+	
+	</script>

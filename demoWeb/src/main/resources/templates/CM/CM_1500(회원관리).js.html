@@ -145,11 +145,11 @@ $(document).ready(function(){
 					if(data.OUT_DATA){
 						for(var i =0;i<data.OUT_DATA.length;i++){
 							var tmp =data.OUT_DATA[i];
-							arr_data.push({ id: tmp.CD , text: tmp.CD_NM  })
+							arr_data.push({ VALUE: tmp.CD , TEXT: tmp.CD_NM  })
 						}
 					}
 					console.log(arr_data);
-					userForm.addSelect2("USE_YN",arr_data);
+					userForm.initComboData("USE_YN",arr_data);
 				}
 
 			});

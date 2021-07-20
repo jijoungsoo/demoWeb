@@ -365,6 +365,27 @@ $(document).ready(function(){
 						}
 					});
 				}
+
+				if(ev.columnName=="EN_NM"){
+					var row_data=grid.getRow(ev.rowKey);
+					console.log(row_data);
+
+					var param = {
+						P_CURRENCY: row_data.EN_NM.toUpperCase()
+					}
+					var popup = new PopupManger(_this, 'UPBIT_0245', {
+							width: 1200,
+							height: 700,
+							title: "업비트주문가능정보["+row_data.EN_NM+"]"
+						},
+						param
+					);
+					popup.open(function (data) {
+						if (data) {
+
+						}
+					});
+				}
 				
 				
 			}

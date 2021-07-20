@@ -13,7 +13,8 @@ class FormMngr {
 			this.container_area = this.container;
 		}
 		if(this.container_area[0] == undefined){
-			alert("form을 찾을수 없습니다.["+area_name+"] 코드를 확인해주세요.");
+			console.log(pgm_mngr);
+			alert("pgm_mngr+["+pgm_mngr.pgm_id+"]form을 찾을수 없습니다.["+area_name+"] 코드를 확인해주세요.");
 			return;
 		}
 		this.initBinder();
@@ -56,6 +57,32 @@ class FormMngr {
 				let _this =this;
 				let _option =option;
 				var option_data = this.pgm_mngr.getComboData(br,param,option);
+				var el = _this.get(name)[0];
+				for(var i=0;i<option_data.length;i++){
+					var item_data = option_data[i];
+					var option = document.createElement("option");
+					option.value = item_data.VALUE;
+					option.text  = item_data.TEXT;
+					el.add(option);
+				}
+				if(option_data.length>0){
+					console.log(el);
+					el.options[0].selected = true;
+				}
+		} catch(e){
+			var tmp = name+"에 combo data 설정중 오류가 발생하였습니다."+name+" 요소가 있는지 확인해보세요."
+			alert(tmp);
+			console.log(e);
+			
+		}
+		this.initBinder()//바인딩을 한번 더 해준다.
+	}
+	initComboData(name,option_data) {
+		try {
+				console.log('initComboData');
+				console.log(option_data);
+				let _this =this;
+				let _option =option;
 				var el = _this.get(name)[0];
 				for(var i=0;i<option_data.length;i++){
 					var item_data = option_data[i];

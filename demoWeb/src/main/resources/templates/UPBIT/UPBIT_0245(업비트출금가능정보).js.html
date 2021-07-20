@@ -9,7 +9,7 @@
 			var withdrawChanceCurrencyForm = new FormMngr(_this, "withdraws_chance_currency_area");
 			var withdrawChanceAccountForm = new FormMngr(_this, "withdraws_chance_account_area");
 			var withdrawChanceWithdrawLimitForm = new FormMngr(_this, "withdraws_chance_withdraw_limit_area");
-			
+	
 			
 			
 			var withdrawCoinForm = new FormMngr(_this, "withdraw_coin_area");
@@ -47,6 +47,12 @@
 					} else {
 						withdrawCoinForm.show();
 						withdrawKrwForm.hide();
+						var withdraw_fee = withdrawChanceCurrencyForm.getData('WITHDRAW_FEE');
+						var balance = withdrawChanceAccountForm.getData('BALANCE');
+						withdrawCoinForm.setData('WITHDRAW_FEE',withdraw_fee);
+						withdrawCoinForm.setData('BALANCE',balance);
+						withdrawCoinForm.setData('CURRENCY',currency);
+						withdrawCoinForm.setData('AMOUNT',(balance-withdraw_fee));
 					}
 				}
 			});	
@@ -56,6 +62,7 @@
 				 switch(el.target.name){
 			   case 'save_krw':
 				   var data = withdrawKrwForm.getData();
+				   console.log(data);
 					var param ={
 						 brRq : 'IN_DATA'
 						,brRs : 'OUT_DATA'
@@ -92,7 +99,12 @@
 				   break;
 				 }
 			  });
+
+			  
+
 		});	
+
+
 	});
 	
 	</script>

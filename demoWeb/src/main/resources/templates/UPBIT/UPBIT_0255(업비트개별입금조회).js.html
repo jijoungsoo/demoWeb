@@ -1,0 +1,35 @@
+
+<script>
+	$(document).ready(function(){
+		var UPBIT_0255 = new PgmPageMngr('[[${uuid}]]');
+		UPBIT_0255.init(function(p_param) {
+			var _this = UPBIT_0255;
+			console.log(p_param.param.P_UUID);
+			var uuid = p_param.param.P_UUID;
+			var txid = p_param.param.P_TXID;
+			var currency = p_param.param.P_CURRENCY;
+		
+
+			var depositForm = new FormMngr(_this, "deposit_area");
+		    $('[data-ax5formatter]').ax5formatter();
+
+			var param ={
+				brRq : 'IN_DATA'
+				,brRs : 'OUT_DATA'
+				,IN_DATA:[ {
+					UUID : uuid
+					,TXID : txid
+					,CURRENCY : currency
+				} ]
+			}
+			_this.showProgress();
+			_this.send('BR_UPBIT_EXCHANGE_GET_DEPOSIT', param, function(data) {
+				_this.hideProgress();
+				if (data) {
+					depositForm.setDataAll(data.OUT_DATA[0]);		
+				}
+			});	
+		});	
+	});
+	
+	</script>
