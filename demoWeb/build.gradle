@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.5.2'
+	id 'org.springframework.boot' version '2.5.3'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
 }
@@ -45,7 +45,7 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'	//thymeleaf 용 스프링시큐리티 태크 사용
 	//implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
 
-   	implementation 'org.springframework.boot:spring-boot-starter-security:2.5.2' /*패스워드 암호화 때문에 사용*/
+   	implementation 'org.springframework.boot:spring-boot-starter-security:2.5.3' /*패스워드 암호화 때문에 사용*/
 
 	   // https://mvnrepository.com/artifact/ch.qos.logback/logback-classic
    implementation 'ch.qos.logback:logback-classic:1.2.3'
@@ -89,7 +89,7 @@ dependencies {
 	/*스프링 상태 모니터링
 	/actuator  로 접근
 	 */
-	implementation "org.springframework.boot:spring-boot-starter-actuator:2.5.2"
+	implementation "org.springframework.boot:spring-boot-starter-actuator:2.5.3"
 	implementation 'de.codecentric:spring-boot-admin-starter-client:2.4.3'
 	
 
@@ -110,23 +110,30 @@ dependencies {
 	implementation 'org.webjars.bower:handlebars:4.7.6'
 	
 	/*excep upload*/
-	compile group: 'org.apache.poi', name: 'poi', version: '5.0.0'
-	compile group: 'org.apache.poi', name: 'poi-ooxml', version: '5.0.0'
-	compile group: 'commons-io', name: 'commons-io', version: '2.8.0'
-	compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
-	compile group: 'com.github.drapostolos', name: 'type-parser', version: '0.7.0'
-	compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.4.2'
+	implementation 'org.apache.poi:poi:5.0.0'
+	implementation 'org.apache.poi:poi-ooxml:5.0.0'
+	//compile group: 'org.apache.poi', name: 'poi', version: '5.0.0'
+	//compile group: 'org.apache.poi', name: 'poi-ooxml', version: '5.0.0'
+
+	implementation 'commons-io:commons-io:2.8.0'
+	implementation 'org.apache.commons:commons-lang3:3.11'
+	implementation 'com.github.drapostolos:type-parser:0.7.0'
+	implementation 'org.springframework.boot:spring-boot-starter-validation:2.5.3'
+	//compile group: 'commons-io', name: 'commons-io', version: '2.8.0'
+	//compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.11'
+	//compile group: 'com.github.drapostolos', name: 'type-parser', version: '0.7.0'
+	//compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.4.2'
 
 	implementation "io.springfox:springfox-boot-starter:3.0.0"
 	
 	
 	// https://mvnrepository.com/artifact/org.apache.poi/poi
-	compile group: 'org.apache.poi', name: 'poi', version: '5.0.0'
+	//compile group: 'org.apache.poi', name: 'poi', version: '5.0.0'
 
 
 
 		//oauth2 로그인
-	  implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
+	  implementation 'org.springframework.boot:spring-boot-starter-oauth2-client:2.5.3'
 	
 	
 	// https://mvnrepository.com/artifact/org.jsoup/jsoup
@@ -146,6 +153,8 @@ dependencies {
 	///  org.springframework.boot.configurationprocessor.json ==>org.json
 	implementation group: 'org.json', name: 'json', version: '20210307'
 
+// https://mvnrepository.com/artifact/org.springframework.plugin/spring-plugin-metadata
+implementation 'org.springframework.plugin:spring-plugin-metadata:2.0.0.RELEASE'
 
 }
 

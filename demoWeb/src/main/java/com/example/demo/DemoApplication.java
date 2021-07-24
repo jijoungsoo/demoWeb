@@ -46,7 +46,6 @@ public class DemoApplication extends SpringBootServletInitializer {
 		//System.setProperty("spring.devtools.livereload.enabled","true");
 		/*https://haviyj.tistory.com/11 라이브 리로딩*/
 		SpringApplication application = new SpringApplication(DemoApplication.class);
-		
 		application.run(args);
 		
 	}
