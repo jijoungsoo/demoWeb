@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.exception.BizException;
 import com.example.demo.service.GoRestService;
 import com.example.demo.user.domain.UserInfo;
 import com.example.demo.utils.PjtUtil;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResourceAccessException;
 @Component
 public class CustomAuthenticationSuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
 
@@ -36,7 +38,7 @@ public class CustomAuthenticationSuccessHandler  extends SimpleUrlAuthentication
 
         HashMap<String, Object> IN_DS = new HashMap<String, Object>();
         IN_DS.put("brRq", "IN_DATA");
-        IN_DS.put("brRs", "OUT_DATA");
+        IN_DS.put("brRs", "");
         ArrayList<HashMap<String, Object>> in_date = new ArrayList<HashMap<String, Object>>();
         HashMap<String, Object> tmp = new HashMap<String, Object>();
         tmp.put("USER_NO", u.getUserNo());
@@ -46,16 +48,35 @@ public class CustomAuthenticationSuccessHandler  extends SimpleUrlAuthentication
         in_date.add(tmp);
         IN_DS.put("IN_DATA", in_date);
 
+
+        System.out.println("cccccccccccccccccccccccccccccccccccccccc");
 		
 
         String jsonInString;
         try {
             jsonInString = ptjU.ObjectToJsonString(IN_DS);
-            String jsonOutString = goS.callAPI("BR_CM_SESSION_LOG_CRT", jsonInString);
+            try {
+                String jsonOutString = goS.callAPI("BR_CM_SESSION_LOG_CRT", jsonInString);
+/*
+                jsonInString last =>
+            {"inDTName":"IN_DATA"
+                ,"refDS":{"IN_DATA":[{"USER_NO":0,"USER_ID":"jijs","LOG_TYPE":"LOGIN","IPADDR":"0:0:0:0:0:0:0:1"}]}
+                ,"actID":"BR_CM_SESSION_LOG_CRT"
+                ,"outDTName":"OUT_DATA"
+            }
+*/                
+
+
+            } catch (ResourceAccessException | BizException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                new BizException(e.getMessage());
+            }
             //OUT_DS = ptjU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+            new BizException(e.getMessage());
         }
 		handle(request, response, authentication);
 		clearAuthenticationAttributes(request);

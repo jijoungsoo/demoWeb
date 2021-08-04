@@ -1,0 +1,152 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0110 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0110.init(function(p_param) {
+			var _this = BINANCE_0110;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'COIN',
+					   name: 'COIN',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'DEPOSIT_ALL_ENABLE',
+					   name: 'DEPOSIT_ALL_ENABLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'FREE',
+					   name: 'FREE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'FREEZE',
+					   name: 'FREEZE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IPOABLE',
+					   name: 'IPOABLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IPOING',
+					   name: 'IPOING',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IS_LEGAL_MONEY',
+					   name: 'IS_LEGAL_MONEY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'LOCKED',
+					   name: 'LOCKED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'NAME',
+					   name: 'NAME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'STORAGE',
+					   name: 'STORAGE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TRADING',
+					   name: 'TRADING',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_ALL_ENABLE',
+					   name: 'WITHDRAW_ALL_ENABLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAWING',
+					   name: 'WITHDRAWING',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid.build();
+
+			  searchForm.addEvent("click","input[type=button]",function(el){
+			   //console.log(el);
+				 switch(el.target.name){
+			   case 'search':
+				   var data = searchForm.getData();
+					var param ={
+						 brRq : 'IN_DATA'
+						,brRs : 'OUT_DATA'
+						,IN_DATA:[  ]
+					}
+					grid.loadData('BR_BINANCE_GET_SAPI_V1_CAPITAL_CONFIG_GETALL',param,function(data){
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+						
+					});
+				   break;
+				 }
+			  });
+			  searchForm.get("search").trigger("click");
+		});	
+	});
+	
+	</script>

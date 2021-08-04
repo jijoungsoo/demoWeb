@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import com.example.demo.exception.BizException;
 import com.example.demo.service.GoRestService;
 import com.example.demo.utils.PjtUtil;
 
@@ -86,8 +87,8 @@ public class ApiRestController {
 	  * 문제는 logbook  으로 남근것만   loback-spring.xml에서 어떻게 가져올수 있는가 이다.
 	  * 답은   https://github.com/zalando/logbook/issues/559
 	  * */
-	 @PostMapping(path= "/api/{br}", consumes = "application/json", produces = "application/json")
-	 public ResponseEntity<Object> callAPI(@PathVariable("br") String br
+	 @PostMapping(path= "/api_rest/{br}", consumes = "application/json", produces = "application/json")
+	 public ResponseEntity<Object> callApiRest(@PathVariable("br") String br
 				, @RequestBody String jsonInString
 				, Authentication authentication
 				, HttpSession session 
@@ -101,7 +102,7 @@ public class ApiRestController {
 
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		try {
-			jsonOutString = goS.callAPI(br, msg.IN_DATA_JSON);
+			jsonOutString = goS.callApiRest(br, msg.IN_DATA_JSON);
 		} catch (HttpClientErrorException e) {
                 result.put("statusCode", "999");
                 result.put("body"  , e.getMessage());
@@ -122,6 +123,52 @@ public class ApiRestController {
                     .body(e.getMessage());
         }
 		pjtU.saveSesstionDebugMsg(msg,jsonOutString,session);		
+		
+	    return ResponseEntity.ok(jsonOutString);
+	 }
+
+	 @PostMapping(path= "/api/{br}", consumes = "application/json", produces = "application/json")
+	 public ResponseEntity<Object> callAPI(@PathVariable("br") String br
+				, @RequestBody String jsonInString
+				, Authentication authentication
+				, HttpSession session 
+			 ) throws Exception  {
+		 log.info("br=>"+br);
+		 
+		 log.info("jsonInString=>"+jsonInString);
+		 String jsonOutString=null;
+		 
+		MsgDebugInfo msg = pjtU.makeLSession(br,jsonInString,authentication);
+
+        pjtU.saveSesstionDebugMsg(msg,jsonOutString,session);		
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		try {
+			jsonOutString = goS.callApiBizActor(br, msg.IN_DATA_JSON);
+		} catch (HttpClientErrorException e) {
+                result.put("statusCode", "999");
+                result.put("body"  , e.getMessage());
+                e.printStackTrace();
+                //https://owin2828.github.io/devlog/2019/12/30/spring-16.html
+                
+                pjtU.saveSesstionDebugMsg(msg,pjtU.ObjectToJsonString(result),session);
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                		.body(e.getMessage());
+            
+		}	catch (HttpServerErrorException e) {
+            result.put("statusCode", e.getRawStatusCode());
+            result.put("body"  , e.getStatusText());
+            e.printStackTrace();
+            //https://owin2828.github.io/devlog/2019/12/30/spring-16.html
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        } catch (BizException e) {
+            result.put("statusCode", "500");
+            result.put("body"  , e.getMessage());
+            e.printStackTrace();
+            //https://owin2828.github.io/devlog/2019/12/30/spring-16.html
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(e.getMessage());
+        }
 		
 	    return ResponseEntity.ok(jsonOutString);
 	 }

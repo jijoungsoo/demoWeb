@@ -5,10 +5,12 @@ import java.security.AlgorithmParameters;
 import java.security.SecureRandom;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.UUID;
 
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
@@ -225,21 +227,46 @@ public class PjtUtil {
         long USER_NO=userInfo.getUserNo();
         String USER_ID=userInfo.getUserNm();
         String EMAIL=userInfo.getEmail();
+
+        System.out.println("-----------makeLSession--------------");
+        System.out.println("USER_NO=>"+USER_NO);
+        System.out.println("USER_ID=>"+USER_ID);
+        System.out.println("EMAIL=>"+EMAIL);
+
+
+        
+
+
         HashMap<String,Object>  inDs= this.JsonStringToObject(jsonInString, HashMap.class );
+
+        UUID one = UUID.randomUUID();//난수 생성
+        inDs.put("_id", one.toString()); 
+
         /*세션은 하나이지만... 약속때문에..  list 에 담는다.*/
-        HashMap<String,Object>  sess = new HashMap<String,Object>();
+        ArrayList<HashMap<String,String>>  arr_sess = new ArrayList<HashMap<String,String>>();
+        HashMap<String,String>  sess = new HashMap<String,String>();
         sess.put("USER_NO", String.valueOf(USER_NO));
         sess.put("USER_ID", USER_ID);
         String UUID = (String) inDs.get("UUID");
         String brRq=(String) inDs.get("brRq");
-        brRq = brRq+",LSESSION";
+        if(this.isEmpty(brRq)){
+            brRq = "LSESSION";
+        } else {
+            brRq = brRq+",LSESSION";
+        }        
         inDs.put("UUID", UUID);
         inDs.put("brRq", brRq);
-        inDs.put("LSESSION", sess);
+        arr_sess.add(sess);
+        inDs.put("LSESSION", arr_sess);
+        
+        
         
 
         
         String sessionJsonInString  = this.ObjectToJsonString(inDs);
+
+        System.out.println("sessionJsonInString=>"+sessionJsonInString);
+        System.out.println("-----------makeLSession--------------");
         
         MsgDebugInfo  m = new MsgDebugInfo();
         m.setBr(br);

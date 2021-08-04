@@ -62,7 +62,7 @@ class MetismenuMngr {
 	join_fav_menu(menu_no){
 		var param = {
 				brRq : 'IN_DATA',
-				brRs : 'OUT_DATA',
+				brRs : '',
 				IN_DATA : [ { MENU_NO : menu_no } ]
 		}
 		let _this=this;
@@ -86,7 +86,7 @@ class MetismenuMngr {
 	rm_fav_menu(fav_no){
 		var param = {
 				brRq : 'IN_DATA',
-				brRs : 'OUT_DATA',
+				brRs : '',
 				IN_DATA : [ { FAV_NO : fav_no } ]
 		}
 		let _this =this;

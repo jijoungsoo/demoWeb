@@ -1,0 +1,64 @@
+
+<script>
+	$(document).ready(function(){
+		var UPBIT_0275 = new PgmPageMngr('[[${uuid}]]');
+		UPBIT_0275.init(function(p_param) {
+			var _this = UPBIT_0275;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'ACCESS_KEY',
+					   name: 'ACCESS_KEY',
+					   width: 300,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'EXPIRE_AT',
+					   name: 'EXPIRE_AT',
+					   width: 300,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid.build();
+
+			  searchForm.addEvent("click","input[type=button]",function(el){
+			   //console.log(el);
+				 switch(el.target.name){
+			   case 'search':
+				   var data = searchForm.getData();
+					var param ={
+						 brRq : 'IN_DATA'
+						,brRs : 'OUT_DATA'
+						,IN_DATA:[  ]
+					}
+					grid.loadData('BR_UPBIT_EXCHANGE_GET_API_KEYS',param,function(data){
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+						
+					});
+				   break;
+				 }
+			  });
+			  searchForm.get("search").trigger("click");
+		});	
+	});
+	
+	</script>

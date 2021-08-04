@@ -48,10 +48,13 @@ public class MainPageController {
 	    session.setAttribute("debug", "Y");
 	    
 	    ArrayList<HashMap<String, Object>>  cmMenuList = brS.BR_CM_ROLE_CD_MENU_FIND_TREE_BY_USER_NO(authentication);
+
+		
 	    if(cmMenuList==null) {
 	        cacheRefresh();
 	        cmMenuList = brS.BR_CM_ROLE_CD_MENU_FIND_TREE_BY_USER_NO(authentication);
 	    }
+		
 	    ArrayList<HashMap<String, Object>>  cmPgmList = brS.findMainPgm();
 	    if(cmPgmList==null) {
             cacheRefresh();

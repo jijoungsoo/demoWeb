@@ -9,6 +9,7 @@ $(document).ready(function(){
 		const grid = new TuiGridMngr(_this,'grid',{
 		      editable: true
 		      ,showRowStatus: true
+			  ,editingEvent: 'click'   /*한번 클릭으로 그리드 수정하게 */
 		      ,rowNum: true
 		      ,checkbox: true      
 		  	}
@@ -39,7 +40,8 @@ $(document).ready(function(){
 		         {
 		           header: '프로그램명',
 		           name: 'PGM_NM',
-		           width: 'auto',   /*너비 자동조절*/
+				   width: 200,
+		           /*width: 'auto',   너비 자동조절*/
 		           sortable: true,
 		           filter: { type: 'text', showApplyBtn: true, showClearBtn: true },
 		           editor: 'text'
@@ -148,9 +150,7 @@ $(document).ready(function(){
 		    	});
                break;
            case 'add_row':
-        	   Message.confirm('행을 추가하시겠습니까?',function()  {
-		        	grid.appendRow();
-				});
+		       grid.appendRow();
                break;
 	  		
 	  		case 'save':

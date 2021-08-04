@@ -55,7 +55,7 @@ public class SessionDestoryListener implements ApplicationListener<SessionDestro
         String jsonInString;
         try {
             jsonInString = ptjU.ObjectToJsonString(IN_DS);
-            String jsonOutString = goS.callAPI("BR_CM_SESSION_LOG_CRT", jsonInString);
+            String jsonOutString = goS.callAPI("", jsonInString);
             //OUT_DS = ptjU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block

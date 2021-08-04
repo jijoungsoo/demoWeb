@@ -19,6 +19,15 @@ public class YmlConfig {
     }
 
     private String apiurl;
+    private String apiurlbizactor;
+
+    public String getApiurlbizactor() {
+        return apiurlbizactor;
+    }
+
+    public void setApiurlbizactor(String apiurlbizactor) {
+        this.apiurlbizactor = apiurlbizactor;
+    }
     
     public String getApiurl() {
         return apiurl;
