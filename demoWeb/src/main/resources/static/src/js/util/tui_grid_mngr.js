@@ -12,7 +12,8 @@ class TuiGridMngr {
         ,scrollX: true
         ,scrollY: true
         ,bodyHeight: 700           /*그리드 높이지정 */
-        ,editingEvent: 'dblclick'  /*더블클릭 수정 */
+        /*,editingEvent: 'dblclick'  더블클릭 수정 */
+		,editingEvent: 'click'   /*한번 클릭으로 그리드 수정하게 */
         ,contextMenu: true 
         ,minBodyHeight: 30
         ,copyOptions: {
