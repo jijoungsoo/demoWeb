@@ -402,9 +402,7 @@
 						});
 						break;
 					case 'cm_role_cd_add_row':
-						Message.confirm('행을 추가하시겠습니까?', function () {
-							grid_cm_role_cd.appendRow();
-						});
+						grid_cm_role_cd.appendRow();
 						break;
 
 					case 'cm_role_cd_save':
@@ -467,6 +465,34 @@
 						break;
 				}
 			});
+
+			function make_sub_menu_tree_re_order(al, c, menu_cd){
+				var al_sub=[];
+				for(var i=0;i<al.length;i++){
+					var c1 = al[i];
+					if(c1.PRNT_MENU_CD==menu_cd){
+						al_sub.push(c1);
+						c1._attributes={expanded : true}
+						make_sub_menu_tree_re_order(al,c1,c1.MENU_CD);
+					}
+				}
+				if(al_sub.length>0){
+					c._children=al_sub;
+				}
+			}
+
+			function make_menu_tree_re_order(data){
+				var al_tmp =[];
+				for(var i=0;i<data.length;i++){
+					var tmp = data[i];
+					if(tmp.MENU_LVL=="0"){
+						al_tmp.push(tmp);
+						tmp._attributes={expanded : true}
+						make_sub_menu_tree_re_order(data,tmp,tmp.MENU_CD);
+					}
+				}
+				return al_tmp;
+			}
 
 			cmUserRoleCdSearchForm.addEvent("click", "input[type=button]", function (el) {
 				switch (el.target.name) {
@@ -594,8 +620,9 @@
 						}]
 					}
 					_this.send('BR_CM_ROLE_CD_MENU_FIND_TREE', param, function(data) {
-						console.log(data);
-						grid_cm_menu_tree.resetData(data.OUT_DATA);
+						var tmp_data=make_menu_tree_re_order(data.OUT_DATA);
+						console.log(tmp_data);
+						grid_cm_menu_tree.resetData(tmp_data);
 						grid_cm_menu_tree.check('ROLE_YN','Y');
 						grid_cm_menu_tree.disableRowCheck('MENU_KIND','M');
 					});

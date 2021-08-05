@@ -306,6 +306,10 @@ class PgmPageMngr {
 				//stomp_client.subscribe('/topic/message',function (msg){  --전체 구독시
 				stomp_client.subscribe('/user/topic/message',function (msg){   //user 구독시
 					console.log('aaa',msg);
+					/*
+					성공,실패를 알고 보내줘야 하는데 일단 무시하자
+					안나오면 프로그래머가 보면되지..
+					*/
 
 					if(p_funtion){
 						var tmp = JSON.parse(msg.body);

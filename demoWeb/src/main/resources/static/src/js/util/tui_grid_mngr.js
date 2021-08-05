@@ -1,7 +1,7 @@
 class TuiGridMngr {
   constructor(pgm_mngr, grid_name, p_options ,columns ) {
 		this.pgm_mngr=pgm_mngr;
-		this.total_size=0;    /*전체 데이터 사이즈*/
+		this.total_size=0;    /*전체 데이터 사이즈--전체갯수*/
 		this.curr_size=0;     /*현재까지 불러온 데이터 사이즈*/
 		this.url  ='';        /*페이징 처리를 하려면 화면에서 넘어온 주소를 알고 있어야한다. */
 		this.param  =[];        /*페이징 처리를 하려면 화면에서 넘어온 파라미터를 알고있어야한다. */ 
@@ -334,8 +334,45 @@ class TuiGridMngr {
     this.url   = url;
     this.param = _.cloneDeep(param);
     if(this.options.pageable==true){
+/*과거 
 		param.brRq=(param.brRq+",PAGE_DATA");
 		param.PAGE_DATA={PAGE_NUM:  0 , PAGE_SIZE: this.options.pageSize };
+*/
+
+		param.brRq=(param.brRq+",__PAGING_INFO_IN__");  /*비즈액터 페이징 인풋 키 */
+		/*__P_TOT_ROW_CNT_REQUIRED__   
+		 "TRUE" 또는 "FALSE"로    "TRUE"로 보내면 전체 카운트를 세는 da를 자동으로 만들어 한번 더 실행한다.
+		 */
+		/*__P_START_ROWNUM__    시작 위치 */
+		/*__P_END_ROWNUM__    종료 위치 */
+		/*__P_TOT_ROW_CNT_TYPE__  필요없음  안넣어도 비즈액터 104=> NUMERIC  으로 자동세팅 */
+
+
+		/*페이지 출력 */
+		/*__PAGING_INFO_OUT__"&/
+		/*========>  __P_TOT_ROW_CNT__  */
+		/*========>  __P_TOT_ROW_CNT__  */
+
+		param.__PAGING_INFO_IN__=[{__P_TOT_ROW_CNT_REQUIRED__ : "TRUE" 
+		,__P_START_ROWNUM__:  1 
+		,__P_END_ROWNUM__:  this.options.pageSize
+
+		/*
+		시작과 끝을 보내주면
+		자동으로   offset값과 limit값을 계산해서 구해준다.
+		X  s=>0,e=>100    =====>   o=>-1 , ㅣ=>101       오류발생  offset이 음수이다.
+		O  s=>1,e=>100    =====>   o=>0 , ㅣ=>100         (100)
+		X  s=>100,e=>200    =====>   o=>99 , ㅣ=>101      (101)
+		O  s=>101,e=>200    =====>   o=>100 , ㅣ=>100      (100)
+		*/
+		}];
+
+		//param.brRs=(param.brRs+",__PAGING_INFO_OUT__");   
+		/*이걸 넣으면  오히려 안나오고  BR에 page에 da 에 page 옵션보고 나오고 안나오고 결정됨*/	
+		/*bizacotr-json-servlet-v2를 수정함  brRq값이 있다면 무조건  __PAGING_INFO_OUT__를 더하도록 수정 */
+
+
+
     }
     var mask = new ax5.ui.mask();
 	mask.open({
@@ -362,11 +399,15 @@ class TuiGridMngr {
       _this.total_size=0;
       if(_this.options.pageable==true 
       		&& data !=undefined 
-      		&& data["PAGE_DATA"]!=undefined) {
-      		 _this.total_size = data["PAGE_DATA"]["TOTAL_SIZE"]
-      		 _this.page_num   = data["PAGE_DATA"]["PAGE_NUM"]
-      		 _this.total_page   = data["PAGE_DATA"]["TOTAL_PAGE"]
+      		&& data["__PAGING_INFO_OUT__"]!=undefined) {
+      		 _this.total_size = data["__PAGING_INFO_OUT__"][0]["__P_TOT_ROW_CNT__"]
+			   console.log(data["__PAGING_INFO_OUT__"]);
+
+      		 //_this.total_page   = data["__PAGING_INFO_OUT__"]["TOTAL_PAGE"]
+			   _this.total_page   = Math.ceil(_this.total_size/_this.options.pageSize)
       		 _this.curr_size  = _this.grid.getRowCount()
+      		// _this.page_num   = data["__PAGING_INFO_OUT__"]["PAGE_NUM"]
+			  _this.page_num    = Math.ceil(_this.curr_size/_this.options.pageSize)			   
       }
       mask.close();
       if(p_func){
@@ -378,7 +419,7 @@ class TuiGridMngr {
 	    }
       _this.pgm_mngr.get("curr_size")[0].innerText=_this.curr_size;
       _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
-      _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num+1);
+      _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num);
       _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
     }
     ,this.pgm_mngr.getId()
@@ -393,11 +434,20 @@ class TuiGridMngr {
 	    	return;
 	    }
 	    var param= _.cloneDeep(this.param);
-   		param.brRq=(param.brRq+",PAGE_DATA");
-		//var tmp=[];
+		/*과거
+   		param.brRq=(param.brRq+",PAGE_DATA");		
 		this.page_num = Number(this.page_num)+1;
-		//tmp.push({PAGE_NUM: this.page_num, PAGE_SIZE: this.options.pageSize });
 		param.PAGE_DATA={PAGE_NUM: this.page_num, PAGE_SIZE: this.options.pageSize };
+		*/
+		this.page_num = Number(this.page_num);
+		//alert(this.page_num);
+		//alert(((this.page_num*this.options.pageSize)+1));
+		//alert((this.page_num*this.options.pageSize)+this.options.pageSize);
+		param.brRq=(param.brRq+",__PAGING_INFO_IN__");  /*비즈액터 페이징 인풋 키 */
+		param.__PAGING_INFO_IN__=[{__P_TOT_ROW_CNT_REQUIRED__ : "TRUE" 
+		,__P_START_ROWNUM__:  ((this.page_num*this.options.pageSize)+1)
+		,__P_END_ROWNUM__:  (this.page_num*this.options.pageSize)+this.options.pageSize
+		}];
 	    
 	    var mask = new ax5.ui.mask();
 		mask.open({
@@ -420,15 +470,17 @@ class TuiGridMngr {
 	      }
 	      if(_this.options.pageable==true 
 	      		&& data !=undefined 
-	      		&& data["PAGE_DATA"]!=undefined) {
-	      		_this.total_page  = data["PAGE_DATA"]["TOTAL_PAGE"];
-	      		_this.total_size  = data["PAGE_DATA"]["TOTAL_SIZE"];
-	      		_this.page_num    = data["PAGE_DATA"]["PAGE_NUM"];
-	      		_this.curr_size   = _this.grid.getRowCount();
+	      		&& data["__PAGING_INFO_OUT__"]!=undefined) {
+	      		//_this.total_page  = data["__PAGING_INFO_OUT__"]["TOTAL_PAGE"];
+				_this.total_page   = Math.ceil(_this.total_size/_this.options.pageSize)
+	      		_this.total_size  = data["__PAGING_INFO_OUT__"][0]["__P_TOT_ROW_CNT__"];
+				_this.curr_size   = _this.grid.getRowCount();
+	      		_this.page_num    = Math.ceil(_this.curr_size/_this.options.pageSize)
+	      		
 	      }
 	      _this.pgm_mngr.get("curr_size")[0].innerText=_this.curr_size;
       	  _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
-      	  _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num+1);
+      	  _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num);
       	  _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
       	  if(p_data_flag_all!='all'){  //all 이 아니라면 종료
       	  	mask.close();

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.example.demo.WebSocketEventListener;
+import com.example.demo.exception.BizException;
 import com.example.demo.service.GoRestService;
 import com.example.demo.utils.PjtUtil;
 
@@ -92,16 +93,23 @@ public class ApiSocketStompRestController {
                 String jsonOutString=null;
                 HashMap<String,Object>  inDs= pjtU.JsonStringToObject(jsonInString, HashMap.class );
                 String br =inDs.get("br").toString();
-                HashMap<String, Object> result = new HashMap<String, Object>();
                try {
                    jsonOutString = goS.callAPI(br, jsonInString);
                } catch (HttpClientErrorException e) {
+                System.out.println("ddddddddddddddddddddddd---2");
                     e.printStackTrace();           
                }	catch (HttpServerErrorException e) {
+                System.out.println("ddddddddddddddddddddddd---3");
                     e.printStackTrace();
-               }
+              }	catch (BizException e) {
+                System.out.println("ddddddddddddddddddddddd---4");
+                    e.printStackTrace();
+              }
+
+               
                //https://withseungryu.tistory.com/136
                System.out.println(jsonOutString);
+               System.out.println("ddddddddddddddddddddddd");
                smt.convertAndSendToUser(p.getName(), "/topic/message", jsonOutString);//동작을 안함.
     }
  

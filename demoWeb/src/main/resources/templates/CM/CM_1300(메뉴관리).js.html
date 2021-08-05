@@ -149,21 +149,20 @@ $(document).ready(function(){
 				},
 				editor : 'text'
 			}, {
-				header : '프로그램',
+				header : '프로그램ID',
 				name : 'PGM_ID',
+				width : 100,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc'
+			}, {
+				header : '프로그램명',
+				name : 'PGM_NM',
 				width : 200,
 				resizable : false,
 				sortable : true,
-				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-				filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-				},
-				type : "combo",
-				comboData : _this.getComboData('BR_CM_PGM_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{}]},{ USE_EMPTY_YN : 'Y' , VALUE :'PGM_ID' , TEXT :'PGM_NM' })
-				}, {
-
+				sortingType : 'desc'
+			}, {
 				header : 'PATH',
 				name : 'MENU_PATH',
 				width : 300,
@@ -211,7 +210,9 @@ $(document).ready(function(){
 			grid.on('click', (ev) => {
 				var rowKey = ev.rowKey;
 				if (rowKey >=0) {
-					if(ev.columnName=="PGM_ID"){
+					if(ev.columnName=="PGM_ID"
+						|| ev.columnName=="PGM_NM"
+					){
 						var row_data=grid.getRow(rowKey);
 						
 						var param = {
@@ -226,7 +227,13 @@ $(document).ready(function(){
 						popup.open(function(data){
 							if(data){
 								console.log(data);
-								grid.setValue(rowKey, "PGM_ID", data.PGM_ID)
+								grid.setValue(rowKey, "PGM_ID", data.PGM_ID);
+								grid.setValue(rowKey, "PGM_NM", data.PGM_NM);
+								/*
+								https://github.com/nhn/tui.grid/issues/320
+								콤보박스 데이터가 선택되지 않는다.
+								http://nhn.github.io/tui.grid/latest/Grid#setColumns
+								*/
 							}
 						});
 					}	
