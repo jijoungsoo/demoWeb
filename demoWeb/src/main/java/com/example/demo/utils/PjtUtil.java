@@ -76,7 +76,7 @@ public class PjtUtil {
         if (tmp == null) {
             return true;
         }
-        if (tmp.length() == 0) {
+        if (tmp.trim().length() == 0) {
             return true;
         }
         return false;

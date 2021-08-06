@@ -178,11 +178,28 @@ public class GoRestService {
                 if(arr_input_param!=null){
                     for(int j=0;j<arr_input_param.size();j++){
 
+                        HashMap<String,Object> input_param_tmp = new HashMap<String,Object>();
                         HashMap<String,Object> input_param = arr_input_param.get(j);
                         for (Map.Entry<String, Object> entry : input_param.entrySet()) {
-                            input_param.put(entry.getKey(),Objects.toString(entry.getValue(),""));
+                            String tmpKey  =entry.getKey();
+                            String tmpValue =Objects.toString(entry.getValue(),"");
+                            
+                            if(!pjtU.isEmpty(tmpValue)){
+                                //System.out.println("tmpKey=>"+tmpKey);
+                                //System.out.println("tmpValue=>"+tmpValue);
+                                //System.out.println("is not Empty");
+                                
+                                input_param_tmp.put(tmpKey,tmpValue);
+                            } else {
+                                //System.out.println("tmpKey=>"+tmpKey);
+                                //System.out.println("tmpValue=>"+tmpValue);
+                                //System.out.println("is Empty");
+                            }
+                            
+
+
                         }
-                        arr_input_param_tmp.add(input_param);
+                        arr_input_param_tmp.add(input_param_tmp);
                     }
                 }
               
@@ -235,7 +252,7 @@ public class GoRestService {
         String body = resultMap.getBody();
         log.info("statusCode=>" + statusCode);
         log.info("header=>" + resultMap.getHeaders());
-        log.info("body=>" + body);
+        //log.info("body=>" + body);
 
         HashMap<String,Object> out_msg = null;
         try {

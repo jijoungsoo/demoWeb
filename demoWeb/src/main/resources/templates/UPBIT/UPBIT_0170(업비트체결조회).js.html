@@ -99,7 +99,7 @@ $(document).ready(function(){
 				   sortable : true,
 				   resizable: true,
 				   renderer : {
-					type: commaRendererRemoveDot
+					type: commaRenderer
 					},
 		           sortingType: 'desc'
 				},{
@@ -118,7 +118,7 @@ $(document).ready(function(){
 				   sortable : true,
 				   resizable: true,
 				   renderer : {
-					type: commaRendererRemoveDot
+					type: commaRenderer
 					},
 		           sortingType: 'desc'
 				},{
@@ -129,7 +129,7 @@ $(document).ready(function(){
 				   sortable : true,
 				   resizable: true,
 				   renderer : {
-					type: commaRendererRemoveDot
+					type: commaRenderer
 					},
 		           sortingType: 'desc'	       
 				},{
@@ -212,7 +212,7 @@ $(document).ready(function(){
 					var data = searchForm.getData();
 					var param ={
 						brRq : 'IN_DATA'
-						,brRs : 'OUT_DATA'
+						,brRs : ''
 						,IN_DATA:[ data ]
 					}
 					_this.showProgress();
