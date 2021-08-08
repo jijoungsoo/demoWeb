@@ -106,6 +106,13 @@ public class ApiSocketStompRestController {
                     e.printStackTrace();
               }
 
+              /*
+              status ==> true
+              status ==> false
+
+              
+               */
+
                
                //https://withseungryu.tistory.com/136
                System.out.println(jsonOutString);

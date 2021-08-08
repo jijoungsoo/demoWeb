@@ -61,7 +61,6 @@ public class AvImgFileController {
             IN_DS.put("IN_DATA", in_date);
 
             String jsonInString = pjtU.ObjectToJsonString(IN_DS);
-            //MsgDebugInfo msg = pjtU.makeLSession("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", jsonInString, authentication);
             String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", jsonInString);
             outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
@@ -130,8 +129,8 @@ public class AvImgFileController {
             IN_DS.put("IN_DATA", in_date);
 
             String jsonInString = pjtU.ObjectToJsonString(IN_DS);
-            MsgDebugInfo msg = pjtU.makeLSession("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", jsonInString, authentication);
-            String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", msg.getIN_DATA_JSON());
+            String jsonInStringWithSesstion = pjtU.makeLSession("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", jsonInString, authentication);
+            String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", jsonInStringWithSesstion);
             outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
@@ -199,8 +198,8 @@ public class AvImgFileController {
             IN_DS.put("IN_DATA", in_date);
 
             String jsonInString = pjtU.ObjectToJsonString(IN_DS);
-            MsgDebugInfo msg = pjtU.makeLSession("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", jsonInString, authentication);
-            String jsonOutString = goS.callAPI("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", msg.getIN_DATA_JSON());
+            String jsonInStringWithSesstion = pjtU.makeLSession("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", jsonInString, authentication);
+            String jsonOutString = goS.callAPI("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", jsonInStringWithSesstion);
             outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block

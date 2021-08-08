@@ -138,11 +138,37 @@
 			   //console.log(el);
 				 switch(el.target.name){
 			   case 'search':
-				   var data = searchForm.getData();
-					var param ={
-						 brRq : 'IN_DATA'
-						,brRs : 'OUT_DATA'
-						,IN_DATA:[ data ]
+
+			   	   var data = searchForm.getData();
+			   	   var tmp_in_pset = {
+					 CURRENCY : data.CURRENCY
+				   }
+
+				   var tmp_arr_in_uuid = [];
+				   var arr_uuid_str = data.AL_UUIDS;
+				   if(!PjtUtil.isEmpty(arr_uuid_str)){
+					   var arr_tmp = arr_uuid_str.split(",");
+					   for(var i=0;i<arr_tmp.length;i++){
+						tmp_arr_in_uuid.push({UUID : arr_tmp[i]});
+					   }
+				   }
+
+				   var tmp_arr_in_txid = [];
+				   var arr_txid_str = data.AL_TXIDS;
+				   if(!PjtUtil.isEmpty(arr_txid_str)){
+					   var arr_tmp = arr_txid_str.split(",");
+					   for(var i=0;i<arr_tmp.length;i++){
+						tmp_arr_in_txid.push({TXID : arr_tmp[i]});
+					   }
+				   }
+				   
+
+				   var param ={
+						 brRq : 'IN_PSET,IN_TXID,IN_UUID'
+						,brRs : 'OUT_RSET'
+						,IN_PSET:[ tmp_in_pset ]
+						,IN_UUID:tmp_arr_in_uuid
+						,IN_TXID:tmp_arr_in_txid
 					}
 					grid.loadData('BR_UPBIT_EXCHANGE_GET_WITHDRAWS',param,function(data){
 						console.log(data);

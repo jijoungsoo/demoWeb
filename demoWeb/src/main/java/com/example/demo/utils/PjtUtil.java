@@ -19,9 +19,7 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
-import com.example.demo.cm.ctrl.MsgDebugInfo;
 import com.example.demo.user.domain.UserInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -219,7 +217,7 @@ public class PjtUtil {
         return responseBody;
     }
     
-    public  MsgDebugInfo makeLSession(String br, String jsonInString,Authentication authentication) throws JsonMappingException, JsonProcessingException {
+    public  String makeLSession(String br, String jsonInString,Authentication authentication) throws JsonMappingException, JsonProcessingException {
         /*
         출처: https://itstory.tk/entry/Spring-Security-현재-로그인한-사용자-정보-가져오기 [덕's IT Story]
        */
@@ -232,15 +230,8 @@ public class PjtUtil {
         System.out.println("USER_NO=>"+USER_NO);
         System.out.println("USER_ID=>"+USER_ID);
         System.out.println("EMAIL=>"+EMAIL);
-
-
-        
-
-
         HashMap<String,Object>  inDs= this.JsonStringToObject(jsonInString, HashMap.class );
 
-        UUID one = UUID.randomUUID();//난수 생성
-        inDs.put("_id", one.toString()); 
 
         /*세션은 하나이지만... 약속때문에..  list 에 담는다.*/
         ArrayList<HashMap<String,String>>  arr_sess = new ArrayList<HashMap<String,String>>();
@@ -258,43 +249,10 @@ public class PjtUtil {
         inDs.put("brRq", brRq);
         arr_sess.add(sess);
         inDs.put("LSESSION", arr_sess);
-        
-        
-        
 
-        
         String sessionJsonInString  = this.ObjectToJsonString(inDs);
-
         System.out.println("sessionJsonInString=>"+sessionJsonInString);
         System.out.println("-----------makeLSession--------------");
-        
-        MsgDebugInfo  m = new MsgDebugInfo();
-        m.setBr(br);
-        m.setIN_DATA_JSON(sessionJsonInString);
-        
-        if(UUID!=null) {
-            int SEQ = (int) inDs.get("SEQ");
-            m.setUUID(UUID);
-            m.setSEQ(SEQ);
-        }
-        return m;
+        return sessionJsonInString;
       }
-    
-    
-
-    
-    public  void saveSesstionDebugMsg(MsgDebugInfo msg,String jsonOutString,HttpSession session ) {
-        if(msg.getUUID()!=null) {
-               msg.setOUT_DATA_JSON(jsonOutString);
-               Queue<MsgDebugInfo> que = (LinkedList<MsgDebugInfo>) session.getAttribute("UUID_DEBUG_LOG");
-               if(que==null) {
-                   que = new LinkedList<MsgDebugInfo>();
-               }
-               while(que.size()>10) {
-                   que.poll();
-               }
-               que.add(msg);
-               session.setAttribute("UUID_DEBUG_LOG",que);             
-           } 
-    }
 }

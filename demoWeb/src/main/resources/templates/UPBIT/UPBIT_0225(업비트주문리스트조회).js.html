@@ -167,10 +167,43 @@
 				 switch(el.target.name){
 			   case 'search':
 				   var data = searchForm.getData();
+
+				   var tmp_in_pset = {
+						MARKET : data.MARKET
+				   }
+				   var tmp_arr_in_state = [];
+				   var arr_state_str = data.AL_STATES;
+				   if(!PjtUtil.isEmpty(arr_state_str)){
+					   var arr_tmp = arr_state_str.split(",");
+					   for(var i=0;i<arr_tmp.length;i++){
+						tmp_arr_in_state.push({STATE : arr_tmp[i]});
+					   }
+				   }
+				   var tmp_arr_in_uuid = [];
+				   var arr_uuid_str = data.UUIDS;
+				   if(!PjtUtil.isEmpty(arr_uuid_str)){
+					   var arr_tmp = arr_uuid_str.split(",");
+					   for(var i=0;i<arr_tmp.length;i++){
+						tmp_arr_in_uuid.push({UUID : arr_tmp[i]});
+					   }
+				   }
+
+				   var tmp_arr_in_identifiers = [];
+				   var arr_uuid_identifiers = data.IDENTIFIERS;
+				   if(!PjtUtil.isEmpty(arr_uuid_identifiers)){
+					   var arr_tmp = arr_uuid_identifiers.split(",");
+					   for(var i=0;i<arr_tmp.length;i++){
+						tmp_arr_in_identifiers.push({IDENTIFIERS : arr_tmp[i]});
+					   }
+				   }
+				
 					var param ={
-						 brRq : 'IN_DATA'
-						,brRs : 'OUT_DATA'
-						,IN_DATA:[ data ]
+						 brRq : 'IN_PSET,IN_STATE,IN_UUID,IN_IDENTIFIER'
+						,brRs : 'OUT_RSET'
+						,IN_PSET:[ tmp_in_pset ]
+						,IN_STATE:tmp_arr_in_state
+						,IN_UUID:tmp_arr_in_uuid
+						,IN_IDENTIFIER:tmp_arr_in_identifiers
 					}
 					grid.loadData('BR_UPBIT_EXCHANGE_GET_ORDERS',param,function(data){
 						console.log(data);

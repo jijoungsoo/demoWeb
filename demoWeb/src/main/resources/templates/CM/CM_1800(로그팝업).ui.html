@@ -1,33 +1,107 @@
-<div class="border border-primary">
- 	<div class="mb-3 row">
-    <label for="staticEmail" class="col-sm-2 col-form-label">UUID</label>
-    <div class="col-sm-10" style="text-align:left;">
-      [[${req_hm.UUID}]]
+<div name="debug_area"> 
+  <div class="container" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+    <div class="row row-cols-2">
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">SEQ</span> <input type="text"
+            disabled class="form-control"  data-ax-path="SEQ" name="SEQ">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">API_UUID</span> <input type="text"
+            disabled class="form-control" data-ax-path="API_UUID" name="API_UUID">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">actID</span> <input type="text"
+            disabled  class="form-control"  data-ax-path="actID" name="actID">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">inDTName</span> <input type="text"
+            disabled  class="form-control"  data-ax-path="inDTName" name="inDTName">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">outDTName</span> <input type="text"
+            disabled  class="form-control"  data-ax-path="outDTName" name="outDTName">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">create_dtm</span> <input type="text"
+            disabled  class="form-control"  data-ax-path="create_dtm" name="create_dtm">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">time_gap</span> <input type="text"
+            disabled  class="form-control"  data-ax-path="time_gap" name="time_gap">
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">err</span> 
+            <input type="text"
+            disabled class="form-control" data-ax-path="err"  name="err">
+          </div>
+        </div>
+      </div> 
     </div>
-  </div>
-  <div class="mb-3 row">
-    <label for="staticEmail" class="col-sm-2 col-form-label">SEQ</label>
-    <div class="col-sm-10" style="text-align:left;">
-      [[${req_hm.SEQ}]]
-    </div>
-  </div>
-  <div class="mb-3 row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">Br</label>
-    <div class="col-sm-10" style="text-align:left;">
-      [[${gl_tmp.getBr()}]]
-    </div>
-  </div>
-  <div class="mb-3 row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">InPut</label>
-    <div class="col-sm-10">
-    	<pre style="text-align:left;" th:with="pjtUtil=${new com.example.demo.utils.PjtUtil()}">[[${pjtUtil.jsonBeautifier(gl_tmp.getIN_DATA_JSON())}]]</pre>
-    </div>
-  </div>
-  <div class="mb-3 row">
-    <label for="inputPassword" class="col-sm-2 col-form-label">OutPut</label>
-    <div class="col-sm-10">
-    	<pre style="text-align:left;" th:with="pjtUtil=${new com.example.demo.utils.PjtUtil()}">[[${pjtUtil.jsonBeautifier(gl_tmp.getOUT_DATA_JSON())}]]</pre>
-    </div>
-  </div>
+    <div class="row row-cols-1">
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">inDs</span> <textarea type="text" style="height:300px"
+            disabled class="form-control" data-ax-path="inDs"  name="inDs"></textarea>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">outDs</span> <textarea type="text" style="height:300px"
+            disabled class="form-control" data-ax-path="outDs"  name="outDs"></textarea>
+          </div>
+        </div>
+      </div>
       
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">inJsonStr</span> 
+            <textarea type="text" style="height:100px"
+            disabled class="form-control" data-ax-path="inJsonStr"  name="inJsonStr"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="form-group">
+          <div class="input-group">
+            <span class="input-group-addon">outJsonStr</span> 
+            <textarea type="text" style="height:100px"
+            disabled class="form-control" data-ax-path="outJsonStr"  name="outJsonStr"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

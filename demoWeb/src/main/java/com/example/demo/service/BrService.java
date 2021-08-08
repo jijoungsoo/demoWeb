@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Objects;
 
-import com.example.demo.cm.ctrl.MsgDebugInfo;
 import com.example.demo.exception.BizException;
 import com.example.demo.utils.PjtUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -43,10 +42,10 @@ public class BrService {
 			IN_DS.put("brRq","");
 			IN_DS.put("brRs","OUT_DATA");
 			String jsonInString=pjtU.ObjectToJsonString(IN_DS);
-			MsgDebugInfo msg = pjtU.makeLSession("",jsonInString,authentication);
+			String JsonInStringWithSesstion  = pjtU.makeLSession("",jsonInString,authentication);
 			String jsonOutString =null;
 			try {
-				jsonOutString = goS.callAPI("BR_CM_MAIN_FIND_TREE_BY_USER_NO", msg.getIN_DATA_JSON());
+				jsonOutString = goS.callAPI("BR_CM_MAIN_FIND_TREE_BY_USER_NO", JsonInStringWithSesstion);
 			} catch (ResourceAccessException | BizException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

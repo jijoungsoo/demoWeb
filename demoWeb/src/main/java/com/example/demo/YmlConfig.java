@@ -19,7 +19,18 @@ public class YmlConfig {
     }
 
     private String apiurl;
+    private String apiurllog;
+
+    public String getApiurllog() {
+        return apiurllog;
+    }
+
+    public void setApiurllog(String apiurllog) {
+        this.apiurllog = apiurllog;
+    }
+    
     private String apiurlbizactor;
+    
 
     public String getApiurlbizactor() {
         return apiurlbizactor;

@@ -64,6 +64,7 @@ class AjaxMngr {
 	static send_api_post_ajax(p_url, p_param, p_function,uuid) {
 	    var hash = window.location.hash;
 	    var br = p_url;
+		var api_uuid= PjtUtil.makeUUID();
 	    p_url = "/api/"+p_url;
 	     if (AppMngr.debug_console=="Y") {
 	        //클라이언트 세션을 넣으려고 했는데
@@ -91,13 +92,14 @@ class AjaxMngr {
 		        var uuid_debug_log_ul = $("#"+uuid+"_debug_log_ul");
 		        //입력할 창은 정해져있다.
 		        var now_time = moment(new Date()).format('HH:mm:ss');
-		        var run_fun = "javascript:void AppMngr.openLog('"+uuid+"','"+seq+"');";
+		        var run_fun = "javascript:void AppMngr.openLog('"+uuid+"','"+seq+"','"+api_uuid+"');";
 		        console.log(run_fun);
 		        var tmp ="<li><a href=\""+run_fun+"\">["+now_time+"]["+seq+"]"+br+"</a></li>";
 		        console.log(tmp);
 	          	uuid_debug_log_ul.append(tmp);
 	        }
 	    }
+		p_param["API_UUID"]=api_uuid;
 	    var req=$.ajax({
 	        type: "POST",
 	        url: p_url,
@@ -273,5 +275,44 @@ class AjaxMngr {
 	        
 	    });
 	}
+
+
+	
+	static get_api_log_ajax(p_url,p_function) {
+	    var api_uuid = p_url;
+	    p_url = "/api_log/"+p_url;
+	    var req=$.ajax({
+	        type: "GET",
+	        url: p_url,
+	        contentType: "application/json; charset=utf-8",
+	        accept: "application/json",
+	         beforeSend : function(xhr)   /*이거 동작한다.  -- https://hyunsangwon93.tistory.com/28*/
+	        { 
+				xhr.setRequestHeader(csrf_headerName, csrf_token);
+	        },
+	        dataType: "json",
+	    });
+	
+	    req.done(function (data, status) {
+	        if(p_function){
+	        	p_function(data);
+	        }
+	    });
+	
+	    req.fail(function (jqXHR, textStatus) {
+	        console.log(jqXHR)
+	        console.log(textStatus)
+	        if (textStatus == "error") {
+	            var msg = "Sorry but there was an error: ";
+	            console.log(msg + jqXHR.status + ",statusText: " + jqXHR.statusText+ ",responseText: " + jqXHR.responseText);
+	            Message.alert(msg + jqXHR.status + "<br />statusText: " + jqXHR.statusText+ "<br />responseText: " + jqXHR.responseText);
+	        }
+
+			if(p_function){
+	        	p_function();
+	        }
+	    });   
+	}
+
 }
 

@@ -77,23 +77,7 @@ public class PageController {
 
 		String UUID = hm.get("UUID");// 디버깅창에서 넘겨받는  대상 UUID
 		String SEQ = hm.get("SEQ");  // 보내진 함수 일련번호
-
-		//uuid하고 seq로  서버 세션에 있는 값가지고 온다.
-		Queue<MsgDebugInfo> que=(Queue<MsgDebugInfo>)session.getAttribute("UUID_DEBUG_LOG");
-		MsgDebugInfo gl_tmp=null;
-    	Iterator<MsgDebugInfo> it= que.iterator();
-    	while(it.hasNext()) {
-		
-        	MsgDebugInfo tmp = it.next();
-			if(tmp!=null){
-				if(tmp.getUUID().equals(UUID) && String.valueOf(tmp.getSEQ()).equals(SEQ)) {
-					gl_tmp=tmp;
-					break;
-				}
-			}
-    	}
-		
-		model.addAttribute("gl_tmp", gl_tmp);
+	    	
 		model.addAttribute("parentUuid", parentUuid);
 		model.addAttribute("pgmId", pageId);
 		model.addAttribute("dirLink", dirLink);

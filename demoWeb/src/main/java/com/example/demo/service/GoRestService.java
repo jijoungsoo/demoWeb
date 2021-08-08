@@ -35,6 +35,36 @@ public class GoRestService {
     @Autowired
     PjtUtil pjtU;
 
+    public String callApiLog(String api_uuid) throws ResourceAccessException, BizException {
+        log.info("api_uuid=>" + api_uuid);
+        String jsonOutString = null;
+        HashMap<String, Object> result = new HashMap<String, Object>();
+        HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+        RestTemplate restTemplate = new RestTemplate(factory);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<?> entity = new HttpEntity<>(headers);
+        log.info("ymlC.getApiurllog() =>" + ymlC.getApiurllog());
+        String url = ymlC.getApiurllog() + api_uuid;
+        UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
+
+        try {
+            ResponseEntity<String> resultMap = restTemplate.exchange(uriBuilder.build().toString(), HttpMethod.POST,
+                    entity, String.class);
+            result.put("statusCode", resultMap.getStatusCodeValue()); // http status code를 확인
+            result.put("header", resultMap.getHeaders()); // 헤더 정보 확인
+            result.put("body", resultMap.getBody()); // 실제 데이터 정보 확인
+
+            jsonOutString = resultMap.getBody();
+            return jsonOutString;
+        } catch (ResourceAccessException e) {
+            e.printStackTrace();
+            throw new ResourceAccessException("제한시간이 100초가 초과되었습니다.");
+            // 이렇게 에러를 던지는게 아니라 결과셋을 보내야한다.
+        }
+    }
+
     public String callAPI(String br, String jsonInString) throws ResourceAccessException, BizException {
         return callApiBizActor( br,  jsonInString);
     }
@@ -160,8 +190,15 @@ public class GoRestService {
 
             String brRq = input_tmp.get("brRq").toString();
             String brRs = input_tmp.get("brRs").toString();
+            
             input_msg.put("inDTName", brRq);
             input_msg.put("outDTName", brRs);
+
+            if(input_tmp.get("API_UUID")!=null){
+                String _id = input_tmp.get("API_UUID").toString();
+                input_msg.put("_id", _id);
+            }
+            
 
             HashMap<String,Object> refDS = new HashMap<String,Object>();
             String[] arr_brRq = brRq.split(",");
@@ -252,7 +289,7 @@ public class GoRestService {
         String body = resultMap.getBody();
         log.info("statusCode=>" + statusCode);
         log.info("header=>" + resultMap.getHeaders());
-        //log.info("body=>" + body);
+        log.info("body=>" + body);
 
         HashMap<String,Object> out_msg = null;
         try {

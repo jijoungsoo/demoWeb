@@ -37,10 +37,13 @@ public class FileService {
             IN_DS.put("IN_DATA", in_date);
 
             String jsonInString = pjtU.ObjectToJsonString(IN_DS);
-            MsgDebugInfo msg = pjtU.makeLSession("BR_CM_FILE_FIND_BY_FILE_ID", jsonInString, authentication);
-            String jsonOutString = goS.callAPI("BR_CM_FILE_FIND_BY_FILE_ID", msg.getIN_DATA_JSON());
+            String jsonInStringWithSesstion = pjtU.makeLSession("BR_CM_FILE_FIND_BY_FILE_ID", jsonInString, authentication);
+            String jsonOutString = goS.callAPI("BR_CM_FILE_FIND_BY_FILE_ID", jsonInStringWithSesstion);
             outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (BizException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
@@ -117,8 +120,8 @@ public class FileService {
         IN_DS.put("brRs", "OUT_DATA");
         IN_DS.put("IN_DATA", all_list);
         String jsonInString = pjtU.ObjectToJsonString(IN_DS);
-        MsgDebugInfo msg = pjtU.makeLSession("BR_CM_EXCEL_UPLD_CREATE", jsonInString, authentication);
-        String jsonOutString = goS.callAPI("BR_CM_EXCEL_UPLD_CREATE", msg.getIN_DATA_JSON());
+        String jsonInStringWithSesstion = pjtU.makeLSession("BR_CM_EXCEL_UPLD_CREATE", jsonInString, authentication);
+        String jsonOutString = goS.callAPI("BR_CM_EXCEL_UPLD_CREATE", jsonInStringWithSesstion);
         outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         return outDs;
     }
@@ -144,9 +147,9 @@ public class FileService {
         IN_DS.put("IN_DATA",in_al);
 
         String jsonInString=pjtU.ObjectToJsonString(IN_DS);
-        MsgDebugInfo msg = pjtU.makeLSession("BR_CM_FILE_CREATE",jsonInString,authentication);
+        String jsonInStringWithSesstion = pjtU.makeLSession("BR_CM_FILE_CREATE",jsonInString,authentication);
         
-        String jsonOutString = goS.callAPI("BR_CM_FILE_CREATE", msg.getIN_DATA_JSON());
+        String jsonOutString = goS.callAPI("BR_CM_FILE_CREATE", jsonInStringWithSesstion);
         pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         
     }
@@ -164,7 +167,7 @@ public class FileService {
         IN_DS.put("IN_DATA", in_date);
 
         String jsonInString = pjtU.ObjectToJsonString(IN_DS);
-        MsgDebugInfo msg = pjtU.makeLSession("BR_CM_FILE_RM", jsonInString, authentication);
-        String jsonOutString = goS.callAPI("BR_CM_FILE_RM", msg.getIN_DATA_JSON());
+        String jsonInStringWithSession = pjtU.makeLSession("BR_CM_FILE_RM", jsonInString, authentication);
+        String jsonOutString = goS.callAPI("BR_CM_FILE_RM", jsonInStringWithSession);
     }
 }

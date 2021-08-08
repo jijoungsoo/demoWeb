@@ -3,6 +3,21 @@ $(document).ready(function(){
 	var CM_1800 = new PgmPageMngr('[[${uuid}]]');
 	CM_1800.init(function(p_param) {
 		var _this = CM_1800;
+		var api_uuid = p_param.param.API_UUID;
+		var seq = p_param.param.SEQ;
+		var debugForm = new FormMngr(_this, "debug_area");
+
+		 _this.getApiLog(api_uuid,function(data){
+			console.log(data);
+			if (data) {
+				
+				debugForm.setDataAll(data);		
+				debugForm.setData("SEQ",seq);		
+				debugForm.setData("API_UUID",api_uuid);	
+				debugForm.setData("time_gap",data.time_gap["$numberLong"]);	
+			}
+		 });
+		
 	
 	});	
 });

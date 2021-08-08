@@ -11,25 +11,25 @@ class AppMngr {
 	
 	}
 	
-	static makeUUID() { // UUID v4 generator in JavaScript (RFC4122 compliant)
-	    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-	      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 3 | 8);
-	      return v.toString(16);
-	    });
+	static makeUUID() {
+		return PjtUtil.makeUUID();
+	    
 	}
 	
 	static debug_console ="Y";
 	
-	static openLog(uuid,seq){
+	static openLog(uuid,seq,api_uuid){
 		var param = {
 				UUID : uuid,
-				SEQ : seq
+				SEQ : seq,
+				API_UUID : api_uuid,
 				
 		}
 		var tmp = PgmPageMngr.getPgmUuIdMap(uuid);
 		var popup = new PopupManger(tmp, 'CM_1800', {
           width: 1100,
-          heght: 700
+          heght: 700,
+		  title: "로그보기"
         },
           param
         );

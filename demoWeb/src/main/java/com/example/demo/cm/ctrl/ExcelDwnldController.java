@@ -42,28 +42,24 @@ public class ExcelDwnldController {
             HttpServletResponse res, Authentication authentication, HttpSession session) throws Exception {
         log.info("jsonInString=>" + jsonInString);
         String jsonOutString = null;
-        MsgDebugInfo msg = pjtU.makeLSession(br, jsonInString, authentication);
+        String jsonInStringWithSesstion = pjtU.makeLSession(br, jsonInString, authentication);
         HashMap<String, Object> result = new HashMap<String, Object>();
         try {
-            jsonOutString = goS.callAPI(br, msg.IN_DATA_JSON);
-            pjtU.saveSesstionDebugMsg(msg, jsonOutString, session);
+            jsonOutString = goS.callAPI(br, jsonInStringWithSesstion);
         } catch (HttpClientErrorException  e) {
             result.put("statusCode", e.getRawStatusCode());
             result.put("body", e.getStatusText());
             e.printStackTrace();
-            pjtU.saveSesstionDebugMsg(msg, pjtU.ObjectToJsonString(result), session);
             throw  e;
         } catch (HttpServerErrorException e) {
             result.put("statusCode", e.getRawStatusCode());
             result.put("body", e.getStatusText());
             e.printStackTrace();
-            pjtU.saveSesstionDebugMsg(msg, pjtU.ObjectToJsonString(result), session);
             throw  e;
         } catch (Exception e) {
             result.put("statusCode", "999");
             result.put("body", "excpetion오류");
             e.printStackTrace();
-            pjtU.saveSesstionDebugMsg(msg, pjtU.ObjectToJsonString(result), session);
             throw  e;
         }
         try {
