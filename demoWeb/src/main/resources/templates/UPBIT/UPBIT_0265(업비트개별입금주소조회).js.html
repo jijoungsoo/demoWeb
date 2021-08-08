@@ -31,9 +31,9 @@
 			   case 'deposits_generate_coin_address':
 				   var data = depositCoinAddressForm.getData();
 					var param ={
-						 brRq : 'IN_DATA'
-						,brRs : 'OUT_DATA'
-						,IN_DATA:[ {CURRENCY : data.CURRENCY } ]
+						 brRq : 'IN_PSET'
+						,brRs : 'OUT_RSET1,OUT_RSET2'
+						,IN_PSET:[ {CURRENCY : data.CURRENCY } ]
 					}
 					_this.showProgress();
 					_this.send('BR_UPBIT_EXCHANGE_POST_DEPOSITS_GENERATE_COIN_ADDRESS', param, function(data) {

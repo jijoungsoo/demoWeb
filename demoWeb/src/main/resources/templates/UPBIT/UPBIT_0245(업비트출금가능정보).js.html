@@ -9,18 +9,20 @@
 			var withdrawChanceCurrencyForm = new FormMngr(_this, "withdraws_chance_currency_area");
 			var withdrawChanceAccountForm = new FormMngr(_this, "withdraws_chance_account_area");
 			var withdrawChanceWithdrawLimitForm = new FormMngr(_this, "withdraws_chance_withdraw_limit_area");
-	
-			
+
 			
 			var withdrawCoinForm = new FormMngr(_this, "withdraw_coin_area");
 			var withdrawKrwForm = new FormMngr(_this, "withdraw_krw_area");
 		    $('[data-ax5formatter]').ax5formatter();
+
+			//TRANSACTION_TYPE
+			withdrawCoinForm.initCombo("TRANSACTION_TYPE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [  { GRP_CD : 'UPBIT_TRANSACTION_TYPE',  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
 			
 			
 			var param ={
-				brRq : 'IN_DATA'
-				,brRs : 'OUT_DATA'
-				,IN_DATA:[ {
+				brRq : 'IN_PSET'
+				,brRs : 'OUT_DATA_MEMBER_LEVEL,OUT_DATA_CURRENCY,OUT_DATA_ACCOUNT,OUT_DATA_WITHDRAW_LIMIT'
+				,IN_PSET:[ {
 					CURRENCY : currency
 				} ]
 			}

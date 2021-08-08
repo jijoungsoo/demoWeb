@@ -98,9 +98,9 @@
 				switch(el.target.name){
 					case 'btn_search':
 						var param ={
-							brRq : 'IN_DATA'
-							,brRs : 'OUT_DATA'
-							,IN_DATA:[ {
+							brRq : 'IN_PSET'
+							,brRs : 'OUT_RSET,OUT_RSET_TRADES'
+							,IN_PSET:[ {
 								UUID : uuid
 							} ]
 						}
@@ -108,8 +108,8 @@
 						_this.send('BR_UPBIT_EXCHANGE_GET_ORDER', param, function(data) {
 							_this.hideProgress();
 							if (data) {
-								orderAreaForm.setDataAll(data.OUT_DATA[0]);		
-								grid.resetData(data.OUT_DATA_TRADES);
+								orderAreaForm.setDataAll(data.OUT_RSET[0]);		
+								grid.resetData(data.OUT_RSET_TRADES);
 							}
 						});	
 					break;
