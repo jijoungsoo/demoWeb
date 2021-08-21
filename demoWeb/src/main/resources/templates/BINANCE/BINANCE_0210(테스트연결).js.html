@@ -1,0 +1,47 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0210 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0210.init(function(p_param) {
+			var _this = BINANCE_0210;
+			var searchForm = new FormMngr(_this, "search_area");
+		
+
+			searchForm.addEvent("click","input[type=button]",function(el){
+				//console.log(el);
+				switch(el.target.name){
+				case 'btn_ping':
+					var data = searchForm.getData();
+					var param ={
+						 brRq : ''
+						,brRs : 'OUT_RSET,OUT_RST'
+					}
+					_this.showProgress();
+					_this.send('BR_BINANCE_MARKET_GET_API_V3_PING', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							console.log(data);
+							Message.alert(data.OUT_RST[0].STATUS);
+						}
+					});	
+					break;
+				case 'btn_chkServerTime':
+					var param ={
+							brRq : ''
+						,brRs : 'OUT_RSET,OUT_RST'
+					}
+					_this.showProgress();
+					_this.send('BR_BINANCE_MARKET_GET_API_V3_TIME', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							console.log(data.OUT_RSET[0].SERVER_TIME);
+							Message.alert(data.OUT_RSET[0].SERVER_TIME);
+						}
+					});	
+					break;
+				}
+			});
+	});	
+});
+
+</script>

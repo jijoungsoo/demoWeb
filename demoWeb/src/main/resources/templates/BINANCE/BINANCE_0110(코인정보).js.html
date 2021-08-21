@@ -1,0 +1,357 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0110 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0110.init(function(p_param) {
+			var _this = BINANCE_0110;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'COIN',
+					   name: 'COIN',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'DEPOSIT_ALL_ENABLE',
+					   name: 'DEPOSIT_ALL_ENABLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'FREE',
+					   name: 'FREE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'FREEZE',
+					   name: 'FREEZE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IPOABLE',
+					   name: 'IPOABLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IPOING',
+					   name: 'IPOING',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IS_LEGAL_MONEY',
+					   name: 'IS_LEGAL_MONEY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'LOCKED',
+					   name: 'LOCKED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'NAME',
+					   name: 'NAME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'STORAGE',
+					   name: 'STORAGE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TRADING',
+					   name: 'TRADING',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_ALL_ENABLE',
+					   name: 'WITHDRAW_ALL_ENABLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAWING',
+					   name: 'WITHDRAWING',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid.build();
+			const grid_network_list = new TuiGridMngr(_this,'grid_network_list',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'ADDRESS_REGEX',
+					   name: 'ADDRESS_REGEX',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'COIN',
+					   name: 'COIN',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'DEPOSIT_DESC',
+					   name: 'DEPOSIT_DESC',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'DEPOSIT_ENABLE',
+					   name: 'DEPOSIT_ENABLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'INSERT_TIME',
+					   name: 'INSERT_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IS_DEFAULT',
+					   name: 'IS_DEFAULT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MEMO_REGEX',
+					   name: 'MEMO_REGEX',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MIN_CONFIRM',
+					   name: 'MIN_CONFIRM',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'NAME',
+					   name: 'NAME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'NETWORK',
+					   name: 'NETWORK',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'RESET_ADDRESS_STATUS',
+					   name: 'RESET_ADDRESS_STATUS',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SPECIAL_TIPS',
+					   name: 'SPECIAL_TIPS',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'UNLOCK_CONFIRM',
+					   name: 'UNLOCK_CONFIRM',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'UPDATE_TIME',
+					   name: 'UPDATE_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_DESC',
+					   name: 'WITHDRAW_DESC',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_ENABLE',
+					   name: 'WITHDRAW_ENABLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_FEE',
+					   name: 'WITHDRAW_FEE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_INTEGER_MULTIPLE',
+					   name: 'WITHDRAW_INTEGER_MULTIPLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_MIN',
+					   name: 'WITHDRAW_MIN',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid_network_list.build();
+			var data_network_list;
+			  grid.on('click', (ev) => {
+				if (ev.rowKey >=0) {				
+					if(ev.columnName=='COIN'){
+						var row_data=grid.getRow(ev.rowKey);
+						console.log('aaa');
+						console.log(row_data);
+						console.log(data_network_list);
+						console.log('bbb');
+						var tmp_data_network_list=[];
+						for(var i=0;i<data_network_list.length;i++){
+							var tmp_data = data_network_list[i];
+							if(row_data.COIN==tmp_data.COIN){
+								tmp_data_network_list.push(tmp_data);
+							}
+						}
+						console.log("tmp_data_network_list")
+						console.log(tmp_data_network_list)
+						grid_network_list.resetData(tmp_data_network_list);
+						var inline_popup = new InlinePopupManger(_this, 'popup_network_list', {
+							width: 800,
+							height: 300,
+							title: "Network List"
+						});
+						inline_popup.open(function(data){
+
+						});
+					}
+				}
+			});
+
+
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+				switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				var param ={
+						brRq : ''
+					,brRs : 'OUT_RSET,OUT_RSET_NETWORK_LIST'
+				}
+				grid.loadData('BR_BINANCE_WALLET_GET_SAPI_V1_CAPITAL_CONFIG_GETALL',param,function(data){
+					console.log(data);
+					data_network_list = data.OUT_RSET_NETWORK_LIST;
+					//gridLoadData에서 자동으로 로드됨..
+					
+				});
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

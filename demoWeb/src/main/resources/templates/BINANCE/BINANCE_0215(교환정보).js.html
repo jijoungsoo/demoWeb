@@ -1,0 +1,185 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0215 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0215.init(function(p_param) {
+			var _this = BINANCE_0215;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'BASE_ASSET',
+					   name: 'BASE_ASSET',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'BASE_ASSET_PRECISION',
+					   name: 'BASE_ASSET_PRECISION',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BASE_COMMISSION_PRECISION',
+					   name: 'BASE_COMMISSION_PRECISION',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ICEBERG_ALLOWED',
+					   name: 'ICEBERG_ALLOWED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IS_MARGIN_TRADING_ALLOWED',
+					   name: 'IS_MARGIN_TRADING_ALLOWED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IS_SPOT_TRADING_ALLOWED',
+					   name: 'IS_SPOT_TRADING_ALLOWED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IS_LEGAL_MONEY',
+					   name: 'IS_LEGAL_MONEY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'OCO_ALLOWED',
+					   name: 'OCO_ALLOWED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QUOTE_ASSET',
+					   name: 'QUOTE_ASSET',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QUOTE_ORDER_QTY_MARKET_ALLOWED',
+					   name: 'QUOTE_ORDER_QTY_MARKET_ALLOWED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'STATUS',
+					   name: 'STATUS',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QUOTE_ASSET_PRECISION',
+					   name: 'QUOTE_ASSET_PRECISION',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QUOTE_COMMISSION_PRECISION',
+					   name: 'QUOTE_COMMISSION_PRECISION',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QUOTE_PRECISION',
+					   name: 'QUOTE_PRECISION',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid.build();
+		
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+				switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				var brRsStr = 'OUT_RSET_SYMBOLS,OUT_RSET,OUT_RSET_RATE_LIMITS,OUT_RSET_SYMBOLS_FILTERS_PRICE_FILTER,OUT_RSET_SYMBOLS_FILTERS_PERCENT_PRICE,OUT_RSET_SYMBOLS_FILTERS_LOT_SIZE'
+				brRsStr=brRsStr+',OUT_RSET_SYMBOLS_FILTERS_MIN_NOTIONAL,OUT_RSET_SYMBOLS_FILTERS_ICEBERG_PARTS,OUT_RSET_SYMBOLS_FILTERS_MARKET_LOT_SIZE,OUT_RSET_SYMBOLS_FILTERS_MAX_NUM_ORDERS,OUT_RSET_SYMBOLS_FILTERS_MAX_NUM_ALGO_ORDERS'
+				brRsStr=brRsStr+',OUT_RSET_SYMBOLS_ORDER_TYPES,OUT_RSET_SYMBOLS_PERMISSIONS'
+
+				var param ={
+					 brRq : 'IN_DATA'
+					,brRs : brRsStr
+				}
+				grid.loadData('BR_BINANCE_MARKET_GET_API_V3_EXCHANGE_INFO',param,function(data){
+					console.log(data);
+					data_network_list = data.OUT_RSET_NETWORK_LIST;
+					//gridLoadData에서 자동으로 로드됨..
+					
+				});
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

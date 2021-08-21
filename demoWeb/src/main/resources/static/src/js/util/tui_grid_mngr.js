@@ -383,6 +383,7 @@ class TuiGridMngr {
     AjaxMngr.send_api_post_ajax(url, param, function (data) {
       var arr_brRs = param.brRs.split(",");
       var brRs  = arr_brRs[0];
+	  console.log('brRs=>'+brRs);
       if(data !=undefined  && data[brRs]!=undefined) {
         if(_this.options.showRowStatus==true){
           for(var i=0;i<data[brRs].length;i++){
