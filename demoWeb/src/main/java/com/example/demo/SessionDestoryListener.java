@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.example.demo.exception.BizException;
 import com.example.demo.service.GoRestService;
 import com.example.demo.user.domain.UserInfo;
 import com.example.demo.utils.PjtUtil;
@@ -15,6 +16,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.session.SessionDestroyedEvent;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.ResourceAccessException;
 
 @Component
 public class SessionDestoryListener implements ApplicationListener<SessionDestroyedEvent>{
@@ -55,12 +57,19 @@ public class SessionDestoryListener implements ApplicationListener<SessionDestro
         String jsonInString;
         try {
             jsonInString = ptjU.ObjectToJsonString(IN_DS);
-            String jsonOutString = goS.callAPI("", jsonInString);
+            String jsonOutString = goS.callAPI("BR_CM_SESSION_LOG_CRT", jsonInString);
             //OUT_DS = ptjU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } catch (ResourceAccessException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (BizException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+
     }
 
 }

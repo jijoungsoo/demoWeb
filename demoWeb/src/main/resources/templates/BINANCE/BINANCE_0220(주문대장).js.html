@@ -3,6 +3,9 @@
 	$(document).ready(function(){
 		var BINANCE_0220 = new PgmPageMngr('[[${uuid}]]');
 		BINANCE_0220.init(function(p_param) {
+			alert(
+				"aaa"
+			);
 			var _this = BINANCE_0220;
 			var searchForm = new FormMngr(_this, "search_area");
 			const grid_bid = new TuiGridMngr(_this,'grid_bid',{
@@ -34,9 +37,9 @@
 					}
 				]
 			);
-		  	grid_ask.build();
+		  	grid_bid.build();
 
-			const gridgrid_ask_bid = new TuiGridMngr(_this,'grid_ask',{
+			const grid_ask = new TuiGridMngr(_this,'grid_ask',{
 				  editable: false
 				  ,showRowStatus: false
 				  ,rowNum: true
