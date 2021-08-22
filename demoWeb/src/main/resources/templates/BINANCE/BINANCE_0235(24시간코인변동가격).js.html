@@ -1,0 +1,201 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0235 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0235.init(function(p_param) {
+			var _this = BINANCE_0235;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+
+
+	
+					{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'PRICE_CHANGE',
+					   name: 'PRICE_CHANGE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WEIGHTED_AVG_PRICE',
+					   name: 'WEIGHTED_AVG_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'PREV_CLOSE_PRICE',
+					   name: 'PREV_CLOSE_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'LAST_PRICE',
+					   name: 'LAST_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'LAST_QTY',
+					   name: 'LAST_QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BID_PRICE',
+					   name: 'BID_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ASK_PRICE',
+					   name: 'ASK_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'OPEN_PRICE',
+					   name: 'OPEN_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'HIGH_PRICE',
+					   name: 'HIGH_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'LOW_PRICE',
+					   name: 'LOW_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+
+
+
+					},{
+					   header: 'VOLUME',
+					   name: 'VOLUME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QUOTE_VOLUME',
+					   name: 'QUOTE_VOLUME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'OPEN_TIME',
+					   name: 'OPEN_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'CLOSE_TIME',
+					   name: 'CLOSE_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'FIRST_ID',
+					   name: 'FIRST_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'LAST_ID',
+					   name: 'LAST_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'COUNT',
+					   name: 'COUNT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid.build();
+		
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+				switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				var param ={
+					 brRq : 'IN_DATA'
+					,brRs : 'OUT_RSET'
+				}
+				grid.loadData('BR_BINANCE_MARKET_GET_API_V3_TICKER_PRICE_CHANGES_STATISTICS24',param,function(data){
+					console.log(data);
+					
+				});
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

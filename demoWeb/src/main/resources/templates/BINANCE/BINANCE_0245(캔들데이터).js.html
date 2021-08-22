@@ -1,0 +1,239 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0245 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0245.init(function(p_param) {
+			var _this = BINANCE_0245;
+			var searchForm = new FormMngr(_this, "search_area");
+			searchForm.initCombo("INTERVAL",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_CANDLE_INTERVAL', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+			//searchForm.setData('INTERVAL','1m');
+			//value="BNBBTC"
+			searchForm.setData('SYMBOL','BNBBTC');
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 500
+				  */
+				  
+				  
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+			{
+					   header: 'OPEN_TIME',
+					   name: 'OPEN_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'OPEN',
+					   name: 'OPEN',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'HIGH',
+					   name: 'HIGH',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'LOW',
+					   name: 'LOW',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'CLOSE',
+					   name: 'CLOSE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'VOLUME',
+					   name: 'VOLUME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'CLOSE_TIME',
+					   name: 'CLOSE_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'QUOTE_ASSET_VOLUME',
+					   name: 'QUOTE_ASSET_VOLUME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'NUMBER_OF_TRADES',
+					   name: 'NUMBER_OF_TRADES',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'TAKER_BUY_BASE_ASSET_VOLUME',
+					   name: 'TAKER_BUY_BASE_ASSET_VOLUME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'TAKER_BUY_QUOTE_ASSET_VOLUME',
+					   name: 'TAKER_BUY_QUOTE_ASSET_VOLUME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'IGNORE',
+					   name: 'IGNORE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'INTERVAL',
+					   name: 'INTERVAL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					}
+				]
+			);
+			grid.build();
+		
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+				switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				console.log('data');
+				console.log(data);
+				var param ={
+					 brRq : 'IN_DATA'
+					,brRs : 'OUT_RSET'
+					,IN_DATA: [data]
+				}
+			
+				grid.loadData('BR_BINANCE_MARKET_GET_API_V3_KlineCandlestickData', param, function(data) {
+					if (data) {
+					}
+				});
+				
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>
