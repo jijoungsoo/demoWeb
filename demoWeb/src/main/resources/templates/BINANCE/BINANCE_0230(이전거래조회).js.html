@@ -1,0 +1,185 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0220 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0220.init(function(p_param) {
+			var _this = BINANCE_0220;
+			var searchForm = new FormMngr(_this, "search_area");
+			//value="BNBBTC"
+			searchForm.setData('SYMBOL','BNBBTC');
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 500
+				  */
+				  
+				  
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+			{
+					   header: 'ID',
+					   name: 'ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'PRICE',
+					   name: 'PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'QTY',
+					   name: 'QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'QUOTE_QTY',
+					   name: 'QUOTE_QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'TIME',
+					   name: 'TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'IS_BUYER_MAKER',
+					   name: 'IS_BUYER_MAKER',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'IS_BEST_MATCH',
+					   name: 'IS_BEST_MATCH',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'FROM_ID',
+					   name: 'FROM_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					}
+				]
+			);
+			grid.build();
+		
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+				switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				console.log('data');
+				console.log(data);
+				var param ={
+					 brRq : 'IN_DATA'
+					,brRs : 'OUT_RSET'
+					,IN_DATA: [data]
+				}
+			
+				grid.loadData('BR_BINANCE_MARKET_GET_API_V3_OldTradeLookup', param, function(data) {
+					if (data) {
+					}
+				});
+				
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

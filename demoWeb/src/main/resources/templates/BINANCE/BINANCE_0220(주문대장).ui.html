@@ -1,10 +1,28 @@
 <div name="search_area">
   <table>
   <tr>    
+    <td>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">SYMBOL</span> 
+          <input class="form-control" data-ax-path="SYMBOL"  name="SYMBOL" style="width:140px;"  />          
+        </div>
+      </div>
+    </td>
     <td><input type="button" name="search" value="조회" /></td>
   </tr>
   </table>
 </div>
-<div name="grid_bid"></div>
-<div name="grid_ask"></div>
+<table>
+  <tr>
+    <td>매수(BID)</td>
+    <td>매도(ASK)</td>
+  </tr>
+  <tr>
+    <td><div name="grid_bid"></div></td>
+    <td><div name="grid_ask"></div></td>
+  </tr>
+</table>
+
+
 

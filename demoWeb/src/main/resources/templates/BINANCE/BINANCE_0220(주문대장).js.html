@@ -3,11 +3,10 @@
 	$(document).ready(function(){
 		var BINANCE_0220 = new PgmPageMngr('[[${uuid}]]');
 		BINANCE_0220.init(function(p_param) {
-			alert(
-				"aaa"
-			);
 			var _this = BINANCE_0220;
 			var searchForm = new FormMngr(_this, "search_area");
+			//value="BNBBTC"
+			searchForm.setData('SYMBOL','BNBBTC');
 			const grid_bid = new TuiGridMngr(_this,'grid_bid',{
 				  editable: false
 				  ,showRowStatus: false
@@ -16,14 +15,54 @@
 				  ,pageable: false
 				  /*
 				  ,bodyHeight : 700
-				  ,width : 700
 				  */
+				  ,width : 500
+				  
 				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
 				  }
 			,[
-					{
+			{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
 					   header: 'PRICE',
 					   name: 'PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'QTY',
+					   name: 'QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'SEQ',
+					   name: 'SEQ',
 					   width: 100,
 					   align : 'left',
 					   sortable : true,
@@ -47,14 +86,54 @@
 				  ,pageable: false
 				  /*
 				  ,bodyHeight : 700
-				  ,width : 700
 				  */
+				  ,width : 500
+				  
 				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
 				  }
 			,[
 					{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
 					   header: 'PRICE',
 					   name: 'PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'QTY',
+					   name: 'QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'SEQ',
+					   name: 'SEQ',
 					   width: 100,
 					   align : 'left',
 					   sortable : true,
@@ -75,19 +154,24 @@
 				switch(el.target.name){
 			case 'search':
 				var data = searchForm.getData();
+				console.log('data');
+				console.log(data);
 				var param ={
 					 brRq : 'IN_DATA'
-					,brRs : 'OUT_RSET'
+					,brRs : 'OUT_RSET,OUT_RSET_BID,OUT_RSET_ASK'
+					,IN_DATA: [data]
 				}
+			
 				_this.showProgress();
 				_this.send('BR_BINANCE_MARKET_GET_API_V3_OrderBook', param, function(data) {
+					_this.hideProgress();
 					if (data) {
 									
 						console.log(data);
 								
 						grid_bid.resetData(data.OUT_RSET_BID);
 						grid_ask.resetData(data.OUT_RSET_ASK);
-						_this.hideProgress();
+						
 
 					}
 				});
