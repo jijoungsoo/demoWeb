@@ -38,6 +38,16 @@ $(document).ready(function(){
 					showClearBtn : true
 					}
 				},{
+		           header: '코인',
+		           name: 'CURRENCY',
+		           width: 200,
+				   align : 'center',
+				   filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+					}
+				},{
 		           header: '영문명',
 		           name: 'EN_NM',
 		           width: 200,
@@ -371,7 +381,7 @@ $(document).ready(function(){
 					console.log(row_data);
 
 					var param = {
-						P_CURRENCY: row_data.EN_NM.toUpperCase()
+						P_CURRENCY: row_data.CURRENCY.toUpperCase()
 					}
 					var popup = new PopupManger(_this, 'UPBIT_0245', {
 							width: 1200,

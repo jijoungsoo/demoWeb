@@ -20,9 +20,9 @@
 			orderSellForm.setData("MARKET",market);
 		
 			var param ={
-				brRq : 'IN_DATA'
-				,brRs : 'OUT_DATA'
-				,IN_DATA:[ {
+				brRq : 'IN_PSET'
+				,brRs : 'OUT_RSET'
+				,IN_PSET:[ {
 					MARKET : market
 				} ]
 			}
@@ -30,8 +30,8 @@
 			_this.send('BR_UPBIT_EXCHANGE_GET_ORDERS_CHANCE', param, function(data) {
 				_this.hideProgress();
 				if (data) {
-					console.log(data.OUT_DATA[0]);
-					orderChanceAreaForm.setDataAll(data.OUT_DATA[0]);		
+					console.log(data.OUT_RSET[0]);
+					orderChanceAreaForm.setDataAll(data.OUT_RSET[0]);		
 				}
 			});		
 			
@@ -248,19 +248,19 @@
 				switch(el.target.name){
 					case 'btn_search':
 						var param ={
-							brRq : 'IN_DATA'
-							,brRs : 'OUT_DATA,OUT_DATA_ORDER_BOOK'
-							,IN_DATA:[ {
-								MARKET : market
+							brRq : 'IN_PSET'
+							,brRs : 'OUT_RSET,OUT_RSET_ORDER_BOOK'
+							,IN_PSET:[ {
+								MARKETS : market
 							} ]
 						}
 						_this.showProgress();
 						_this.send('BR_UPBIT_QUOTATION_ORDER_BOOK', param, function(data) {
 							_this.hideProgress();
 							if (data) {
-								grid.resetData(data.OUT_DATA);
-								grid_orderbook_units_bid.resetData(data.OUT_DATA_ORDER_BOOK);
-								grid_orderbook_units_ask.resetData(data.OUT_DATA_ORDER_BOOK);
+								grid.resetData(data.OUT_RSET);
+								grid_orderbook_units_bid.resetData(data.OUT_RSET_ORDER_BOOK);
+								grid_orderbook_units_ask.resetData(data.OUT_RSET_ORDER_BOOK);
 							}
 						});	
 					break;		

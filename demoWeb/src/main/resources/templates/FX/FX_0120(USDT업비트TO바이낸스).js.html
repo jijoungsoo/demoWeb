@@ -1,0 +1,232 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0255 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0255.init(function(p_param) {
+			var _this = BINANCE_0255;
+			var searchForm = new FormMngr(_this, "search_area");
+			//value="BNBBTC"
+			//searchForm.setData('SYMBOL','BNBBTC');
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+					{
+					   header: 'WALLET_STATE',
+					   name: 'WALLET_STATE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: 'MARKET_WARNING',
+					   name: 'MARKET_WARNING',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: '코인',
+					   name: 'KR_NM',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: '코인',
+					   name: 'EN_NM',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+						/*
+					},{
+					   header: '코인',
+					   name: 'U_CURRENCY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+						/*
+					},{
+					   header: '바이낸스',
+					   name: 'B_CURRENCY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}*/
+					},{
+					   header: '통화',
+					   name: 'U_MARKET_CD',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+						/*
+					},{
+					   header: '바이낸스통화',
+					   name: 'B_MARKET_CD',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}*/
+					},{
+					   header: '업비트가격',
+					   name: 'U_TRADE_PRICE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: '바이낸스가격',
+					   name: 'B_TRADE_PRICE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: '업-바가격차이',
+					   name: 'GAP',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: '업-바이낸스PER',
+					   name: 'PER',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: '출금수수료',
+					   name: 'WITHDRAW_FEE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: '최소출금금액',
+					   name: 'WITHDRAW_MINIMUM',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					}
+				]
+			);
+			grid.build();
+		
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+				switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				console.log('data');
+				console.log(data);
+				var param ={
+					 brRq : ''
+					,brRs : 'OUT_RSET'
+				}
+			
+				grid.loadData('BR_FX_retrieveUsdtUpbitToBinance', param, function(data) {
+					if (data) {
+					}
+				});
+				
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>
