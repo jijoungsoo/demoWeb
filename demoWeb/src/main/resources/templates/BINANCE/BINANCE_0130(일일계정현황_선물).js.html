@@ -1,0 +1,205 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0110 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0110.init(function(p_param) {
+			var _this = BINANCE_0110;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'TYPE',
+					   name: 'TYPE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid.build();
+
+			const grid_data_assets = new TuiGridMngr(_this,'grid_data_assets',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'ASSET',
+					   name: 'ASSET',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MARGIN_BALANCE',
+					   name: 'MARGIN_BALANCE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WALLET_BALANCE',
+					   name: 'WALLET_BALANCE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+			grid_data_assets.build();
+
+			const grid_data_position = new TuiGridMngr(_this,'grid_data_position',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'ENTRY_PRICE',
+					   name: 'ENTRY_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MARK_PRICE',
+					   name: 'MARK_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'POSITION_AMT',
+					   name: 'POSITION_AMT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'UN_REALIZED_PROFIT',
+					   name: 'UN_REALIZED_PROFIT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+			grid_data_position.build();
+
+			
+			
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+			switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				var param ={
+					 brRq : 'IN_PSET'
+					,brRs : 'OUT_RSET,OUT_RSET_DATA__ASSETS,OUT_RSET_DATA__POSITION'
+				}
+
+				_this.showProgress();
+				_this.send('BR_BINANCE_WALLET_GET_SAPI_V1_DailyAccountSnapshotFUTURES', param, function(data) {
+					_this.hideProgress();
+					if (data) {
+									
+						console.log(data);
+								
+						grid.resetData(data.OUT_RSET);
+						grid_data_assets.resetData(data.OUT_RSET_DATA__ASSETS);
+						
+
+					}
+				});
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

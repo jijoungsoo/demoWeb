@@ -1,0 +1,188 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0110 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0110.init(function(p_param) {
+			var _this = BINANCE_0110;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'TYPE',
+					   name: 'TYPE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'UPDATE_TIME',
+					   name: 'UPDATE_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TOTAL_ASSET_OF_BTC',
+					   name: 'TOTAL_ASSET_OF_BTC',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TOTAL_LIABILITY_OF_BTC',
+					   name: 'TOTAL_LIABILITY_OF_BTC',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TOTAL_NET_ASSET_OF_BTC',
+					   name: 'TOTAL_NET_ASSET_OF_BTC',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid.build();
+
+			const grid_user_assets = new TuiGridMngr(_this,'grid_user_assets',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'ASSET',
+					   name: 'ASSET',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BORROWED',
+					   name: 'BORROWED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'FREE',
+					   name: 'FREE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'INTEREST',
+					   name: 'INTEREST',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'LOCKED',
+					   name: 'LOCKED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'NET_ASSET',
+					   name: 'NET_ASSET',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+			grid_user_assets.build();
+			
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+			switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				var param ={
+					 brRq : 'IN_PSET'
+					,brRs : 'OUT_RSET,OUT_RSET_DATA__USER_ASSETS'
+				}
+
+				_this.showProgress();
+				_this.send('BR_BINANCE_WALLET_GET_SAPI_V1_DailyAccountSnapshotMARGIN', param, function(data) {
+					_this.hideProgress();
+					if (data) {
+									
+						console.log(data);
+								
+						grid.resetData(data.OUT_RSET);
+						grid_balances.resetData(data.OUT_RSET_DATA__USER_ASSETS);
+						
+
+					}
+				});
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>
