@@ -1,0 +1,70 @@
+<div name="search_area">
+	<table>
+		<tr>
+			<td><input type="button" name="search" value="조회" /></td>
+			<td><input type="button" name="del" value="삭제" /></td>
+		</tr>
+	</table>
+</div>
+<div name="grid"></div>
+
+<div name="user_area"
+	style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+	<div class="container">
+		<div class="row row-cols-4">
+			<div class="col-sm">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">스케줄이름</span> <input type="text"
+							 class="form-control"  data-ax-path="NAME"  name="NAME">
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">스케줄 SUBJECT</span> <input type="text"
+             class="form-control"  data-ax-path="SUBJECT"  name="SUBJECT">
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">스케줄 MESSAGE_BODY</span> <input type="text"
+             class="form-control"  data-ax-path="MESSAGE_BODY"  name="MESSAGE_BODY">
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">스케줄 트리거 이름</span> <input type="text"
+             class="form-control"  data-ax-path="TRIGGERS_NAME"  name="TRIGGERS_NAME">
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">스케줄 트리거 그룹</span> <input type="text"
+							class="form-control"  data-ax-path="TRIGGERS_GROUP" name="TRIGGERS_GROUP">
+					</div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">스케줄 트리거 주기</span> <input type="text"
+							class="form-control"  data-ax-path="TRIGGERS_CRON" name="TRIGGERS_CRON">
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="padding: 10px;">
+		<input type="button" name="new" value="신규" /> 
+     <input type="button" name="save" value="저장" />
+	</div>
+</div>
+

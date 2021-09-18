@@ -1,0 +1,222 @@
+<script>
+	$(document).ready(function(){
+		var CM_1750 = new PgmPageMngr('[[${uuid}]]');
+			CM_1750.init(function(p_param) {
+				var _this = CM_1750;
+				var searchForm = new FormMngr(_this, "search_area");
+				var userForm = new FormMngr(_this, "user_area");
+				$('[data-ax5formatter]').ax5formatter();
+	
+				const grid = new TuiGridMngr(_this, 'grid', {
+					editable : true,
+					showRowStatus : true,
+					rowNum : true,
+					checkbox : true,
+					bodyHeight: 300
+				},
+				[ {
+					header : '이름',
+					name : 'name',
+					width : 100,
+					resizable : false,
+					sortable : true,
+					align : "left"
+				}, {
+					header : 'subject',
+					name : 'subject',
+					width : 'auto', /*너비 자동조절*/
+					width : 200,
+					sortable : true,
+					align : "left"
+				},{
+					header : 'MESSAGE_BODY',
+					name : 'messageBody',
+					width : 140,
+					sortable : true,
+					align : "left"
+				},{
+					header : '트리거 상태',
+					name : 'triggerState',
+					width : 300,
+					sortable : true,
+					align : "center"
+				},{
+					
+					header : '트리거 이름',
+					name : 'triggersName',
+					width : 100,
+					sortable : true,
+					align : "center"
+				},{
+					header : '트리거 그룹',
+					name : 'triggersGroup',
+					width : 100,
+					sortable : true,
+					align : "center"
+				},{
+					header : '트리거 주기',
+					name : 'triggersCron',
+					width : 300,
+					sortable : true,
+					align : "center"
+				}]
+				);
+				grid.build();
+	
+				grid.on('click', (ev) => {
+					if (ev.rowKey >=0) {
+						var row_data=grid.getRow(ev.rowKey);
+						console.log(row_data);
+						userForm.setDataAll(row_data);
+					}
+				});
+	
+				searchForm.addEvent("click", "input[type=button]", function(el) {
+					//console.log(el);
+					switch (el.target.name) {
+					case 'search':
+						var params = {
+							url : "http://localhost:8084/groups/sc/jobs/list",
+							param: {}
+						}
+
+						_this.showProgress();
+						_this.send_proxy(params, function(data) {
+							_this.hideProgress();
+							if (data.body) {
+								console.log(data)
+								var tmp_data =[];
+								for(var i=0;i<data.body.length;i++){
+									var tmp = data.body[i];
+									tmp_data.push({
+										"name": tmp.name,
+										"subject": tmp.subject,
+										"messageBody": tmp.messageBody,
+										"triggersName": tmp.triggers[0].name,
+										"triggersGroup": tmp.triggers[0].group,
+										"triggersCron": tmp.triggers[0].cron,
+										"triggerState": tmp.triggerState,
+									})
+								}
+
+
+								grid.resetData(tmp_data);
+							}
+
+						});					
+						break;
+					case "del":
+						var data = grid.getCheckedData();
+						console.log(data);
+						if (data.length <= 0) {
+							Message.alert('선택된 항목이 없습니다.');
+							return;
+						}
+	
+						Message.confirm('삭제하시겠습니까?', function() {
+							var param = {
+								brRq : 'IN_DATA',
+								brRs : '',
+								IN_DATA : data
+							}
+							_this.showProgress();
+							_this.send('BR_CM_USER_RM', param, function(data) {
+								_this.hideProgress();
+								if (data) {
+									Message.alert('삭제되었습니다.', function() {
+										searchForm.get("search").trigger("click");
+										userForm.clearData();
+									});
+								}
+	
+							});
+						});
+						break;
+					}
+				});
+	
+				userForm.addEvent("click", "input[type=button]", function(el) {
+					//console.log(el);
+					switch (el.target.name) {
+					case 'new':
+						userForm.clearData();
+						break;
+					case "save":
+						var data = userForm.getData();
+						console.log(data);
+	
+
+						if(PjtUtil.isEmpty(data.NAME)){
+							Message.alert("스케줄 이름을 입력해주세요.");
+							return;
+						}
+						if(PjtUtil.isEmpty(data.SUBJECT)){
+							Message.alert("스케줄 SUBJECT를 입력해주세요.");
+							return;
+						}
+
+						if(PjtUtil.isEmpty(data.MESSAGE_BODY)){
+							Message.alert("스케줄 MESSAGE_BODY를 입력해주세요.");
+							return;
+						}
+						
+						if(PjtUtil.isEmpty(data.TRIGGERS_NAME)){
+							Message.alert("스케줄 트리거 이름을 입력해주세요.");
+							return;
+						}
+
+						if(PjtUtil.isEmpty(data.TRIGGERS_GROUP)){
+							Message.alert("스케줄 트리거 그룹을 입력해주세요.");
+							return;
+						}
+
+						if(PjtUtil.isEmpty(data.TRIGGERS_CRON)){
+							Message.alert("스케줄 트리거 주기를 입력해주세요.");
+							return;
+						}
+
+						var tmp_data={
+							"name" : "12",
+							"subject" : "34",
+							"messageBody" : "55",
+							"to" : ["123","456"],
+							"triggers" : [
+								{
+									"name": "7",
+									"group": "8",
+									"cron": "0 0 12 * * ?"
+								}
+							]
+						}
+
+						alert('aaa2')
+						//https://advenoh.tistory.com/56
+						//라이브러리가 원래 존재하는 것처럼 적어주었다.
+						//https://github.com/kenshin579/tutorials-java/blob/master/springboot-quartz-cluster/src/main/java/com/advenoh/controller/ScheduleController.java
+	
+						Message.confirm('저장하시겠습니까?', function() {
+							var params = {
+								url : "http://localhost:8084/groups/sc/jobs/create",
+								param: tmp_data
+							}
+
+							console.log(params);
+							_this.showProgress();
+							_this.send_proxy(params, function(data) {
+								_this.hideProgress();
+								if (data) {
+									Message.alert('저장되었습니다.', function() {
+										searchForm.get("search").trigger("click");
+										userForm.clearData();
+									});
+								}
+
+							});
+						});
+						
+						break;
+					}
+				});
+			});
+		});
+	</script>

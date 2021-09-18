@@ -157,6 +157,12 @@ dependencies {
 // https://mvnrepository.com/artifact/org.springframework.plugin/spring-plugin-metadata
 implementation 'org.springframework.plugin:spring-plugin-metadata:2.0.0.RELEASE'
 
+
+//인증관련
+// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
+
+
 }
 
 test {
