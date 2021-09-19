@@ -1,0 +1,61 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0160 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0160.init(function(p_param) {
+			var _this = BINANCE_0160;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'DATA',
+					   name: 'DATA',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					}
+				]
+			);
+		  	grid.build();
+			
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+			switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				var param ={
+					 brRq : ''
+					,brRs : 'OUT_RSET'
+				}
+
+				_this.showProgress();
+				_this.send('BR_BINANCE_WALLET_GET_SAPI_V1_AccountStatus', param, function(data) {
+					_this.hideProgress();
+					if (data) {
+									
+						console.log(data);
+								
+						grid.resetData(data.OUT_RSET);
+					}
+				});
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

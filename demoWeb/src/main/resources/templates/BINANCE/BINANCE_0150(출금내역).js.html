@@ -1,0 +1,149 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0150 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0150.init(function(p_param) {
+			var _this = BINANCE_0150;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'ADDRESS',
+					   name: 'ADDRESS',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'AMOUNT',
+					   name: 'AMOUNT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'APPLY_TIME',
+					   name: 'APPLY_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'COIN',
+					   name: 'COIN',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ID',
+					   name: 'ID',
+					   width: 150,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_ORDER_ID',
+					   name: 'WITHDRAW_ORDER_ID',
+					   width: 150,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'NETWORK',
+					   name: 'NETWORK',
+					   width: 150,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TRANSFER_TYPE',
+					   name: 'TRANSFER_TYPE',
+					   width: 150,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'STATUS',
+					   name: 'STATUS',
+					   width: 150,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TRANSACTION_FEE',
+					   name: 'TRANSACTION_FEE',
+					   width: 150,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'CONFIRM_NO',
+					   name: 'CONFIRM_NO',
+					   width: 150,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TX_ID',
+					   name: 'TX_ID',
+					   width: 150,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid.build();
+			
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+			switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				var param ={
+					 brRq : 'IN_PSET'
+					,brRs : 'OUT_RSET'
+				}
+
+				_this.showProgress();
+				_this.send('BR_BINANCE_WALLET_GET_SAPI_V1_WithdrawHistory', param, function(data) {
+					_this.hideProgress();
+					if (data) {
+									
+						console.log(data);
+								
+						grid.resetData(data.OUT_RSET);
+					}
+				});
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>
