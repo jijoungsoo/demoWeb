@@ -1,0 +1,226 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0160 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0160.init(function(p_param) {
+			var _this = BINANCE_0160;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'IS_LOCKED',
+					   name: 'IS_LOCKED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'PLANNED_RECOVER_TIME',
+					   name: 'PLANNED_RECOVER_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TRIGGER_CONDITION__GCR',
+					   name: 'TRIGGER_CONDITION__GCR',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TRIGGER_CONDITION__IFER',
+					   name: 'TRIGGER_CONDITION__IFER',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TRIGGER_CONDITION__UFR',
+					   name: 'TRIGGER_CONDITION__UFR',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'UPDATE_TIME',
+					   name: 'UPDATE_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					}
+				]
+			);
+		  	grid.build();
+
+			  
+
+			const grid_indicators = new TuiGridMngr(_this,'grid_indicators',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+					{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'UFR_INDICATOR',
+					   name: 'UFR_INDICATOR',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'UFR_COUNT',
+					   name: 'UFR_COUNT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'UFR_CURRENT',
+					   name: 'UFR_CURRENT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'UFR_TRIGGER',
+					   name: 'UFR_TRIGGER',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'IFER_INDICATOR',
+					   name: 'IFER_INDICATOR',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'IFER_COUNT',
+					   name: 'IFER_COUNT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'IFER_CURRENT',
+					   name: 'IFER_CURRENT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'IFER_TRIGGER',
+					   name: 'IFER_TRIGGER',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'GCR_INDICATOR',
+					   name: 'GCR_INDICATOR',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'GCR_COUNT',
+					   name: 'GCR_COUNT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'GCR_CURRENT',
+					   name: 'GCR_CURRENT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'GCR_TRIGGER',
+					   name: 'GCR_TRIGGER',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					}
+				]
+			);
+			grid_indicators.build();
+			
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+			switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				var param ={
+					 brRq : ''
+					,brRs : 'OUT_RSET,OUT_RSET_INDICATORS'
+				}
+
+				_this.showProgress();
+				_this.send('BR_BINANCE_WALLET_GET_SAPI_V1_AccountApiTradingStatus', param, function(data) {
+					_this.hideProgress();
+					if (data) {
+									
+						console.log(data);
+								
+						grid.resetData(data.OUT_RSET);
+						grid_indicators.resetData(data.OUT_RSET_INDICATORS);
+					}
+				});
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

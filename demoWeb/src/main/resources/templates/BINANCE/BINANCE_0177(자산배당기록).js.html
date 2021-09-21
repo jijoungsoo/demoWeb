@@ -1,0 +1,90 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0177 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0177.init(function(p_param) {
+			var _this = BINANCE_0177;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+					{
+					   header: 'AMOUNT',
+					   name: 'AMOUNT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'ASSET',
+					   name: 'ASSET',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'DIV_TIME',
+					   name: 'DIV_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'EN_INFO',
+					   name: 'EN_INFO',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TRAN_ID',
+					   name: 'TRAN_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					}
+				]
+			);
+		  	grid.build();
+
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+			switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				var param ={
+					 brRq : 'IN_PSET'
+					,brRs : 'OUT_RSET'
+					,IN_PSET : [ data ]
+				}
+
+				_this.showProgress();
+				_this.send('BR_BINANCE_WALLET_GET_SAPI_V1_AssetDividendRecord', param, function(data) {
+					_this.hideProgress();
+					if (data) {
+									
+						console.log(data);
+								
+						grid.resetData(data.OUT_RSET);
+						grid_transfer.resetData(data.OUT_RSET_DATA__TRANSFER_RESULT);
+					}
+				});
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

@@ -1,0 +1,172 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0160 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0160.init(function(p_param) {
+			var _this = BINANCE_0160;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+					{
+					   header: 'TOTAL',
+					   name: 'TOTAL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					}
+				]
+			);
+		  	grid.build();
+
+			const grid_user_asset_dribblets = new TuiGridMngr(_this,'grid_user_asset_dribblets',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+					{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'OPERATE_TIME',
+					   name: 'OPERATE_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TOTAL_TRANSFERED_AMOUNT',
+					   name: 'TOTAL_TRANSFERED_AMOUNT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TOTAL_SERVICE_CHARGE_AMOUNT',
+					   name: 'TOTAL_SERVICE_CHARGE_AMOUNT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TRANS_ID',
+					   name: 'TRANS_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					}
+				]
+			);
+			grid_user_asset_dribblets.build();
+
+			const grid_user_asset_dribblet_details = new TuiGridMngr(_this,'grid_user_asset_dribblet_details',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+					{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TRANS_ID',
+					   name: 'TRANS_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'SERVICE_CHARGE_AMOUNT',
+					   name: 'SERVICE_CHARGE_AMOUNT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'OPERATE_TIME',
+					   name: 'OPERATE_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TRANSFERED_AMOUNT',
+					   name: 'TRANSFERED_AMOUNT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'FROM_ASSET',
+					   name: 'FROM_ASSET',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					}
+				]
+			);
+			grid_user_asset_dribblet_details.build();
+			
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+			switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				var param ={
+					 brRq : 'IN_PSET'
+					,brRs : 'OUT_RSET,OUT_RSET_USER_ASSET_DRIBBLETS,OUT_RSET_USER_ASSET_DRIBBLET_DETAILS'
+				}
+
+				_this.showProgress();
+				_this.send('BR_BINANCE_WALLET_GET_SAPI_V1_DustLog', param, function(data) {
+					_this.hideProgress();
+					if (data) {
+									
+						console.log(data);
+								
+						grid.resetData(data.OUT_RSET);
+						grid_user_asset_dribblets.resetData(data.OUT_RSET_USER_ASSET_DRIBBLETS);
+						grid_user_asset_dribblet_details.resetData(data.OUT_RSET_USER_ASSET_DRIBBLET_DETAILS);
+					}
+				});
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>
