@@ -1,0 +1,57 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0185 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0185.init(function(p_param) {
+			var _this = BINANCE_0185;
+			var searchForm = new FormMngr(_this, "search_area");
+			searchForm.initCombo("TYPE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_USER_UNIVERSAL_TRANSFER_TYPE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+					{
+					   header: 'TRAN_ID',
+					   name: 'TRAN_ID',
+					   width: 200,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'				
+					}
+				]
+			);
+		  	grid.build();
+
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+			switch(el.target.name){
+			case 'transfer':
+				var data = searchForm.getData();
+				var param ={
+					 brRq : 'IN_PSET'
+					,brRs : 'OUT_RSET'
+					,IN_PSET : [ data ]
+				}
+
+				_this.showProgress();
+				_this.send('BR_BINANCE_WALLET_POST_SAPI_V1_UserUniversalTransfer', param, function(data) {
+					_this.hideProgress();
+					if (data) {
+									
+						console.log(data);
+								
+						grid.resetData(data.OUT_RSET);
+					}
+				});
+				break;
+				}
+			});
+	});	
+});
+
+</script>
