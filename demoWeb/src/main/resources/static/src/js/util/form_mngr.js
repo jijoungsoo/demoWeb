@@ -17,6 +17,11 @@ class FormMngr {
 			alert("pgm_mngr+["+pgm_mngr.pgm_id+"]form을 찾을수 없습니다.["+area_name+"] 코드를 확인해주세요.");
 			return;
 		}
+		console.log('aaaa');
+		console.log(this.container_area);
+		console.log(this.container.children());
+		console.log('aaaa');
+		//this.container.children().unwrap().wrapAll("<form name='input' ></form>");
 		this.initBinder();
 	}
 	getUUID() {
@@ -170,6 +175,17 @@ class FormMngr {
 		var tmp =t[0].reportValidity();
 		return tmp;
 		
+	}
+
+	isValid(){
+		//https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=horajjan&logNo=220586383301
+		var t=this.container_area;
+		var tmp =t[0];
+		console.log(tmp.checkValidity());
+		console.log($(tmp));
+		/*문구하고   focus 잡는걸 해야겠다.
+		 */
+		return tmp.checkValidity()
 	}
 
 	disable(el_name){

@@ -5,10 +5,6 @@
 		BINANCE_0310.init(function(p_param) {
 			var _this = BINANCE_0310;
 			var sendForm = new FormMngr(_this, "send_area");
-			sendForm.initCombo("TYPE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_TYPE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
-			sendForm.initCombo("SIDE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_SIDE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
-			sendForm.initCombo("TIME_IN_FORCE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_TIME_IN_FORCE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
-			
 			//value="BNBBTC"
 			sendForm.setData('SYMBOL','BNBBTC');
 			const grid = new TuiGridMngr(_this,'grid',{
@@ -29,6 +25,19 @@
 			{
 					   header: 'SYMBOL',
 					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'ORIG_CLIENT_ORDER_ID',
+					   name: 'ORIG_CLIENT_ORDER_ID',
 					   width: 100,
 					   align : 'left',
 					   sortable : true,
@@ -68,19 +77,6 @@
 					},{
 					   header: 'CLIENT_ORDER_ID',
 					   name: 'CLIENT_ORDER_ID',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
-					},{
-					   header: 'TRANSACT_TIME',
-					   name: 'TRANSACT_TIME',
 					   width: 100,
 					   align : 'left',
 					   sortable : true,
@@ -199,118 +195,26 @@
 				]
 			);
 			grid.build();
-
-
-			const grid_fills = new TuiGridMngr(_this,'grid_fills',{
-				  editable: false
-				  ,showRowStatus: false
-				  ,rowNum: true
-				  ,checkbox: false
-				  ,pageable: false
-				  /*
-				  ,bodyHeight : 700
-				  ,width : 500
-				  */
-				  
-				  
-				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
-				  }
-			,[
-			{
-					   header: 'SYMBOL',
-					   name: 'SYMBOL',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
-					},{
-					   header: 'PRICE',
-					   name: 'PRICE',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
-					},{
-					   header: 'QTY',
-					   name: 'QTY',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
-					},{
-					   header: 'COMMISSION',
-					   name: 'COMMISSION',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
-					},{
-					   header: 'COMMISSION_ASSET',
-					   name: 'COMMISSION_ASSET',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
-					}
-				]
-			);
-			grid_fills.build();
 		
 			sendForm.addEvent("click","input[type=button]",function(el){
 				//console.log(el);
 				switch(el.target.name){
 				case 'test_new_order':
-
-					if(!sendForm.isValid()){
-						return;
-					}
-
 					var data = sendForm.getData();
 					console.log('data');
 					console.log(data);
 					var param ={
 						brRq : 'IN_PSET'
-						,brRs : 'OUT_RSET,OUT_RSET_FILLS'
+						,brRs : 'OUT_RSET'
 						,IN_PSET: [data]
 					}
 					_this.showProgress();
-					_this.send_socket('BR_SPOT_ACCOUNT_TRADE_POST_API_V3_TestNewOrder', param, function(data) {
+					_this.send_socket('BR_SPOT_ACCOUNT_TRADE_POST_API_V3_CancelOrder', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							var row_data = data.OUT_RSET;
 							console.log(data);
 							grid.resetData(data.OUT_RSET);
-							grid_fills.resetData(data.OUT_RSET_FILLS);
 						} 
 					
 					});
