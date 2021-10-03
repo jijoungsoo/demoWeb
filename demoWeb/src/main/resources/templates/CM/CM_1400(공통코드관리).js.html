@@ -17,6 +17,12 @@ $(document).ready(function(){
 				showDummyRows : false
 			},
 			[ {
+				header : 'GRP_CD_SEQ',
+				name : 'GRP_CD_SEQ',
+				width : 100,
+				resizable : false,
+				sortable : true
+			  },{
 				header : '공통그룹코드',
 				name : 'GRP_CD',
 				width : 200,
@@ -156,6 +162,12 @@ $(document).ready(function(){
 				showDummyRows : false
 			},
 			[ {
+				header : 'CD_SEQ',
+				name : 'CD_SEQ',
+				width : 100,
+				resizable : false,
+				sortable : true
+			},{
 				header : '공통그룹코드',
 				name : 'GRP_CD',
 				width : 200,
@@ -317,10 +329,11 @@ $(document).ready(function(){
 			cmGrpCdSearchForm.addEvent("click","input[type=button]", function(el) {
 				switch (el.target.name) {
 				case 'cm_grp_cd_search':
+					var search_data = cmGrpCdSearchForm.getData();
 					var param = {
-						brRq : 'IN_DATA',
+						brRq : 'IN_PSET',
 						brRs : 'OUT_DATA',
-						IN_DATA : [ {} ]
+						IN_PSET : [ search_data ]
 					}
 					grid_cm_grp_cd.loadData('BR_CM_GRP_CD_FIND', param, function(data) {
 						console.log(data);

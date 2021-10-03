@@ -5,6 +5,10 @@
 		BINANCE_0310.init(function(p_param) {
 			var _this = BINANCE_0310;
 			var sendForm = new FormMngr(_this, "send_area");
+			sendForm.initCombo("TYPE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_TYPE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+			sendForm.initCombo("SIDE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_SIDE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+			sendForm.initCombo("TIME_IN_FORCE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_TIME_IN_FORCE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+			
 			//value="BNBBTC"
 			sendForm.setData('SYMBOL','BNBBTC');
 			const grid = new TuiGridMngr(_this,'grid',{
