@@ -199,7 +199,7 @@
 			sendForm.addEvent("click","input[type=button]",function(el){
 				//console.log(el);
 				switch(el.target.name){
-				case 'test_new_order':
+				case 'cancel_order':
 					var data = sendForm.getData();
 					console.log('data');
 					console.log(data);
@@ -209,7 +209,7 @@
 						,IN_PSET: [data]
 					}
 					_this.showProgress();
-					_this.send_socket('BR_SPOT_ACCOUNT_TRADE_POST_API_V3_CancelOrder', param, function(data) {
+					_this.send_socket('BR_SPOT_ACCOUNT_TRADE_DELETE_API_V3_CancelOrder', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							var row_data = data.OUT_RSET;
@@ -220,7 +220,6 @@
 					});
 				}
 			});
-			sendForm.get("search").trigger("click");
 	});	
 });
 

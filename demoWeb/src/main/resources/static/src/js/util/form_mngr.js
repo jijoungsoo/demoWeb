@@ -181,7 +181,26 @@ class FormMngr {
 		//https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=horajjan&logNo=220586383301
 		var t=this.container_area;
 		var tmp =t[0];
-		console.log(tmp.checkValidity());
+		//console.log(tmp.checkValidity()); 이것으로 전체 다 되는데 순회하는걸 하나 더 만들자 알림메시지를 보여주려고
+
+		for(var i=0;i<tmp.elements.length;i++){
+			var tmp_el = tmp.elements[i];
+
+			if(tmp_el.checkValidity()==false){
+				console.log(tmp_el);
+				console.log(tmp_el.name);
+				console.log(tmp_el.required);
+				if(tmp_el.required==true){
+					alert(tmp_el.name+"값이 비어있습니다.")
+				}
+				tmp_el.focus();
+
+
+				return ;
+			}
+		}
+
+
 		console.log($(tmp));
 		/*문구하고   focus 잡는걸 해야겠다.
 		 */

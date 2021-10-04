@@ -287,9 +287,14 @@
 			grid_fills.build();
 		
 			sendForm.addEvent("click","input[type=button]",function(el){
+
+				if(!sendForm.isValid()){
+						return;
+				}
+
 				//console.log(el);
 				switch(el.target.name){
-				case 'test_new_order':
+				case 'new_order':
 					var data = sendForm.getData();
 					console.log('data');
 					console.log(data);
@@ -311,7 +316,6 @@
 					});
 				}
 			});
-			sendForm.get("search").trigger("click");
 	});	
 });
 
