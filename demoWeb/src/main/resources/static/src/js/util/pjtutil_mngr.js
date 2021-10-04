@@ -105,4 +105,34 @@ class PjtUtil{
 	      return v.toString(16);
 	    });
 	}
+
+	static saveApiLog(br,p_param,uuid){
+		 var api_uuid= PjtUtil.makeUUID();
+		if (AppMngr.debug_console=="Y") {
+	        if(uuid!=undefined){
+		        var seq = sessionStorage.getItem(uuid);
+		        if(seq==null){
+		        	seq =1;
+		        	sessionStorage.setItem(uuid,1);
+		        } else {
+		        	seq = Number(seq);
+		        	seq = seq+1;
+		        	sessionStorage.setItem(uuid,seq);
+		        }
+		        /**/
+		        p_param['UUID'] = uuid;
+		        p_param['SEQ'] = seq;
+		        //자 이걸 등록한다.
+		        var uuid_debug_log_ul = $("#"+uuid+"_debug_log_ul");
+		        //입력할 창은 정해져있다.
+		        var now_time = moment(new Date()).format('HH:mm:ss');
+		        var run_fun = "javascript:void AppMngr.openLog('"+uuid+"','"+seq+"','"+api_uuid+"');";
+		        console.log(run_fun);
+		        var tmp ="<li><a href=\""+run_fun+"\">["+now_time+"]["+seq+"]"+br+"</a></li>";
+		        console.log(tmp);
+	          	uuid_debug_log_ul.append(tmp);
+	        }
+	    }
+		return p_param;
+	}
 }

@@ -1,0 +1,144 @@
+<script>
+$(document).ready(function(){
+	var CM_1850 = new PgmPageMngr('[[${uuid}]]');
+		CM_1850.init(function(p_param) {
+			var _this = CM_1850;
+			var searchForm = new FormMngr(_this, "search_area");
+
+			const grid = new TuiGridMngr(_this, 'grid', {
+				editable : true,
+				showRowStatus : true,
+				rowNum : true,
+				checkbox : true,
+				bodyHeight : 700 /*그리드 높이지정 */
+				,
+				showDummyRows : false
+			},
+			[ 
+				
+			{
+				header : '_ID',
+				name : '_ID',
+				width : 400,
+				resizable : false,
+				sortable : true
+			},{
+				header : 'ACT_ID',
+				name : 'ACT_ID',
+				width : 300,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}
+			},
+			{
+				header : 'IN_DT_NAME',
+				name : 'IN_DT_NAME',
+				width : 300,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}
+			},
+
+			{
+				header : 'OUT_DT_NAME',
+				name : 'OUT_DT_NAME',
+				width : 300,
+				sortable : true,
+				align : "center",
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}				
+			}, {
+				header : 'CREATE_DTM',
+				name : 'CREATE_DTM',
+				renderer : {
+					type : datetimeRenderer,
+					options : {
+						format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+						,
+						source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+					}
+				},
+				width : 120,
+				sortable : true,
+				align : "center",
+				filter : {
+					type : 'date',
+					format : 'yyyy-MM-DD'
+				/*'yyyy-MM-dd HH:mm A'*/
+				/*실제 데이터랑 비교하나보다 .. 비교가 안된다. */
+				}
+			}, {
+				header : 'TIME_GAP',
+				name : 'TIME_GAP',
+				width : 100,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}				
+			}, {
+				header : 'ERR',
+				name : 'ERR',
+				width : 300,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}				
+			} ]
+			);
+			grid.build();
+
+			searchForm.addEvent("click","input[type=button]", function(el) {
+				switch (el.target.name) {
+				case 'search':
+					var param = {
+						brRq : 'IN_DATA',
+						brRs : 'OUT_DATA',
+						IN_DATA : [ {} ]
+					}
+					grid.loadData('BR_CM_API_LOG_GetApiLog', param, function(data) {
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+					
+					});
+					break;
+				case "del":				
+					Message.confirm('삭제하시겠습니까?', function() {
+						var param = {
+							brRq : '',
+							brRs : '',
+						}
+						_this.send('BR_CM_API_LOG_DropLog', param, function(data) {
+							Message.alert('삭제되었습니다.', function() {
+								searchForm.get("search").trigger("click");
+							});
+						});
+					});
+					break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+		});
+	});
+</script>

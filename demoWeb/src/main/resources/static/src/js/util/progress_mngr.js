@@ -12,11 +12,16 @@ function ProgressMngr(uuid) {
 	    
 		});
 	*/
-    this.showProgress=function(){
+    this.showProgress=function(){   
     	/*  open 안에  저 icon이 실제로 로딩 이미지 */
        mask.open({
-                content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading</h1>'
-            });
+            content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading222</h1>'
+            ,onClick: function(){
+                console.log(this);
+                //개발일경우만 이것을 활성화 하자. 나중에 플래그 두어서 구분하자..
+                this.self.close();
+            }
+        });
     }
     this.hideProgress=function(){
        mask.close();

@@ -41,11 +41,10 @@ class AxGridMngr {
   }
    
   loadData(url,param, p_func){
-    var mask = new ax5.ui.mask();
-	mask.open({
-		content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading</h1>'
-		,target: $("#"+this.pgm_mngr.getId()).get(0),
-	});
+
+    var progress = new ProgressMngr(this.pgm_mngr.getId());
+    progress.showProgress();
+
     let grid=this.grid;    
     AjaxMngr.send_api_post_ajax(url, param, function (data) {
 	  console.log('param')
@@ -59,11 +58,11 @@ class AxGridMngr {
       console.log('arr_brRs')
       console.log(brRs)
       if(data[brRs]) {
-	    grid.setData(data[brRs]);
+	      grid.setData(data[brRs]);
       }
-      mask.close();
+      progress.hideProgress();
       if(p_func){
-    	p_func(data);
+    	  p_func(data);
     	}
     })
   }

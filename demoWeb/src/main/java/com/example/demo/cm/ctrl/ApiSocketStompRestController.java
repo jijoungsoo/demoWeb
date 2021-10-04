@@ -23,101 +23,95 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 public class ApiSocketStompRestController {
-	
+
     @Autowired
     PjtUtil pjtU;
     @Autowired
     WebSocketEventListener wsel;
 
     @Autowired
- GoRestService goS;
-    
-    /*https://tech.osci.kr/2019/12/23/86033468/ 
-     * 이아저씨 예제가 좋다. 
-     * */
+    GoRestService goS;
+
+    /*
+     * https://tech.osci.kr/2019/12/23/86033468/ 이아저씨 예제가 좋다.
+     */
     @Autowired
     SimpMessagingTemplate smt;
-	/*소켓*/
-    @MessageMapping("/socketApi")   /*보내는 이름*/
-    @SendTo("/topic/message")  /*받는 이름*/
-    public String callSocketAPI(SimpMessageHeaderAccessor simpMessageHeaderAccessor, 
-            String jsonInString,
-            Principal p
-            ) throws Exception  {
-        log.info("simpMessageHeaderAccessor=>"+simpMessageHeaderAccessor);
+
+    /* 소켓 */
+    @MessageMapping("/socketApi") /* 보내는 이름 */
+    @SendTo("/topic/message") /* 받는 이름 */
+    public String callSocketAPI(SimpMessageHeaderAccessor simpMessageHeaderAccessor, String jsonInString, Principal p)
+            throws Exception {
+        log.info("simpMessageHeaderAccessor=>" + simpMessageHeaderAccessor);
         Map nativeHeaders = (Map) simpMessageHeaderAccessor.getHeader("nativeHeaders");
-        String UUID = nativeHeaders.get("UUID").toString();// 클라이언트가 보낸 값 
-        log.info("Uuid=>"+nativeHeaders.get("UUID"));
-        log.info("p.getName()=>"+p.getName());
+        String UUID = nativeHeaders.get("UUID").toString();// 클라이언트가 보낸 값
+        log.info("Uuid=>" + nativeHeaders.get("UUID"));
+        log.info("p.getName()=>" + p.getName());
         String SessionId = simpMessageHeaderAccessor.getSessionId();
         int cnt = wsel.getSessionCnt();
-        //String msg ="["+cnt+"]["+SessionId+"]"+jsonInString; 
-        //log.info("msg=>"+msg);
-        //String jsonOutString="aaa";
-        log.info("jsonInString=>"+jsonInString);
+        // String msg ="["+cnt+"]["+SessionId+"]"+jsonInString;
+        // log.info("msg=>"+msg);
+        // String jsonOutString="aaa";
+        log.info("jsonInString=>" + jsonInString);
         System.out.println(jsonInString);
-        String jsonOutString=null;
-        HashMap<String,Object>  inDs= pjtU.JsonStringToObject(jsonInString, HashMap.class );
-        String br =inDs.get("br").toString();
+        String jsonOutString = null;
+        HashMap<String, Object> inDs = pjtU.JsonStringToObject(jsonInString, HashMap.class);
+        String br = inDs.get("br").toString();
         HashMap<String, Object> result = new HashMap<String, Object>();
-       try {
-           jsonOutString = goS.callAPI(br, jsonInString);
-       } catch (HttpClientErrorException e) {
-            e.printStackTrace();           
-       }	catch (HttpServerErrorException e) {
+        try {
+            jsonOutString = goS.callAPI(br, jsonInString);
+        } catch (HttpClientErrorException e) {
             e.printStackTrace();
-       }
-       //https://withseungryu.tistory.com/136
-       smt.convertAndSendToUser(p.getName(), "/topic/message", jsonOutString);//동작을 안함.
-       System.out.println(jsonOutString);
-       return jsonOutString;
+        } catch (HttpServerErrorException e) {
+            e.printStackTrace();
+        }
+        // https://withseungryu.tistory.com/136
+        smt.convertAndSendToUser(p.getName(), "/topic/message", jsonOutString);// 동작을 안함.
+        System.out.println(jsonOutString);
+        return jsonOutString;
     }
-    
-    @MessageMapping("/socketApiToMe")   /*보내는 이름*/
-    public void callSocketAPIToMe(SimpMessageHeaderAccessor simpMessageHeaderAccessor, 
-    String jsonInString,
-    Principal p
-            ) throws Exception  {
-                log.info("simpMessageHeaderAccessor=>"+simpMessageHeaderAccessor);
-                Map nativeHeaders = (Map) simpMessageHeaderAccessor.getHeader("nativeHeaders");
-                String UUID = nativeHeaders.get("UUID").toString();// 클라이언트가 보낸 값 
-                log.info("Uuid=>"+nativeHeaders.get("UUID"));
-                log.info("p.getName()=>"+p.getName());
-                String SessionId = simpMessageHeaderAccessor.getSessionId();
-                int cnt = wsel.getSessionCnt();
-                //String msg ="["+cnt+"]["+SessionId+"]"+jsonInString; 
-                //log.info("msg=>"+msg);
-                //String jsonOutString="aaa";
-                log.info("jsonInString=>"+jsonInString);
-                System.out.println(jsonInString);
-                String jsonOutString=null;
-                HashMap<String,Object>  inDs= pjtU.JsonStringToObject(jsonInString, HashMap.class );
-                String br =inDs.get("br").toString();
-               try {
-                   jsonOutString = goS.callAPI(br, jsonInString);
-               } catch (HttpClientErrorException e) {
-                System.out.println("ddddddddddddddddddddddd---2");
-                    e.printStackTrace();           
-               }	catch (HttpServerErrorException e) {
-                System.out.println("ddddddddddddddddddddddd---3");
-                    e.printStackTrace();
-              }	catch (BizException e) {
-                System.out.println("ddddddddddddddddddddddd---4");
-                    e.printStackTrace();
-              }
 
-              /*
-              status ==> true
-              status ==> false
+    @MessageMapping("/socketApiToMe") /* 보내는 이름 */
+    public void callSocketAPIToMe(SimpMessageHeaderAccessor simpMessageHeaderAccessor, String jsonInString, Principal p)
+            throws Exception {
+        log.info("simpMessageHeaderAccessor=>" + simpMessageHeaderAccessor);
+        Map nativeHeaders = (Map) simpMessageHeaderAccessor.getHeader("nativeHeaders");
+        String UUID = nativeHeaders.get("UUID").toString();// 클라이언트가 보낸 값
+        log.info("Uuid=>" + nativeHeaders.get("UUID"));
+        log.info("p.getName()=>" + p.getName());
+        String SessionId = simpMessageHeaderAccessor.getSessionId();
+        int cnt = wsel.getSessionCnt();
+        // String msg ="["+cnt+"]["+SessionId+"]"+jsonInString;
+        // log.info("msg=>"+msg);
+        // String jsonOutString="aaa";
+        log.info("jsonInString=>" + jsonInString);
+        String jsonOutString = null;
+        HashMap<String, Object> inDs = pjtU.JsonStringToObject(jsonInString, HashMap.class);
+        String br = inDs.get("br").toString();
+        try {
+            jsonOutString = goS.callAPIMap(br, inDs);
+        } catch (HttpClientErrorException e) {
+            System.out.println("ddddddddddddddddddddddd---2");
+            e.printStackTrace();
+        } catch (HttpServerErrorException e) {
+            System.out.println("ddddddddddddddddddddddd---3");
+            e.printStackTrace();
+        } catch (BizException e) {
+            System.out.println("ddddddddddddddddddddddd---4");
+            e.printStackTrace();
+        }
 
-              
-               */
+        /*
+         * status ==> true status ==> false
+         * 
+         * 
+         */
 
-               
-               //https://withseungryu.tistory.com/136
-               System.out.println(jsonOutString);
-               System.out.println("ddddddddddddddddddddddd");
-               smt.convertAndSendToUser(p.getName(), "/topic/message", jsonOutString);//동작을 안함.
+        // https://withseungryu.tistory.com/136
+        System.out.println(jsonOutString);
+        System.out.println("ddddddddddddddddddddddd");
+        smt.convertAndSendToUser(p.getName(), "/topic/message", jsonOutString);// 동작을 안함.
     }
- 
+
 }

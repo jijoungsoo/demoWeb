@@ -374,12 +374,9 @@ class TuiGridMngr {
 
 
     }
-    var mask = new ax5.ui.mask();
-	mask.open({
-		content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading</h1>'
-		,target: $("#"+this.pgm_mngr.getId()).get(0),
-	});
-	let _this=this;	
+		var progress = new ProgressMngr(this.pgm_mngr.getId());
+		progress.showProgress();
+		let _this=this;	
     AjaxMngr.send_api_post_ajax(url, param, function (data) {
       var arr_brRs = param.brRs.split(",");
       var brRs  = arr_brRs[0];
@@ -410,7 +407,7 @@ class TuiGridMngr {
       		// _this.page_num   = data["__PAGING_INFO_OUT__"]["PAGE_NUM"]
 			  _this.page_num    = Math.ceil(_this.curr_size/_this.options.pageSize)			   
       }
-      mask.close();
+      progress.hideProgress();
       if(p_func){
     	p_func(data);
       }
@@ -450,11 +447,8 @@ class TuiGridMngr {
 		,__P_END_ROWNUM__:  (this.page_num*this.options.pageSize)+this.options.pageSize
 		}];
 	    
-	    var mask = new ax5.ui.mask();
-		mask.open({
-			content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading</h1>'
-			,target: $("#"+this.pgm_mngr.getId()).get(0),
-		});
+	    var progress = new ProgressMngr(this.pgm_mngr.getId());
+		progress.showProgress();
 	    let _this=this;
 	    AjaxMngr.send_api_post_ajax(_this.url, param, function (data) {
 	      var arr_brRs = param.brRs.split(",");
@@ -484,19 +478,19 @@ class TuiGridMngr {
       	  _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num);
       	  _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
       	  if(p_data_flag_all!='all'){  //all 이 아니라면 종료
-      	  	mask.close();
+			progress.hideProgress();
       	  	return;   
       	  }
 	      
 	      
 	      if(_this.curr_size>=_this.total_size){
-	      	mask.close();
+			progress.hideProgress();
       	  	return;
 	      }
 	      
 	      if(p_data_flag_all==='all'){
   	        setTimeout(function() {
-  	           mask.close();	
+				progress.hideProgress();
   	        	_this.appendLoadData(p_data_flag_all);
 			}, 0);  //일단 딜레이0 으로 주자 서버 부하를 생각했는데
 			//확인해보니까. 1000개짜리 20번 호출하는 것보다 20000개를 1번 호출하는게 더 문제가 된다.

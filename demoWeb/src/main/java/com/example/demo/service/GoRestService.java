@@ -69,6 +69,10 @@ public class GoRestService {
         return callApiBizActor(br, jsonInString);
     }
 
+    public String callAPIMap(String br, Map<String, Object> inDs) throws ResourceAccessException, BizException {
+        return callApiBizActorMap(br, inDs);
+    }
+
     public String callApiRest(String br, String jsonInString) throws ResourceAccessException {
         log.info("br=>" + br);
         log.info("jsonInString=>" + jsonInString);

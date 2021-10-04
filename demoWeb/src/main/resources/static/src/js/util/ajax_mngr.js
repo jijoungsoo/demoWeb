@@ -60,46 +60,14 @@ class AjaxMngr {
 	        }
 	    });   
 	}
+
+	
 	
 	static send_api_post_ajax(p_url, p_param, p_function,uuid) {
 	    var hash = window.location.hash;
 	    var br = p_url;
-		var api_uuid= PjtUtil.makeUUID();
 	    p_url = "/api/"+p_url;
-	     if (AppMngr.debug_console=="Y") {
-	        //클라이언트 세션을 넣으려고 했는데
-	        //그게 아니다 서버 세션에 넣자.-- 왜냐면 사용자 정보를 클라이언트는 모르니
-	        //사용자 정보를 알려면 저장되어야 하는 부분은 서버세션이다.
-	        //페이지에서 그 정보를 저장하려면 키가 있어야한다.
-	        //클라이언트 세션에 페이지에 관한 uuid와 
-	        //시퀀스에 대한  seq를 생성해서 넣자 uuid에 시퀀스한 seq
-	        //실제로는 서버에 저장할수도 있겠지만. 
-	        //나는 로그 서버 저장소가 없으므로  서버사이드 세션에 저장한다.
-	        if(uuid!=undefined){
-		        var seq = sessionStorage.getItem(uuid);
-		        if(seq==null){
-		        	seq =1;
-		        	sessionStorage.setItem(uuid,1);
-		        } else {
-		        	seq = Number(seq);
-		        	seq = seq+1;
-		        	sessionStorage.setItem(uuid,seq);
-		        }
-		        /**/
-		        p_param['UUID'] = uuid;
-		        p_param['SEQ'] = seq;
-		        //자 이걸 등록한다.
-		        var uuid_debug_log_ul = $("#"+uuid+"_debug_log_ul");
-		        //입력할 창은 정해져있다.
-		        var now_time = moment(new Date()).format('HH:mm:ss');
-		        var run_fun = "javascript:void AppMngr.openLog('"+uuid+"','"+seq+"','"+api_uuid+"');";
-		        console.log(run_fun);
-		        var tmp ="<li><a href=\""+run_fun+"\">["+now_time+"]["+seq+"]"+br+"</a></li>";
-		        console.log(tmp);
-	          	uuid_debug_log_ul.append(tmp);
-	        }
-	    }
-		p_param["API_UUID"]=api_uuid;
+		p_param = PjtUtil.saveApiLog(br,p_param,uuid);
 	    var req=$.ajax({
 	        type: "POST",
 	        url: p_url,
@@ -375,6 +343,53 @@ class AjaxMngr {
 	        }
 	    });   
 	}
+	static send_socket(p_url, p_param, p_funtion,uuid){
+		console.log('send_socket');
+		p_param.br=p_url;
+		var ws_stomp  = new SockJS("/ws-stomp");
+		var stomp_client = Stomp.over(ws_stomp)
+		var header = {UUID : uuid}			
+		p_param = PjtUtil.saveApiLog(p_param.br,p_param,uuid);
+		function send(){
+				//전송
+				var p_p=JSON.stringify(p_param) ; //json을 string 으로 변환
+				//stomp_client.send('/socketApi',header,p_p);
+				stomp_client.send('/socketApiToMe',header,p_p);
+				
+				//받기
+				//stomp_client.subscribe('/topic/message',function (msg){  --전체 구독시
+				stomp_client.subscribe('/user/topic/message',function (msg){   //user 구독시
+					console.log('aaa',msg);
+					/*
+					성공,실패를 알고 보내줘야 하는데 일단 무시하자
+					안나오면 프로그래머가 보면되지..
+					*/
+
+					if(p_funtion){
+						var tmp = JSON.parse(msg.body);
+						console.log(tmp);
+						p_funtion(tmp);
+					}
+
+					stomp_client.disconnect()
+					ws_stomp.close();
+				});
+		}	
+		stomp_client.connect(header,function(frame){
+			console.log("Info: connected stomp.");
+			console.log(frame)
+			send();
+		})
+
+		ws_stomp.onclose = function(event) {
+			console.log('Info: connection closed.');
+		}
+
+		ws_stomp.onerror = function(err) {
+			console.log('Info: Error.', err);
+		}
+    }
+	
 
 }
 

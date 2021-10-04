@@ -148,7 +148,8 @@ class PgmPageMngr {
 		
 		this.childPgmMap =[];
 		//console.log('PgmPageMngr-constructor');
-        this.mask = new ax5.ui.mask();
+		
+
 		var _this = this;
 		this.container = $("#" + uuid);
 		console.log(uuid);
@@ -177,6 +178,7 @@ class PgmPageMngr {
 			console.log(p)
 			p.addChildPgmMap(this);
 		}
+		this.progress = new ProgressMngr(uuid);
 
     }
     getEl(){
@@ -255,13 +257,10 @@ class PgmPageMngr {
         return this.container.find("[name=" + name + "]");
     }
     showProgress() {
-		this.mask.open({
-			content: '<h1><i class="fa fa-spinner fa-spin"></i> Loading</h1>'
-			,target: $("#"+this.getId()).get(0),
-		});
+		this.progress.showProgress();
     }
     hideProgress() {
-        this.mask.close();
+		this.progress.hideProgress();
     }
 	getApiLog(p_url,  p_funtion){
     	console.log('p_url=>'+p_url);
@@ -289,64 +288,12 @@ class PgmPageMngr {
     	AjaxMngr.send_api_post_ajax_sync(p_url, p_param, p_funtion);
     }
 	send_socket(p_url, p_param, p_funtion){
-		var _this = this;
 		console.log('send_socket');
-		console.log(_this);
+		console.log('p_url=>'+p_url);
+    	console.log('p_param=>'+p_param);
+    	console.log('p_funtion=>'+p_funtion);
+		AjaxMngr.send_socket(p_url, p_param, p_funtion,this.getId());
 		
-
-		/*
-		var param = {
-			br: "BR_FIND"
-			brRq: 'IN_DATA',
-			brRs: 'OUT_DATA',
-			IN_DATA: [{
-				ACTOR_IDX : p_param.param.ACTOR_IDX
-			}]
-		}
-		param.br=p_url;
-		*/
-		p_param.br=p_url;
-		var ws_stomp  = new SockJS("/ws-stomp");
-		var stomp_client = Stomp.over(ws_stomp)
-		var header = {UUID : _this.getId()}			
-		function send(){
-				//전송
-				var p_p=JSON.stringify(p_param) ; //json을 string 으로 변환
-				//stomp_client.send('/socketApi',header,p_p);
-				stomp_client.send('/socketApiToMe',header,p_p);
-				
-				//받기
-				//stomp_client.subscribe('/topic/message',function (msg){  --전체 구독시
-				stomp_client.subscribe('/user/topic/message',function (msg){   //user 구독시
-					console.log('aaa',msg);
-					/*
-					성공,실패를 알고 보내줘야 하는데 일단 무시하자
-					안나오면 프로그래머가 보면되지..
-					*/
-
-					if(p_funtion){
-						var tmp = JSON.parse(msg.body);
-						console.log(tmp);
-						p_funtion(tmp);
-					}
-
-					stomp_client.disconnect()
-					ws_stomp.close();
-				});
-		}	
-		stomp_client.connect(header,function(frame){
-			console.log("Info: connected stomp.");
-			console.log(frame)
-			send();
-		})
-
-		ws_stomp.onclose = function(event) {
-			console.log('Info: connection closed.');
-		}
-
-		ws_stomp.onerror = function(err) {
-			console.log('Info: Error.', err);
-		}
     }
     
     close(p_param){
