@@ -112,30 +112,6 @@ public class ApiRestController {
 		return ResponseEntity.ok(jsonOutString);
 	}
 
-	@GetMapping(path = "/api_log/{API_UUID}", produces = "application/json")
-	public ResponseEntity<Object> callApiLog(@PathVariable("API_UUID") String api_uuid) throws Exception {
-		log.info("api_uuid=>" + api_uuid);
-		String jsonOutString = "";
-		HashMap<String, Object> result = new HashMap<String, Object>();
-		try {
-			jsonOutString = goS.callApiLog(api_uuid);
-		} catch (HttpClientErrorException e) {
-			result.put("statusCode", "999");
-			result.put("body", e.getMessage());
-			e.printStackTrace();
-			// https://owin2828.github.io/devlog/2019/12/30/spring-16.html
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-
-		} catch (HttpServerErrorException e) {
-			result.put("statusCode", e.getRawStatusCode());
-			result.put("body", e.getStatusText());
-			e.printStackTrace();
-			// https://owin2828.github.io/devlog/2019/12/30/spring-16.html
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
-		}
-		return ResponseEntity.ok(jsonOutString);
-	}
-
 	@PostMapping(path = "/api/{br}", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> callAPI(@PathVariable("br") String br, @RequestBody Map<String, Object> jsonInString,
 			Authentication authentication, HttpSession session) throws Exception {

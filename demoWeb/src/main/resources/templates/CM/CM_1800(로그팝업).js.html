@@ -7,17 +7,26 @@ $(document).ready(function(){
 		var seq = p_param.param.SEQ;
 		var debugForm = new FormMngr(_this, "debug_area");
 
-		 _this.getApiLog(api_uuid,function(data){
+		 		
+
+		var param = {
+			brRq: 'IN_PSET',
+			brRs: 'OUT_REST',
+			IN_PSET: [{
+				API_UUID : api_uuid
+			}]
+		}
+		 
+		_this.showProgress();
+		_this.send_socket('BR_CM_API_LOG_GetApiLog', param, function(data) {
 			console.log(data);
+			_this.hideProgress();
 			if (data) {
-				
-				debugForm.setDataAll(data);		
+				debugForm.setDataAll(data.OUT_REST[0]);		
 				debugForm.setData("SEQ",seq);		
 				debugForm.setData("API_UUID",api_uuid);	
-				debugForm.setData("time_gap",data.time_gap["$numberLong"]);	
 			}
-		 });
-		
+		});	
 	
 	});	
 });

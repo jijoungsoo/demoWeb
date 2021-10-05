@@ -68,6 +68,7 @@ class AjaxMngr {
 	    var br = p_url;
 	    p_url = "/api/"+p_url;
 		p_param = PjtUtil.saveApiLog(br,p_param,uuid);
+		console.log(p_param);
 	    var req=$.ajax({
 	        type: "POST",
 	        url: p_url,
@@ -242,44 +243,6 @@ class AjaxMngr {
 	        }
 	        
 	    });
-	}
-
-
-	
-	static get_api_log_ajax(p_url,p_function) {
-	    var api_uuid = p_url;
-	    p_url = "/api_log/"+p_url;
-	    var req=$.ajax({
-	        type: "GET",
-	        url: p_url,
-	        contentType: "application/json; charset=utf-8",
-	        accept: "application/json",
-	         beforeSend : function(xhr)   /*이거 동작한다.  -- https://hyunsangwon93.tistory.com/28*/
-	        { 
-				xhr.setRequestHeader(csrf_headerName, csrf_token);
-	        },
-	        dataType: "json",
-	    });
-	
-	    req.done(function (data, status) {
-	        if(p_function){
-	        	p_function(data);
-	        }
-	    });
-	
-	    req.fail(function (jqXHR, textStatus) {
-	        console.log(jqXHR)
-	        console.log(textStatus)
-	        if (textStatus == "error") {
-	            var msg = "Sorry but there was an error: ";
-	            console.log(msg + jqXHR.status + ",statusText: " + jqXHR.statusText+ ",responseText: " + jqXHR.responseText);
-	            Message.alert(msg + jqXHR.status + "<br />statusText: " + jqXHR.statusText+ "<br />responseText: " + jqXHR.responseText);
-	        }
-
-			if(p_function){
-	        	p_function();
-	        }
-	    });   
 	}
 
 

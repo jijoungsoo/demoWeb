@@ -122,6 +122,7 @@ class PjtUtil{
 		        /**/
 		        p_param['UUID'] = uuid;
 		        p_param['SEQ'] = seq;
+				p_param['API_UUID'] = api_uuid;
 		        //자 이걸 등록한다.
 		        var uuid_debug_log_ul = $("#"+uuid+"_debug_log_ul");
 		        //입력할 창은 정해져있다.

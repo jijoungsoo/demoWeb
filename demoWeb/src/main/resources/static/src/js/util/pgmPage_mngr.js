@@ -262,11 +262,7 @@ class PgmPageMngr {
     hideProgress() {
 		this.progress.hideProgress();
     }
-	getApiLog(p_url,  p_funtion){
-    	console.log('p_url=>'+p_url);
-    	console.log('p_funtion=>'+p_funtion);
-    	AjaxMngr.get_api_log_ajax(p_url, p_funtion);
-    }
+
     send(p_url, p_param, p_funtion){
     	console.log('p_url=>'+p_url);
     	console.log('p_param=>'+p_param);
