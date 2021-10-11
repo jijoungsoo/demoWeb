@@ -1,10 +1,16 @@
 <div name="search_area">
+<pre class="tal lh12">
+<h3>Old Trade Lookup (MARKET_DATA)</h3>
+GET /api/v3/historicalTrades
+Get older market trades.
+<b>Weight(IP):</b> 5
+</pre>  
   <table>
   <tr>    
     <td>
       <div class="form-group">
         <div class="input-group">
-          <span class="input-group-addon">SYMBOL</span> 
+          <span class="input-group-addon">SYMBOL(필수)</span> 
           <input class="form-control" data-ax-path="SYMBOL"  name="SYMBOL" style="width:140px;"  />          
         </div>
       </div>
@@ -13,7 +19,7 @@
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-addon">LIMIT</span> 
-          <input class="form-control" data-ax-path="LIMIT"  name="LIMIT" style="width:140px;"  />          
+          <input class="form-control" data-ax-path="LIMIT"  name="LIMIT" style="width:140px;"  /> (Default 500; max 1000.)     
         </div>
       </div>
     </td>
@@ -21,7 +27,7 @@
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-addon">FROM_ID</span> 
-          <input class="form-control" data-ax-path="FROM_ID"  name="FROM_ID" style="width:140px;"  />          
+          <input class="form-control" data-ax-path="FROM_ID"  name="FROM_ID" style="width:140px;"  /> (	Trade id to fetch from. Default gets most recent trades.)   
         </div>
       </div>
     </td>

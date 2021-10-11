@@ -1,4 +1,13 @@
 <div name="search_area">
+<pre class="tal lh12">
+<h3>Funding Wallet (USER_DATA)</h3>
+POST /sapi/v1/asset/get-funding-asset (HMAC SHA256)
+<b>Weight(IP):</b>  1
+</pre>  
+<hr>
+<pre class="tal lh12">
+Currently supports querying the following business assets：Binance Pay, Binance Card, Binance Gift Card, Stock Token
+</pre>
   <table>
   <tr>    
     <td>
@@ -13,7 +22,7 @@
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-addon">NEED_BTC_VALUATION</span> 
-          <input type="text" class="form-control" data-ax-path="NEED_BTC_VALUATION"  name="NEED_BTC_VALUATION" style="width:140px;" />
+          <input type="text" class="form-control" data-ax-path="NEED_BTC_VALUATION"  name="NEED_BTC_VALUATION" style="width:140px;" />(true or false)
         </div>
       </div>
     </td>

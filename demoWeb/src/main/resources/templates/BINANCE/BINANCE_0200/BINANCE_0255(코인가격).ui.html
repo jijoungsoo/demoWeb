@@ -1,4 +1,16 @@
 <div name="search_area">
+<pre class="tal lh12">
+<h3>Symbol Price Ticker</h3>
+GET /api/v3/ticker/price
+Latest price for a symbol or symbols.
+<b>Weight(IP):</b> 
+1 for a single symbol;
+2 when the symbol parameter is omitted;
+</pre>   
+<hr>
+<pre class="tal lh12">
+If the symbol is not sent, prices for all symbols will be returned in an array.  
+</pre>   
   <table>
   <tr>    
     <td>

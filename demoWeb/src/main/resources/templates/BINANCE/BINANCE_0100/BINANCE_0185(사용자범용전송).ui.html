@@ -1,10 +1,24 @@
 <div name="search_area">
+<pre class="tal lh12">
+<h3>User Universal Transfer (USER_DATA)</h3>
+POST /sapi/v1/asset/transfer (HMAC SHA256)
+You need to enable Permits Universal Transfer option for the api key which requests this endpoint.
+<b>Weight(IP):</b>  1
+</pre>  
+<hr>
+<pre class="tal lh12">
+  <ul>
+    <li>fromSymbol must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN</li>
+    <li>toSymbol must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN</li>
+  </ul>
+
+</pre>
   <table>
   <tr>    
     <td>
       <div class="form-group">
         <div class="input-group">
-          <span class="input-group-addon">TYPE</span> 
+          <span class="input-group-addon">TYPE(필수)</span> 
           <select class="form-control" data-ax-path="TYPE"  name="TYPE" style="width:140px;"></select>
         </div>
       </div>
@@ -12,7 +26,7 @@
     <td>
       <div class="form-group">
         <div class="input-group">
-          <span class="input-group-addon">ASSET</span> 
+          <span class="input-group-addon">ASSET(필수)</span> 
           <input type="text" class="form-control" data-ax-path="ASSET"  name="ASSET" style="width:140px;" />
         </div>
       </div>
@@ -20,7 +34,7 @@
     <td>
       <div class="form-group">
         <div class="input-group">
-          <span class="input-group-addon">AMOUNT</span> 
+          <span class="input-group-addon">AMOUNT(필수)</span> 
           <input type="text" class="form-control" data-ax-path="AMOUNT"  name="AMOUNT" style="width:140px;" />
         </div>
       </div>

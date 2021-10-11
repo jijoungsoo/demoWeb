@@ -1,11 +1,17 @@
 <div name="search_area">
+<pre class="tal lh12">
+<h3>Dust Transfer (USER_DATA)</h3>
+POST /sapi/v1/asset/dust (HMAC SHA256)
+Convert dust assets to BNB.
+<b>Weight(IP):</b>  10
+</pre> 
   <table>
   <tr>    
     <td>
       <div class="form-group">
         <div class="input-group">
           <span class="input-group-addon">ASSET</span> 
-          <input type="text" class="form-control" data-ax-path="ASSET"  name="ASSET" style="width:140px;" />
+          <input type="text" class="form-control" data-ax-path="ASSET"  name="ASSET" style="width:140px;" />(The asset being converted. For example: asset=BTC&asset=USDT)
         </div>
       </div>
     </td>

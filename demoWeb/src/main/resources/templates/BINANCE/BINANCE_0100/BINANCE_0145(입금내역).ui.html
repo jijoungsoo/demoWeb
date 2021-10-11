@@ -1,4 +1,17 @@
 <div name="search_area">
+<pre class="tal lh12">
+<h3>Deposit History(supporting network) (USER_DATA)</h3>
+GET /sapi/v1/capital/deposit/hisrec (HMAC SHA256)
+Fetch deposit history.
+<b>Weight(IP):</b>  1
+</pre>  
+<hr>
+<pre class="tal lh12">
+<ul>
+  <li>Please notice the default startTime and endTime to make sure that time interval is within 0-90 days.</li>
+  <li>If both startTime and endTime are sent, time between startTime and endTime must be less than 90 days.</li> 
+</ul>
+</pre>  
   <table>
   <tr>    
     <td>

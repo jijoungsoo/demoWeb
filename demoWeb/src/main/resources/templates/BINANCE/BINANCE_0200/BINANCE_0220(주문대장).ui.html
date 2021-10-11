@@ -1,10 +1,30 @@
 <div name="search_area">
+<pre class="tal lh12">
+<h3>Order Book</h3>
+GET /api/v3/depth
+<b>Weight(IP):</b> Adjusted based on the limit:
+</pre>
+<hr>
+<pre class="tal lh12">
+Limit	                 Weight
+5, 10, 20, 50, 100	   1
+500	                   5
+1000	                 10
+5000	                 50
+Parameters:
+
+Name	   Type	     Mandatory	Description
+symbol	 STRING	   YES	
+limit	   INT	     NO	        Default 100; max 5000. Valid limits:[5, 10, 20, 50, 100, 500, 1000, 5000]
+
+Data Source: Memory
+</pre>
   <table>
   <tr>    
     <td>
       <div class="form-group">
         <div class="input-group">
-          <span class="input-group-addon">SYMBOL</span> 
+          <span class="input-group-addon">SYMBOL(필수)</span> 
           <input class="form-control" data-ax-path="SYMBOL"  name="SYMBOL" style="width:140px;"  />          
         </div>
       </div>

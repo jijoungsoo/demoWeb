@@ -1,4 +1,16 @@
 <div name="search_area">
+<pre class="tal lh12">
+<h3>Query User Universal Transfer History (USER_DATA)</h3>
+GET /sapi/v1/asset/transfer (HMAC SHA256)
+<b>Weight(IP):</b>  1
+</pre>  
+<hr>
+<pre class="tal lh12">
+  <ul>
+    <li>fromSymbol must be sent when type are ISOLATEDMARGIN_MARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN</li>
+    <li>toSymbol must be sent when type are MARGIN_ISOLATEDMARGIN and ISOLATEDMARGIN_ISOLATEDMARGIN</li>
+  </ul>
+</pre>
   <table>
   <tr>    
     <td>

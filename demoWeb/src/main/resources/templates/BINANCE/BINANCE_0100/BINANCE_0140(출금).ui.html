@@ -1,11 +1,24 @@
+<pre class="tal lh12">
+<h3>Withdraw(USER_DATA)</h3>
+POST /sapi/v1/capital/withdraw/apply (HMAC SHA256)
+Submit a withdraw request.
+<b>Weight(IP):</b>  1
+</pre>
+<hr>
+<pre class="tal lh12">
+<ul>
+  <li>If network not send, return with default network of the coin.</li>
+  <li>You can get network and isDefault in networkList of a coin in the response of Get /sapi/v1/capital/config/getall (HMAC SHA256).</li> 
+</ul>
+</pre>
 <div name="withdraw_area" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
   <div class="container">
     <div class="row row-cols-4">
       <div class="col-sm">
         <div class="form-group">
           <div class="input-group">
-            <span class="input-group-addon">COIN</span> <input type="text"
-              class="form-control"  data-ax-path="COIN"  name="COIN">
+            <span class="input-group-addon">COIN(필수)</span> 
+            <input type="text" class="form-control"  data-ax-path="COIN"  name="COIN">
           </div>
         </div>
       </div>
@@ -13,7 +26,7 @@
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon">WITHDRAW_ORDER_ID</span> <input type="text"
-            class="form-control"  data-ax-path="WITHDRAW_ORDER_ID"  name="WITHDRAW_ORDER_ID">
+            class="form-control"  data-ax-path="WITHDRAW_ORDER_ID"  name="WITHDRAW_ORDER_ID">(client id for withdraw)
           </div>
         </div>
       </div>
@@ -28,24 +41,24 @@
       <div class="col">
         <div class="form-group">
           <div class="input-group">
-            <span class="input-group-addon">ADDRESS</span> <input type="text"
-            class="form-control"  data-ax-path="ADDRESS"  name="ADDRESS">
+            <span class="input-group-addon">ADDRESS(필수)</span> 
+            <input type="text" class="form-control"  data-ax-path="ADDRESS"  name="ADDRESS">
           </div>
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <div class="input-group">
-            <span class="input-group-addon">ADDRESS_TAG</span> <input type="text"
-              class="form-control"  data-ax-path="ADDRESS_TAG" name="ADDRESS_TAG">
+            <span class="input-group-addon">ADDRESS_TAG</span> 
+            <input type="text" class="form-control"  data-ax-path="ADDRESS_TAG" name="ADDRESS_TAG">(Secondary address identifier for coins like XRP,XMR etc.)
           </div>
         </div>
       </div>
       <div class="col">
         <div class="form-group">
           <div class="input-group">
-            <span class="input-group-addon">AMOUNT</span> <input type="text"
-              class="form-control"  data-ax-path="AMOUNT" name="AMOUNT">
+            <span class="input-group-addon">AMOUNT(필수)</span> 
+            <input type="text" class="form-control"  data-ax-path="AMOUNT" name="AMOUNT">
           </div>
         </div>
       </div>
@@ -53,7 +66,7 @@
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon">TRANSACTION_FEE_FLAG</span> <input type="text"
-              class="form-control"  data-ax-path="TRANSACTION_FEE_FLAG" name="TRANSACTION_FEE_FLAG">
+              class="form-control"  data-ax-path="TRANSACTION_FEE_FLAG" name="TRANSACTION_FEE_FLAG">(	When making internal transfer, true for returning the fee to the destination account; false for returning the fee back to the departure account. Default false.)
           </div>
         </div>
       </div>
@@ -61,7 +74,7 @@
         <div class="form-group">
           <div class="input-group">
             <span class="input-group-addon">NAME</span> <input type="text"
-              class="form-control"  data-ax-path="NAME" name="NAME">
+              class="form-control"  data-ax-path="NAME" name="NAME">(Description of the address. Space in name should be encoded into %20.)
           </div>
         </div>
       </div>

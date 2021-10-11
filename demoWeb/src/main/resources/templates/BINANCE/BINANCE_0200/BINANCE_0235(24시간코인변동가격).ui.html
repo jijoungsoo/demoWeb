@@ -1,4 +1,16 @@
 <div name="search_area">
+<pre class="tal lh12">
+<h3>24hr Ticker Price Change Statistics</h3>
+GET /api/v3/ticker/24hr
+24 hour rolling window price change statistics. Careful when accessing this with no symbol.
+<b>Weight(IP):</b> 
+1 for a single symbol;
+40 when the symbol parameter is omitted;
+</pre>  
+<hr>
+<pre class="tal lh12">
+  If the symbol is not sent, tickers for all symbols will be returned in an array.
+</pre>  
   <table>
   <tr>    
     <td><input type="button" name="search" value="조회" /></td>

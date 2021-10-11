@@ -1,4 +1,35 @@
 <div name="search_area">
+<pre class="tal lh12">
+<h3>Enable Fast Withdraw Switch (USER_DATA)</h3>
+POST /sapi/v1/account/enableFastWithdrawSwitch (HMAC SHA256)
+<b>Weight(IP):</b>  1
+</pre>
+<hr>
+<pre class="tal lh12">
+<ul>
+  <li>This request will enable fastwithdraw switch under your account.
+    You need to enable "trade" option for the api key which requests this endpoint.</li>
+  <li>When Fast Withdraw Switch is on, transferring funds to a Binance account will be done instantly. There is no on-chain transaction, no transaction ID and no withdrawal fee.</li>
+</ul>
+</pre>
+
+<hr>
+
+<pre class="tal lh12">
+  <h3>Disable Fast Withdraw Switch (USER_DATA)</h3>
+  POST /sapi/v1/account/disableFastWithdrawSwitch (HMAC SHA256)
+  <b>Weight(IP):</b>  1
+  </pre>
+  <hr>
+  <pre class="tal lh12">
+  <b>Caution:</b>
+  <ul>
+    <li>This request will disable fastwithdraw switch under your account.</li>
+    <li>You need to enable "trade" option for the api key which requests this endpoint.</li>
+  </ul>
+  </pre>
+
+
   <table>
   <tr>    
     <td><input type="button" name="disableFastWithdrawSwitch" value="빠른인출스위치비활성화" /></td>
