@@ -1,0 +1,213 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0365 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0365.init(function(p_param) {
+			var _this = BINANCE_0365;
+			var sendForm = new FormMngr(_this, "send_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 500
+				  */
+				  
+				  
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+			{
+					   header: 'ORDER_LIST_ID',
+					   name: 'ORDER_LIST_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'CONTINGENCY_TYPE',
+					   name: 'CONTINGENCY_TYPE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'LIST_STATUS_TYPE',
+					   name: 'LIST_STATUS_TYPE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'LIST_ORDER_STATUS',
+					   name: 'LIST_ORDER_STATUS',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'LIST_CLIENT_ORDER_ID',
+					   name: 'LIST_CLIENT_ORDER_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'TRANSACTION_TIME',
+					   name: 'TRANSACTION_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					}
+				]
+			);
+			grid.build();
+
+
+			const grid_orders = new TuiGridMngr(_this,'grid_orders',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+			{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'ORDER_ID',
+					   name: 'ORDER_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'ORDER_LIST_ID',
+					   name: 'ORDER_LIST_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'CLIENT_ORDER_ID',
+					   name: 'CLIENT_ORDER_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					}					
+				]
+			);
+			grid_orders.build();
+		
+			sendForm.addEvent("click","input[type=button]",function(el){
+				//console.log(el);
+				switch(el.target.name){
+				case 'open_oco_search':
+					var data = sendForm.getData();
+					console.log('data');
+					console.log(data);
+					var param ={
+						brRq : 'IN_PSET'
+						,brRs : 'OUT_RSET,OUT_RSET_ORDERS'
+						,IN_PSET: [data]
+					}
+					_this.showProgress();
+					_this.send_socket('BR_SPOT_ACCOUNT_TRADE_GET_API_V3_QueryOpenOco', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							var row_data = data.OUT_RSET;
+							console.log(data);
+							grid.resetData(data.OUT_RSET);
+							grid_orders.resetData(data.OUT_RSET_ORDERS);
+						} 
+					
+					});
+				}
+			});
+	});	
+});
+
+</script>

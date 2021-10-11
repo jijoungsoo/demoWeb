@@ -1,0 +1,24 @@
+<div name="send_area">
+<pre class="tal lh12">
+<h3>Current Open Orders (USER_DATA)</h3>
+GET /api/v3/openOrders (HMAC SHA256)
+Get all open orders on a symbol. Careful when accessing this with no symbol.
+<b>Weight(IP):</b> 3 for a single symbol; 40 when the symbol parameter is omitted;
+</pre>
+  <table>
+  <tr>    
+    <td>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">SYMBOL</span> 
+          <input class="form-control" data-ax-path="SYMBOL"  name="SYMBOL" style="width:140px;"  required />          
+        </div>
+      </div>
+    </td>   
+    <td><input type="button" name="open_order_search" value="미체결주문조회" /></td>
+  </tr>
+  </table>
+</div>
+<div name="grid"></div>
+
+

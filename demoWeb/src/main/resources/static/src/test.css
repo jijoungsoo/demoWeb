@@ -1,22 +1,22 @@
-h2{
+h2 {
   font: 14px Arial, sans-serif;
-  color:#000;
+  color: #000;
   padding: 10px;
 }
 
-.lm_content{
+.lm_content {
   text-align: center;
-	color: white;
+  color: white;
 }
 
 body {
-    /*height: 100%;*/
-    /*width: 100%;*/
-    /*position: absolute;*/
-    transition: all 0.5s ease;
+  /*height: 100%;*/
+  /*width: 100%;*/
+  /*position: absolute;*/
+  transition: all 0.5s ease;
 }
 
-#layoutContainer{
+#layoutContainer {
   /*
   width: 100%;
   height: calc(100% - 50px);
@@ -25,78 +25,81 @@ body {
   /*width: calc(100% - 200px);*/
   /*left: 200px;*/
   width: 100%;
-  position:absolute;
+  position: absolute;
   top: 0;
-  
+
   /*
   box-shadow: -3px 0px 9px 0px rgba( 0, 0, 0, 0.4 );
   */
 }
-
 
 /*로그인 박스*/
 .login {
   background: #083d72;
   /*border:solid 1px red;*/
   width: 200px;
-  height:60px;
-  top:0px;
-  left:0; 
-  color:#fff;
+  height: 60px;
+  top: 0px;
+  left: 0;
+  color: #fff;
   padding: 0px 0px 0px 0px;
-  line-height:14px;
-  display:table;
-  float:left;
-  text-align:center;
+  line-height: 14px;
+  display: table;
+  float: left;
+  text-align: center;
   word-break: break-all;
 }
 
-.login label{
+.login label {
   color: white;
-  font-size:30px !important;
+  font-size: 30px !important;
   line-height: 60px;
   padding-left: 30px;
 }
 
-  html, body {
-        padding: 0;
-        height: 100%;
-        overflow: hidden;
-    }
-        /*출처: https://juve.tistory.com/157 [Forza Juve!]*/
-    #footer_search { 
-    position: fixed; 
-    bottom: 0; 
-    width: 200px; 
-    }
-    
-  #footer_search > ul {
-  maring:0 !important; 
-  padding:0;
-  } 
-  #footer_search > ul > li { 
-  maring:0 ; 
-  padding:0;
+html,
+body {
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+}
+/*출처: https://juve.tistory.com/157 [Forza Juve!]*/
+#footer_search {
+  position: fixed;
+  bottom: 0;
+  width: 200px;
+}
+
+#footer_search > ul {
+  maring: 0 !important;
+  padding: 0;
+}
+#footer_search > ul > li {
+  maring: 0;
+  padding: 0;
   list-style: none;
-  } 
+}
 /*하단 박스 */
-  #footer_search > ul > li > a {
+#footer_search > ul > li > a {
   display: block;
-  padding: 0 0 10px 14px;				/*1뎁스 패딩*/
-  color: #f8f9fa; 
-  background:#6610f2;							/*1단뎁스 색깔*/
-  } 
-  #footer_search > ul > li a:hover {
-    color: #f8f9fa;
-    background-color: #6610f2;
-  } 
-  
-  ol, ul {
-    margin-bottom: 0;
-  }
+  padding: 0 0 10px 14px; /*1뎁스 패딩*/
+  color: #f8f9fa;
+  background: #6610f2; /*1단뎁스 색깔*/
+}
+#footer_search > ul > li a:hover {
+  color: #f8f9fa;
+  background-color: #6610f2;
+}
 
+ol,
+ul {
+  margin-bottom: 0;
+}
 
-  .selectedColor {
-     background-color: coral; 
-  }
+.selectedColor {
+  background-color: coral;
+}
 
+.lh12 {
+  line-height: 12px;
+}

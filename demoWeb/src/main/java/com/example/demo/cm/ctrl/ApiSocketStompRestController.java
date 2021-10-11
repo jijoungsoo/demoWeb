@@ -89,18 +89,7 @@ public class ApiSocketStompRestController {
         String jsonOutString = null;
         HashMap<String, Object> inDs = pjtU.JsonStringToObject(jsonInString, HashMap.class);
         String br = inDs.get("br").toString();
-        try {
-            jsonOutString = goS.callAPIMap(br, inDs);
-        } catch (HttpClientErrorException e) {
-            System.out.println("ddddddddddddddddddddddd---2");
-            e.printStackTrace();
-        } catch (HttpServerErrorException e) {
-            System.out.println("ddddddddddddddddddddddd---3");
-            e.printStackTrace();
-        } catch (BizException e) {
-            System.out.println("ddddddddddddddddddddddd---4");
-            e.printStackTrace();
-        }
+        jsonOutString = goS.callAPIMap(br, inDs);
 
         /*
          * status ==> true status ==> false

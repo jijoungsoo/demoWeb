@@ -1,0 +1,59 @@
+<div name="send_area">
+<pre class="tal lh12">
+<h3>Cancel OCO (TRADE)</h3>
+DELETE /api/v3/orderList (HMAC SHA256) Cancel an entire Order List.
+<b>Weight(IP):</b> 1
+</pre>
+<hr>
+<div class="tal">
+  Additional notes:
+  <ul>
+    <li>Canceling an individual leg will cancel the entire OCO</li>
+  </ul>
+  <b>Data Source:</b> Matching Engine
+</div>
+
+</pre>
+  <table>
+  <tr>    
+    <td>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">SYMBOL</span> 
+          <input class="form-control" data-ax-path="SYMBOL"  name="SYMBOL" style="width:140px;"  required />          
+        </div>
+      </div>
+    </td>   
+    <td>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">ORDER_LIST_ID</span> 
+          <input class="form-control" data-ax-path="ORDER_LIST_ID"  name="ORDER_LIST_ID" style="width:140px;"  required />     
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">LIST_CLIENT_ORDER_ID</span> 
+          <input class="form-control" data-ax-path="LIST_CLIENT_ORDER_ID"  name="LIST_CLIENT_ORDER_ID" style="width:140px;"  required />          
+        </div>
+      </div>
+    </td>   
+    <td>
+      <div class="form-group">
+        <div class="input-group">
+          <span class="input-group-addon">NEW_CLIENT_ORDER_ID</span> 
+          <input class="form-control" data-ax-path="NEW_CLIENT_ORDER_ID"  name="NEW_CLIENT_ORDER_ID" style="width:140px;"  required />          
+        </div>
+      </div>
+    </td>   
+    <td><input type="button" name="cancel_oco_send" value="OCO 주문 취소" /></td>
+  </tr>
+  </table>
+</div>
+<div name="grid"></div>
+<div name="grid_orders"></div>
+<div name="grid_order_reports"></div>
+
+

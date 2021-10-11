@@ -1,0 +1,247 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0370 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0370.init(function(p_param) {
+			var _this = BINANCE_0370;
+			var sendForm = new FormMngr(_this, "send_area");
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+			{
+					   header: 'MAKER_COMMISSION',
+					   name: 'MAKER_COMMISSION',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'TAKER_COMMISSION',
+					   name: 'TAKER_COMMISSION',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'BUYER_COMMISSION',
+					   name: 'BUYER_COMMISSION',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'SELLER_COMMISSION',
+					   name: 'SELLER_COMMISSION',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'CAN_TRADE',
+					   name: 'CAN_TRADE',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'CAN_WITHDRAW',
+					   name: 'CAN_WITHDRAW',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'CAN_DEPOSIT',
+					   name: 'CAN_DEPOSIT',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'UPDATE_TIME',
+					   name: 'UPDATE_TIME',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'ACCOUNT_TYPE',
+					   name: 'ACCOUNT_TYPE',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					}
+				]
+			);
+			grid.build();
+
+
+			const grid_balances = new TuiGridMngr(_this,'grid_balances',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+			{
+					   header: 'ASSET',
+					   name: 'ASSET',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'FREE',
+					   name: 'FREE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'LOCKED',
+					   name: 'LOCKED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					}				
+				]
+			);
+			grid_balances.build();
+
+
+			const grid_permissions = new TuiGridMngr(_this,'grid_permissions',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+			{
+					   header: 'TYPE',
+					   name: 'TYPE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					}				
+				]
+			);
+			grid_permissions.build();
+		
+			sendForm.addEvent("click","input[type=button]",function(el){
+				//console.log(el);
+				switch(el.target.name){
+				case 'account_search':
+					var data = sendForm.getData();
+					console.log('data');
+					console.log(data);
+					var param ={
+						brRq : 'IN_PSET'
+						,brRs : 'OUT_RSET,OUT_RSET_BALANCES,OUT_RSET_PERMISSIONS'
+						,IN_PSET: [data]
+					}
+					_this.showProgress();
+					_this.send_socket('BR_SPOT_ACCOUNT_TRADE_GET_API_V3_AccountInformation', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							var row_data = data.OUT_RSET;
+							console.log(data);
+							grid.resetData(data.OUT_RSET);
+							grid_balances.resetData(data.OUT_RSET_BALANCES);
+							grid_permissions.resetData(data.OUT_RSET_PERMISSIONS);
+						} 
+					
+					});
+				}
+			});
+	});	
+});
+
+</script>

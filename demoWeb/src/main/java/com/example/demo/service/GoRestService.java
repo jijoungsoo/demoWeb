@@ -405,6 +405,7 @@ public class GoRestService {
                 e.printStackTrace();
             }
         } else {
+            System.out.println(out_msg.get("message").toString());
             // 나머진 다 에러
             // throw new BizException(out_msg.get("message").toString());
             throw new BizException(out_msg.get("message").toString());

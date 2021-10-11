@@ -1,0 +1,218 @@
+
+<script>
+	$(document).ready(function(){
+		var BINANCE_0375 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0375.init(function(p_param) {
+			var _this = BINANCE_0375;
+			var sendForm = new FormMngr(_this, "send_area");
+			sendForm.setData('SYMBOL','BNBBTC');
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+			{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'ID',
+					   name: 'ID',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'ORDER_ID',
+					   name: 'ORDER_ID',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'ORDER_LIST_ID',
+					   name: 'ORDER_LIST_ID',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'PRICE',
+					   name: 'PRICE',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'QTY',
+					   name: 'QTY',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'QUOTE_QTY',
+					   name: 'QUOTE_QTY',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'COMMISSION',
+					   name: 'COMMISSION',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'COMMISSION_ASSET',
+					   name: 'COMMISSION_ASSET',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'TIME',
+					   name: 'TIME',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'IS_BUYER',
+					   name: 'IS_BUYER',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'IS_MAKER',
+					   name: 'IS_MAKER',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'IS_BEST_MATCH',
+					   name: 'IS_BEST_MATCH',
+					   width: 160,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						} /*text, number, select, date 4가지가 있다.*/
+					}
+				]
+			);
+			grid.build();
+		
+			sendForm.addEvent("click","input[type=button]",function(el){
+				//console.log(el);
+				switch(el.target.name){
+				case 'account_search':
+					var data = sendForm.getData();
+					console.log('data');
+					console.log(data);
+					var param ={
+						brRq : 'IN_PSET'
+						,brRs : 'OUT_RSET'
+						,IN_PSET: [data]
+					}
+					_this.showProgress();
+					_this.send_socket('BR_SPOT_ACCOUNT_TRADE_GET_API_V3_AccountTradeList', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							var row_data = data.OUT_RSET;
+							console.log(data);
+							grid.resetData(data.OUT_RSET);
+						} 
+					
+					});
+				}
+			});
+	});	
+});
+
+</script>
