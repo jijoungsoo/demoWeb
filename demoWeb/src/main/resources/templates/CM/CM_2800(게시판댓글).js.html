@@ -48,9 +48,9 @@ $(document).ready(function(){
 				var brd_seq = cmtForm.getData('BRD_SEQ');
 				console.log(brd_seq);
 				var param = {
-						brRq : 'IN_DATA',
-						brRs : '',
-						IN_DATA : [ {
+						brRq : 'IN_PSET',
+						brRs : 'OUT_RSET',
+						IN_PSET : [ {
 							BRD_SEQ : brd_seq
 						} ],
 				}
@@ -59,7 +59,7 @@ $(document).ready(function(){
 					_this.hideProgress();
 					if(data){
 						console.log(data);
-						cmtList(data.OUT_DATA);
+						cmtList(data.OUT_RSET);
 						
 
 						/*삭제랑 수정 이벤트는 별도로 넣어줘야겠다.*/
