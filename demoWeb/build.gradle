@@ -163,6 +163,14 @@ implementation 'org.springframework.plugin:spring-plugin-metadata:2.0.0.RELEASE'
 implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 
 
+	//세션  db스토리지 사용
+	implementation 'org.springframework.session:spring-session-jdbc:2.5.2'
+	//세션 db스토리지를 사용하기위해서는  spring-data-jdbc도 넣어줘야한다.
+	implementation("org.springframework.data:spring-data-jdbc:2.2.5")
+	//트랜잭션메니저 설정
+	implementation("org.apache.tomcat:tomcat-jdbc:10.0.8")
+	//db드라이버 설정
+	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23'
 }
 
 test {

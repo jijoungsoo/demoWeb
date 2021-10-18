@@ -10,6 +10,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
+import org.springframework.session.jdbc.config.annotation.web.http.EnableJdbcHttpSession;
 import org.springframework.stereotype.Controller;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ import lombok.extern.slf4j.Slf4j;
  * server.servlet.session.timeout=30s   (30초)
  * 
  * */
+@EnableJdbcHttpSession
 public class DemoApplication extends SpringBootServletInitializer {
 
 

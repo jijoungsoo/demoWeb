@@ -99,3 +99,14 @@ spring:
       max-request-size: 100MB
 server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초
  
+
+spring.session:
+  store-type: jdbc 
+
+spring.datasource:
+    hikari:
+      maximum-pool-size: 4
+      driver-class-name: org.postgresql.Driver       
+      jdbc-url: jdbc:postgresql://postgres:5432/stockweb  #postgres   db명
+      username: postgres
+      password: POSTGRES  
