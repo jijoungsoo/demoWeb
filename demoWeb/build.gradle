@@ -183,7 +183,8 @@ bootBuildImage{
 */
 
 tasks.jar {
-    enabled = true
+	//https://dongjuppp.tistory.com/87
+    enabled = false
     // Remove `plain` postfix from jar file name
     archiveClassifier.set("")
 }
