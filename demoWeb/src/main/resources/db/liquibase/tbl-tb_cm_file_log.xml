@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="auto (g)" id="tb_cm_file_log-1">
+                
+        <createTable tableName="tb_cm_file_log" remarks="파일 다운로드 로그" >
+                        
+            <column name="file_log_id" type="BIGINT" remarks="파일 다운로드 로그 키" >
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_cm_file_log_pkey"/>                            
+            </column>
+                        
+            <column name="file_id" type="BIGINT"  remarks="파일 키" />
+            <column name="log_date" type="TIMESTAMP WITHOUT TIME ZONE" remarks="기록일시" />
+            <column name="server_ip" type="VARCHAR(50)"  remarks="서버 IP" />
+            <column name="client_ip" type="VARCHAR(50)"  remarks="클라이언트 IP" />
+            <column name="user_no" type="BIGINT" />
+        </createTable>
+            
+    </changeSet>
+</databaseChangeLog>
