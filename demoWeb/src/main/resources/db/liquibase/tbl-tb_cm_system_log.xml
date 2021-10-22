@@ -4,17 +4,26 @@
                 
         <createTable tableName="tb_cm_system_log">
                         
-            <column name="system_log_id" type="BIGINT">                                
-                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_cm_system_log_pkey"/>                            
+            <column name="system_log_id" type="BIGINT">
+                                
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_cm_system_log_pkey"/>
+                            
             </column>
-            <column name="ip_addr" type="VARCHAR(30)" />            
-            <column name="log_date" type="TIMESTAMP WITHOUT TIME ZONE" />      
-            <column name="log_type_code" type="VARCHAR(50)" />
-            <column name="program_id" type="BIGINT" />
-
-            <column name="server_ip" type="VARCHAR(30)" />
-            <column name="url_addr" type="VARCHAR(500)" />
-            <column name="user_no" type="BIGINT" />
+                        
+            <column name="ip_addr" type="VARCHAR(30)"/>
+                        
+            <column name="log_date" type="TIMESTAMP WITHOUT TIME ZONE"/>
+                        
+            <column name="log_type_code" type="VARCHAR(50)"/>
+                        
+            <column name="program_id" type="BIGINT"/>
+                        
+            <column name="server_ip" type="VARCHAR(30)"/>
+                        
+            <column name="url_addr" type="VARCHAR(500)"/>
+                        
+            <column name="user_no" type="BIGINT"/>
+                    
         </createTable>
             
     </changeSet>

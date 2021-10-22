@@ -2,23 +2,36 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet author="auto (g)" id="tb_cm_error_log-1">
                 
-        <createTable tableName="tb_cm_error_log" remarks="에러로그" >
+        <createTable remarks="에러로그" tableName="tb_cm_error_log">
                         
-            <column name="error_log_id" type="BIGINT" remarks="에러 증가 id" >                                
-                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_cm_error_log_pkey"/>                            
+            <column name="error_log_id" remarks="에러 증가 id" type="BIGINT">
+                                
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_cm_error_log_pkey"/>
+                            
             </column>
                         
-            <column name="browser_kind" type="VARCHAR(500)" remarks="브라우저 종류"  />                        
-            <column name="error_class" type="VARCHAR(200)"  remarks="에러 클래스" />
-            <column name="error_msg" type="VARCHAR(2000)"  remarks="에러 메시지" />
-            <column name="header_info" type="VARCHAR(4000)"  remarks="해더 정보" />
-            <column name="log_date" type="TIMESTAMP WITHOUT TIME ZONE"  remarks="기록 시간" />
-            <column name="param_info" type="VARCHAR(4000)"   remarks="파라미터 정보" />
-            <column name="request_path" type="VARCHAR(2000)"   remarks="url" />
-            <column name="server_ip" type="VARCHAR(50)"   remarks="서버 IP" />
-            <column name="stack_trace" type="LONGTEXT"   remarks="에러 상세" />
-            <column name="user_no" type="BIGINT"   remarks="유저 키" />
-            <column name="client_ip" type="VARCHAR(50)" remarks="클라이언트 IP" />
+            <column name="browser_kind" remarks="브라우저 종류" type="VARCHAR(500)"/>
+                        
+            <column name="error_class" remarks="에러 클래스" type="VARCHAR(200)"/>
+                        
+            <column name="error_msg" remarks="에러 메시지" type="VARCHAR(2000)"/>
+                        
+            <column name="header_info" remarks="해더 정보" type="VARCHAR(4000)"/>
+                        
+            <column name="log_date" remarks="기록 시간" type="TIMESTAMP WITHOUT TIME ZONE"/>
+                        
+            <column name="param_info" remarks="파라미터 정보" type="VARCHAR(4000)"/>
+                        
+            <column name="request_path" remarks="url" type="VARCHAR(2000)"/>
+                        
+            <column name="server_ip" remarks="서버 IP" type="VARCHAR(50)"/>
+                        
+            <column name="stack_trace" remarks="에러 상세" type="TEXT"/>
+                        
+            <column name="user_no" remarks="유저 키" type="BIGINT"/>
+                        
+            <column name="client_ip" remarks="클라이언트 IP" type="VARCHAR(50)"/>
+                    
         </createTable>
             
     </changeSet>

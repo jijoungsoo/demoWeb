@@ -20,7 +20,7 @@
                         
             <column name="img_s" type="VARCHAR(1000)"/>
                         
-            <column name="name_en" type="VARCHAR(100)"/>
+            <column name="name_en" remarks="이름영문2" type="VARCHAR(100)"/>
                         
             <column name="name_kr" type="VARCHAR(100)"/>
                         
