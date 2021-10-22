@@ -1,8 +1,8 @@
 <script>
 $(document).ready(function(){
-	var CM_1850 = new PgmPageMngr('[[${uuid}]]');
-		CM_1850.init(function(p_param) {
-			var _this = CM_1850;
+	var CM_1860 = new PgmPageMngr('[[${uuid}]]');
+		CM_1860.init(function(p_param) {
+			var _this = CM_1860;
 			var searchForm = new FormMngr(_this, "search_area");
 
 			const grid = new TuiGridMngr(_this, 'grid', {
@@ -17,15 +17,15 @@ $(document).ready(function(){
 			[ 
 				
 			{
-				header : 'BIZACTOR_LOG_ID',
-				name : 'BIZACTOR_LOG_ID',
-				width : 400,
+				header : 'ID',
+				name : 'ID',
+				width : 140,
 				resizable : false,
 				sortable : true
             },{
-				header : 'SEQ',
-				name : 'SEQ',
-				width : 100,
+				header : 'AUTHOR',
+				name : 'AUTHOR',
+				width : 140,
 				resizable : false,
 				sortable : true,
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -35,9 +35,9 @@ $(document).ready(function(){
 					showClearBtn : true
 				}
 			},{
-				header : 'ACT_ID',
-				name : 'ACT_ID',
-				width : 300,
+				header : 'FILE_NAME',
+				name : 'FILE_NAME',
+				width : 200,
 				resizable : false,
 				sortable : true,
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -48,9 +48,9 @@ $(document).ready(function(){
 				}
 			},
 			{
-				header : 'IN_DT_NAME',
-				name : 'IN_DT_NAME',
-				width : 300,
+				header : 'DATE_EXECUTED',
+				name : 'DATE_EXECUTED',
+				width : 140,
 				sortable : true,
 				align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -62,43 +62,11 @@ $(document).ready(function(){
 			},
 
 			{
-				header : 'OUT_DT_NAME',
-				name : 'OUT_DT_NAME',
-				width : 300,
-				sortable : true,
-				align : "center",
-				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
-				filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-				}				
-			}, {
-				header : 'LOG_DATE',
-				name : 'LOG_DATE',
-				renderer : {
-					type : datetimeRenderer,
-					options : {
-						format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
-						,
-						source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
-					}
-				},
-				width : 120,
-				sortable : true,
-				align : "center",
-				filter : {
-					type : 'date',
-					format : 'yyyy-MM-DD'
-				/*'yyyy-MM-dd HH:mm A'*/
-				/*실제 데이터랑 비교하나보다 .. 비교가 안된다. */
-				}
-			}, {
-				header : 'GAP',
-				name : 'GAP',
+				header : 'ORDER_EXECUTED',
+				name : 'ORDER_EXECUTED',
 				width : 100,
-				resizable : false,
 				sortable : true,
+				align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
 				filter : {
 					type : 'text',
@@ -106,9 +74,15 @@ $(document).ready(function(){
 					showClearBtn : true
 				}				
 			}, {
-				header : 'ERR_STR',
-				name : 'ERR_STR',
-				width : 300,
+				header : 'EXEC_TYPE',
+				name : 'EXEC_TYPE',
+				width : 100,
+				sortable : true,
+				align : "center"
+			}, {
+				header : 'DESCRIPTION',
+				name : 'DESCRIPTION',
+				width : 400,
 				resizable : false,
 				sortable : true,
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -117,7 +91,7 @@ $(document).ready(function(){
 					showApplyBtn : true,
 					showClearBtn : true
 				}				
-			} ]
+			}]
 			);
 			grid.build();
 
@@ -129,7 +103,7 @@ $(document).ready(function(){
 						brRs : 'OUT_DATA',
 						IN_DATA : [ {} ]
 					}
-					grid.loadData('BR_CM_API_LOG_GetApiLogList', param, function(data) {
+					grid.loadData('BR_CM_DB_MGR_retrieve', param, function(data) {
 						console.log(data);
 						//gridLoadData에서 자동으로 로드됨..
 					
@@ -141,7 +115,7 @@ $(document).ready(function(){
 							brRq : '',
 							brRs : '',
 						}
-						_this.send('BR_CM_API_LOG_DropLog', param, function(data) {
+						_this.send('BR_CM_DB_MGR_delete', param, function(data) {
 							Message.alert('삭제되었습니다.', function() {
 								searchForm.get("search").trigger("click");
 							});

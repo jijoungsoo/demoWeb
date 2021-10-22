@@ -1,50 +1,26 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+<?xml version="1.1" encoding="UTF-8"?><databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet author="auto (g)" id="tb_cm_grp_cd-1">
-                
         <createTable tableName="tb_cm_grp_cd">
-                        
             <column name="grp_cd" type="VARCHAR(100)">
-                                
                 <constraints nullable="false" primaryKey="true" primaryKeyName="tb_cm_grp_cd_pkey"/>
-                            
             </column>
-                        
             <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
-                                
                 <constraints nullable="false"/>
-                            
             </column>
-                        
             <column name="grp_nm" type="VARCHAR(100)">
-                                
                 <constraints nullable="false"/>
-                            
             </column>
-                        
             <column name="ord" type="INTEGER"/>
-                        
             <column name="rmk" type="VARCHAR(4000)"/>
-                        
             <column name="updt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
-                                
                 <constraints nullable="false"/>
-                            
             </column>
-                        
             <column name="use_yn" type="VARCHAR(1)">
-                                
                 <constraints nullable="false"/>
-                            
             </column>
-                        
             <column name="crt_usr_no" type="BIGINT"/>
-                        
             <column name="updt_usr_no" type="BIGINT"/>
-                        
             <column name="grp_cd_seq" type="BIGINT"/>
-                    
         </createTable>
-            
     </changeSet>
 </databaseChangeLog>

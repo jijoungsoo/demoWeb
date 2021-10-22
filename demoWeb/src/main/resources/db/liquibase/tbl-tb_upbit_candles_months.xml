@@ -1,52 +1,27 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+<?xml version="1.1" encoding="UTF-8"?><databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet author="auto (g)" id="tb_upbit_candles_months-1">
-                
         <createTable tableName="tb_upbit_candles_months">
-                        
             <column name="market" type="VARCHAR(1000)">
-                                
                 <constraints nullable="false" primaryKey="true" primaryKeyName="tb_upbit_candles_months_pkey"/>
-                            
             </column>
-                        
             <column name="candle_date_time_utc" type="VARCHAR(1000)">
-                                
                 <constraints nullable="false" primaryKey="true" primaryKeyName="tb_upbit_candles_months_pkey"/>
-                            
             </column>
-                        
             <column name="candle_acc_trade_price" type="FLOAT8"/>
-                        
             <column name="candle_acc_trade_volume" type="FLOAT8"/>
-                        
             <column name="candle_date_time_kst" type="VARCHAR(1000)"/>
-                        
             <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
-                                
                 <constraints nullable="false"/>
-                            
             </column>
-                        
             <column name="first_day_of_period" type="VARCHAR(255)"/>
-                        
             <column name="high_price" type="FLOAT8"/>
-                        
             <column name="low_price" type="FLOAT8"/>
-                        
             <column name="opening_price" type="FLOAT8"/>
-                        
             <column name="timestamp" type="BIGINT"/>
-                        
             <column name="trade_price" type="FLOAT8"/>
-                        
             <column name="updt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
-                                
                 <constraints nullable="false"/>
-                            
             </column>
-                    
         </createTable>
-            
     </changeSet>
 </databaseChangeLog>

@@ -13,7 +13,7 @@ $(document).ready(function(){
 			brRq: 'IN_PSET',
 			brRs: 'OUT_REST',
 			IN_PSET: [{
-				API_UUID : api_uuid
+				BIZACTOR_ID : api_uuid
 			}]
 		}
 		 
@@ -24,7 +24,7 @@ $(document).ready(function(){
 			if (data) {
 				debugForm.setDataAll(data.OUT_REST[0]);		
 				debugForm.setData("SEQ",seq);		
-				debugForm.setData("API_UUID",api_uuid);	
+				debugForm.setData("BIZACTOR_ID",api_uuid);	
 			}
 		});	
 	

@@ -1,146 +1,74 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+<?xml version="1.1" encoding="UTF-8"?><databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet author="auto (g)" id="tb_st_optkwfid-1">
-                
         <createTable tableName="tb_st_optkwfid">
-                        
             <column name="stock_cd" type="VARCHAR(9)">
-                                
                 <constraints nullable="false" primaryKey="true" primaryKeyName="tb_st_optkwfid_pkey"/>
-                            
             </column>
-                        
             <column name="bid_amt" type="INTEGER"/>
-                        
             <column name="bid_amt_five" type="INTEGER"/>
-                        
             <column name="bid_amt_four" type="INTEGER"/>
-                        
             <column name="bid_amt_one" type="INTEGER"/>
-                        
             <column name="bid_amt_three" type="INTEGER"/>
-                        
             <column name="bid_amt_two" type="INTEGER"/>
-                        
             <column name="break_even_point" type="FLOAT8"/>
-                        
             <column name="capital_amt" type="INTEGER"/>
-                        
             <column name="clsg_amt" type="INTEGER"/>
-                        
             <column name="contract_qty" type="INTEGER"/>
-                        
             <column name="contract_strength" type="FLOAT8"/>
-                        
             <column name="contract_time" type="VARCHAR(6)"/>
-                        
             <column name="contrast_open_interest" type="INTEGER"/>
-                        
             <column name="contrast_yesterday" type="INTEGER"/>
-                        
             <column name="contrast_yesterday_symbol" type="INTEGER"/>
-                        
             <column name="conversion_rt" type="FLOAT8"/>
-                        
             <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
-                                
                 <constraints nullable="false"/>
-                            
             </column>
-                        
             <column name="curr_amt" type="INTEGER"/>
-                        
             <column name="delta" type="INTEGER"/>
-                        
             <column name="elw_expiry_dt" type="VARCHAR(8)"/>
-                        
             <column name="elw_strike_amt" type="INTEGER"/>
-                        
             <column name="expectation_contract_amt" type="INTEGER"/>
-                        
             <column name="expectation_contract_qty" type="INTEGER"/>
-                        
             <column name="face_amt" type="INTEGER"/>
-                        
             <column name="fluctuation_rt" type="FLOAT8"/>
-                        
             <column name="fst_bid_balance" type="INTEGER"/>
-                        
             <column name="fst_bid_qty" type="INTEGER"/>
-                        
             <column name="fst_offered_balance" type="INTEGER"/>
-                        
             <column name="fst_offered_qty" type="INTEGER"/>
-                        
             <column name="gamma" type="INTEGER"/>
-                        
             <column name="gearing" type="FLOAT8"/>
-                        
             <column name="high_amt" type="INTEGER"/>
-                        
             <column name="hoga_time" type="VARCHAR(6)"/>
-                        
             <column name="implied_volatility" type="INTEGER"/>
-                        
             <column name="lo" type="INTEGER"/>
-                        
             <column name="low_amt" type="INTEGER"/>
-                        
             <column name="lower_amt_lmt" type="INTEGER"/>
-                        
             <column name="offered_amt" type="INTEGER"/>
-                        
             <column name="offered_amt_five" type="INTEGER"/>
-                        
             <column name="offered_amt_four" type="INTEGER"/>
-                        
             <column name="offered_amt_one" type="INTEGER"/>
-                        
             <column name="offered_amt_three" type="INTEGER"/>
-                        
             <column name="offered_amt_two" type="INTEGER"/>
-                        
             <column name="open_interest" type="INTEGER"/>
-                        
             <column name="parity_rt" type="FLOAT8"/>
-                        
             <column name="start_amt" type="INTEGER"/>
-                        
             <column name="stock_cnt" type="INTEGER"/>
-                        
             <column name="stock_dt" type="VARCHAR(8)">
-                                
                 <constraints nullable="false"/>
-                            
             </column>
-                        
             <column name="theorist_amt" type="INTEGER"/>
-                        
             <column name="theta" type="INTEGER"/>
-                        
             <column name="tot_bid_balance" type="INTEGER"/>
-                        
             <column name="tot_bid_qty" type="INTEGER"/>
-                        
             <column name="tot_market_amt" type="INTEGER"/>
-                        
             <column name="tot_offered_balance" type="INTEGER"/>
-                        
             <column name="tot_offered_qty" type="INTEGER"/>
-                        
             <column name="trade_amt" type="INTEGER"/>
-                        
             <column name="trade_qty" type="INTEGER"/>
-                        
             <column name="upper_amt_lmt" type="INTEGER"/>
-                        
             <column name="vega" type="INTEGER"/>
-                        
             <column name="yesterday_amt" type="INTEGER"/>
-                        
             <column name="yesterday_contrast_trade_rt" type="FLOAT8"/>
-                    
         </createTable>
-            
     </changeSet>
 </databaseChangeLog>

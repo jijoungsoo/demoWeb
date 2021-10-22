@@ -1,40 +1,21 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+<?xml version="1.1" encoding="UTF-8"?><databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
     <changeSet author="auto (g)" id="tb_cm_bizactor_log-1">
-                
         <createTable remarks="비즈액터로그" tableName="tb_cm_bizactor_log">
-                        
             <column name="bizactor_log_id" remarks="에러 증가 id" type="VARCHAR(50)">
-                                
                 <constraints nullable="false" primaryKey="true" primaryKeyName="tb_cm_bizactor_log_pkey"/>
-                            
             </column>
-                        
             <column name="seq" remarks="시퀀스" type="BIGINT"/>
-                        
             <column name="act_id" remarks="BR명" type="VARCHAR(500)"/>
-                        
             <column name="in_dt_name" remarks="인풋 테이블명" type="VARCHAR(200)"/>
-                        
             <column name="out_dt_name" remarks="아웃풋 테이블명" type="VARCHAR(200)"/>
-                        
             <column name="in_json_str" remarks="인풋 데이터 JSON" type="TEXT"/>
-                        
             <column name="out_json_str" remarks="아웃풋 데이터 JSON" type="TEXT"/>
-                        
             <column name="in_ds_str" remarks="인풋 DS XML" type="TEXT"/>
-                        
             <column name="out_ds_str" remarks="아웃풋 DS XML" type="TEXT"/>
-                        
             <column name="gap" remarks="실행시간" type="BIGINT"/>
-                        
             <column name="client_ip" remarks="클라이언트 IP" type="VARCHAR(50)"/>
-                        
             <column name="log_date" remarks="기록 시간" type="TIMESTAMP WITHOUT TIME ZONE"/>
-                        
             <column name="err_str" remarks="에러 메시지" type="TEXT"/>
-                    
         </createTable>
-            
     </changeSet>
 </databaseChangeLog>
