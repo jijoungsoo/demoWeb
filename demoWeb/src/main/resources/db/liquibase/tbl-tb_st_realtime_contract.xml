@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="auto (g)" id="tb_st_realtime_contract-1">
+                
+        <createTable tableName="tb_st_realtime_contract">
+                        
+            <column name="stock_dt" type="VARCHAR(255)">
+                                
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_st_realtime_contract_pkey"/>
+                            
+            </column>
+                        
+            <column name="stock_cd" type="VARCHAR(255)">
+                                
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_st_realtime_contract_pkey"/>
+                            
+            </column>
+                        
+            <column name="curr_time" type="VARCHAR(255)">
+                                
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_st_realtime_contract_pkey"/>
+                            
+            </column>
+                        
+            <column name="accumulated_trade_amt" type="INTEGER"/>
+                        
+            <column name="accumulated_trade_qty" type="INTEGER"/>
+                        
+            <column name="bid_amt" type="INTEGER"/>
+                        
+            <column name="contract_strength" type="FLOAT8"/>
+                        
+            <column name="contrast_yesterday" type="INTEGER"/>
+                        
+            <column name="contrast_yesterday_symbol" type="INTEGER"/>
+                        
+            <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="curr_amt" type="INTEGER"/>
+                        
+            <column name="fluctuation_rt" type="FLOAT8"/>
+                        
+            <column name="high_amt" type="INTEGER"/>
+                        
+            <column name="ko_accessibility_rt" type="FLOAT8"/>
+                        
+            <column name="low_amt" type="INTEGER"/>
+                        
+            <column name="lower_amt_limit_time" type="VARCHAR(6)"/>
+                        
+            <column name="market_gubun" type="INTEGER"/>
+                        
+            <column name="offered_amt" type="INTEGER"/>
+                        
+            <column name="real_name" type="VARCHAR(50)"/>
+                        
+            <column name="start_amt" type="INTEGER"/>
+                        
+            <column name="tot_market_amt" type="INTEGER"/>
+                        
+            <column name="trade_amount_variation" type="FLOAT8"/>
+                        
+            <column name="trade_cost" type="INTEGER"/>
+                        
+            <column name="trade_qty" type="INTEGER"/>
+                        
+            <column name="trade_turnover_ratio" type="FLOAT8"/>
+                        
+            <column name="upper_amt_limit_time" type="VARCHAR(6)"/>
+                        
+            <column name="yesterday_contrast_trade_qty" type="INTEGER"/>
+                        
+            <column name="yesterday_contrast_trade_rt" type="FLOAT8"/>
+                    
+        </createTable>
+            
+    </changeSet>
+</databaseChangeLog>

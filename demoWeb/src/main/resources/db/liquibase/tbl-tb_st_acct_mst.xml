@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="auto (g)" id="tb_st_acct_mst-1">
+                
+        <createTable tableName="tb_st_acct_mst">
+                        
+            <column name="buy_seq" type="BIGINT">
+                                
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_st_acct_mst_pkey"/>
+                            
+            </column>
+                        
+            <column name="amt" type="INTEGER">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="bal_cnt" type="INTEGER">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="buy_date" type="VARCHAR(14)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="cnt" type="INTEGER">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="crt_usr_no" type="BIGINT">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="del_yn" type="VARCHAR(1)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="fee" type="INTEGER">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="rmk" type="VARCHAR(4000)"/>
+                        
+            <column name="stock_cd" type="VARCHAR(9)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="stock_nm" type="VARCHAR(45)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="tot_amt" type="INTEGER">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="updt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="updt_usr_no" type="BIGINT">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="acct_seq" type="BIGINT">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="acct_num" type="VARCHAR(45)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="acct_nm" type="VARCHAR(45)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                    
+        </createTable>
+            
+    </changeSet>
+</databaseChangeLog>

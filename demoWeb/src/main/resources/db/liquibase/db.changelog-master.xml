@@ -1,0 +1,150 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <include file="db\liquibase\tbl-mig_av_actr_cmt_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_mv_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_job_details_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_triggers_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_fired_triggers_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-spring_session_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_msg_snd_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_msg_snd_rcv_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_user_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_user_role_cd_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_theme_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_theme_stock_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_brd_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_brd_grp_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_eml_snd_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_eml_snd_rcv_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_role_cd_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_brd_cmt_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_cd_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_grp_cd_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_menu_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_menu_role_cd_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-batch_job_execution_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-batch_job_execution_context_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-batch_job_execution_params_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-batch_step_execution_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-batch_job_instance_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_blob_triggers_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_cron_triggers_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_simple_triggers_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_simprop_triggers_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-spring_session_attributes_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-batch_step_execution_context_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_av_mv_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_actr_lk_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_fv_mn_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_domain_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_pgm_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_mv_actr_cmt_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_actr_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_actr_img_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_comp_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_gen_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_menu_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_mk_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_mv_actr_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_mv_actr_main_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_mv_cmt_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-mig_av_mv_gen_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_calendars_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_locks_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_paused_trigger_grps_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-qrtz_scheduler_state_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_av_actr_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_excel_upld_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_fav_menu_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_file_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_job_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_msg_tmpl_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_oauth_log_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_seq_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_cm_sess_log_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_fx_binance_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_fx_upbit_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_kiw_market_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_kiw_stock_mst_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_acct_dpst_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_acct_imn_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_acct_mst_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_acct_wthdrw_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_buy_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_marcap_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_optkwfid_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_realtime_contract_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_receive_msg_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_st_sell_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_upbit_candles_days_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_upbit_candles_minutes_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_upbit_candles_months_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_upbit_candles_weeks_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_upbit_market_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_upbit_order_book_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_upbit_order_book_units_1.0.xml" relativeToChangelogFile="false"/>
+    <include file="db\liquibase\tbl-tb_upbit_trades_ticks_1.0.xml" relativeToChangelogFile="false"/>
+    <changeSet author="jijsx (generated)" id="1634880561660-44">
+        <addForeignKeyConstraint baseColumnNames="sched_name,job_name,job_group" baseTableName="qrtz_triggers" constraintName="qrtz_triggers_sched_name_job_name_job_group_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="sched_name,job_name,job_group" referencedTableName="qrtz_job_details" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-57">
+        <addForeignKeyConstraint baseColumnNames="sched_name,trigger_name,trigger_group" baseTableName="qrtz_blob_triggers" constraintName="qrtz_blob_triggers_sched_name_trigger_name_trigger_group_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="sched_name,trigger_name,trigger_group" referencedTableName="qrtz_triggers" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-58">
+        <addForeignKeyConstraint baseColumnNames="sched_name,trigger_name,trigger_group" baseTableName="qrtz_cron_triggers" constraintName="qrtz_cron_triggers_sched_name_trigger_name_trigger_group_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="sched_name,trigger_name,trigger_group" referencedTableName="qrtz_triggers" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-59">
+        <addForeignKeyConstraint baseColumnNames="sched_name,trigger_name,trigger_group" baseTableName="qrtz_simple_triggers" constraintName="qrtz_simple_triggers_sched_name_trigger_name_trigger_group_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="sched_name,trigger_name,trigger_group" referencedTableName="qrtz_triggers" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-60">
+        <addForeignKeyConstraint baseColumnNames="sched_name,trigger_name,trigger_group" baseTableName="qrtz_simprop_triggers" constraintName="qrtz_simprop_triggers_sched_name_trigger_name_trigger_grou_fkey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="sched_name,trigger_name,trigger_group" referencedTableName="qrtz_triggers" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-70">
+        <addForeignKeyConstraint baseColumnNames="session_primary_id" baseTableName="spring_session_attributes" constraintName="spring_session_attributes_fk" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="primary_id" referencedTableName="spring_session" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-71">
+        <addForeignKeyConstraint baseColumnNames="snd_seq" baseTableName="tb_cm_msg_snd_rcv" constraintName="fk3f91vkfwsu36w4qp3nkt946ey" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="snd_seq" referencedTableName="tb_cm_msg_snd" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-72">
+        <addForeignKeyConstraint baseColumnNames="user_no" baseTableName="tb_cm_user_role_cd" constraintName="fk7eget49ape28osn2t1uen0be7" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="user_no" referencedTableName="tb_cm_user" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-73">
+        <addForeignKeyConstraint baseColumnNames="role_cd" baseTableName="tb_cm_user_role_cd" constraintName="fki10n68fj1ex6koirebvl40ptj" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="role_cd" referencedTableName="tb_cm_role_cd" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-74">
+        <addForeignKeyConstraint baseColumnNames="theme_cd" baseTableName="tb_st_theme_stock" constraintName="fka3jbah4hkw2xnlmxb436hody" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="theme_cd" referencedTableName="tb_st_theme" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-75">
+        <addForeignKeyConstraint baseColumnNames="grp_seq" baseTableName="tb_cm_brd" constraintName="fkcj9je27q23r318dp80ddcx1i6" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="grp_seq" referencedTableName="tb_cm_brd_grp" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-76">
+        <addForeignKeyConstraint baseColumnNames="brd_seq" baseTableName="tb_cm_brd_cmt" constraintName="fki6qclewoef6uuqv30ai4dn5e" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="brd_seq" referencedTableName="tb_cm_brd" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-77">
+        <addForeignKeyConstraint baseColumnNames="snd_seq" baseTableName="tb_cm_eml_snd_rcv" constraintName="fkhpnafpgnyfx02n0r02nxncf4u" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="snd_seq" referencedTableName="tb_cm_eml_snd" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-78">
+        <addForeignKeyConstraint baseColumnNames="menu_cd" baseTableName="tb_cm_role_cd" constraintName="fkrp196q9r68eanjjo78d9hks71" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="menu_no" referencedTableName="tb_cm_menu" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-79">
+        <addForeignKeyConstraint baseColumnNames="grp_cd" baseTableName="tb_cm_cd" constraintName="fklilthvf23tt0ohunf7tmiaivm" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="grp_cd" referencedTableName="tb_cm_grp_cd" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-80">
+        <addForeignKeyConstraint baseColumnNames="menu_no" baseTableName="tb_cm_menu_role_cd" constraintName="fknuqwfrdrlocdqs17wrran5e8t" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="menu_no" referencedTableName="tb_cm_menu" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-82">
+        <addForeignKeyConstraint baseColumnNames="job_execution_id" baseTableName="batch_job_execution_context" constraintName="job_exec_ctx_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="job_execution_id" referencedTableName="batch_job_execution" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-83">
+        <addForeignKeyConstraint baseColumnNames="job_execution_id" baseTableName="batch_job_execution_params" constraintName="job_exec_params_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="job_execution_id" referencedTableName="batch_job_execution" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-84">
+        <addForeignKeyConstraint baseColumnNames="job_execution_id" baseTableName="batch_step_execution" constraintName="job_exec_step_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="job_execution_id" referencedTableName="batch_job_execution" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-85">
+        <addForeignKeyConstraint baseColumnNames="job_instance_id" baseTableName="batch_job_execution" constraintName="job_inst_exec_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="job_instance_id" referencedTableName="batch_job_instance" validate="true"/>
+    </changeSet>
+    <changeSet author="jijsx (generated)" id="1634880561660-86">
+        <addForeignKeyConstraint baseColumnNames="step_execution_id" baseTableName="batch_step_execution_context" constraintName="step_exec_ctx_fk" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="step_execution_id" referencedTableName="batch_step_execution" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

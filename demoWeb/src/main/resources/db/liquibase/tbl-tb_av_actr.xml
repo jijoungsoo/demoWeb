@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="auto (g)" id="tb_av_actr-1">
+                
+        <createTable tableName="tb_av_actr">
+                        
+            <column name="actr_seq" type="BIGINT">
+                                
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_av_actr_pkey"/>
+                            
+            </column>
+                        
+            <column name="actr_nm_eng" type="VARCHAR(50)"/>
+                        
+            <column name="actr_nm_jp" type="VARCHAR(50)"/>
+                        
+            <column name="actr_nm_kr" type="VARCHAR(50)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="birth_dt" type="VARCHAR(8)"/>
+                        
+            <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="crt_usr_no" type="BIGINT">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="msc_yn" type="VARCHAR(1)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="ord" type="INTEGER">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="rmk" type="VARCHAR(4000)"/>
+                        
+            <column name="rnk" type="INTEGER"/>
+                        
+            <column name="sex" type="VARCHAR(1)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="updt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="updt_usr_no" type="BIGINT">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                    
+        </createTable>
+            
+    </changeSet>
+</databaseChangeLog>

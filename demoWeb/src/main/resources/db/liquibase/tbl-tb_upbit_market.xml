@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="auto (g)" id="tb_upbit_market-1">
+                
+        <createTable tableName="tb_upbit_market">
+                        
+            <column name="market" type="VARCHAR(255)">
+                                
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_upbit_market_pkey"/>
+                            
+            </column>
+                        
+            <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="en_nm" type="VARCHAR(1000)"/>
+                        
+            <column name="kr_nm" type="VARCHAR(1000)"/>
+                        
+            <column name="market_warning" type="VARCHAR(1000)"/>
+                        
+            <column name="updt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="market_cd" type="VARCHAR(255)"/>
+                        
+            <column name="trade_date" type="VARCHAR(1000)"/>
+                        
+            <column name="trade_time" type="VARCHAR(1000)"/>
+                        
+            <column name="trade_date_kst" type="VARCHAR(8)"/>
+                        
+            <column name="trade_time_kst" type="VARCHAR(8)"/>
+                        
+            <column name="opening_price" type="FLOAT8"/>
+                        
+            <column name="high_price" type="FLOAT8"/>
+                        
+            <column name="low_price" type="FLOAT8"/>
+                        
+            <column name="prev_closing_price" type="FLOAT8"/>
+                        
+            <column name="trade_price" type="FLOAT8"/>
+                        
+            <column name="change_price" type="FLOAT8"/>
+                        
+            <column name="change_rate" type="FLOAT8"/>
+                        
+            <column name="signed_change_price" type="FLOAT8"/>
+                        
+            <column name="signed_change_rate" type="FLOAT8"/>
+                        
+            <column name="acc_trade_price" type="FLOAT8"/>
+                        
+            <column name="acc_trade_price_24h" type="FLOAT8"/>
+                        
+            <column name="acc_trade_volume" type="FLOAT8"/>
+                        
+            <column name="acc_trade_volume_24h" type="FLOAT8"/>
+                        
+            <column name="trade_volume" type="FLOAT8"/>
+                        
+            <column name="highest_52_week_price" type="FLOAT8"/>
+                        
+            <column name="highest_52_week_date" type="VARCHAR(255)"/>
+                        
+            <column name="lowest_52_week_date" type="VARCHAR(255)"/>
+                        
+            <column name="lowest_52_week_price" type="FLOAT8"/>
+                        
+            <column name="timestamp" type="BIGINT"/>
+                        
+            <column name="change" type="VARCHAR(10)"/>
+                        
+            <column name="del_yn" type="VARCHAR(255)"/>
+                        
+            <column name="walletstate" type="VARCHAR(255)"/>
+                        
+            <column name="wallet_state" type="VARCHAR(100)"/>
+                        
+            <column name="currency" type="VARCHAR(255)"/>
+                    
+        </createTable>
+            
+    </changeSet>
+</databaseChangeLog>

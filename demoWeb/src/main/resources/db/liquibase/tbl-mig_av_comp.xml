@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="auto (g)" id="mig_av_comp-1">
+                
+        <createTable tableName="mig_av_comp">
+                        
+            <column name="dvd_idx" type="BIGINT">
+                                
+                <constraints nullable="false" primaryKey="true" primaryKeyName="mig_av_comp_pkey"/>
+                            
+            </column>
+                        
+            <column name="actr_nm" type="VARCHAR(1000)"/>
+                        
+            <column name="best_yn" type="VARCHAR(1)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="comp_nm" type="VARCHAR(1000)"/>
+                        
+            <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="director" type="VARCHAR(100)"/>
+                        
+            <column name="gen_list" type="VARCHAR(4000)"/>
+                        
+            <column name="img_a" type="VARCHAR(1000)"/>
+                        
+            <column name="img_as" type="VARCHAR(1000)"/>
+                        
+            <column name="img_la" type="VARCHAR(1000)"/>
+                        
+            <column name="img_las" type="VARCHAR(1000)"/>
+                        
+            <column name="img_ln" type="VARCHAR(1000)"/>
+                        
+            <column name="img_lns" type="VARCHAR(1000)"/>
+                        
+            <column name="img_n" type="VARCHAR(1000)"/>
+                        
+            <column name="img_ns" type="VARCHAR(1000)"/>
+                        
+            <column name="label" type="VARCHAR(1000)"/>
+                        
+            <column name="main_actor_idx" type="BIGINT"/>
+                        
+            <column name="main_actor_nm" type="VARCHAR(1000)"/>
+                        
+            <column name="mv_nm" type="VARCHAR(1000)"/>
+                        
+            <column name="open_dt" type="VARCHAR(100)"/>
+                        
+            <column name="run_time" type="VARCHAR(100)"/>
+                        
+            <column name="sample_yn" type="VARCHAR(1)"/>
+                        
+            <column name="series" type="VARCHAR(1000)"/>
+                        
+            <column name="story_kr" type="VARCHAR(4000)"/>
+                        
+            <column name="sync" type="VARCHAR(1)">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="title_kr" type="VARCHAR(1000)"/>
+                        
+            <column name="updt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                    
+        </createTable>
+            
+    </changeSet>
+</databaseChangeLog>

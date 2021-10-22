@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="auto (g)" id="mig_av_actr-1">
+                
+        <createTable tableName="mig_av_actr">
+                        
+            <column name="actor_idx" type="BIGINT">
+                                
+                <constraints nullable="false" primaryKey="true" primaryKeyName="mig_av_actr_pkey"/>
+                            
+            </column>
+                        
+            <column name="birth" type="VARCHAR(100)"/>
+                        
+            <column name="debut_dt" type="VARCHAR(100)"/>
+                        
+            <column name="height" type="VARCHAR(100)"/>
+                        
+            <column name="img" type="VARCHAR(1000)"/>
+                        
+            <column name="img_s" type="VARCHAR(1000)"/>
+                        
+            <column name="name_en" type="VARCHAR(100)"/>
+                        
+            <column name="name_kr" type="VARCHAR(100)"/>
+                        
+            <column name="size" type="VARCHAR(100)"/>
+                        
+            <column name="sync" type="VARCHAR(1)"/>
+                        
+            <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="updt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
+                                
+                <constraints nullable="false"/>
+                            
+            </column>
+                        
+            <column name="bra_size" type="VARCHAR(100)"/>
+                        
+            <column name="name_cn" type="VARCHAR(100)"/>
+                        
+            <column name="dscr" type="VARCHAR(4000)"/>
+                        
+            <column name="dscr_ttl" type="VARCHAR(4000)"/>
+                        
+            <column name="o_nm" type="VARCHAR(1000)"/>
+                        
+            <column name="img_l" type="VARCHAR(1000)"/>
+                        
+            <column name="img_ls" type="VARCHAR(1000)"/>
+                        
+            <column name="size_b" type="VARCHAR(100)"/>
+                        
+            <column name="size_h" type="VARCHAR(100)"/>
+                        
+            <column name="size_w" type="VARCHAR(100)"/>
+                    
+        </createTable>
+            
+    </changeSet>
+</databaseChangeLog>

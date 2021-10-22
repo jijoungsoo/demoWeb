@@ -171,6 +171,15 @@ implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
 	implementation("org.apache.tomcat:tomcat-jdbc:10.0.8")
 	//db드라이버 설정
 	implementation group: 'org.postgresql', name: 'postgresql', version: '42.2.23'
+
+
+    //데이터베이스 스키마 관리를 위해  liquibase 를 사용하자
+    // https://mvnrepository.com/artifact/org.liquibase/liquibase-core
+    //커멘드 명령어로 기존에 db에서   설정파일을 출력할수 있다.
+    //https://www.liquibase.org/download 
+    //D:\liquibase-4.5.0
+    implementation 'org.liquibase:liquibase-core:4.5.0'
+
 }
 
 test {
