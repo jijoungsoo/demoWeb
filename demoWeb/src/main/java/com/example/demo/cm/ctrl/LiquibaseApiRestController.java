@@ -296,6 +296,24 @@ public class LiquibaseApiRestController {
             } 
         }
 
+        /* 참조 키 제약조건 이것도 키를 좀 의미있게 번호를 매겨보자  */
+        nList = el.getElementsByTagName("addForeignKeyConstraint");
+        for (int i = 0; i < nList.getLength(); i++) {
+            Node nNode = nList.item(i);
+            System.out.println("\nCurrent Element :" + nNode.getNodeName());
+            if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+                Element foreignkey = (Element) nNode;
+                if(foreignkey!=null){
+                    String baseTableName =foreignkey.getAttribute("baseTableName");
+                    Element parent_el =(Element) foreignkey.getParentNode();
+
+                    parent_el.setAttribute("id", baseTableName+"-"+(i+1));
+                    parent_el.setAttribute("author", "auto (g)");
+                }  
+            } 
+        }
+        
+
 
         for(int i=0;i<removeAl.size();i++){
             el.removeChild(removeAl.get(i).getParentNode());
