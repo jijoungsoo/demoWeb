@@ -16,7 +16,9 @@ import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -99,7 +101,7 @@ public class LiquibaseApiRestController {
     private ResourceLoader resourceLoader;
 
     
-    @GetMapping(path = "/liquibase_rest/generateChangeLog")
+    @PostMapping(path = "/liquibase_rest/generateChangeLog", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> generateChangeLog(Authentication authentication, HttpSession session) throws Exception {
 
         //이것도 동작한다. 
@@ -151,7 +153,7 @@ public class LiquibaseApiRestController {
 		return ResponseEntity.ok(result);
 	}
 
-	@GetMapping(path = "/liquibase_rest/update")
+	@PostMapping(path = "/liquibase_rest/update", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> update(Authentication authentication, HttpSession session) throws Exception {
 
                 
@@ -174,7 +176,7 @@ public class LiquibaseApiRestController {
 		return ResponseEntity.ok(result);
 	}
 
-    @GetMapping(path = "/liquibase_rest/changeLogSync")
+    @PostMapping(path = "/liquibase_rest/changeLogSync", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> changeLogSync(Authentication authentication, HttpSession session) throws Exception {
 
         //이것도 동작한다. 
@@ -196,16 +198,32 @@ public class LiquibaseApiRestController {
 		return ResponseEntity.ok(result);
 	}
 
-    @GetMapping(path = "/liquibase_rest/rollback")
-	public ResponseEntity<Object> rollback(Authentication authentication, HttpSession session) throws Exception {
+    @PostMapping(path = "/liquibase_rest/rollback", consumes = "application/json", produces = "application/json")
+	public ResponseEntity<Object> rollback(@RequestBody Map<String,Object> params , Authentication authentication, HttpSession session) throws Exception {
+        System.out.println("/liquibase_rest/rollback");
+        System.out.println(params);
 
-                
+        //{date_executed=2021-10-23 11:57:48.562565}
+
+        Date dateToRollBackTo = new Date();
+        System.out.println(dateToRollBackTo);
+        if(params.get("date_executed")!=null) {
+            String date_executed=params.get("date_executed").toString();
+            System.out.println(date_executed);
+            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); //밀리세컨까지 해주고 싶었는데 시분초가 이상하게 변환되어서 포기
+            dateToRollBackTo = transFormat.parse(date_executed);
+            System.out.println(dateToRollBackTo);
+        } 
+        System.out.println(dateToRollBackTo);
+        
         // Locate change log file
         Resource resource = resourceLoader.getResource(CHANGE_LOG_FILE);
         Assert.state(resource.exists(), "Unable to find file: " + CHANGE_LOG_FILE);
         Database database = DatabaseFactory.getInstance().findCorrectDatabaseImplementation(new JdbcConnection(dataSource.getConnection()));
         Liquibase liquibase = new Liquibase(CHANGE_LOG_FILE, new ClassLoaderResourceAccessor(getClass()
         .getClassLoader()), database);
+        
+        liquibase.rollback(dateToRollBackTo, "");
         //liquibase.rollback(changesToRollback, contexts);
 
         ///

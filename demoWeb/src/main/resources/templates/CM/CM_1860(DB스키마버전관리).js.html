@@ -50,7 +50,7 @@ $(document).ready(function(){
 			{
 				header : 'DATE_EXECUTED',
 				name : 'DATE_EXECUTED',
-				width : 140,
+				width : 200,
 				sortable : true,
 				align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
@@ -115,8 +115,74 @@ $(document).ready(function(){
 							brRq : '',
 							brRs : '',
 						}
-						_this.send('BR_CM_DB_MGR_delete', param, function(data) {
+						_this.send_api('BR_CM_DB_MGR_delete', param, function(data) {
 							Message.alert('삭제되었습니다.', function() {
+								searchForm.get("search").trigger("click");
+							});
+						});
+					});
+					break;
+
+
+                case "rollback":	
+                    var data = grid.getCheckedData();
+                    console.log(data);
+                    if(data.length!=1) {
+                        Message.alert('한개의 행만 선택되어야한다.');
+                        return;
+                    }		
+					Message.confirm('['+data[0].ORDER_EXECUTED+']'+data[0].DATE_EXECUTED+'시간대에 모든 항목을 rollback하시겠습니까?', function() {
+						var param = {
+							date_executed : data[0].DATE_EXECUTED
+						}
+						_this.send('/liquibase_rest/rollback', param, function(data) {
+                            console.log(data);
+							Message.alert('['+data[0].ORDER_EXECUTED+']'+data[0].DATE_EXECUTED+'시간대에 모든 항목이 rollback되었습니다.', function() {
+								searchForm.get("search").trigger("click");
+							});
+						});
+					});
+					break;
+
+                    
+                case "update":				
+					Message.confirm('변경반영하시겠습니까?', function() {
+						var param = {
+							brRq : '',
+							brRs : '',
+						}
+						_this.send('/liquibase_rest/update', param, function(data) {
+                            console.log(data);
+							Message.alert('변경반영되었습니다.', function() {
+								searchForm.get("search").trigger("click");
+							});
+						});
+					});
+					break;
+
+                case "changeLogSync":				
+					Message.confirm('log데이터반영하시겠습니까?', function() {
+						var param = {
+							brRq : '',
+							brRs : '',
+						}
+						_this.send('/liquibase_rest/changeLogSync', param, function(data) {
+                            console.log(data);
+							Message.alert('log데이터반영되었습니다.', function() {
+								searchForm.get("search").trigger("click");
+							});
+						});
+					});
+					break;
+                case "generateChangeLog":				
+					Message.confirm('xml파일을 초기화하시겠습니까?', function() {
+						var param = {
+							brRq : '',
+							brRs : '',
+						}
+						_this.send('/liquibase_rest/generateChangeLog', param, function(data) {
+                            console.log(data);
+							Message.alert('xml파일이 초기화하되었습니다.', function() {
 								searchForm.get("search").trigger("click");
 							});
 						});

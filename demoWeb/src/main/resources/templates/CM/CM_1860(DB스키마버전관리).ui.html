@@ -2,7 +2,11 @@
 	<table>
 		<tr>
 			<td><input type="button" name="search" value="조회" /></td>
-			<td><input type="button" name="del" value="삭제" /></td>
+			<td><input type="button" name="del" value="삭제" title="(del->DATABASECHANGELOG)" /></td>
+            <td><input type="button" name="changeLogSync" value="log데이터반영" title="(insert->DATABASECHANGELOG)" /></td>
+            <td><input type="button" name="update" value="변경반영" title="ddl 실행" /></td>
+            <td><input type="button" name="rollback" value="시간rollback" title="ddl rollback" /></td>
+            <td><input type="button" name="generateChangeLog" value="xml초기화" title="db.changelog-master.xml을 db기준으로 초기화" /></td>
 		</tr>
 	</table>
 </div>
