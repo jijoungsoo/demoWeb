@@ -8,42 +8,42 @@
 				
 			
 			searchForm.addEvent("click","input[type=button]",function(el){
-			//console.log(el);
-			switch(el.target.name){
-			case 'disableFastWithdrawSwitch':
-				var data = searchForm.getData();
-				var param ={
-					 brRq : ''
-					,brRs : ''
-				}
+                //console.log(el);
+                switch(el.target.name){
+                case 'disableFastWithdrawSwitch':
+                    var data = searchForm.getData();
+                    var param ={
+                        brRq : ''
+                        ,brRs : ''
+                    }
 
-				_this.showProgress();
-				_this.send('BR_BINANCE_WALLET_POST_SAPI_V1_DisableFastWithdrawSwitch', param, function(data) {
-					_this.hideProgress();
-					if (data) {
-						console.log(data);
-					}
-				});
-				break;
-				case 'enableFastWithdrawSwitch':
-				var data = searchForm.getData();
-				var param ={
-					 brRq : ''
-					,brRs : 'OUT_RSET'
-				}
+                    _this.showProgress();
+                    _this.send_api('BR_BINANCE_WALLET_POST_SAPI_V1_DisableFastWithdrawSwitch', param, function(data) {
+                        _this.hideProgress();
+                        if (data) {
+                            console.log(data);
+                        }
+                    });
+                    break;
+                case 'enableFastWithdrawSwitch':
+                    var data = searchForm.getData();
+                    var param ={
+                        brRq : ''
+                        ,brRs : 'OUT_RSET'
+                    }
 
-				_this.showProgress();
-				_this.send('BR_BINANCE_WALLET_POST_SAPI_V1_EnableFastWithdrawSwitch', param, function(data) {
-					_this.hideProgress();
-					if (data) {
-									
-						console.log(data);
-				
+                    _this.showProgress();
+                    _this.send_api('BR_BINANCE_WALLET_POST_SAPI_V1_EnableFastWithdrawSwitch', param, function(data) {
+                        _this.hideProgress();
+                        if (data) {
+                                        
+                            console.log(data);
+                    
 
-					}
-				});
-				break;
-				}
+                        }
+                    });
+                    break;
+                }
 			});
 	});	
 });

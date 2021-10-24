@@ -98,8 +98,8 @@ public class ApiSocketStompRestController {
          */
 
         // https://withseungryu.tistory.com/136
-        System.out.println(jsonOutString);
-        System.out.println("ddddddddddddddddddddddd");
+        //System.out.println(jsonOutString);
+        //System.out.println("ddddddddddddddddddddddd");
         smt.convertAndSendToUser(p.getName(), "/topic/message", jsonOutString);// 동작을 안함.
     }
 

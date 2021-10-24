@@ -45,7 +45,7 @@ public class GoRestService {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<?> entity = new HttpEntity<>(headers);
-        log.info("ymlC.getApiurllog() =>" + ymlC.getApiurllog());
+        //log.info("ymlC.getApiurllog() =>" + ymlC.getApiurllog());
         String url = ymlC.getApiurllog() + api_uuid;
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
 
@@ -75,7 +75,7 @@ public class GoRestService {
 
     public String callApiRest(String br, String jsonInString) throws ResourceAccessException {
         log.info("br=>" + br);
-        log.info("jsonInString=>" + jsonInString);
+        //log.info("jsonInString=>" + jsonInString);
         String jsonOutString = null;
         HashMap<String, Object> result = new HashMap<String, Object>();
         HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
@@ -224,9 +224,9 @@ public class GoRestService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
-        log.info("jsonInString last =>" + jsonInString);
+        //log.info("jsonInString last =>" + jsonInString);
         HttpEntity<?> entity = new HttpEntity<>(jsonInString, headers);
-        log.info("ymlC.getApiurlbizactor() =>" + ymlC.getApiurlbizactor());
+        //log.info("ymlC.getApiurlbizactor() =>" + ymlC.getApiurlbizactor());
         String url = ymlC.getApiurlbizactor();
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
 
