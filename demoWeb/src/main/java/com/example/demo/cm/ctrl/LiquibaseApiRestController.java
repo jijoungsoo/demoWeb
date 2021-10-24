@@ -4,17 +4,12 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.io.StringReader;
-import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -23,34 +18,20 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-
 import javax.servlet.http.HttpSession;
-
-import com.example.demo.exception.BizException;
-import com.example.demo.service.GoRestService;
-import com.example.demo.utils.PjtUtil;
-
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-
-import liquibase.CatalogAndSchema;
 import liquibase.Liquibase;
 import liquibase.changelog.DatabaseChangeLog;
 import liquibase.database.Database;
@@ -58,7 +39,6 @@ import liquibase.database.DatabaseFactory;
 import liquibase.database.jvm.JdbcConnection;
 import liquibase.diff.output.DiffOutputControl;
 import liquibase.diff.output.changelog.DiffToChangeLog;
-import liquibase.integration.spring.SpringLiquibase;
 import liquibase.resource.ClassLoaderResourceAccessor;
 import liquibase.structure.DatabaseObject;
 
@@ -75,12 +55,6 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import liquibase.integration.spring.SpringLiquibase;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.util.Assert;
@@ -90,9 +64,6 @@ import org.springframework.util.Assert;
 public class LiquibaseApiRestController {
     public final static String CHANGE_LOG_FILE ="classpath:db/liquibase/db.changelog-master.xml";
     public final static String CHANGE_LOG_DIR ="D:\\git\\demoWeb\\demoWeb\\src\\main\\resources\\db\\liquibase";
-
-    @Autowired
-	PjtUtil pjtU;
 
     @Autowired
     private DataSource dataSource;
@@ -128,8 +99,7 @@ public class LiquibaseApiRestController {
             liquibase.structure.core.Index.class ,
             liquibase.structure.core.ForeignKey.class ,
             liquibase.structure.core.PrimaryKey.class ,
-            liquibase.structure.core.UniqueConstraint.class ,
-
+            liquibase.structure.core.UniqueConstraint.class
         };
  
         //https://www.programcreek.com/java-api-examples/?api=liquibase.diff.output.DiffOutputControl

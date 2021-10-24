@@ -27,7 +27,7 @@
 				} ]
 			}
 			_this.showProgress();
-			_this.send('BR_UPBIT_EXCHANGE_GET_WITHDRAWS_CHANCE', param, function(data) {
+			_this.send_api('BR_UPBIT_EXCHANGE_GET_WITHDRAWS_CHANCE', param, function(data) {
 				_this.hideProgress();
 				if (data) {
 					console.log(data);
@@ -71,7 +71,7 @@
 						,IN_DATA:[ data ]
 					}
 					_this.showProgress();
-					_this.send('BR_UPBIT_EXCHANGE_POST_WITHDRAWS_KRW', param, function(data) {
+					_this.send_api('BR_UPBIT_EXCHANGE_POST_WITHDRAWS_KRW', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							
@@ -92,7 +92,7 @@
 						,IN_DATA:[ data ]
 					}
 					_this.showProgress();
-					_this.send('BR_UPBIT_EXCHANGE_POST_WITHDRAWS_COIN', param, function(data) {
+					_this.send_api('BR_UPBIT_EXCHANGE_POST_WITHDRAWS_COIN', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							

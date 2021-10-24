@@ -27,7 +27,7 @@
 				} ]
 			}
 			_this.showProgress();
-			_this.send('BR_UPBIT_EXCHANGE_GET_ORDERS_CHANCE', param, function(data) {
+			_this.send_api('BR_UPBIT_EXCHANGE_GET_ORDERS_CHANCE', param, function(data) {
 				_this.hideProgress();
 				if (data) {
 					console.log(data.OUT_RSET[0]);
@@ -255,7 +255,7 @@
 							} ]
 						}
 						_this.showProgress();
-						_this.send('BR_UPBIT_QUOTATION_ORDER_BOOK', param, function(data) {
+						_this.send_api('BR_UPBIT_QUOTATION_ORDER_BOOK', param, function(data) {
 							_this.hideProgress();
 							if (data) {
 								grid.resetData(data.OUT_RSET);
@@ -280,7 +280,7 @@
 							} ]
 						}
 						_this.showProgress();
-						_this.send('BR_UPBIT_EXCHANGE_POST_ORDERS_BUY', param, function(data) {
+						_this.send_api('BR_UPBIT_EXCHANGE_POST_ORDERS_BUY', param, function(data) {
 							_this.hideProgress();
 							if (data) {
 
@@ -303,7 +303,7 @@
 							} ]
 						}
 						_this.showProgress();
-						_this.send('BR_UPBIT_EXCHANGE_POST_ORDERS_SELL', param, function(data) {
+						_this.send_api('BR_UPBIT_EXCHANGE_POST_ORDERS_SELL', param, function(data) {
 							_this.hideProgress();
 							if (data) {
 

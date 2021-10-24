@@ -100,13 +100,16 @@ spring:
 server.servlet.session.timeout: 30m         #세션 만료시간 30분  30s 는 30초
  
 
-spring.session:
-  store-type: jdbc 
-
 spring.datasource:
-    hikari:
-      maximum-pool-size: 4
-      driver-class-name: org.postgresql.Driver       
-      jdbc-url: jdbc:postgresql://postgres:5432/stockweb  #postgres   db명
-      username: postgres
-      password: POSTGRES  
+    url: jdbc:postgresql://192.168.0.13:5432/stockweb
+    username: postgres
+    password: POSTGRES
+    driver-class-name: org.postgresql.Driver
+spring.session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+#https://otrodevym.tistory.com/entry/spring-boot-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-5-liquibase-%EC%84%A4%EC%A0%95-%EB%B0%8F-%EC%97%B0%EB%8F%99      
+spring.liquibase: 
+    change-log: classpath:db/liquibase/db.changelog-master.xml
+    enabled: false
