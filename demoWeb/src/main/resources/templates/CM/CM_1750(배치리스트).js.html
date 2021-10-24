@@ -4,217 +4,241 @@
 			CM_1750.init(function(p_param) {
 				var _this = CM_1750;
 				var searchForm = new FormMngr(_this, "search_area");
-				var userForm = new FormMngr(_this, "user_area");
 				$('[data-ax5formatter]').ax5formatter();
 	
-				const grid = new TuiGridMngr(_this, 'grid', {
-					editable : true,
-					showRowStatus : true,
-					rowNum : true,
-					checkbox : true,
-					bodyHeight: 300
-				},
-				[ {
-					header : '이름',
-					name : 'name',
-					width : 100,
-					resizable : false,
-					sortable : true,
-					align : "left"
-				}, {
-					header : 'subject',
-					name : 'subject',
-					width : 'auto', /*너비 자동조절*/
-					width : 200,
-					sortable : true,
-					align : "left"
-				},{
-					header : 'MESSAGE_BODY',
-					name : 'messageBody',
-					width : 140,
-					sortable : true,
-					align : "left"
-				},{
-					header : '트리거 상태',
-					name : 'triggerState',
-					width : 300,
-					sortable : true,
-					align : "center"
-				},{
-					
-					header : '트리거 이름',
-					name : 'triggersName',
-					width : 100,
-					sortable : true,
-					align : "center"
-				},{
-					header : '트리거 그룹',
-					name : 'triggersGroup',
-					width : 100,
-					sortable : true,
-					align : "center"
-				},{
-					header : '트리거 주기',
-					name : 'triggersCron',
-					width : 300,
-					sortable : true,
-					align : "center"
-				}]
-				);
-				grid.build();
+                const grid = new TuiGridMngr(_this, 'grid', {
+                    editable : true,
+                    showRowStatus : true,
+                    rowNum : false,
+                    checkbox : true,
+                    bodyHeight: 700,
+                    header: {
+                        height: 60,
+                        complexColumns: [
+                        {
+                            header: '최종실행결과',
+                            name: 'mergeColumn1',
+                            childNames: ['START_TIME','END_TIME','DELAY_TIMESTAMP', 'EXIT_CODE']
+                        }
+                        ]
+                    },
+                },
+                [ 	{
+                        header: 'Job Id',
+                        name: 'JOB_ID',
+                        width: 100,
+                        resizable: false,
+                        sortable: true,
+                        align:"right",
+                        sortingType: 'desc'
+                    },{
+                        header: 'Job Name',
+                        name: 'JOB_NAME',
+                        width : 100,
+                        sortable : true,
+                        validation : {
+                            dataType : 'string', /*string ,number*/
+                            required : true, /*  true 필수, false 필수아님  */
+                            unique : true /*true 데이터가 중복되면 빨간색 표시 */
+                        },
+                        editor : 'text'
+                    },{
+                        header: 'Job설명',
+                        name: 'DESCRIPTION',
+                        width : 100,
+                        sortable : true,
+                        validation : {
+                            dataType : 'string', /*string ,number*/
+                            required : true, /*  true 필수, false 필수아님  */
+                            unique : false /*true 데이터가 중복되면 빨간색 표시 */
+                        },
+                        editor : 'text'
+                    },{
+                        header: 'BR명',
+                        name: 'GBN_ID',
+                        width : 100,
+                        sortable : true,
+                        validation : {
+                            dataType : 'string', /*string ,number*/
+                            required : true, /*  true 필수, false 필수아님  */
+                            unique : true /*true 데이터가 중복되면 빨간색 표시 */
+                        },
+                        editor : 'text'
+                    },{
+                        header: 'Job 실행주기',
+                        name: 'JOB_EXEC_TIME',
+                        width : 200,
+                        sortable : true,
+                        validation : {
+                            dataType : 'string', /*string ,number*/
+                            required : true, /*  true 필수, false 필수아님  */
+                            unique : false /*true 데이터가 중복되면 빨간색 표시 */
+                        },
+                        editor : 'text'		
+                    },{
+                        header: '개발자',
+                        name: 'DEVELOPER_NAME',
+                        width: 300,
+                        sortable: true,
+                        validation : {
+                            dataType : 'string', /*string ,number*/
+                            required : true, /*  true 필수, false 필수아님  */
+                            unique : false /*true 데이터가 중복되면 빨간색 표시 */
+                        },
+                        editor : 'text'		
+                    },{
+                        header: '순번',
+                        name: 'SORT_ORDER_NO',
+                        width: 200,
+                        resizable: false,
+                        sortable: true,
+                        sortingType: 'desc',
+                        validation : {
+                            dataType : 'number', /*string ,number*/
+                            required : true, /*  true 필수, false 필수아님  */
+                            unique : false /*true 데이터가 중복되면 빨간색 표시 */
+                        },
+                        editor : 'text'
+                    },{
+                        header : '사용여부',
+                        name : 'USE_YN',
+                        width : 100,
+                        sortable : true,
+                        align : "center",
+                        sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+                        filter : {
+                            type : 'text',
+                            showApplyBtn : true,
+                            showClearBtn : true
+                        }, /*text, number, select, date 4가지가 있다.*/
+                        formatter: 'listItemText',
+                        editor: {
+                            type: 'select',
+                            options: {
+                            listItems: [
+                                { text: 'Y', value: 'Y' },
+                                { text: 'N', value: 'N' }
+                            ]
+                            }
+                        }
+                    },{
+                        header: 'Start Time',
+                        name: 'START_TIME',
+                        width : 100,
+                        align: "center",
+                        sortable: true
+                    },{
+                        header : 'End Time',
+                        name : 'END_TIME',
+                        width : 100,
+                        sortable : true
+                    },{
+                        header: 'Elapsed Time',
+                        name: 'DELAY_TIMESTAMP',
+                        width: 140,
+                        sortable: true,
+                        align: "center"
+                    },{
+                        header: 'Exit Code',
+                        name: 'EXIT_CODE',
+                        width: 140,
+                        sortable: true,
+                        align: "center"
+                    }]
+                );
+                grid.build();
 	
 				grid.on('click', (ev) => {
 					if (ev.rowKey >=0) {
 						var row_data=grid.getRow(ev.rowKey);
 						console.log(row_data);
-						userForm.setDataAll(row_data);
 					}
 				});
 	
 				searchForm.addEvent("click", "input[type=button]", function(el) {
 					//console.log(el);
 					switch (el.target.name) {
-					case 'search':
-						var params = {
-							url : "http://localhost:8084/groups/sc/jobs/list",
-							param: {}
-						}
+                    case 'search':
+                        var search_data = searchForm.getData();
+                        console.log(search_data);
+                        var param = {
+                            brRq : 'IN_PSET',
+                            brRs : 'OUT_DATA',
+                            IN_PSET : [search_data]
+                        }
+                        grid.loadData('BR_CM_BATCH_retrieveJobList', param, function(data) {
+                            console.log(data);
 
-						_this.showProgress();
-						_this.send_proxy(params, function(data) {
-							_this.hideProgress();
-							if (data.body) {
-								console.log(data)
-								var tmp_data =[];
-								for(var i=0;i<data.body.length;i++){
-									var tmp = data.body[i];
-									tmp_data.push({
-										"name": tmp.name,
-										"subject": tmp.subject,
-										"messageBody": tmp.messageBody,
-										"triggersName": tmp.triggers[0].name,
-										"triggersGroup": tmp.triggers[0].group,
-										"triggersCron": tmp.triggers[0].cron,
-										"triggerState": tmp.triggerState,
-									})
-								}
+                        });
+                        break;
+                    case 'add_row':
+                        Message.confirm('행을 추가하시겠습니까?', function() {
+                            grid.appendRow();
+                        });
+                        break;		
+                        
+                    case 'cm_grp_cd_save':
+                        var data = grid.getModifiedRows();
+                        console.log(data);
+                        var crt_cnt = data.createdRows.length;
+                        var updt_cnt = data.updatedRows.length;
 
+                        if ((crt_cnt + updt_cnt) == 0) {
+                            Message.alert("저장할 내용이 존재하지 않습니다.");
+                            return;
+                        }
+                        if (grid.isValid() == false) {
+                            grid.validMsg();
+                            return;
+                        }
 
-								grid.resetData(tmp_data);
-							}
-
-						});					
-						break;
-					case "del":
-						var data = grid.getCheckedData();
-						console.log(data);
-						if (data.length <= 0) {
-							Message.alert('선택된 항목이 없습니다.');
-							return;
-						}
-	
-						Message.confirm('삭제하시겠습니까?', function() {
-							var param = {
-								brRq : 'IN_DATA',
-								brRs : '',
-								IN_DATA : data
-							}
-							_this.showProgress();
-							_this.send('BR_CM_USER_RM', param, function(data) {
-								_this.hideProgress();
-								if (data) {
-									Message.alert('삭제되었습니다.', function() {
-										searchForm.get("search").trigger("click");
-										userForm.clearData();
-									});
-								}
-	
-							});
-						});
-						break;
-					}
-				});
-	
-				userForm.addEvent("click", "input[type=button]", function(el) {
-					//console.log(el);
-					switch (el.target.name) {
-					case 'new':
-						userForm.clearData();
-						break;
-					case "save":
-						var data = userForm.getData();
-						console.log(data);
-	
-
-						if(PjtUtil.isEmpty(data.NAME)){
-							Message.alert("스케줄 이름을 입력해주세요.");
-							return;
-						}
-						if(PjtUtil.isEmpty(data.SUBJECT)){
-							Message.alert("스케줄 SUBJECT를 입력해주세요.");
-							return;
-						}
-
-						if(PjtUtil.isEmpty(data.MESSAGE_BODY)){
-							Message.alert("스케줄 MESSAGE_BODY를 입력해주세요.");
-							return;
-						}
-						
-						if(PjtUtil.isEmpty(data.TRIGGERS_NAME)){
-							Message.alert("스케줄 트리거 이름을 입력해주세요.");
-							return;
-						}
-
-						if(PjtUtil.isEmpty(data.TRIGGERS_GROUP)){
-							Message.alert("스케줄 트리거 그룹을 입력해주세요.");
-							return;
-						}
-
-						if(PjtUtil.isEmpty(data.TRIGGERS_CRON)){
-							Message.alert("스케줄 트리거 주기를 입력해주세요.");
-							return;
-						}
-
-						var tmp_data={
-							"name" : "12",
-							"subject" : "34",
-							"messageBody" : "55",
-							"to" : ["123","456"],
-							"triggers" : [
-								{
-									"name": "7",
-									"group": "8",
-									"cron": "0 0 12 * * ?"
-								}
-							]
-						}
-
-						alert('aaa2')
-						//https://advenoh.tistory.com/56
-						//라이브러리가 원래 존재하는 것처럼 적어주었다.
-						//https://github.com/kenshin579/tutorials-java/blob/master/springboot-quartz-cluster/src/main/java/com/advenoh/controller/ScheduleController.java
-	
-						Message.confirm('저장하시겠습니까?', function() {
-							var params = {
-								url : "http://localhost:8084/groups/sc/jobs/create",
-								param: tmp_data
-							}
-
-							console.log(params);
-							_this.showProgress();
-							_this.send_proxy(params, function(data) {
-								_this.hideProgress();
-								if (data) {
-									Message.alert('저장되었습니다.', function() {
-										searchForm.get("search").trigger("click");
-										userForm.clearData();
-									});
-								}
-
-							});
-						});
-						
-						break;
+                        Message.confirm('배치리스트를 저장하시겠습니까?', function() {
+                            var param = {
+                                brRq : 'IN_DATA,UPDT_DATA',
+                                brRs : '',
+                                IN_DATA : data.createdRows,
+                                UPDT_DATA : data.updatedRows
+                            }
+                            _this.send_api('BR_CM_BATCH_saveJob', param, function(data) {
+                                if(data){
+                                    Message.alert('배치리스트를 저장하였습니다.', function() {
+                                        searchForm.get("search").trigger("click");
+                                    });
+                                }
+                            });
+                        });
+                        break;
+                    case "del":
+                        var data = grid.getCheckedData();
+                        console.log(data);
+                        if (data.length <= 0) {
+                            Message.alert('선택된 항목이 없습니다.');
+                            return;
+                        }
+                        var in_data = [];
+                        for (var i = 0; i < data.length; i++) {
+                            var row = data[i];
+                            in_data.push({
+                                JOB_ID : row.JOB_ID
+                            });
+                        }
+                        Message.confirm('삭제하시겠습니까?', function() {
+                            var param = {
+                                brRq : 'IN_DATA',
+                                brRs : '',
+                                IN_DATA : in_data
+                            }
+                            _this.send_api('BR_CM_BATCH_removeJob', param, function(data) {
+                                if(data) {
+                                    Message.alert('삭제되었습니다.', function() {
+                                        searchForm.get("search").trigger("click");
+                                    });
+                                }
+                            });
+                        });
+                        //실제로 서버에서 삭제하는로직 필요.
+                        //grid.removeRow(0); 
+                        break;
 					}
 				});
 			});
