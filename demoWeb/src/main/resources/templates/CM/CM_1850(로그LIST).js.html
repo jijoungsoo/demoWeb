@@ -141,7 +141,7 @@ $(document).ready(function(){
 							brRq : '',
 							brRs : '',
 						}
-						_this.send('BR_CM_API_LOG_DropLog', param, function(data) {
+						_this.send_api('BR_CM_API_LOG_DropLog', param, function(data) {
 							Message.alert('삭제되었습니다.', function() {
 								searchForm.get("search").trigger("click");
 							});

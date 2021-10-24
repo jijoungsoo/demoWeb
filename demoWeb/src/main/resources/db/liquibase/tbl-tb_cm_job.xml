@@ -1,4 +1,31 @@
 <?xml version="1.1" encoding="UTF-8"?><databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="auto (g)" id="tb_cm_job-2">
+        <dropColumn  catalogName="public"  
+            schemaName="public"  
+            tableName="tb_cm_job">  
+            <column  name="job_task_code"/>  
+            <column  name="job_type_code"/>  
+            <column  name="job_param"/>  
+        </dropColumn>  
+
+        <addColumn catalogName="public"  
+			schemaName="public"
+			tableName="tb_cm_job" >
+            <column name="br_nm" 
+                type="VARCHAR(500)"
+                remarks="BR명"
+                />  
+        </addColumn>  
+
+        <setColumnRemarks catalogName="public"  columnName="job_id"  remarks="Job구분키" schemaName="public" tableName="tb_cm_job" /> 
+        <setColumnRemarks catalogName="public"  columnName="job_name"  remarks="Job Name" schemaName="public" tableName="tb_cm_job" /> 
+        <setColumnRemarks catalogName="public"  columnName="description"  remarks="Job설명" schemaName="public" tableName="tb_cm_job" /> 
+        <setColumnRemarks catalogName="public"  columnName="developer_name"  remarks="개발자" schemaName="public" tableName="tb_cm_job" /> 
+        <setColumnRemarks catalogName="public"  columnName="sort_order_no"  remarks="순번" schemaName="public" tableName="tb_cm_job" /> 
+        <setColumnRemarks catalogName="public"  columnName="job_exec_time"  remarks="Job실행주기" schemaName="public" tableName="tb_cm_job" /> 
+        <setColumnRemarks catalogName="public"  columnName="use_yn"  remarks="사용여부" schemaName="public" tableName="tb_cm_job" /> 
+    </changeSet>
+
     <changeSet author="auto (g)" id="tb_cm_job-1">
         <createTable tableName="tb_cm_job">
             <column name="job_id" type="VARCHAR(36)">
