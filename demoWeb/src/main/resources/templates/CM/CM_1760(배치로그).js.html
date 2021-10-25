@@ -1,0 +1,103 @@
+<script>
+	$(document).ready(function(){
+		var CM_1760 = new PgmPageMngr('[[${uuid}]]');
+			CM_1760.init(function(p_param) {
+				var _this = CM_1760;
+				var searchForm = new FormMngr(_this, "search_area");
+				$('[data-ax5formatter]').ax5formatter();
+	
+                const grid = new TuiGridMngr(_this, 'grid', {
+                    editable : false,
+                    showRowStatus : false,
+                    rowNum : false,
+                    checkbox : false,
+                    bodyHeight: 700,
+                    },
+                [ 	{
+                        header: 'JOB_EXECUTION_ID',
+                        name: 'JOB_EXECUTION_ID',
+                        width: 100,
+                        resizable: false,
+                        sortable: true,
+                        align:"right",
+                        sortingType: 'desc'
+                    },{
+                        header: 'Job Name',
+                        name: 'JOB_NM',
+                        width : 200,
+                        sortable : true
+                    },{
+                        header: 'Job설명',
+                        name: 'DESCRIPTION',
+                        width : 200,
+                        sortable : true
+                    },{
+                        header: 'BR명',
+                        name: 'BR_NM',
+                        width : 200,
+                        sortable : true
+                    },{
+                        header: 'Job 실행주기',
+                        name: 'JOB_EXEC_TIME',
+                        width : 200,
+                        sortable : true		
+                    },{
+                        header: '개발자',
+                        name: 'DEVELOPER_NM',
+                        width: 100,
+                        sortable: true
+                    },{
+                        header: 'Start Time',
+                        name: 'START_TIME',
+                        width : 160,
+                        align: "center",
+                        sortable: true
+                    },{
+                        header : 'End Time',
+                        name : 'END_TIME',
+                        width : 160,
+                        sortable : true
+                    },{
+                        header: 'Elapsed Time',
+                        name: 'DELAY_TIMESTAMP',
+                        width: 100,
+                        sortable: true,
+                        align: "center"
+                    },{
+                        header: 'Exit Code',
+                        name: 'EXIT_CODE',
+                        width: 100,
+                        sortable: true,
+                        align: "center"
+                    }]
+                );
+                grid.build();
+	
+				grid.on('click', (ev) => {
+					if (ev.rowKey >=0) {
+						var row_data=grid.getRow(ev.rowKey);
+						console.log(row_data);
+					}
+				});
+	
+				searchForm.addEvent("click", "input[type=button]", function(el) {
+					//console.log(el);
+					switch (el.target.name) {
+                    case 'search':
+                        var search_data = searchForm.getData();
+                        console.log(search_data);
+                        var param = {
+                            brRq : 'IN_PSET',
+                            brRs : 'OUT_DATA',
+                            IN_PSET : [search_data]
+                        }
+                        grid.loadData('BR_CM_BATCH_retrieveJobLogList', param, function(data) {
+                            console.log(data);
+
+                        });
+                        break;
+					}
+				});
+			});
+		});
+	</script>

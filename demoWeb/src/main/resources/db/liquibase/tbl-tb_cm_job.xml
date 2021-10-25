@@ -1,4 +1,52 @@
 <?xml version="1.1" encoding="UTF-8"?><databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-4.1.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="auto (g)" id="tb_cm_job-4">
+        <dropColumn  catalogName="public"  
+            schemaName="public"  
+            tableName="tb_cm_job">  
+            <column  name="creation_date"/>  
+            <column name="last_update_date" />
+            <column name="creation_user_no"/>
+            <column name="update_user_no"/>
+            <column name="developer_name"/>
+            <column name="job_name"/>
+            
+
+        </dropColumn>  
+
+        <addColumn catalogName="public"  
+			schemaName="public"
+			tableName="tb_cm_job" >
+            <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE"  remarks="생성일" />
+            <column name="updt_dtm" type="TIMESTAMP WITHOUT TIME ZONE"  remarks="수정일" />
+            <column name="crt_user_no" type="BIGINT"  remarks="생성자NO" />
+            <column name="updt_user_no" type="BIGINT"  remarks="수정자NO" />
+            <column name="developer_nm" remarks="개발자" type="VARCHAR(100)" />
+            <column name="job_nm" type="VARCHAR(200)"  remarks="JOB명" />
+
+            
+
+        </addColumn>  
+    </changeSet>
+    <changeSet author="auto (g)" id="tb_cm_job-3">
+        <dropColumn  catalogName="public"  
+            schemaName="public"  
+            tableName="tb_cm_job">  
+            <column  name="job_id"/>  
+            <column name="creation_user_id" />
+            <column name="last_update_user_id" />
+        </dropColumn>  
+
+        <addColumn catalogName="public"  
+			schemaName="public"
+			tableName="tb_cm_job" >
+            <column name="job_seq" type="BIGINT"  remarks="JOB키">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="tb_cm_job_pkey"/>
+            </column>
+            <column name="creation_user_no" type="BIGINT"  remarks="생성자NO" />
+            <column name="update_user_no" type="BIGINT"  remarks="수정자NO" />
+        </addColumn>  
+    </changeSet>
+
     <changeSet author="auto (g)" id="tb_cm_job-2">
         <dropColumn  catalogName="public"  
             schemaName="public"  

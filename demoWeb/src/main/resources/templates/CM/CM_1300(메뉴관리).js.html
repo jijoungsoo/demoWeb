@@ -287,7 +287,7 @@ $(document).ready(function(){
 						brRq : '',
 						brRs : 'OUT_DATA'
 					}
-					_this.send('BR_CM_MENU_FIND_TREE', param, function(data) {
+					_this.send_api('BR_CM_MENU_FIND_TREE', param, function(data) {
 						var tmp_data =make_menu_tree_re_order(data.OUT_DATA)
 						console.log(tmp_data);
 						grid_tree.resetData(tmp_data);
@@ -319,7 +319,7 @@ $(document).ready(function(){
 							IN_DATA : data.createdRows,
 							UPDT_DATA : data.updatedRows
 						}
-						_this.send('BR_CM_MENU_SAVE', param, function(data) {
+						_this.send_api('BR_CM_MENU_SAVE', param, function(data) {
 							console.log(data);
 							if (data) {
 								Message.alert('저장되었습니다.', function() {
@@ -349,7 +349,7 @@ $(document).ready(function(){
 							brRs : '',
 							IN_DATA : in_data
 						}
-						_this.send('BR_CM_MENU_RM', param, function(data) {
+						_this.send_api('BR_CM_MENU_RM', param, function(data) {
 							if(data) {
 								Message.alert('삭제되었습니다.', function() {
 									searchForm.get("search").trigger("click");

@@ -177,7 +177,7 @@ $(document).ready(function(){
 		    			,UPDT_DATA	: data.updatedRows
 					}
 		    		_this.showProgress();					
-		    		_this.send('BR_CM_PGM_SAVE',param,function(data){
+		    		_this.send_api('BR_CM_PGM_SAVE',param,function(data){
 		    			_this.hideProgress();
 		    			if(data){
 		    				Message.alert('저장되었습니다.',function()  {
@@ -203,7 +203,7 @@ $(document).ready(function(){
 						,IN_DATA: data
 					}
 		        	_this.showProgress();
-			        _this.send('BR_CM_PGM_RM',param,function(data){
+			        _this.send_api('BR_CM_PGM_RM',param,function(data){
 			        	_this.hideProgress();
 			        	if(data){
 			        		Message.alert('삭제되었습니다.',function()  {

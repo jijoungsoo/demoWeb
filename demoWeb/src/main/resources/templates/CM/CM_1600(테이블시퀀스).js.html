@@ -206,7 +206,7 @@ $(document).ready(function(){
 							IN_DATA : data.createdRows,
 							UPDT_DATA : data.updatedRows
 						}
-						_this.send('BR_CM_SEQ_SAVE', param, function(data) {
+						_this.send_api('BR_CM_SEQ_SAVE', param, function(data) {
 							if(data){
 								Message.alert('저장되었습니다.', function() {
 									searchForm.get("search").trigger("click");
@@ -229,7 +229,7 @@ $(document).ready(function(){
 							brRs : '',
 							IN_DATA : data
 						}
-						_this.send('BR_CM_SEQ_RM', param, function(data) {
+						_this.send_api('BR_CM_SEQ_RM', param, function(data) {
 							Message.alert('삭제되었습니다.', function() {
 								searchForm.get("search").trigger("click");
 							});

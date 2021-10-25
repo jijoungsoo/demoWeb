@@ -427,7 +427,7 @@
 								IN_DATA: data.createdRows,
 								UPDT_DATA: data.updatedRows
 							}
-							_this.send('BR_CM_ROLE_CD_SAVE', param, function (data) {
+							_this.send_api('BR_CM_ROLE_CD_SAVE', param, function (data) {
 								if (data) {
 									Message.alert('역할코드가 저장되었습니다.', function () {
 										cmRoleCdSearchForm.get(
@@ -452,7 +452,7 @@
 								brRs: '',
 								IN_DATA: data
 							}
-							_this.send('BR_CM_ROLE_CD_RM', param, function (data) {
+							_this.send_api('BR_CM_ROLE_CD_RM', param, function (data) {
 								if (data) {
 									Message.alert('역할코드를 삭제되었습니다.', function () {
 										cmRoleCdSearchForm.get(
@@ -566,7 +566,7 @@
 								IN_DATA: data.createdRows,
 								UPDT_DATA: data.updatedRows
 							}
-							_this.send('BR_CM_USER_ROLE_CD_SAVE', param, function (data) {
+							_this.send_api('BR_CM_USER_ROLE_CD_SAVE', param, function (data) {
 								if (data) {
 									Message.alert('저장되었습니다.', function () {
 										cmUserRoleCdSearchForm.get("cm_user_role_cd_search").trigger("click");
@@ -588,7 +588,7 @@
 								brRs: '',
 								IN_DATA: data
 							}
-							_this.send('BR_CM_USER_ROLE_CD_RM', param, function (data) {
+							_this.send_api('BR_CM_USER_ROLE_CD_RM', param, function (data) {
 								if (data) {
 									Message.alert('삭제되었습니다.', function () {
 										cmUserRoleCdSearchForm.get("cm_user_role_cd_search").trigger("click");
@@ -619,7 +619,7 @@
 								ROLE_CD : data.ROLE_CD
 						}]
 					}
-					_this.send('BR_CM_ROLE_CD_MENU_FIND_TREE', param, function(data) {
+					_this.send_api('BR_CM_ROLE_CD_MENU_FIND_TREE', param, function(data) {
 						var tmp_data=make_menu_tree_re_order(data.OUT_DATA);
 						console.log(tmp_data);
 						grid_cm_menu_tree.resetData(tmp_data);
@@ -664,7 +664,7 @@
 							}],
 							IN_DATA : data,
 						}
-						_this.send('BR_CM_ROLE_CD_MENU_SAVE', param, function(data) {
+						_this.send_api('BR_CM_ROLE_CD_MENU_SAVE', param, function(data) {
 							console.log(data);
 							if (data) {
 								Message.alert('저장되었습니다.', function() {
