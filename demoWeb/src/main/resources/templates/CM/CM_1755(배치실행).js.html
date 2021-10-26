@@ -1,0 +1,113 @@
+<script>
+$(document).ready(function(){
+	var CM_1755 = new PgmPageMngr('[[${uuid}]]');
+        CM_1755.init(function(p_param) {
+			var _this = CM_1755;
+			var batchForm = new FormMngr(_this, "batch_area");
+		    $('[data-ax5formatter]').ax5formatter();
+                
+            var param = {
+                brRq: 'IN_PSET',
+                brRs: 'OUT_RSET',
+                IN_PSET: [{
+                    JOB_SEQ : p_param.param.JOB_SEQ
+                }]
+            }
+            _this.showProgress();
+            _this.send_socket('BR_CM_BATCH_retrieveJob', param, function(data) {
+                _this.hideProgress();
+                if (data.OUT_RSET) {
+                    batchForm.setDataAll(data.OUT_RSET[0]);
+                 
+                }
+            });	
+
+			const grid = new TuiGridMngr(_this, 'grid', {
+				editable : false,
+				showRowStatus : false,
+				rowNum : true,
+				checkbox : false,
+				bodyHeight: 300
+			},
+			[ {
+				header : 'Step 아이디',
+				name : 'USER_NO',
+				width : 100,
+                align : "center"
+			}, {
+				header : 'Step 이름',
+				name : 'USER_NM',
+				width : 200,
+                align : "center"
+			},{
+				header : 'Read',
+				name : 'SNS_GUBUN',
+				width : 100,
+				align : "center"
+			},{
+				header : 'Write',
+				name : 'SNS_ID',
+				width : 100,
+				align : "center"
+			},{
+				header : 'Read Skip',
+				name : 'USER_PWD',
+				width : 300,
+                align : "center"
+			},{
+				header : 'Process',
+				name : 'EMAIL',
+				width : 140,
+                align : "center"
+			},{
+                header: 'Write',
+                name: 'USE_YN',
+                formatter: 'listItemText',
+                width : 80,
+                align : "center"
+            },{
+                header : 'Total Skip',
+                name : 'RMK',
+                width : 140,
+                align : "center"
+            }, {
+                header : 'Commit',
+                name : 'LST_ACC_DTM',
+                width : 140,
+                align : "center"
+            }, {
+				header : 'Rollback',
+				name : 'CRT_DTM',
+				width : 100,
+				sortable : true,
+				align : "center"
+			}, {
+				header : '종료시 상태',
+				name : 'UPDT_DTM',
+				width : 100,
+				sortable : true,
+				align : "center"
+			} ]
+			);
+			grid.build();
+
+			batchForm.addEvent("click", "input[type=button]", function(el) {
+				//console.log(el);
+				switch (el.target.name) {
+				case 'run':
+					var param = {
+						brRq : 'IN_DATA',
+						brRs : 'OUT_DATA',
+						IN_DATA : [ {} ]
+					}
+					grid.loadData('BR_CM_USER_FIND', param, function(data) {
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+
+					});
+					break;
+			    }
+			});
+		});
+	});
+</script>
