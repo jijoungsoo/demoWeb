@@ -288,6 +288,7 @@ $(document).ready(function(){
 						brRs : 'OUT_DATA'
 					}
 					_this.send_api('BR_CM_MENU_FIND_TREE', param, function(data) {
+                        console.log(data.OUT_DATA);
 						var tmp_data =make_menu_tree_re_order(data.OUT_DATA)
 						console.log(tmp_data);
 						grid_tree.resetData(tmp_data);
