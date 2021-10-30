@@ -169,6 +169,187 @@ $(document).ready(function(){
                     });
 
                     break;
+
+                case 'sql_insert':
+                var data = grid.getCheckedData();
+                    console.log(data)
+                    if(data.length<=0) {
+                        Message.alert('선택된 항목이 없습니다.');
+                        return;
+                    }
+                    var table_name = data[0].TABLE_NAME;
+                    var sql_insert ='INSERT INTO '+table_name +' (';
+                    for(var i=0;i<data.length;i++){
+                        if(i==0){
+                            sql_insert = sql_insert+' '+data[i].COLUMN_NAME;
+                        } else {
+                            sql_insert = sql_insert+', '+data[i].COLUMN_NAME;
+                        }                        
+                    }
+                    var sql_insert =sql_insert+' ) VALUES ( ' ;
+                    for(var i=0;i<data.length;i++){
+                        if(i==0){
+                            sql_insert = sql_insert+' @'+data[i].COLUMN_NAME;
+                        } else {
+                            sql_insert = sql_insert+', @'+data[i].COLUMN_NAME;
+                        }                        
+                    }
+                    var sql_insert =sql_insert+')' ;
+
+                    var inline_popup = new InlinePopupManger(_this, 'sql_div', {
+                        width: 800,
+                        height: 300,
+                        title: "SQL"
+                    });
+                    var tmp = sqlFormatter.format(sql_insert, {
+                    language: 'sql', // Defaults to "sql"
+                    indent: '    ', // Defaults to two spaces,
+                    uppercase: false, // Defaults to false
+                    linesBetweenQueries: 1 // Defaults to 1
+                    });
+                    console.log(tmp);
+                    var el =_this.get("sql_div");
+                    var tmp_el = `<pre class="sql"  name="SQL"></pre>`;
+                    el.empty();
+                    el.append(tmp_el);
+                    var el_sql =_this.get("SQL");
+                    el_sql.text(tmp);
+                    /*sql_div 자식들을 모두 비우고--비워야하는 이유는여러번 클릭시 찌거기가 남음 */
+                    /*    <pre class="sql"  name="SQL"></pre>   를 추가하고*/
+                    dp.SyntaxHighlighter.HighlightAll('SQL');  /*이걸실생한다.*/
+
+
+                    inline_popup.open(function(data){
+
+                        if(data){
+                            console.log(data);
+                        }
+                    });
+                    break;
+                case 'sql_update':
+                    var data = grid.getCheckedData();
+                    console.log(data)
+                    if(data.length<=0) {
+                        Message.alert('선택된 항목이 없습니다.');
+                        return;
+                    }
+                    var table_name = data[0].TABLE_NAME;
+                    var sql_update ='UPDATE '+table_name;
+                    sql_update = sql_update+' SET ';
+                    for(var i=0;i<data.length;i++){
+                        if(i==0){
+                            sql_update = sql_update+' '+data[i].COLUMN_NAME+'=@'+data[i].COLUMN_NAME ;
+                        } else {
+                            sql_update = sql_update+', '+data[i].COLUMN_NAME+'=@'+data[i].COLUMN_NAME ;
+                        }                        
+                    }
+                    var sql_update =sql_update+' WHERE 1=1 ' ;
+                    
+                    var inline_popup = new InlinePopupManger(_this, 'sql_div', {
+                        width: 800,
+                        height: 300,
+                        title: "SQL"
+                    });
+                    var tmp = sqlFormatter.format(sql_update, {
+                    language: 'sql', // Defaults to "sql"
+                    indent: '    ', // Defaults to two spaces,
+                    uppercase: false, // Defaults to false
+                    linesBetweenQueries: 1 // Defaults to 1
+                    });
+                    console.log(tmp);
+                    var el =_this.get("sql_div");
+                    var tmp_el = `<pre class="sql"  name="SQL"></pre>`;
+                    el.empty();
+                    el.append(tmp_el);
+                    var el_sql =_this.get("SQL");
+                    el_sql.text(tmp);
+                    /*sql_div 자식들을 모두 비우고--비워야하는 이유는여러번 클릭시 찌거기가 남음 */
+                    /*    <pre class="sql"  name="SQL"></pre>   를 추가하고*/
+                    dp.SyntaxHighlighter.HighlightAll('SQL');  /*이걸실생한다.*/
+
+
+                    inline_popup.open(function(data){
+
+                        if(data){
+                            console.log(data);
+                        }
+                    });
+                    break;
+                case 'sql_delete':
+                    var data = grid.getCheckedData();
+                    console.log(data)
+                    if(data.length<=0) {
+                        Message.alert('선택된 항목이 없습니다.');
+                        return;
+                    }
+                    var table_name = data[0].TABLE_NAME;
+                    var sql_delete ='DELETE FROM '+table_name;
+                    sql_delete = sql_delete+' WHERE 1=1 ';
+                    for(var i=0;i<data.length;i++){
+                        sql_delete = sql_delete+' AND '+data[i].COLUMN_NAME+'=@'+data[i].COLUMN_NAME ;
+                    }
+                    
+                    var inline_popup = new InlinePopupManger(_this, 'sql_div', {
+                        width: 800,
+                        height: 300,
+                        title: "SQL"
+                    });
+                    var tmp = sqlFormatter.format(sql_delete, {
+                    language: 'sql', // Defaults to "sql"
+                    indent: '    ', // Defaults to two spaces,
+                    uppercase: false, // Defaults to false
+                    linesBetweenQueries: 1 // Defaults to 1
+                    });
+                    console.log(tmp);
+                    var el =_this.get("sql_div");
+                    var tmp_el = `<pre class="sql"  name="SQL">`+tmp+`</pre>`;
+                    el.empty();
+                    el.append(tmp_el);
+                    /*sql_div 자식들을 모두 비우고--비워야하는 이유는여러번 클릭시 찌거기가 남음 */
+                    /*    <pre class="sql"  name="SQL"></pre>   를 추가하고*/
+                    dp.SyntaxHighlighter.HighlightAll('SQL');  /*이걸실생한다.*/
+
+
+                    inline_popup.open(function(data){
+
+                        if(data){
+                            console.log(data);
+                        }
+                    });
+                    break;
+
+                case 'dataColumn':
+                var data = grid.getCheckedData();
+                    console.log(data)
+                    if(data.length<=0) {
+                        Message.alert('선택된 항목이 없습니다.');
+                        return;
+                    }
+                    var dataColumn="";
+                    for(var i=0;i<data.length;i++){
+                        dataColumn = dataColumn+''+data[i].COLUMN_NAME+'\t'+'String'+'\t'+''+'\t'+PjtUtil.trim(data[i].COLUMN_COMMENT)+'\n' ;
+                    }
+                    
+                    var inline_popup = new InlinePopupManger(_this, 'sql_div', {
+                        width: 800,
+                        height: 300,
+                        title: "DataColumn"
+                    });
+                    console.log(dataColumn);
+                    var el =_this.get("sql_div");
+                    var tmp_el = `<pre class="sql"  name="SQL">`+dataColumn+`</pre>`;
+                    el.empty();
+                    el.append(tmp_el);
+                    //dp.SyntaxHighlighter.HighlightAll('SQL');  /*이걸실생한다.*/
+
+
+                    inline_popup.open(function(data){
+
+                        if(data){
+                            console.log(data);
+                        }
+                    });
+                    break;
 				}
 			});
 			searchForm.get("search").trigger("click");

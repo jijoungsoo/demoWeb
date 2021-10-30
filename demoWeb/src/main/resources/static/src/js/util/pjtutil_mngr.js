@@ -136,4 +136,16 @@ class PjtUtil{
 	    }
 		return p_param;
 	}
+
+
+    static trim(str){
+        if (str === undefined){
+            return "";
+        }
+        if (str === null){
+            return "";
+        }
+
+        return String(str).replace(/^\s+|\s+$/g, "");
+    }
 }
