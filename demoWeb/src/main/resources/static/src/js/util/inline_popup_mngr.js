@@ -35,7 +35,7 @@ class InlinePopupManger {
 			$("#" + uuid + " .ui-widget-overlay").attr('style', tmp_style);
 		});
 	}
-	
+
 	open(func){
 		this.dialog.dialog("open");
 		this.func=func;

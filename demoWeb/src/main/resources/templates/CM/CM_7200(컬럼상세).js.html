@@ -10,7 +10,7 @@ $(document).ready(function(){
 				editable : true,
 				showRowStatus : true,
 				rowNum : true,
-				checkbox : false,
+				checkbox : true,
 				bodyHeight : 700 /*그리드 높이지정 */,
 				showDummyRows : false
 			},
@@ -120,6 +120,55 @@ $(document).ready(function(){
 						});
 					});
 					break;
+                case 'sql_select':
+                    var data = grid.getCheckedData();
+                    console.log(data)
+                    if(data.length<=0) {
+                        Message.alert('선택된 항목이 없습니다.');
+                        return;
+                    }
+                    var table_name = data[0].TABLE_NAME;
+                    var sql_select ='SELECT ';
+                    for(var i=0;i<data.length;i++){
+                        if(i==0){
+                            sql_select = sql_select+'A.'+data[i].COLUMN_NAME;
+                        } else {
+                            sql_select = sql_select+',A.'+data[i].COLUMN_NAME;
+                        }                        
+                    }
+                    sql_select = sql_select+' FROM '+table_name+' A';
+
+                    var inline_popup = new InlinePopupManger(_this, 'sql_div', {
+                        width: 800,
+                        height: 300,
+                        title: "SQL"
+                    });
+                    var tmp = sqlFormatter.format(sql_select, {
+                    language: 'sql', // Defaults to "sql"
+                    indent: '    ', // Defaults to two spaces,
+                    uppercase: false, // Defaults to false
+                    linesBetweenQueries: 2 // Defaults to 1
+                    });
+                    console.log(tmp);
+                    var el =_this.get("sql_div");
+                    var tmp_el = `<pre class="sql"  name="SQL"></pre>`;
+                    el.empty();
+                    el.append(tmp_el);
+                    var el_sql =_this.get("SQL");
+                    el_sql.text(tmp);
+                    /*sql_div 자식들을 모두 비우고--비워야하는 이유는여러번 클릭시 찌거기가 남음 */
+                    /*    <pre class="sql"  name="SQL"></pre>   를 추가하고*/
+                    dp.SyntaxHighlighter.HighlightAll('SQL');  /*이걸실생한다.*/
+
+
+                    inline_popup.open(function(data){
+
+                        if(data){
+                            console.log(data);
+                        }
+                    });
+
+                    break;
 				}
 			});
 			searchForm.get("search").trigger("click");
