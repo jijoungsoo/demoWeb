@@ -23,14 +23,12 @@ public class DownloadExcel {
     private static final Logger LOGGER = LoggerFactory.getLogger(DownloadExcel.class);
     private HttpServletResponse response;
     private HSSFWorkbook wb;
-
-    @Autowired
-	PjtUtil pjtU;
     
     public DownloadExcel(String filename, HttpServletRequest request, HttpServletResponse response, HSSFWorkbook wb) { 
         this.response = response; 
         this.wb = wb; 
         try { 
+            PjtUtil pjtU = new PjtUtil();
             String browser = pjtU.getBrowser(request); 
             // 브라우저 확인하는 메서드 
             String encodedFilename = null; 

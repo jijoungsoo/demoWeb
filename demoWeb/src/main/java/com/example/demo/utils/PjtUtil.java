@@ -50,6 +50,7 @@ public class PjtUtil {
 
     public String getBrowser(HttpServletRequest request) {
         String header = request.getHeader("User-Agent");
+        System.out.println("header=>"+header);
         if (header != null) {
             if (header.indexOf("Trident") > -1) {
                 return "MSIE";

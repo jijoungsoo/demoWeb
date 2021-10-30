@@ -243,7 +243,7 @@ public class GoRestService {
         String body = resultMap.getBody();
         log.info("statusCode=>" + statusCode);
         log.info("header=>" + resultMap.getHeaders());
-        log.info("body=>" + body);
+        //log.info("body=>" + body);
 
         HashMap<String, Object> out_msg = null;
         try {

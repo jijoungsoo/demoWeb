@@ -30,7 +30,7 @@ public class GridDwnldController {
     @RequestMapping(value = "/GRID_DWNLD/{br}", method = RequestMethod.POST, consumes = "application/json", produces="text/plain;Charset=UTF-8")
     public void exceldownload(@PathVariable("br") String br, @RequestBody String jsonInString, HttpServletRequest req,
             HttpServletResponse res, Authentication authentication, HttpSession session) throws Exception {
-        log.info("jsonInString=>" + jsonInString);
+        //log.info("jsonInString=>" + jsonInString);
         try {
             
             IN_DS inDS= pjtU.JsonStringToObject(jsonInString, IN_DS.class);

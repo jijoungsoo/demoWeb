@@ -256,6 +256,9 @@ class PgmPageMngr {
     get(name) {
         return this.container.find("[name=" + name + "]");
     }
+    find(name) {
+        return this.container.find(name);
+    }
     showProgress() {
 		this.progress.showProgress();
     }

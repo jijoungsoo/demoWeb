@@ -1,0 +1,231 @@
+<script>
+$(document).ready(function(){
+	var CM_7300 = new PgmPageMngr('[[${uuid}]]');
+        CM_7300.init(function(p_param) {
+			var _this = CM_7300;
+			var searchForm = new FormMngr(_this, "search_area");
+
+			searchForm.addEvent("click","input[type=button]", function(el) {
+				switch (el.target.name) {
+				case 'sql_getOutColumns':
+                     var data = searchForm.getData();
+                     if(PjtUtil.isEmptyObj(data)==true){
+                        Message.alert("SQL 내용이 존재하지 않습니다.1");
+						return; 
+                     }
+
+                     var sql = PjtUtil.trim(data.INPUT);
+                     if(PjtUtil.isEmpty(sql)==true){
+                        Message.alert("SQL 내용이 존재하지 않습니다.2");
+						return; 
+                     }
+					var param = {
+						SQL : sql
+					}
+                    _this.send('/jdbc/getOutColumns', param, function(data) {
+                        console.log(data);
+                            var inline_popup = new InlinePopupManger(_this, 'out_div', {
+                                    width: 800,
+                                    height: 300,
+                                    title: "OUT"
+                            });
+							if(data.status=="ok"){
+                                var el =_this.get("out_div");
+                                var tmp_el = `<pre name="OUT"></pre>`;
+                                el.empty();
+                                el.append(tmp_el);
+                                var el_dev =_this.get("OUT");
+                                var tmp ="";
+                                for(var i=0;i<data.data.length;i++){
+                                    tmp =tmp+data.data[i].c+'\n';
+                                }
+                                el_dev.text(tmp);
+							} else {
+                                var el =_this.get("out_div");
+                                var tmp_el = `<pre class="js" name="OUT"></pre>`;
+                                el.empty();
+                                el.append(tmp_el);
+                                var el_dev =_this.get("OUT");
+
+                                el_dev.text(js_beautify(JSON.stringify(data), { indent_size: 2, space_in_empty_paren: true }));
+                                dp.SyntaxHighlighter.HighlightAll('OUT');
+                            }
+                            inline_popup.open(function(data){
+                                    if(data){
+                                        console.log(data);
+                                    }
+                            });
+						});
+					
+					break;
+				case 'sql_runSelect':
+                    var data = searchForm.getData();
+                    if(PjtUtil.isEmptyObj(data)==true){
+                    Message.alert("SQL 내용이 존재하지 않습니다.1");
+                    return; 
+                    }
+
+                    var sql = PjtUtil.trim(data.INPUT);
+                    if(PjtUtil.isEmpty(sql)==true){
+                    Message.alert("SQL 내용이 존재하지 않습니다.2");
+                    return; 
+                    }
+                    var param = {
+                    SQL : sql
+                    }
+                    _this.send('/jdbc/runSelect', param, function(data) {
+                        console.log(data);
+                        var inline_popup = new InlinePopupManger(_this, 'out_div', {
+                            width: 1100,
+                            height: 700,
+                            title: "OUT"
+                        });
+                        if(data.status=="ok"){
+                            var el =_this.get("out_div");
+                            var tmp_el = `<div name="grid"></div>`;
+                            el.empty();
+                            el.append(tmp_el);
+                            if(data.data.length <= 0){
+                                Message.alert("SQL 조회 내역이 존재하지 않습니다.");
+                                return; 
+                            }
+                            var tmp_columns = [];
+                            var tmp_data=data.data[0];
+                            for (prop in tmp_data) {
+                                if (tmp_data.hasOwnProperty(prop)) {
+                                    tmp_columns.push(
+                                        {
+                                            header : prop,
+                                            name : prop,
+                                            width : 200,
+                                            resizable : false,
+                                            sortable : true
+                                        }
+                                    )
+                                }
+                            }
+                            const grid = new TuiGridMngr(_this, 'grid', {
+                                    editable : false,
+                                    showRowStatus : false,
+                                    rowNum : true,
+                                    checkbox : false,
+                                    bodyHeight : 600,
+                                    showDummyRows : false
+                                },
+                                tmp_columns
+                            );
+                            grid.build();
+                            grid.resetData(data.data);
+                        } else {
+                            var el =_this.get("out_div");
+                            var tmp_el = `<pre class="js" name="OUT"></pre>`;
+                            el.empty();
+                            el.append(tmp_el);
+                            var el_dev =_this.get("OUT");
+
+                            el_dev.text(js_beautify(JSON.stringify(data), { indent_size: 2, space_in_empty_paren: true }));
+                            dp.SyntaxHighlighter.HighlightAll('OUT');
+                        }
+                        inline_popup.open(function(data){
+                            if(data){
+                                console.log(data);
+                            }
+                        });
+                    });
+					break;
+                case 'sql_runSQL':
+                var data = searchForm.getData();
+                    if(PjtUtil.isEmptyObj(data)==true){
+                        Message.alert("SQL 내용이 존재하지 않습니다.1");
+                    return; 
+                    }
+
+                    var sql = PjtUtil.trim(data.INPUT);
+                    if(PjtUtil.isEmpty(sql)==true){
+                        Message.alert("SQL 내용이 존재하지 않습니다.2");
+                    return; 
+                    }
+                    var param = {
+						SQL : sql
+					}
+                    _this.send('/jdbc/runSQL', param, function(data) {
+                        console.log(data);
+                        var inline_popup = new InlinePopupManger(_this, 'out_div', {
+                            width: 800,
+                            height: 300,
+                            title: "OUT"
+                        });
+                        if(data.status=="ok"){
+                            var el =_this.get("out_div");
+                            var tmp_el = `<pre class="js" name="OUT"></pre>`;
+                            el.empty();
+                            el.append(tmp_el);
+                            var el_dev =_this.get("OUT");
+                            el_dev.text(JSON.stringify(data));
+                            dp.SyntaxHighlighter.HighlightAll('OUT');
+                        } else {
+                            var el =_this.get("out_div");
+                            var tmp_el = `<pre class="js" name="OUT"></pre>`;
+                            el.empty();
+                            el.append(tmp_el);
+                            var el_dev =_this.get("OUT");
+
+                            el_dev.text(js_beautify(JSON.stringify(data), { indent_size: 2, space_in_empty_paren: true }));
+                            dp.SyntaxHighlighter.HighlightAll('OUT');
+                        }
+                        inline_popup.open(function(data){
+                            if(data){
+                                console.log(data);
+                            }
+                        });
+                    });            
+                    break;
+                case 'sql_prettySQL':
+                    var data = searchForm.getData();
+                    if(PjtUtil.isEmptyObj(data)==true){
+                        Message.alert("SQL 내용이 존재하지 않습니다.1");
+                        return; 
+                    }
+
+                    var sql = PjtUtil.trim(data.INPUT);
+                    if(PjtUtil.isEmpty(sql)==true){
+                        Message.alert("SQL 내용이 존재하지 않습니다.2");
+                        return; 
+                    }
+                    var inline_popup = new InlinePopupManger(_this, 'out_div', {
+                        width: 800,
+                        height: 700,
+                        title: "OUT"
+                    });
+                    var tmp = sqlFormatter.format(sql, {
+                        language: 'sql', // Defaults to "sql"
+                        indent: '    ', // Defaults to two spaces,
+                        uppercase: false, // Defaults to false
+                        linesBetweenQueries: 1 // Defaults to 1
+                    });
+
+                    var el =_this.get("out_div");
+                    var tmp_el = `<pre class="sql" name="OUT"></pre>`;
+                    el.empty();
+                    el.append(tmp_el);
+                    var el_div =_this.get("OUT");
+                    el_div.text(tmp);
+                    dp.SyntaxHighlighter.HighlightAll('OUT');
+                    var el_div =_this.get("OUT");
+                    console.log(_this);
+                    var el_div = _this.find(".syntaxhighlighter");
+                    el_div.height(600);
+                    inline_popup.open(function(data){
+
+                        if(data){
+                            console.log(data);
+                        }
+                    });
+                    break;
+
+				}
+			});
+			searchForm.get("search").trigger("click");
+		});
+	});
+</script>
