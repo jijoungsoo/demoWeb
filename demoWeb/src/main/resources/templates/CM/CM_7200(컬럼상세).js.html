@@ -1,0 +1,128 @@
+<script>
+$(document).ready(function(){
+	var CM_1850 = new PgmPageMngr('[[${uuid}]]');
+		CM_1850.init(function(p_param) {
+			var _this = CM_1850;
+			var searchForm = new FormMngr(_this, "search_area");
+            searchForm.initCombo("TABLE_NAME",'BR_CM_DB_POSTGRESQL_retrieveTableList', {brRq: '',brRs: 'OUT_RSET'},{ USE_EMPTY_YN : 'Y' , VALUE :'TABLE_NAME' , TEXT :'COMBO_TEXT' });
+
+			const grid = new TuiGridMngr(_this, 'grid', {
+				editable : true,
+				showRowStatus : true,
+				rowNum : true,
+				checkbox : false,
+				bodyHeight : 700 /*그리드 높이지정 */,
+				showDummyRows : false
+			},
+			[ 
+				
+			{
+				header : 'RNK',
+				name : 'RNK',
+				width : 40,
+				resizable : false,
+				sortable : true
+			},{
+				header : 'TABLE_NAME',
+				name : 'TABLE_NAME',
+				width : 300,
+				resizable : false,
+				sortable : true
+			},{
+				header : 'TABLE_COMMENT',
+				name : 'TABLE_COMMENT',
+				width : 200,
+				resizable : false,
+				sortable : true
+			},{
+				header : 'COLUMN_NAME',
+				name : 'COLUMN_NAME',
+				width : 300,
+				resizable : false,
+				sortable : true
+            },{
+				header : 'DATA_TYPE',
+				name : 'DATA_TYPE',
+				width : 200,
+				resizable : false,
+				sortable : true
+			},{
+				header : 'C_SIZE',
+				name : 'CHARACTER_MAXIMUM_LENGTH',
+				width : 100,
+				resizable : false,
+				sortable : true
+            },{
+				header : 'NULL',
+				name : 'IS_NULLABLE',
+				width : 40,
+				resizable : false,
+				sortable : true
+            },{
+				header : 'COLUMN_COMMENT',
+				name : 'COLUMN_COMMENT',
+				width : 200,
+				resizable : false,
+				sortable : true,
+				editor : 'text'
+			},{
+				header : 'ORD',
+				name : 'ORDINAL_POSITION',
+				width : 40,
+				resizable : false,
+				sortable : true
+			}
+        ]
+			);
+			grid.build();
+
+			searchForm.addEvent("click","input[type=button]", function(el) {
+				switch (el.target.name) {
+				case 'search':
+                var data = searchForm.getData();
+					var param = {
+						brRq : 'IN_PSET',
+						brRs : 'OUT_RSET',
+						IN_PSET :[data]
+					}
+					grid.loadData('BR_CM_DB_POSTGRESQL_retrieveColumnList', param, function(data) {
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+					
+					});
+					break;
+				case 'save':
+					var data = grid.getModifiedRows();
+					var updt_cnt = data.updatedRows.length;
+
+					if ((updt_cnt) == 0) {
+						Message.alert("저장할 내용이 존재하지 않습니다.");
+						return;
+					}
+					if (grid.isValid() == false) {
+						grid.validMsg();
+						return;
+					}
+                    
+
+					Message.confirm('컬럼코멘트를 저장하시겠습니까?', function() {
+						var param = {
+							brRq : 'UPDT_DATA',
+							brRs : '',
+							UPDT_DATA : data.updatedRows
+						}
+						_this.send_api('BR_CM_DB_POSTGRESQL_saveColumnCmt', param, function(data) {
+							if(data){
+								Message.alert('컬럼코멘트를 저장하였습니다.', function() {
+									searchForm.get("search").trigger("click");
+								});
+							}
+						});
+					});
+					break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+		});
+	});
+</script>

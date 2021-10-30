@@ -58,6 +58,7 @@ $(document).ready(function(){
 						resizable : false,
 						sortable : true,
 						sortingType : 'desc' /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+                       
 					},
 				 {
 				header : '메뉴코드',
@@ -86,7 +87,16 @@ $(document).ready(function(){
 				sortable : true,
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
 				editor : 'text',
-				align : 'center'
+				align : 'center',
+                renderer : {
+						type: colorCellRenderer,
+						options : {
+                            selectedValue : 'M',
+							colorClass : 'selectedColor',
+                            bgColor: '#348feb',
+							colorColumns : ['MENU_NO','MENU_CD','MENU_LVL','MENU_NM']
+						}
+					}
 			}, {
 				header : 'LVL',
 				name : 'MENU_LVL',

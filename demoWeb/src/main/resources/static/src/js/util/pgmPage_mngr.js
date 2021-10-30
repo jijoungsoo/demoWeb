@@ -342,29 +342,42 @@ class PgmPageMngr {
 					option_data.push({VALUE : '', TEXT : '빈것' });
 				}
 			}
-			if(data.OUT_DATA && data.OUT_DATA.length){
-				var value_name="value";
-				var text_name="text";
-				console.log(_option);
-				if(_option && _option.VALUE) {
-					value_name=_option.VALUE;
-				}
-				if(_option && _option.TEXT) {
-					text_name=_option.TEXT;
-				}
-				
-				for(var i=0;i<data.OUT_DATA.length;i++){
-					var item_data = data.OUT_DATA[i];
-					option.value = item_data[value_name];
-					option.text  = item_data[text_name];
-					option_data.push(
-						{
-							VALUE : item_data[value_name] , 
-							TEXT : item_data[text_name] 
-						}
-					);
-				}
-			}
+
+            
+            var arr_brRs = param.brRs.split(",");
+            var brRs  = arr_brRs[0];
+            console.log('brRs=>'+brRs);
+            if(data !=undefined  && data[brRs]!=undefined) {
+                var tmp_data=data[brRs];
+
+                console.log(param);
+                console.log(data);
+                if(tmp_data && tmp_data.length){
+                    var value_name="value";
+                    var text_name="text";
+                    console.log(_option);
+                    if(_option && _option.VALUE) {
+                        value_name=_option.VALUE;
+                    }
+                    if(_option && _option.TEXT) {
+                        text_name=_option.TEXT;
+                    }
+                    
+                    for(var i=0;i<tmp_data.length;i++){
+                        var item_data = tmp_data[i];
+                        option.value = item_data[value_name];
+                        option.text  = item_data[text_name];
+                        option_data.push(
+                            {
+                                VALUE : item_data[value_name] , 
+                                TEXT : item_data[text_name] 
+                            }
+                        );
+                    }
+                }
+
+            }
+
 			
 		});
 		return option_data;
