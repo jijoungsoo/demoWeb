@@ -157,4 +157,19 @@ class PjtUtil{
         
         return false;
       }
+
+     static _escapeString(val) {
+         //https://stackoverflow.com/questions/7744912/making-a-javascript-string-sql-friendly
+        var regex = new RegExp(/[\0\x08\x09\x1a\n\r"'\\\%]/g)
+        var escaper = function escaper(char){
+            var m = ['\\0', '\\x08', '\\x09', '\\x1a', '\\n', '\\r', "'", '"', "\\", '\\\\', "%"];
+            var r = ['\\\\0', '\\\\b', '\\\\t', '\\\\z', '\\\\n', '\\\\r', "''", '""', '\\\\', '\\\\\\\\', '\\%'];
+            return r[m.indexOf(char)];
+        };
+        //Implementation
+        var val=val.replace(regex, escaper);     
+        console.log(val);
+
+        return val;
+      };
 }
