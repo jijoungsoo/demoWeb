@@ -37,6 +37,11 @@
     <include file="db\liquibase\tbl-tb_cm_fv_mn.xml" relativeToChangelogFile="false"/>
     <include file="db\liquibase\tbl-tb_cm_domain.xml" relativeToChangelogFile="false"/>
     <include file="db\liquibase\tbl-tb_cm_pgm.xml" relativeToChangelogFile="false"/>
+
+    <include file="db\liquibase\tbl-tb_coin_acct_mngr.xml" relativeToChangelogFile="false"/>
+
+
+    
     <include file="db\liquibase\tbl-mig_av_mv_actr_cmt.xml" relativeToChangelogFile="false"/>
     <include file="db\liquibase\tbl-mig_av_actr.xml" relativeToChangelogFile="false"/>
     <include file="db\liquibase\tbl-mig_av_actr_img.xml" relativeToChangelogFile="false"/>

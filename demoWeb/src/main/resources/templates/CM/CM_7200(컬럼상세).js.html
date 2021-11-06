@@ -1,8 +1,8 @@
 <script>
 $(document).ready(function(){
-	var CM_1850 = new PgmPageMngr('[[${uuid}]]');
-		CM_1850.init(function(p_param) {
-			var _this = CM_1850;
+	var CM_7200 = new PgmPageMngr('[[${uuid}]]');
+    CM_7200.init(function(p_param) {
+			var _this = CM_7200;
 			var searchForm = new FormMngr(_this, "search_area");
             searchForm.initCombo("TABLE_NAME",'BR_CM_DB_POSTGRESQL_retrieveTableList', {brRq: '',brRs: 'OUT_RSET'},{ USE_EMPTY_YN : 'Y' , VALUE :'TABLE_NAME' , TEXT :'COMBO_TEXT' });
 
@@ -75,6 +75,29 @@ $(document).ready(function(){
         ]
 			);
 			grid.build();
+
+            function getBlankRight(str,len) {
+                var tmp ="";
+                var maxlen=0;
+                if(str.length<=len){
+                    maxlen=len;
+                } else {
+                    maxlen=str.length;
+                }
+                console.log('len==>'+len);
+                for(var i=0;i<maxlen;i++){
+                    if(str.length>i){
+                        //-1하고 같기때문에 이렇게 되어야한다.
+                        tmp=tmp+str[i];
+                        console.log('a'+tmp);
+                    } else {
+                        tmp=tmp+" ";                    
+                        console.log('b'+tmp);
+                    }
+                    console.log(tmp);
+                }
+                return tmp;
+            }
 
 			searchForm.addEvent("click","input[type=button]", function(el) {
 				switch (el.target.name) {
@@ -234,28 +257,40 @@ $(document).ready(function(){
                         return;
                     }
                     var table_name = data[0].TABLE_NAME;
-                    var sql_update ='UPDATE '+table_name;
-                    sql_update = sql_update+' SET ';
+                    var sql_update ='UPDATE\n  '+table_name+'\n' ;
+                    sql_update = sql_update+'SET \n';
+                    var len=0;
+                    for(var i=0;i<data.length;i++){
+                        if(len<=data[i].COLUMN_NAME.length){
+                            len=data[i].COLUMN_NAME.length;
+                        }
+                    }
+                    len=len+1;
+
                     for(var i=0;i<data.length;i++){
                         if(i==0){
-                            sql_update = sql_update+' '+data[i].COLUMN_NAME+'=@'+data[i].COLUMN_NAME ;
+                            sql_update = sql_update+'   '+getBlankRight(data[i].COLUMN_NAME,len)+'=@'+data[i].COLUMN_NAME+'\n' ;
                         } else {
-                            sql_update = sql_update+', '+data[i].COLUMN_NAME+'=@'+data[i].COLUMN_NAME ;
+                            sql_update = sql_update+'  ,'+getBlankRight(data[i].COLUMN_NAME,len)+'=@'+data[i].COLUMN_NAME+'\n' ;
                         }                        
                     }
-                    var sql_update =sql_update+' WHERE 1=1 ' ;
+                    var sql_update =sql_update+'WHERE 1=1 ' ;
+                    console.log(sql_update);
                     
                     var inline_popup = new InlinePopupManger(_this, 'sql_div', {
                         width: 800,
                         height: 300,
                         title: "SQL"
                     });
+                    tmp=sql_update;
+                    /*
                     var tmp = sqlFormatter.format(sql_update, {
                     language: 'sql', // Defaults to "sql"
                     indent: '    ', // Defaults to two spaces,
                     uppercase: false, // Defaults to false
                     linesBetweenQueries: 1 // Defaults to 1
                     });
+                    */
                     console.log(tmp);
                     var el =_this.get("sql_div");
                     var tmp_el = `<pre class="sql"  name="SQL"></pre>`;
