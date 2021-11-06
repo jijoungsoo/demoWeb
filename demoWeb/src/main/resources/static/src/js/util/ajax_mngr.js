@@ -39,25 +39,30 @@ class AjaxMngr {
 	        if (textStatus == "error") {
 	            var msg = "Sorry but there was an error: ";
 	            console.log(msg + jqXHR.status + ",statusText: " + jqXHR.statusText+ ",responseText: " + jqXHR.responseText);
-	            Message.alert(msg + jqXHR.status + "<br />statusText: " + jqXHR.statusText+ "<br />responseText: " + jqXHR.responseText);
+                var tmp ="<div style='height:400px;text-align:left;overflow-y:scroll'>"+msg + jqXHR.status + "<br />statusText: " + jqXHR.statusText+ "<br />responseText: " + jqXHR.responseText+"</div>";
+	            Message.alert(tmp,function(){
+
+                        /*
+                        textStatus가 		 	parsererror  
+                        넘어오는 경우가 있다.
+                        이런경우는 ajax 에서 dataType 이 json으로 지정했는데
+                        결과가 text로 넘어온 경우라고 한다.
+                        https://vvh-avv.tistory.com/159
+
+                        에러일때 text로 익셉션을 넘겼는데 그것이 문제였다.
+                        에러도 json 형식으로 넘겨 보아야겠다.
+                    */
+
+                        
+                        
+                        if(p_function){
+                            p_function();
+                        }
+
+
+                });
 	        }
 
-			/*
-			textStatus가 		 	parsererror  
-			넘어오는 경우가 있다.
-			이런경우는 ajax 에서 dataType 이 json으로 지정했는데
-			결과가 text로 넘어온 경우라고 한다.
-			https://vvh-avv.tistory.com/159
-
-			에러일때 text로 익셉션을 넘겼는데 그것이 문제였다.
-			에러도 json 형식으로 넘겨 보아야겠다.
-		   */
-
-			
-	        
-	        if(p_function){
-	        	p_function();
-	        }
 	    });   
 	}
 

@@ -1,0 +1,193 @@
+
+<script>
+	$(document).ready(function(){
+		var FX_0140 = new PgmPageMngr('[[${uuid}]]');
+		FX_0140.init(function(p_param) {
+			var _this = FX_0140;
+			var searchForm = new FormMngr(_this, "search_area");
+			//value="BNBBTC"
+			//searchForm.setData('SYMBOL','BNBBTC');
+			const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  }
+			,[
+					{
+					   header: 'TRADE_PRICE',
+					   name: 'TRADE_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: 'MARKET_CD',
+					   name: 'MARKET_CD',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: 'CURRENCY',
+					   name: 'CURRENCY',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: 'WITHDRAW_ENABLE',
+					   name: 'WITHDRAW_ENABLE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+                    },{
+					   header: 'WITHDRAW_FEE',
+					   name: 'WITHDRAW_FEE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: 'WITHDRAW_MIN',
+					   name: 'WITHDRAW_MIN',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: 'WITHDRAW_MAX',
+					   name: 'WITHDRAW_MAX',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: 'MAKER_COMMITION',
+					   name: 'MAKER_COMMITION',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: 'TAKER_COMMITION',
+					   name: 'TAKER_COMMITION',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}					
+					}
+				]
+			);
+			grid.build();
+		
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+				switch(el.target.name){
+                case 'search':
+                    var data = searchForm.getData();
+                    console.log('data');
+                    console.log(data);
+                    var param ={
+                        brRq : ''
+                        ,brRs : 'OUT_RSET'
+                    }
+                
+                    grid.loadData('BR_FX_retrieveBinanceList', param, function(data) {
+                        if (data) {
+                        }
+                    });
+                    
+                    break;
+                case 'sync':
+                    Message.confirm('싱크하시겠습니까?', function() {
+                        _this.showProgress();
+                        var param = {
+                            brRq : '',
+                            brRs : ''
+                        }
+                        _this.send_api('BR_FX_UPBIT_SYNC', param, function(data) {
+                            _this.hideProgress();
+                            Message.alert('싱크되었습니다.', function() {
+                                searchForm.get("search").trigger("click");
+                            });
+                        });                    
+                    });                    
+                    break;
+                }
+				
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

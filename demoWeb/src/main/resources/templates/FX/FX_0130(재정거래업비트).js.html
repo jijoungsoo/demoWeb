@@ -68,6 +68,71 @@
 							showClearBtn : true
 						}
 					},{
+					   header: '종가',
+					   name: 'TRADE_PRICE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+                    },{
+					   header: '해당 화폐의 지갑 상태',
+					   name: 'WALLET_STATE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: '해당 화폐의 출금 수수료',
+					   name: 'WITHDRAW_FEE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: '출금 최소 금액/수량',
+					   name: 'WITHDRAW_MINIMUM',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: '출금 지원 여부',
+					   name: 'CAN_WITHDRAW',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
 					   header: '유의 종목 여부',
 					   name: 'MARKET_WARNING',
 					   width: 100,
@@ -184,19 +249,7 @@
 							showApplyBtn : true,
 							showClearBtn : true
 						}
-					},{
-					   header: '종가',
-					   name: 'TRADE_PRICE',
-					   width: 100,
-					   align : 'right',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
+					
 					},{
 					   header: '변화액의 절대값',
 					   name: 'CHANGE_PRICE',
@@ -418,58 +471,6 @@
 							showApplyBtn : true,
 							showClearBtn : true
 						}
-					},{
-					   header: '해당 화폐의 지갑 상태',
-					   name: 'WALLET_STATE',
-					   width: 100,
-					   align : 'right',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
-					},{
-					   header: '해당 화폐의 출금 수수료',
-					   name: 'WITHDRAW_FEE',
-					   width: 100,
-					   align : 'right',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
-					},{
-					   header: '출금 최소 금액/수량',
-					   name: 'WITHDRAW_MINIMUM',
-					   width: 100,
-					   align : 'right',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
-					},{
-					   header: '출금 지원 여부',
-					   name: 'CAN_WITHDRAW',
-					   width: 100,
-					   align : 'right',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
 					}
 				]
 			);
@@ -478,22 +479,38 @@
 			searchForm.addEvent("click","input[type=button]",function(el){
 			//console.log(el);
 				switch(el.target.name){
-			case 'search':
-				var data = searchForm.getData();
-				console.log('data');
-				console.log(data);
-				var param ={
-					 brRq : ''
-					,brRs : 'OUT_RSET'
-				}
-			
-				grid.loadData('BR_FX_retrieveUpbitList', param, function(data) {
-					if (data) {
-					}
-				});
+                case 'search':
+                    var data = searchForm.getData();
+                    console.log('data');
+                    console.log(data);
+                    var param ={
+                        brRq : ''
+                        ,brRs : 'OUT_RSET'
+                    }
+                
+                    grid.loadData('BR_FX_retrieveUpbitList', param, function(data) {
+                        if (data) {
+                        }
+                    });
+                    
+                    break;
+                case 'sync':
+                    Message.confirm('싱크하시겠습니까?', function() {
+                        _this.showProgress();
+                        var param = {
+                            brRq : '',
+                            brRs : ''
+                        }
+                        _this.send_api('BR_FX_UPBIT_SYNC', param, function(data) {
+                            _this.hideProgress();
+                            Message.alert('싱크되었습니다.', function() {
+                                searchForm.get("search").trigger("click");
+                            });
+                        });                    
+                    });                    
+                    break;
+                }
 				
-				break;
-				}
 			});
 			searchForm.get("search").trigger("click");
 	});	

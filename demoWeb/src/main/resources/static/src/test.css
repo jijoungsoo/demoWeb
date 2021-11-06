@@ -103,3 +103,7 @@ ul {
 .lh12 {
   line-height: 12px;
 }
+
+.red {
+ background-color:red;
+}

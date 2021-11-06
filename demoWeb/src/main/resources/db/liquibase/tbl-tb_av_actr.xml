@@ -9,7 +9,7 @@
             <column name="actr_nm_kr" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column name="birth_dt" type="VARCHAR(8)"/>
+            <column name="birth_dt" remarks="dddd" type="VARCHAR(8)"/>
             <column name="crt_dtm" type="TIMESTAMP WITHOUT TIME ZONE">
                 <constraints nullable="false"/>
             </column>

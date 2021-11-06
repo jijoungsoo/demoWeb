@@ -5,7 +5,7 @@
         </createIndex>
     </changeSet>
     <changeSet author="auto (g)" id="mig_av_actr_lk-1">
-        <createTable tableName="mig_av_actr_lk">
+        <createTable remarks="22" tableName="mig_av_actr_lk">
             <column name="dvd_idx" type="BIGINT">
                 <constraints nullable="false" primaryKey="true" primaryKeyName="mig_av_actr_lk_pkey"/>
             </column>

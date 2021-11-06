@@ -8,7 +8,7 @@ class Message {
         mask.open();
       	var dialog = new ax5.ui.dialog({
 			title: "Alert",
-			width: 400,
+			width: 500,
 			height: 600
     	});
 		dialog.alert(message, function () {
@@ -25,7 +25,7 @@ class Message {
         confirmDialog.setConfig({
             title: "confirm",
             theme: "danger",
-            width: 400,
+            width: 500,
 			height: 600
         });
         var mask = new ax5.ui.mask();
