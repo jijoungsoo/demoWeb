@@ -18,10 +18,26 @@
 				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
 				  }
 			,[
-					{
+                    {
+					   header: 'STATUS',
+					   name: 'STATUS',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 120,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
 					   header: 'BASE_ASSET',
 					   name: 'BASE_ASSET',
-					   width: 100,
+					   width: 120,
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
@@ -31,6 +47,14 @@
 							showApplyBtn : true,
 							showClearBtn : true
 						} /*text, number, select, date 4가지가 있다.*/
+					},{
+					   header: 'QUOTE_ASSET',
+					   name: 'QUOTE_ASSET',
+					   width: 120,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
 					},{
 					   header: 'BASE_ASSET_PRECISION',
 					   name: 'BASE_ASSET_PRECISION',
@@ -72,24 +96,8 @@
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
-					   header: 'IS_LEGAL_MONEY',
-					   name: 'IS_LEGAL_MONEY',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
 					   header: 'OCO_ALLOWED',
 					   name: 'OCO_ALLOWED',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'QUOTE_ASSET',
-					   name: 'QUOTE_ASSET',
 					   width: 100,
 					   align : 'left',
 					   sortable : true,
@@ -104,32 +112,8 @@
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
-					   header: 'STATUS',
-					   name: 'STATUS',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'SYMBOL',
-					   name: 'SYMBOL',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
 					   header: 'QUOTE_ASSET_PRECISION',
 					   name: 'QUOTE_ASSET_PRECISION',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'SYMBOL',
-					   name: 'SYMBOL',
 					   width: 100,
 					   align : 'left',
 					   sortable : true,
@@ -151,7 +135,18 @@
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc'
-					}
+					}, {
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        width : 200,
+                        resizable : false,
+                        sortable : true,
+                        align : "center",
+                            filter : {
+                                type : 'date',
+                                format : 'yyyy-MM-DD'
+                        }	
+                    }
 				]
 			);
 		  	grid.build();
@@ -161,21 +156,34 @@
 				switch(el.target.name){
 			case 'search':
 				var data = searchForm.getData();
-				var brRsStr = 'OUT_RSET_SYMBOLS,OUT_RSET,OUT_RSET_RATE_LIMITS,OUT_RSET_SYMBOLS_FILTERS_PRICE_FILTER,OUT_RSET_SYMBOLS_FILTERS_PERCENT_PRICE,OUT_RSET_SYMBOLS_FILTERS_LOT_SIZE'
-				brRsStr=brRsStr+',OUT_RSET_SYMBOLS_FILTERS_MIN_NOTIONAL,OUT_RSET_SYMBOLS_FILTERS_ICEBERG_PARTS,OUT_RSET_SYMBOLS_FILTERS_MARKET_LOT_SIZE,OUT_RSET_SYMBOLS_FILTERS_MAX_NUM_ORDERS,OUT_RSET_SYMBOLS_FILTERS_MAX_NUM_ALGO_ORDERS'
-				brRsStr=brRsStr+',OUT_RSET_SYMBOLS_ORDER_TYPES,OUT_RSET_SYMBOLS_PERMISSIONS'
+				var brRsStr = 'OUT_RSET'
+				
 
 				var param ={
 					 brRq : 'IN_DATA'
 					,brRs : brRsStr
 				}
-				grid.loadData('BR_BINANCE_MARKET_GET_API_V3_EXCHANGE_INFO',param,function(data){
+				grid.loadData('BR_BINANCE_MARKET_retrieveExchangeInfo',param,function(data){
 					console.log(data);
-					data_network_list = data.OUT_RSET_NETWORK_LIST;
 					//gridLoadData에서 자동으로 로드됨..
 					
 				});
 				break;
+            case 'sync':
+                    Message.confirm('싱크하시겠습니까?', function() {
+                        _this.showProgress();
+                        var param = {
+                            brRq : '',
+                            brRs : ''
+                        }
+                        _this.send_api('BR_FX_syncBinanceExchangeInfo', param, function(data) {
+                            _this.hideProgress();
+                            Message.alert('싱크되었습니다.', function() {
+                                searchForm.get("search").trigger("click");
+                            });
+                        });                    
+                    });                    
+                    break;
 				}
 			});
 			searchForm.get("search").trigger("click");

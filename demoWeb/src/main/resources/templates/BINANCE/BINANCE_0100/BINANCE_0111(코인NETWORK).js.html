@@ -1,0 +1,205 @@
+' '
+<script>
+	$(document).ready(function(){
+		var BINANCE_0111 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0111.init(function(p_param) {
+            console.log('p_param');
+            console.log(p_param.param);
+			var _this = BINANCE_0111;
+            var searchForm = new FormMngr(_this, "search_area");
+            searchForm.setData('COIN',p_param.param.COIN);
+			const grid_network_list = new TuiGridMngr(_this,'grid_network_list',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  /*
+				  ,bodyHeight : 700
+				  ,width : 700
+				  */
+				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+				  }
+			,[
+                    {
+					   header: 'NAME',
+					   name: 'NAME',
+					   width: 200,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'NETWORK',
+					   name: 'NETWORK',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'COIN',
+					   name: 'COIN',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_ENABLE',
+					   name: 'WITHDRAW_ENABLE',
+					   width: 100,
+					   align : 'center',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_FEE',
+					   name: 'WITHDRAW_FEE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ADDRESS_REGEX',
+					   name: 'ADDRESS_REGEX',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'DEPOSIT_DESC',
+					   name: 'DEPOSIT_DESC',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'DEPOSIT_ENABLE',
+					   name: 'DEPOSIT_ENABLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IS_DEFAULT',
+					   name: 'IS_DEFAULT',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MEMO_REGEX',
+					   name: 'MEMO_REGEX',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MIN_CONFIRM',
+					   name: 'MIN_CONFIRM',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'RESET_ADDRESS_STATUS',
+					   name: 'RESET_ADDRESS_STATUS',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SPECIAL_TIPS',
+					   name: 'SPECIAL_TIPS',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'UN_LOCK_CONFIRM',
+					   name: 'UN_LOCK_CONFIRM',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_DESC',
+					   name: 'WITHDRAW_DESC',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_INTEGER_MULTIPLE',
+					   name: 'WITHDRAW_INTEGER_MULTIPLE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_MIN',
+					   name: 'WITHDRAW_MIN',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'WITHDRAW_MAX',
+					   name: 'WITHDRAW_MAX',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SAME_ADDRESS',
+					   name: 'SAME_ADDRESS',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+
+                    
+				]
+			);
+		  	grid_network_list.build();
+       
+
+            searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+				switch(el.target.name){
+                case 'search':
+                    var data=searchForm.getData();
+                    var param ={
+                        brRq : 'IN_PSET',
+                        brRs : 'OUT_RSET',
+                        IN_PSET : [data]
+                    }
+                    grid_network_list.loadData('BR_BINANCE_WALLET_retrieveCoinNetwork',param,function(data){
+                        
+                    });
+                    break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+			
+	});	
+});
+
+</script>
