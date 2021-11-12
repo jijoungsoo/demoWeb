@@ -385,6 +385,30 @@ $(document).ready(function(){
                         }
                     });
                     break;
+
+                    
+                case 'dropColumn':
+                    var data = grid.getCheckedData();
+                    console.log(data)
+                    if(data.length<=0) {
+                        Message.alert('선택된 항목이 없습니다.');
+                        return;
+                    }
+                    Message.confirm('Column을 Drop 하시겠습니까?', function() {
+						var param = {
+							brRq : 'IN_PSET',
+							brRs : '',
+							IN_PSET : data
+						}
+						_this.send_api('BR_CM_DB_POSTGRESQL_dropColumn', param, function(data) {
+							if(data){
+								Message.alert('Column을 Drop 하였습니다.', function() {
+									searchForm.get("search").trigger("click");
+								});
+							}
+						});
+					});
+                    break;
 				}
 			});
 			searchForm.get("search").trigger("click");

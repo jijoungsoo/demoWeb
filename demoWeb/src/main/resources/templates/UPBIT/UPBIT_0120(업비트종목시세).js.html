@@ -17,17 +17,7 @@ $(document).ready(function(){
 			   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
 		  	}
 		,[
-				{
-		           header: '통화코드',
-		           name: 'MARKET_CD',
-		           width: 200,
-				   align : 'center',
-				   filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-					}
-				},{
+			    {
 		           header: '종목명',
 		           name: 'MARKET',
 		           width: 200,
@@ -38,45 +28,6 @@ $(document).ready(function(){
 					showClearBtn : true
 					}
 				},{
-		           header: '코인',
-		           name: 'CURRENCY',
-		           width: 200,
-				   align : 'center',
-				   filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-					}
-				},{
-		           header: '영문명',
-		           name: 'EN_NM',
-		           width: 200,
-				   align : 'center',
-				   filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-				   },
-				   resizable: true,
-				   sortable : true,
-		           sortingType: 'desc'
-				},{
-		           header: '한글명',
-		           name: 'KR_NM',
-		           width: 200,
-				   align : 'center',
-				   sortable : true,
-				   resizable: true,
-		           sortingType: 'desc'
-				},{
-					header: '유의 종목 여부',
-		           name: 'MARKET_WARNING',
-		           width: 200,
-				   align : 'center',
-				   sortable : true,
-				   resizable: true,
-		           sortingType: 'desc'
-				 },{
 		           header: '최근 거래 일자(UTC)',
 		           name: 'TRADE_DATE',
 		           width: 100,
@@ -109,15 +60,12 @@ $(document).ready(function(){
 				   resizable: true,
 		           sortingType: 'desc'
 				},{
-		           header: '시가',
+		           header: '시가2',
 		           name: 'OPENING_PRICE',
 		           width: 100,
 				   align : 'right',
 				   sortable : true,
 				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
 		           sortingType: 'desc'
 				},{
 		           header: '고가',
@@ -126,9 +74,6 @@ $(document).ready(function(){
 				   align : 'right',
 				   sortable : true,
 				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
 		           sortingType: 'desc'
 				},{
 		           header: '저가',
@@ -137,9 +82,6 @@ $(document).ready(function(){
 				   align : 'right',
 				   sortable : true,
 				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
 		           sortingType: 'desc'
 				},{
 		           header: '종가',
@@ -148,9 +90,6 @@ $(document).ready(function(){
 				   align : 'right',
 				   sortable : true,
 				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
 		           sortingType: 'desc'
 				},{
 		           header: '전일 종가',
@@ -159,9 +98,6 @@ $(document).ready(function(){
 				   align : 'right',
 				   sortable : true,
 				   resizable: true,
-				   renderer : {
-					type: commaRendererRemoveDot
-					},
 		           sortingType: 'desc'
 				},{
 		           header: '변화',
@@ -322,13 +258,7 @@ $(document).ready(function(){
 		             width: 200,
 		             sortable: true,
 		             align: "center"
-					},{
-		             header: '수정일',
-		             name: 'UPDT_DTM',
-		             width: 200,
-		             sortable: true,
-		             align: "center"
-		         }
+					}
 		    ]
 		);
 	  	grid.build();
@@ -411,13 +341,13 @@ $(document).ready(function(){
 					,brRs : 'OUT_DATA'
 					,IN_DATA:[ data ]
 				}
-		    	grid.loadData('BR_UPBIT_MARKET_TICKER_FIND',param,function(data){
+		    	grid.loadData('BR_UPBIT_retrieveTicker',param,function(data){
 			    	console.log(data);
 			    	//gridLoadData에서 자동으로 로드됨..
 		        	
 		    	});
                break;
-			   case 'BTN_UPBIT_MARKET_TICKER_SYNC':
+			   case 'BR_UPBIT_TICKER_SYNC':
 					var data = searchForm.getData();
 					var param ={
 						brRq : 'IN_DATA'
@@ -425,7 +355,7 @@ $(document).ready(function(){
 						,IN_DATA:[ data ]
 					}
 					_this.showProgress();
-					_this.send_socket('BR_UPBIT_MARKET_TICKER_SYNC', param, function(data) {
+					_this.send_socket('BR_UPBIT_TICKER_SYNC', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							searchForm.get("search").trigger("click");

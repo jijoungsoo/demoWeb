@@ -7,9 +7,6 @@ $(document).ready(function(){
 		var searchForm = new FormMngr(_this, "search_area");
 		searchForm.initCombo("MARKET_WARNING",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_WARNING', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
 		searchForm.initCombo("MARKET_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
-		searchForm.initCombo("DEL_YN",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'DEL_YN', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
-
-		
 		
 		const grid = new TuiGridMngr(_this,'grid',{
 		      editable: false
@@ -20,8 +17,18 @@ $(document).ready(function(){
 			   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
 		  	}
 		,[
-				{
-		           header: '통화코드',
+                {
+		           header: '코인',
+		           name: 'COIN',
+		           width: 200,
+				   align : 'center',
+				   filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+					}
+				},{
+		           header: 'MARKET_CD',
 		           name: 'MARKET_CD',
 		           width: 200,
 				   align : 'center',
@@ -70,26 +77,12 @@ $(document).ready(function(){
 				   resizable: true,
 		           sortingType: 'desc'
 				},{
-		           header: '삭제유무',
-		           name: 'DEL_YN',
-		           width: 100,
-				   align : 'center',
-				   sortable : true,
-				   resizable: true,
-		           sortingType: 'desc'
-				 },{
 		             header: '생성일',
 		             name: 'CRT_DTM',
 		             width: 200,
 		             sortable: true,
 		             align: "center"
-					},{
-		             header: '수정일',
-		             name: 'UPDT_DTM',
-		             width: 200,
-		             sortable: true,
-		             align: "center"
-		         }
+				}
 		    ]
 		);
 	  	grid.build();

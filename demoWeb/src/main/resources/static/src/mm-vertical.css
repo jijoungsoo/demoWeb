@@ -61,7 +61,7 @@
 .sidebar-nav .metismenu .three_depth_left{
 	border:solid 0px red;
 	display:block;
-	width:134px;
+	width:234px;
 	float:left;
 	text-overflow: ellipsis;
 	text-decoration: none;
@@ -85,7 +85,7 @@
 .sidebar-nav .metismenu .fav_depth_right{
 	border:solid 0px red;
 	display:block;
-	width:132px;
+	width:232px;
 	margin-left:2px;
 	float:right;
 	text-overflow: ellipsis;

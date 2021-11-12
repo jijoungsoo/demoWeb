@@ -5,8 +5,6 @@ $(document).ready(function(){
 	UPBIT_0130.init(function(p_param) {
 		var _this = UPBIT_0130;
 		var searchForm = new FormMngr(_this, "search_area");
-		searchForm.initCombo("MARKET_WARNING",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_WARNING', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
-		searchForm.initCombo("MARKET_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
 		searchForm.initCombo("UNIT",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_UNIT', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
 
 		
@@ -21,16 +19,6 @@ $(document).ready(function(){
 		  	}
 		,[
 				{
-		           header: '통화코드',
-		           name: 'MARKET_CD',
-		           width: 200,
-				   align : 'center',
-				   filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-					}
-				},{
 		           header: '종목명',
 		           name: 'MARKET',
 		           width: 200,
@@ -41,35 +29,6 @@ $(document).ready(function(){
 					showClearBtn : true
 					}
 				},{
-		           header: '영문명',
-		           name: 'EN_NM',
-		           width: 200,
-				   align : 'center',
-				   filter : {
-					type : 'text',
-					showApplyBtn : true,
-					showClearBtn : true
-				   },
-				   resizable: true,
-				   sortable : true,
-		           sortingType: 'desc'
-				},{
-		           header: '한글명',
-		           name: 'KR_NM',
-		           width: 200,
-				   align : 'center',
-				   sortable : true,
-				   resizable: true,
-		           sortingType: 'desc'
-				},{
-					header: '유의 종목 여부',
-		           name: 'MARKET_WARNING',
-		           width: 200,
-				   align : 'center',
-				   sortable : true,
-				   resizable: true,
-		           sortingType: 'desc'
-				 },{
 		           header: '캔들 기준 시각(UTC 기준)',
 		           name: 'CANDLE_DATE_TIME_UTC',
 		           width: 200,
@@ -173,13 +132,7 @@ $(document).ready(function(){
 		             width: 200,
 		             sortable: true,
 		             align: "center"
-					},{
-		             header: '수정일',
-		             name: 'UPDT_DTM',
-		             width: 200,
-		             sortable: true,
-		             align: "center"
-		         }
+					}
 		    ]
 		);
 	  	grid.build();

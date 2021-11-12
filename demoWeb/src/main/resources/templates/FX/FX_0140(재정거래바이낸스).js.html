@@ -15,50 +15,11 @@
 				  ,pageable: false
 				  }
 			,[
-					{
-					   header: 'TRADE_PRICE',
-					   name: 'TRADE_PRICE',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
-					},{
-					   header: 'MARKET_CD',
-					   name: 'MARKET_CD',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
-					},{
-					   header: 'CURRENCY',
-					   name: 'CURRENCY',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
-					},{
+                    {
 					   header: 'SYMBOL',
 					   name: 'SYMBOL',
-					   width: 100,
-					   align : 'left',
+					   width: 200,
+					   align : 'center',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc',
@@ -68,35 +29,25 @@
 							showClearBtn : true
 						}
 					},{
-					   header: 'WITHDRAW_ENABLE',
-					   name: 'WITHDRAW_ENABLE',
-					   width: 100,
+					   header: 'PRICE',
+					   name: 'PRICE',
+					   width: 200,
 					   align : 'right',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
-                    },{
-					   header: 'WITHDRAW_FEE',
-					   name: 'WITHDRAW_FEE',
-					   width: 100,
-					   align : 'right',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
+                       renderer : {
+					      type: commaRenderer
+					   },
 					   filter : {
 							type : 'text',
 							showApplyBtn : true,
 							showClearBtn : true
 						}
 					},{
-					   header: 'WITHDRAW_MIN',
-					   name: 'WITHDRAW_MIN',
-					   width: 100,
+					   header: 'MAKER_COMMISSION',
+					   name: 'MAKER_COMMISSION',
+					   width: 200,
 					   align : 'right',
 					   sortable : true,
 					   resizable: true,
@@ -107,36 +58,10 @@
 							showClearBtn : true
 						}
 					},{
-					   header: 'WITHDRAW_MAX',
-					   name: 'WITHDRAW_MAX',
-					   width: 100,
+					   header: 'TAKER_COMMISSION',
+					   name: 'TAKER_COMMISSION',
+					   width: 200,
 					   align : 'right',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
-					},{
-					   header: 'MAKER_COMMITION',
-					   name: 'MAKER_COMMITION',
-					   width: 100,
-					   align : 'right',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
-					},{
-					   header: 'TAKER_COMMITION',
-					   name: 'TAKER_COMMITION',
-					   width: 100,
-					   align : 'left',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc',
@@ -145,7 +70,13 @@
 							showApplyBtn : true,
 							showClearBtn : true
 						}					
-					}
+					},{
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        width : 200,
+                        sortable : true,
+                        align : "center"
+                    }
 				]
 			);
 			grid.build();
@@ -158,11 +89,13 @@
                     console.log('data');
                     console.log(data);
                     var param ={
-                        brRq : ''
-                        ,brRs : 'OUT_RSET'
+                        brRq : 'IN_PSET',
+                        brRs : 'OUT_RSET',
+                        IN_PSET : [data]
+
                     }
                 
-                    grid.loadData('BR_FX_retrieveBinanceList', param, function(data) {
+                    grid.loadData('BR_BINANCE_retrieveBinanceList', param, function(data) {
                         if (data) {
                         }
                     });
