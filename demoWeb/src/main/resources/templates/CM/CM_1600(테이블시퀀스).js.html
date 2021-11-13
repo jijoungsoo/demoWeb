@@ -118,6 +118,7 @@ $(document).ready(function(){
 				width : 100,
 				resizable : false,
 				sortable : true,
+                align : "center",
 				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
 				filter : {
 					type : 'text',
@@ -125,6 +126,90 @@ $(document).ready(function(){
 					showClearBtn : true
 				}, 
 				editor : 'text'
+			}, {
+				header : '년단위 초기화',
+				name : 'CYCLE_YYYY_YN',
+				width : 140,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, 
+				editor: {
+		            type: 'select',
+		            options: {
+		              listItems: [
+		                { text: 'Y', value: 'Y' },
+		                { text: 'N', value: 'N' }
+		              ]
+		            }
+				},validation : {
+					dataType : 'string', /*string ,number*/
+					required : true /*  true 필수, false 필수아님  */
+				}
+			}, {
+				header : '월단위초기화',
+				name : 'CYCLE_YYYYMM_YN',
+				width : 140,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, 
+				editor: {
+		            type: 'select',
+		            options: {
+		              listItems: [
+		                { text: 'Y', value: 'Y' },
+		                { text: 'N', value: 'N' }
+		              ]
+		            }
+				},validation : {
+					dataType : 'string', /*string ,number*/
+					required : true /*  true 필수, false 필수아님  */
+				}
+			}, {
+				header : '일별초기화',
+				name : 'CYCLE_YYYYMMDD_YN',
+				width : 140,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}, 
+				editor: {
+		            type: 'select',
+		            options: {
+		              listItems: [
+		                { text: 'Y', value: 'Y' },
+		                { text: 'N', value: 'N' }
+		              ]
+		            }
+				},validation : {
+					dataType : 'string', /*string ,number*/
+					required : true /*  true 필수, false 필수아님  */
+				}
+             } , {
+				header : '마지막시퀀스NO반영일시',
+				name : 'LST_SEQ_NO_DTM',
+				width : 200,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc', /*내림차순   ctrl 키를 누르고 정렬키를 여러개 누르면 이어서 정렬이 된다.*/
+				filter : {
+					type : 'text',
+					showApplyBtn : true,
+					showClearBtn : true
+				}
 			}, {
 				header : '생성일',
 				name : 'CRT_DTM',

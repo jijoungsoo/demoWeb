@@ -18,23 +18,7 @@
 		    $('[data-ax5formatter]').ax5formatter();
 			orderBuyForm.setData("MARKET",market);
 			orderSellForm.setData("MARKET",market);
-		
-			var param ={
-				brRq : 'IN_PSET'
-				,brRs : 'OUT_RSET'
-				,IN_PSET:[ {
-					MARKET : market
-				} ]
-			}
-			_this.showProgress();
-			_this.send_api('BR_UPBIT_EXCHANGE_GET_ORDERS_CHANCE', param, function(data) {
-				_this.hideProgress();
-				if (data) {
-					console.log(data.OUT_RSET[0]);
-					orderChanceAreaForm.setDataAll(data.OUT_RSET[0]);		
-				}
-			});		
-			
+					
 			const grid = new TuiGridMngr(_this,'grid',{
 				  editable: false
 				  ,showRowStatus: false
@@ -70,16 +54,16 @@
 					},{
 					   header: '호가 매도 총 잔량',
 					   name: 'TOTAL_ASK_SIZE',
-					   width: 200,
-					   align : 'center',
+					   width: 400,
+					   align : 'right',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
 					   header: '호가 매수 총 잔량',
 					   name: 'TOTAL_BID_SIZE',
-					   width: 200,
-					   align : 'center',
+					   width: 400,
+					   align : 'right',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc'
@@ -94,33 +78,23 @@
 				  ,rowNum: true
 				  ,checkbox: false
 				  ,pageable: false
-				  ,bodyHeight : 300
+				  ,bodyHeight : 200
 				  }
 				,[
 					{
-					   header: '마켓의 유일 키',
-					   name: 'MARKET',
-					   width: 200,
-					   align : 'center',
-					   filter : {
-						type : 'text',
-						showApplyBtn : true,
-						showClearBtn : true
-						}
-					},{
 					   header: '매수호가',
 					   name: 'BID_PRICE',
-					   width: 100,
-					   align : 'center',
+					   width: 400,
+					   align : 'right',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc'
 					 },{
 						 header: '매수 잔량',
 						 name: 'BID_SIZE',
-						 width: 200,
-						 sortable: true,
-						 align: "center"
+						 width: 400,
+                         align : 'right',
+						 sortable: true
 					 }
 				]
 			);
@@ -144,24 +118,14 @@
 				  ,rowNum: true
 				  ,checkbox: false
 				  ,pageable: false
-				  ,bodyHeight : 300
+				  ,bodyHeight : 200
 				  }
 				,[
 					{
-					   header: '마켓의 유일 키',
-					   name: 'MARKET',
-					   width: 200,
-					   align : 'center',
-					   filter : {
-						type : 'text',
-						showApplyBtn : true,
-						showClearBtn : true
-						}
-					},{
 					   header: '매도호가',
 					   name: 'ASK_PRICE',
-					   width: 100,
-					   align : 'center',
+					   width: 400,
+					   align : 'right',
 					   filter : {
 						type : 'text',
 						showApplyBtn : true,
@@ -173,8 +137,8 @@
 					},{
 					   header: '매도 잔량',
 					   name: 'ASK_SIZE',
-					   width: 200,
-					   align : 'center',
+					   width: 400,
+					   align : 'right',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc'
@@ -201,16 +165,15 @@
 				console.log(ord_type);
 				if(ord_type=='price'){
 					/*
-					시장가 주문
+					시장가 주문---매수
 					시장가 주문은 ord_type 필드를 price or market 으로 설정해야됩니다.
 					매수 주문의 경우 ord_type을 price로 설정하고 volume을 null 혹은 제외해야됩니다.
-					매도 주문의 경우 ord_type을 market로 설정하고 price을 null 혹은 제외해야됩니다.
 					*/
 					//주문수량을 disable하자.
-					orderBuyForm.disable("VOLUME");
-					orderBuyForm.setData("VOLUME","");
+					orderBuyForm.disable("PRICE");
+					orderBuyForm.setData("PRICE","");
 				} else {
-					orderBuyForm.enable("VOLUME");
+					orderBuyForm.enable("PRICE");
 				}
 			}
 			function chg_order_sell_combo(){
@@ -218,16 +181,15 @@
 				console.log(ord_type);
 				if(ord_type=='market'){
 					/*
-					시장가 주문
+					시장가 주문---매도
 					시장가 주문은 ord_type 필드를 price or market 으로 설정해야됩니다.
-					매수 주문의 경우 ord_type을 price로 설정하고 volume을 null 혹은 제외해야됩니다.
 					매도 주문의 경우 ord_type을 market로 설정하고 price을 null 혹은 제외해야됩니다.
 					*/
 					//주문가격을 disable하자.
 					orderSellForm.disable("PRICE");
 					orderSellForm.setData("PRICE","");
 				} else {
-					orderSellForm.enable("VOLUME");
+					orderSellForm.enable("PRICE");
 				}
 			}
 			
@@ -263,6 +225,23 @@
 								grid_orderbook_units_ask.resetData(data.OUT_RSET_ORDER_BOOK);
 							}
 						});	
+
+                        
+                        var param ={
+                            brRq : 'IN_PSET'
+                            ,brRs : 'OUT_RSET'
+                            ,IN_PSET:[ {
+                                MARKET : market
+                            } ]
+                        }
+                        _this.showProgress();
+                        _this.send_api('BR_UPBIT_EXCHANGE_GET_ORDERS_CHANCE', param, function(data) {
+                            _this.hideProgress();
+                            if (data) {
+                                console.log(data.OUT_RSET[0]);
+                                orderChanceAreaForm.setDataAll(data.OUT_RSET[0]);		
+                            }
+                        });		
 					break;		
 				}
 			});
@@ -270,9 +249,9 @@
 				switch(el.target.name){
 					case 'btn_buy':
 						var param ={
-							brRq : 'IN_DATA'
-							,brRs : 'OUT_DATA'
-							,IN_DATA:[ {
+							brRq : 'IN_PSET'
+							,brRs : 'OUT_RSET'
+							,IN_PSET:[ {
 								MARKET : orderBuyForm.getData("MARKET"),
 								VOLUME : orderBuyForm.getData("VOLUME"),
 								PRICE : orderBuyForm.getData("PRICE"),
@@ -291,11 +270,11 @@
 			});
 			orderSellForm.addEvent("click","input[type=button]",function(el){
 				switch(el.target.name){
-					case 'btn_buy':
+					case 'btn_sell':
 						var param ={
-							brRq : 'IN_DATA'
-							,brRs : 'OUT_DATA'
-							,IN_DATA:[ {
+							brRq : 'IN_PSET'
+							,brRs : 'OUT_RSET'
+							,IN_PSET:[ {
 								MARKET : orderSellForm.getData("MARKET"),
 								VOLUME : orderSellForm.getData("VOLUME"),
 								PRICE : orderSellForm.getData("PRICE"),

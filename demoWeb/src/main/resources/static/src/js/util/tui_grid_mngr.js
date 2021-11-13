@@ -282,7 +282,7 @@ class TuiGridMngr {
     <div name='tui-context-menu-container'>
     </div>
 	`
-	if(tmp.contextMenu==true){	/*context Menu 생성 */
+	if(tmp.contextMenu==true && false/*문제있다 무조건 false */){	/*context Menu 생성 */
 		$(this.options.el).append(context_menu_div);
 		const contextMenu = new tui.ContextMenu(this.pgm_mngr.get("tui-context-menu-container")[0]);
 		var _this =this;
@@ -323,6 +323,10 @@ class TuiGridMngr {
             }
             
         }
+        console.log(contextMenu);
+        console.log(this.options.el);
+        document.querySelector(this.options.el)
+        
    	    contextMenu.register(this.options.el, onClick , [
             {title: '엑셀다운로드', command: 'excel_download'}
         ]);

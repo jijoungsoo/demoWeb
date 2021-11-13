@@ -105,7 +105,7 @@
 							} ]
 						}
 						_this.showProgress();
-						_this.send('BR_UPBIT_EXCHANGE_GET_ORDER', param, function(data) {
+						_this.send_api('BR_UPBIT_EXCHANGE_GET_ORDER', param, function(data) {
 							_this.hideProgress();
 							if (data) {
 								orderAreaForm.setDataAll(data.OUT_RSET[0]);		
@@ -113,24 +113,25 @@
 							}
 						});	
 					break;
-					case 'btn_delete_order':
-						var param ={
-							brRq : 'IN_DATA'
-							,brRs : 'OUT_DATA'
-							,IN_DATA: [ {
-								UUID : uuid
-							} ]
-						}						
-						alert('주문취소');
-						_this.showProgress();
-						_this.send('BR_UPBIT_EXCHANGE_DELETE_ORDER', param, function(data) {
-							_this.hideProgress();
-							if (data) {
-								orderAreaForm.get("btn_search").trigger("click");
-							}
-						});	
+					case 'btn_delete_order':                      
+                        Message.confirm('주문을 취소하시겠습니까?', function() {
+                            var param ={
+                                brRq : 'IN_PSET'
+                                ,brRs : 'OUT_RSET'
+                                ,IN_PSET: [ {
+                                    UUID : uuid
+							    } ]
+						    }						
+                            _this.showProgress();
+                            _this.send_api('BR_UPBIT_EXCHANGE_DELETE_ORDER', param, function(data) {
+                                _this.hideProgress();
+                                if (data) {
+                                    orderAreaForm.get("btn_search").trigger("click");
+                                }
+                            });	
 
-						break;
+                        });
+                        break;
 					}
 				});
 				orderAreaForm.get("btn_search").trigger("click");
