@@ -165,15 +165,14 @@
 				console.log(ord_type);
 				if(ord_type=='price'){
 					/*
-					시장가 주문---매수
-					시장가 주문은 ord_type 필드를 price or market 으로 설정해야됩니다.
-					매수 주문의 경우 ord_type을 price로 설정하고 volume을 null 혹은 제외해야됩니다.
+                    매수--지정가주문  -- 주문가격,주문량 필요
+                    매수--시장가 주문  --주문가격만 필요  시장가 500원짜리 물건이라면    주문가격을 1000원으로 입력하면 2개가 사진다.
 					*/
 					//주문수량을 disable하자.
-					orderBuyForm.disable("PRICE");
-					orderBuyForm.setData("PRICE","");
+					orderBuyForm.disable("VOLUME");
+					orderBuyForm.setData("VOLUME","");
 				} else {
-					orderBuyForm.enable("PRICE");
+					orderBuyForm.enable("VOLUME");
 				}
 			}
 			function chg_order_sell_combo(){
@@ -266,6 +265,32 @@
 							}
 						});	
 					break;			
+                    case 'btn_calc':
+                        var ord_type = orderBuyForm.getData("ORD_TYPE");
+
+                        if(ord_type=='limit'){
+                            var data = orderBuyForm.getData();
+                            console.log(data);
+                            if(price==''){
+                                var data = grid_orderbook_units_bid.getRowAt(0);
+                                console.log(data);
+
+                            } else {
+
+                            }
+                            
+                        }
+
+                        if(ord_type=='price'){
+                            var data = orderChanceAreaForm.getData();
+                            console.log(data.BID_FEE);
+                            console.log(data.BID_ACCOUNT__BALANCE);
+                            var bid_fee = data.BID_FEE*data.BID_ACCOUNT__BALANCE
+                            var price =data.BID_ACCOUNT__BALANCE-bid_fee;
+                            orderBuyForm.setData("PRICE",price);
+                        }
+
+                    break;
 				}
 			});
 			orderSellForm.addEvent("click","input[type=button]",function(el){

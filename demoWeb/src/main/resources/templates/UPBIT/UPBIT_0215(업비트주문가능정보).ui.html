@@ -77,7 +77,7 @@
             <div class="col">
                 <div class="form-group">
                     <div class="input-group">
-                        <span class="input-group-addon">주문가능 금액/수량</span> 
+                        <span class="input-group-addon">주문가능 금액</span> 
                         <input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__BALANCE"  name="BID_ACCOUNT__BALANCE">
                     </div>
                 </div>
@@ -130,7 +130,7 @@
                 <div class="col">
                     <div class="form-group">
                         <div class="input-group">
-                            <span class="input-group-addon">주문가능 금액/수량</span> 
+                            <span class="input-group-addon">주문가능 수량</span> 
                             <input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__BALANCE"  name="ASK_ACCOUNT__BALANCE">
                         </div>
                     </div>
@@ -291,7 +291,9 @@
                         </div>
                     </div>
                 </div>
-                <input type="button" name="btn_buy" value="사자" />  
+                <input type="button" name="btn_buy" value="사자" /> 
+                <input type="button" name="btn_calc" value="가능" /> 
+                시장가주문(매수[bid]-price)  주문가격을 입력하면 시장가에 맞춰 주문량을 자동으로 계산하여 사짐
             </div>
         </div>
     </td>    

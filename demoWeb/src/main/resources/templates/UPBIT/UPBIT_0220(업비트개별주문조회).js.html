@@ -125,11 +125,8 @@
                             _this.showProgress();
                             _this.send_api('BR_UPBIT_EXCHANGE_DELETE_ORDER', param, function(data) {
                                 _this.hideProgress();
-                                if (data) {
-                                    orderAreaForm.get("btn_search").trigger("click");
-                                }
+                                _this.close({});
                             });	
-
                         });
                         break;
 					}
