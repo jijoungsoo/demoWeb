@@ -4,6 +4,9 @@ $(document).ready(function(){
     CM_1900.init(function(p_param) {
 			var _this = CM_1900;
 			var searchForm = new FormMngr(_this, "search_area");
+            searchForm.initCombo("SERVER",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [  { GRP_CD : 'SERVER',  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+            searchForm.initCombo("LEVEL_STRING",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [  { GRP_CD : 'LOG_LEVEL',  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+
 			const grid = new TuiGridMngr(_this, 'grid', {
 				editable : false,
 				showRowStatus : false,
@@ -116,17 +119,86 @@ $(document).ready(function(){
         
             ]
 			);
-
-
 			grid.build();
+
+
+         
+
+            
+			grid.on('click', (ev) => {
+				var rowKey = ev.rowKey;
+				if (rowKey >=0) {
+                    var row_data=grid.getRow(rowKey);
+                    if(row_data["LEVEL_STRING"]=='ERROR'){
+                        _this.showProgress();
+                        var param = {
+                                brRq : 'IN_PSET',
+                                brRs : 'OUT_RSET',
+                                IN_PSET : [ {
+                                    EVENT_ID : row_data["EVENT_ID"]
+                                } ],
+                        }							    			
+                        _this.send_api('BR_CM_CONSOLE_retrieveErrorDetailLog', param, function(data) {
+                            _this.hideProgress();
+                            if(data){
+                                console.log(data);
+                                const grid_error = new TuiGridMngr(_this, 'grid_error', {
+                                    editable : false,
+                                    showRowStatus : false,
+                                    rowNum : false,
+                                    checkbox : false,
+                                    bodyHeight : 780,
+                                    showDummyRows : false
+                                },
+                                [ 			
+                                {
+                                    header : 'ID',
+                                    name : 'EVENT_ID',
+                                    width : 60,
+                                    sortable : true
+                                },{
+                                    header : 'I',
+                                    name : 'I',
+                                    width : 40,
+                                    sortable : true
+                                },{
+                                    header : 'TRACE_LINE',
+                                    name : 'TRACE_LINE',
+                                    width : 900,
+                                    sortable : true
+                                }        
+                                ]
+                                );
+                                grid_error.build();
+                                grid_error.resetData(data.OUT_RSET);
+                                var inline_popup = new InlinePopupManger(_this, 'popup_error', {
+                                    width: 1100,
+                                    height: 900,
+                                    title: "에러상세"
+                                });
+                                inline_popup.open(function(data2){
+                                    if(data2){
+                                        console.log(data2);
+                                    }
+                                });
+                            }
+                        });
+
+
+                        
+                    }
+				}
+			});
 
 			searchForm.addEvent("click","input[type=button]", function(el) {
 				switch (el.target.name) {
 				case 'search':
+                    var data = searchForm.getData();
+					
 					var param = {
 						brRq : 'IN_PSET',
 						brRs : 'OUT_RSET',
-						IN_PSET : [ {} ]
+						IN_PSET : [ data ]
 					}
 					grid.loadData('BR_CM_CONSOLE_retrieveLog', param, function(data) {
 						console.log(data);
@@ -138,12 +210,14 @@ $(document).ready(function(){
                     
 
 					Message.confirm('삭제하시겠습니까?', function() {
-						var param = {
-							brRq : 'IN_PSET',
-							brRs : '',
-                            IN_PSET : [ {} ]
-						}
-						_this.send_api('BR_CM_CONSOLE_deleteLog', param, function(data) {
+					    var data = searchForm.getData();
+					
+                        var param = {
+                            brRq : 'IN_PSET',
+                            brRs : '',
+                            IN_PSET : [ data ]
+                        }
+						_this.send_api('BR_CM_CONSOLE_deleteLog', param, function(data2) {
 							Message.alert('삭제되었습니다.', function() {
 								searchForm.get("search").trigger("click");
 							});

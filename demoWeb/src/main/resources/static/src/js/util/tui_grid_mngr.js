@@ -91,7 +91,11 @@ class TuiGridMngr {
 			}
 			o_columns.push(tmp);
       }
-      this.options.el= pgm_mngr.get(grid_name)[0] /*타켓대상*/
+      console.log("aaaa");
+      console.log(pgm_mngr.get(grid_name));
+      pgm_mngr.get(grid_name).empty();
+      this.options.el= pgm_mngr.get(grid_name)[0]; /*타켓대상*/
+      
       this.options.columns= o_columns;
   }
   initCombo(br,param,option) {

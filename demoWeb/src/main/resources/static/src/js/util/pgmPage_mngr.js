@@ -281,6 +281,12 @@ class PgmPageMngr {
     	AjaxMngr.send_api_post_ajax(p_url, p_param, p_funtion,this.uuid);
     }
 
+    send_proxy_get(p_param, p_funtion){
+    	console.log('p_param=>'+p_param);
+    	console.log('p_funtion=>'+p_funtion);
+    	AjaxMngr.send_proxy_get(p_param, p_funtion,this.uuid);
+    }
+
 	send_proxy(p_param, p_funtion){
     	console.log('p_param=>'+p_param);
     	console.log('p_funtion=>'+p_funtion);

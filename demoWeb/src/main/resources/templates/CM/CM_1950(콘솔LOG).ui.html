@@ -1,9 +1,35 @@
 <div name="search_area">
 	<table>
 		<tr>
+            <td>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">서버</span> 
+                    <select class="form-control" data-ax-path="SERVER"  name="SERVER" style="width:140px;">
+                    </select>
+                  </div>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                  <div class="input-group">
+                    <span class="input-group-addon">LEVEL</span> 
+                    <select class="form-control" data-ax-path="LEVEL_STRING"  name="LEVEL_STRING" style="width:140px;">
+                    </select>
+                  </div>
+                </div>
+            </td>
 			<td><input type="button" name="search" value="조회" /></td>
 			<td><input type="button" name="del" value="삭제" /></td>
 		</tr>
 	</table>
 </div>
 <div name="grid"></div>
+
+
+
+<!--error 팝업-->
+<div name="popup_error" style="display: none">
+    <div name="grid_error"></div>
+</div>
+    

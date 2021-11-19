@@ -96,6 +96,23 @@
 
                         });
                         break;
+
+                    case "del":		
+                        Message.confirm('삭제하시겠습니까?', function() {
+                            var data = searchForm.getData();
+                        
+                            var param = {
+                                brRq : 'IN_PSET',
+                                brRs : '',
+                                IN_PSET : [ data ]
+                            }
+                            _this.send_api('BR_CM_BATCH_deleteJobLog', param, function(data2) {
+                                Message.alert('삭제되었습니다.', function() {
+                                    searchForm.get("search").trigger("click");
+                                });
+                            });
+                        });
+                        break;
 					}
 				});
 			});

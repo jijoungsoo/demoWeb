@@ -237,16 +237,16 @@
                         for (var i = 0; i < data.length; i++) {
                             var row = data[i];
                             in_data.push({
-                                JOB_ID : row.JOB_ID
+                                JOB_SEQ : row.JOB_SEQ
                             });
                         }
                         Message.confirm('삭제하시겠습니까?', function() {
                             var param = {
-                                brRq : 'IN_DATA',
+                                brRq : 'IN_PSET',
                                 brRs : '',
-                                IN_DATA : in_data
+                                IN_PSET : in_data
                             }
-                            _this.send_api('BR_CM_BATCH_removeJob', param, function(data) {
+                            _this.send_api('BR_CM_BATCH_deleteJob', param, function(data) {
                                 if(data) {
                                     Message.alert('삭제되었습니다.', function() {
                                         searchForm.get("search").trigger("click");
@@ -259,6 +259,7 @@
                         break;
 					}
 				});
+                searchForm.get("search").trigger("click");
 			});
 		});
 	</script>
