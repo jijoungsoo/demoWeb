@@ -48,8 +48,8 @@
 	border:solid 0px red;
     position: relative;
     display: block;
-    padding: 13px 15px;
-    height:50px;
+    padding: 2px 15px;
+    height:30px;
     color: #adb5bd;
     outline-width: 0;
     transition: all .3s ease-out;
@@ -96,11 +96,11 @@
 
 
 .sidebar-nav .metismenu ul div {
-    padding: 10px 15px 10px 30px;
+    padding: 5px 15px 10px 30px;
 }
 
 .sidebar-nav .metismenu ul ul div {
-    padding: 10px 15px 10px 45px;
+    padding: 5px 15px 10px 45px;
 }
 
 .sidebar-nav .metismenu div:hover,

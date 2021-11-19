@@ -187,6 +187,15 @@ implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
     //D:\liquibase-4.5.0
     implementation 'org.liquibase:liquibase-core:4.5.0'
 
+
+
+    //elk 설치
+    // https://mvnrepository.com/artifact/net.logstash.logback/logstash-logback-encoder
+    /*
+    implementation group: 'net.logstash.logback', name: 'logstash-logback-encoder', version: '7.0'
+    */
+
+
 }
 
 test {

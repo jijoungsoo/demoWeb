@@ -4,13 +4,11 @@
 <!-- 여기 변수명을 가져다 쓰려고 한다.--> 
   <property resource="application.yaml"/>
 
-
+<!--
   <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <!-- rollover daily -->
       <fileNamePattern>d:/logs/demoWeb/apilog-%d{yyyy-MM-dd}.%i.txt.zip</fileNamePattern>
       <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-        <!-- or whenever the file size reaches 100MB -->
         <maxFileSize>100MB</maxFileSize>
       </timeBasedFileNamingAndTriggeringPolicy>
     </rollingPolicy>
@@ -18,18 +16,44 @@
       <pattern>%d{HH:mm:ss.SSS}-%green(%-5level)-%logger{36} - %msg%n</pattern>
     </encoder>
   </appender>
-
+-->
+<!--
   <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     <layout class="ch.qos.logback.classic.PatternLayout">
-    <!--  로그 출력정보 https://goddaehee.tistory.com/206 -->
+    
       <Pattern>%d{HH:mm:ss.SSS}-%green(%-5level)-%logger{36} - %msg%n</Pattern>
     </layout>
   </appender>
+  -->
+
+  <!-- logstash 4560포트 설정에 맞춰 설정 -->
+  <!--
+<appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+    <destination>192.168.0.13:5000</destination>
+    <encoder class="net.logstash.logback.encoder.LogstashEncoder"></encoder>
+</appender>
+-->
+<!--
+ <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+    <connectionSource class="ch.qos.logback.core.db.JNDIConnectionSource">
+      <jndiLocation>java:comp/env/jdbc/logging</jndiLocation>
+    </connectionSource>
+  </appender>
+-->
+
+   <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+    <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
+      <driverClass>org.postgresql.Driver</driverClass>
+      <url>jdbc:postgresql://192.168.0.13:5432/stockweb</url>
+      <user>postgres</user>
+      <password>POSTGRES</password>
+    </connectionSource>
+  </appender>
 
 
+  <!--
   <appender name="FLOG" class="ch.qos.logback.core.rolling.RollingFileAppender">
     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-      <!-- rollover daily -->
       <fileNamePattern>d:/logs/demoWeb/flonetd/flog-%d{yyyy-MM-dd}.txt.zip</fileNamePattern>
 
     </rollingPolicy>
@@ -38,7 +62,7 @@
       <pattern>%5p [%d] %msg%n</pattern>
     </encoder>
   </appender>
-  
+  -->
 
   <!-- Loggers -->
   <logger name="org.springframework.core">
@@ -62,8 +86,10 @@
 
   </logger>
   <logger name="java.sql">
+  <!--
     <appender-ref ref="ROLLING"/>
     <appender-ref ref="STDOUT"/>
+    -->
     <level value="info"/>
 
   </logger>
@@ -71,8 +97,10 @@
 
   <!-- SQL문만을 로그로 남기며, PreparedStatement일 경우 관련된 argument 값으로 대체된 SQL문이 보여진다. -->
   <logger name="jdbc.sqlonly" additivity="false">
+  <!--
     <appender-ref ref="ROLLING"/>
     <appender-ref ref="STDOUT"/>
+    -->
     <level value="info"/>
 
 
@@ -90,13 +118,17 @@
 
   </logger>
   <logger name="jdbc.resultsettable" additivity="false">
+  <!--
     <appender-ref ref="ROLLING"/>
     <appender-ref ref="STDOUT"/>
+    -->
     <level value="debug"/>
 
   </logger>
   <logger name="jdbc.connection" additivity="false">
+  <!--
     <appender-ref ref="ROLLING"/>
+    -->
     <level value="fetal"/>
   </logger>
   <logger name="jdbc.audit" additivity="false">
@@ -106,8 +138,9 @@
   </logger>
 
   <logger name="flunetd"  additivity="false" >
+  <!--
     <appender-ref ref="FLOG"/>
-
+-->
 
     <level value="info"/>
   </logger>
@@ -126,8 +159,11 @@
 -->
     
   <root level="info">
+  <!--
     <appender-ref ref="ROLLING"/>
     <appender-ref ref="STDOUT"/>
+-->
+      <appender-ref ref="DB"/>
   </root>
 </configuration>
 

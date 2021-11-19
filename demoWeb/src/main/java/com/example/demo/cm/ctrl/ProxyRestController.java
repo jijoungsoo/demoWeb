@@ -57,6 +57,7 @@ public class ProxyRestController {
 
 		HttpEntity<?> entity = new HttpEntity<>(jsonParam, headers);
 		UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
+        System.out.println("url=>"+url);
 
 		try {
 			ResponseEntity<String> resultMap = restTemplate.exchange(uriBuilder.build().toString(), HttpMethod.POST,

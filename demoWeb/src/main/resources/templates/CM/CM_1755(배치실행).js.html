@@ -95,16 +95,20 @@ $(document).ready(function(){
 				//console.log(el);
 				switch (el.target.name) {
 				case 'run':
-					var param = {
-						brRq : 'IN_DATA',
-						brRs : 'OUT_DATA',
-						IN_DATA : [ {} ]
+					var param2 = {
+						url : 'http://192.168.0.13:7090/schedulerTrigger'
+                        , param : {
+                            JOB:'tutorialJob'
+                        }
 					}
-					grid.loadData('BR_CM_USER_FIND', param, function(data) {
-						console.log(data);
-						//gridLoadData에서 자동으로 로드됨..
-
-					});
+                    _this.showProgress();
+                    _this.send_proxy(param2, function(data) {
+                        _this.hideProgress();
+                        if (data.OUT_RSET) {
+                            batchForm.setDataAll(data.OUT_RSET[0]);
+                        
+                        }
+                    });	
 					break;
 			    }
 			});

@@ -141,7 +141,7 @@ class MetismenuMngr {
 
 				$("#fav_menu").empty();
 			    $("#fav_menu").append(tmp);
-			    _this.fav_metismenu_resync();
+			    //_this.fav_metismenu_resync();
 			   	_this.targetClickEvent();
 			    _this.fav_menu_button_trigger();
 			    

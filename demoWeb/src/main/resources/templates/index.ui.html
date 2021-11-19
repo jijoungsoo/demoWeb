@@ -51,26 +51,30 @@
 		</div>
 	</div>
 	<div data-dock-panel='{dock:"left", split:true, width: 300, minWidth: 50}' style="background-color:#212529">
-	<nav class="sidebar-nav">
-		<ul class="metismenu" id='metismenu_fav' >		
-				<li class="mm-active"><div class="has-arrow" ><a href="#"><span class="fa fa-fw fa-star"></span>줄겨찾기</a></div>
+
+        <button data-toggle="onoffcanvas" data-target="#side-canvas">즐겨찾기 열기</button>
+        <div class="onoffcanvas" id="side-canvas" style="background-color:#222222">
+
+            <button data-toggle="onoffcanvas" data-target="#side-canvas">즐겨찾기 닫기</button>
 				<ul id='fav_menu'>
 				</ul>
 <script id="fav_menu-template" type="text/x-handlebars-template">
 {{#favMenuList}}
 <li>
-	<div>
-		<a href="#" class="fav_depth_left"
+	<a href="#" class="fav_depth_left"
 					fav_no="{{FAV_NO}}"><span class="fa fa-fw fa-star"></span></a>
-		<a href="#" class="js-open-target fav_depth_right"
+	<a href="#" class="js-open-target fav_depth_right"
 					data-target="{{PGM_ID}}" 
 					data-title="{{MENU_NM}}">{{MENU_NM}}</a>
-	</div>
 </li>
 {{/favMenuList}}
 </script>
-			</li/>
 		</ul>	
+
+
+        </div>
+	<nav class="sidebar-nav">
+	
 		<div id="left_menu">
 		</div>
 <script id="left_menu-template" type="text/x-handlebars-template">
