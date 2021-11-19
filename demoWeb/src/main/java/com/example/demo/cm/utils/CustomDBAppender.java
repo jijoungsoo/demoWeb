@@ -5,8 +5,14 @@ import ch.qos.logback.classic.db.DBAppender;
 import ch.qos.logback.classic.db.DBHelper;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import java.lang.reflect.Method;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.net.UnknownHostException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Enumeration;
+
 import ch.qos.logback.classic.db.names.ColumnName;
 import ch.qos.logback.classic.db.names.DBNameResolver;
 import ch.qos.logback.classic.db.names.DefaultDBNameResolver;
@@ -38,6 +44,15 @@ public class CustomDBAppender extends DBAppender {
     static final int EVENT_ID_INDEX = 15;
 
     static final StackTraceElement EMPTY_CALLER_DATA = CallerData.naInstance();
+
+    static  String serverIp = "";
+    static{
+        try {
+            serverIp = InetAddress.getLocalHost().getHostAddress();
+          } catch (UnknownHostException  e) {
+          
+        } 
+    }
 
 
     public void setDbNameResolver(DBNameResolver dbNameResolver) {
@@ -155,7 +170,7 @@ public class CustomDBAppender extends DBAppender {
         return sqlBuilder.toString();
     }
 
-    static String buildInsertSQL(DBNameResolver dbNameResolver) {
+    static String buildInsertSQL(DBNameResolver dbNameResolver) {      
         StringBuilder sqlBuilder = new StringBuilder("INSERT INTO ");
         sqlBuilder.append(dbNameResolver.getTableName(TableName.LOGGING_EVENT)).append(" (");
         sqlBuilder.append(dbNameResolver.getColumnName(ColumnName.TIMESTMP)).append(", ");
@@ -172,8 +187,11 @@ public class CustomDBAppender extends DBAppender {
         sqlBuilder.append(dbNameResolver.getColumnName(ColumnName.CALLER_CLASS)).append(", ");
         sqlBuilder.append(dbNameResolver.getColumnName(ColumnName.CALLER_METHOD)).append(", ");
         sqlBuilder.append(dbNameResolver.getColumnName(ColumnName.CALLER_LINE)).append(", ");
-        sqlBuilder.append("server").append(") ");
-        sqlBuilder.append("VALUES (?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'demoWeb')");
+        sqlBuilder.append("server").append(", ");
+        sqlBuilder.append("server_ip").append(") ");
+        sqlBuilder.append("VALUES (?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'demoWeb','"+serverIp+"')");
+
+       
         return sqlBuilder.toString();
     }
 }

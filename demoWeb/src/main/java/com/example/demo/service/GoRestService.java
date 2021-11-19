@@ -292,7 +292,7 @@ public class GoRestService {
     }
 
     public String callApiBizActorMap(String br, Map<String, Object> inDs) throws ResourceAccessException, BizException {
-        log.info("br=>" + br);
+        //log.info("br=>" + br);
 
         HashMap<String, Object> input_msg = new HashMap<String, Object>();
         input_msg.put("actID", br);
@@ -367,7 +367,7 @@ public class GoRestService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         // log.info("jsonInString last =>" + jsonInString);
         HttpEntity<?> entity = new HttpEntity<>(jsonInString, headers);
-        log.info("ymlC.getApiurlbizactor() =>" + ymlC.getApiurlbizactor());
+        //log.info("ymlC.getApiurlbizactor() =>" + ymlC.getApiurlbizactor());
         String url = ymlC.getApiurlbizactor();
         UriComponentsBuilder uriBuilder = UriComponentsBuilder.fromHttpUrl(url);
 

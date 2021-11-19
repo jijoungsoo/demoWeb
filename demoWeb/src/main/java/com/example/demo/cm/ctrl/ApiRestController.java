@@ -115,9 +115,9 @@ public class ApiRestController {
 	@PostMapping(path = "/api/{br}", consumes = "application/json", produces = "application/json")
 	public ResponseEntity<Object> callAPI(@PathVariable("br") String br, @RequestBody Map<String, Object> jsonInString,
 			Authentication authentication, HttpSession session) throws Exception {
-		log.info("br=>" + br);
+		//log.info("br=>" + br);
 
-		log.info("jsonInString=>" + jsonInString);
+		//log.info("jsonInString=>" + jsonInString);
 		String jsonOutString = null;
 
 		Map<String, Object> inDS = pjtU.makeLSessionMap(br, jsonInString, authentication);
