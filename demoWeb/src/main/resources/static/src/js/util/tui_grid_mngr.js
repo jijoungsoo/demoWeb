@@ -18,7 +18,7 @@ class TuiGridMngr {
         ,minBodyHeight: 30
         ,copyOptions: {
           useFormattedValue: true,   /*셀의 formatter와 함께 텍스트를 복사한다.*/
-          useListItemText: true    /*선택 또는 체크 박스 셀의 값을 listItem의 value가 아닌 text로 복사한다.*/
+          useListItemText: true,    /*선택 또는 체크 박스 셀의 값을 listItem의 value가 아닌 text로 복사한다.*/
           /*,customValue: 'custom'   문자열 또는 함수로 변경된 값을 복사한다.*/
         }
         ,hideLoadingBar: true /*loading 바를 숨김  별도 로딩바를 구현했으므로 필요없다.*/
@@ -28,8 +28,10 @@ class TuiGridMngr {
         ,checkbox: false
         ,showDummyRows: true   /*높이만큼 비어있으면 비어있는 컨텐츠를 보여준다.*/
         ,pageable: false /*커스터마이징 서버에 보낼때 페이징 파라미터를 달고 갈것인지 여부*/
-        ,pageSize: 300   /*페이징 처리를 한다면 한화면에 몇개보일지 여부*/
-       
+        ,pageSize: 300   /*페이징 처리를 한다면 한화면에 몇개보일지 여부*/ 
+        ,columnOptions: {  /*컬럼 너비 조절 */
+            resizable: true
+        }
       };
       this.options = $.extend(basic_options, p_options);
       var o_columns = [];
@@ -144,6 +146,8 @@ class TuiGridMngr {
   }
   build()  {
     var tmp =this.options;
+    console.log('grid->option');
+      console.log(tmp);
       const grid = new tui.Grid(tmp);
       tui.Grid.applyTheme('striped', {
         frozenBorder: {

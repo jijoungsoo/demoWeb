@@ -35,8 +35,13 @@ console.log("Time: "+moment(myDate).format("hh:mm A"));
    	        } else if(this.source=='YYYYMMDD'){
    	        	this.el.innerText = moment(props.value,'YYYYMMDD').format(this.format);
    	        } else if(this.source=='TIME'){
-   	        	var tmp = new Date(props.value);
-   	        	this.el.innerText = moment(tmp).format(this.format);
+                if(!isNaN(props.value)){
+                    var tmp = new Date(Number(props.value));
+                    this.el.innerText = moment(tmp).format(this.format);
+                } else {
+                    this.el.innerText = props.value;    
+                }
+   	        	
    	        } else {
    	        	this.el.innerText = props.value;
    	        }

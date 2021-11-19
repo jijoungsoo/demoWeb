@@ -41,7 +41,7 @@
   </appender>
 -->
 
-   <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
+   <appender name="DB" class="com.example.demo.cm.utils.CustomDBAppender">
     <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
       <driverClass>org.postgresql.Driver</driverClass>
       <url>jdbc:postgresql://192.168.0.13:5432/stockweb</url>

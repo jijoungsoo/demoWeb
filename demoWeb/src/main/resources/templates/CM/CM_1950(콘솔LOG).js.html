@@ -1,0 +1,148 @@
+<script>
+$(document).ready(function(){
+	var CM_1900 = new PgmPageMngr('[[${uuid}]]');
+    CM_1900.init(function(p_param) {
+			var _this = CM_1900;
+			var searchForm = new FormMngr(_this, "search_area");
+			const grid = new TuiGridMngr(_this, 'grid', {
+				editable : false,
+				showRowStatus : false,
+				rowNum : true,
+				checkbox : false,
+				bodyHeight : 700,
+				showDummyRows : false
+			},
+			[ 			
+			{
+				header : 'TIMESTMP',
+				name : 'TIMESTMP',
+                renderer : {
+					type: datetimeRenderer,
+					options : {
+						format : 'YYYY-MM-DD HH:mm:ss',
+						source : 'TIME'
+					}
+				},
+				width : 140,
+				sortable : true
+            }, {
+				header : 'LEVEL',
+				name : 'LEVEL_STRING',
+				width : 80,
+				sortable : true,
+				editor : 'text'
+			}, {
+				header : 'FILENAME',
+				name : 'CALLER_FILENAME',
+				width : 200,
+				sortable : true		
+			},{
+				header : 'LINE',
+				name : 'CALLER_LINE',
+				width : 60,
+				sortable : true,
+				align : "right",
+			},{
+                header : 'METHOD',
+                name : 'CALLER_METHOD',
+                width : 200,
+                resizable : false,
+                sortable : true
+            }, {
+				header : 'FORMATTED_MESSAGE',
+				name : 'FORMATTED_MESSAGE',
+				width : 600,
+				sortable : true,
+                align : "left"			
+            },{
+				header : 'EVENT_ID',
+				name : 'EVENT_ID',
+				width : 100,
+				sortable : true,
+				align : "center"
+			},{
+				header : 'CALLER_CLASS',
+				name : 'CALLER_CLASS',
+				width : 200,
+				sortable : true
+			}, {
+				header : 'LOGGER_NAME',
+				name : 'LOGGER_NAME',
+				width : 200,
+				sortable : true,
+				align : "center"
+			}, {
+				header : 'THREAD_NAME',
+				name : 'THREAD_NAME',
+				width : 140,
+				resizable : false,
+				sortable : true
+			}, {
+				header : 'REFERENCE_FLAG',
+				name : 'REFERENCE_FLAG',
+				width : 140,
+				sortable : true			
+			} , {
+				header : 'ARG0',
+				name : 'ARG0',
+				width : 100,
+				sortable : true			
+			} , {
+				header : 'ARG1',
+				name : 'ARG1',
+				width : 100,
+				sortable : true			
+			} , {
+				header : 'ARG2',
+				name : 'ARG2',
+				width : 100,
+				sortable : true			
+			}  , {
+				header : 'ARG3',
+				name : 'ARG3',
+				width : 100,
+				sortable : true			
+			}
+        
+            ]
+			);
+
+
+			grid.build();
+
+			searchForm.addEvent("click","input[type=button]", function(el) {
+				switch (el.target.name) {
+				case 'search':
+					var param = {
+						brRq : 'IN_PSET',
+						brRs : 'OUT_RSET',
+						IN_PSET : [ {} ]
+					}
+					grid.loadData('BR_CM_CONSOLE_retrieveLog', param, function(data) {
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+					
+					});
+					break;
+				case "del":		
+                    
+
+					Message.confirm('삭제하시겠습니까?', function() {
+						var param = {
+							brRq : 'IN_PSET',
+							brRs : '',
+                            IN_PSET : [ {} ]
+						}
+						_this.send_api('BR_CM_CONSOLE_deleteLog', param, function(data) {
+							Message.alert('삭제되었습니다.', function() {
+								searchForm.get("search").trigger("click");
+							});
+						});
+					});
+					break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+		});
+	});
+</script>
