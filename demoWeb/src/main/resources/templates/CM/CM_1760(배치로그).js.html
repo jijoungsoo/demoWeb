@@ -16,7 +16,15 @@
                 [ 	{
                         header: 'JOB_EXECUTION_ID',
                         name: 'JOB_EXECUTION_ID',
-                        width: 100,
+                        width: 160,
+                        resizable: false,
+                        sortable: true,
+                        align:"right",
+                        sortingType: 'desc'
+                    },{
+                        header: 'JOB_INSTANCE_ID',
+                        name: 'JOB_INSTANCE_ID',
+                        width: 160,
                         resizable: false,
                         sortable: true,
                         align:"right",
@@ -34,12 +42,12 @@
                     },{
                         header: 'BR명',
                         name: 'BR_NM',
-                        width : 200,
+                        width : 300,
                         sortable : true
                     },{
                         header: 'Job 실행주기',
                         name: 'JOB_EXEC_TIME',
-                        width : 200,
+                        width : 300,
                         sortable : true		
                     },{
                         header: '개발자',
@@ -73,12 +81,28 @@
                 );
                 grid.build();
 	
-				grid.on('click', (ev) => {
-					if (ev.rowKey >=0) {
-						var row_data=grid.getRow(ev.rowKey);
-						console.log(row_data);
-					}
-				});
+                grid.on('click', (ev) => {
+                    if (ev.rowKey >=0) {
+                        var row_data=grid.getRow(ev.rowKey);
+                        console.log(row_data);
+
+                        var param = {
+                            JOB_INSTANCE_ID: row_data.JOB_INSTANCE_ID
+                        }
+                        var popup = new PopupManger(_this, 'CM_1755', {
+                                width: 1100,
+                                height: 960,
+                                title: "배치실행"
+                            },
+                            param
+                        );
+                        popup.open(function (data) {
+                            if (data) {
+
+                            }
+                        });                            
+                    }
+                });
 	
 				searchForm.addEvent("click", "input[type=button]", function(el) {
 					//console.log(el);
@@ -115,6 +139,8 @@
                         break;
 					}
 				});
+
+                searchForm.get("search").trigger("click");
 			});
 		});
 	</script>

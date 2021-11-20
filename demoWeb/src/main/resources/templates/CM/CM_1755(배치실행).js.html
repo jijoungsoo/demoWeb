@@ -4,92 +4,112 @@ $(document).ready(function(){
         CM_1755.init(function(p_param) {
 			var _this = CM_1755;
 			var batchForm = new FormMngr(_this, "batch_area");
+            var batchResultForm = new FormMngr(_this, "batch_area_result");
+            
 		    $('[data-ax5formatter]').ax5formatter();
-                
-            var param = {
-                brRq: 'IN_PSET',
-                brRs: 'OUT_RSET',
-                IN_PSET: [{
-                    JOB_SEQ : p_param.param.JOB_SEQ
-                }]
-            }
-            _this.showProgress();
-            _this.send_socket('BR_CM_BATCH_retrieveJob', param, function(data) {
-                _this.hideProgress();
-                if (data.OUT_RSET) {
-                    batchForm.setDataAll(data.OUT_RSET[0]);
-                 
-                }
-            });	
-
+           
 			const grid = new TuiGridMngr(_this, 'grid', {
 				editable : false,
 				showRowStatus : false,
 				rowNum : true,
 				checkbox : false,
-				bodyHeight: 300
+				bodyHeight: 100,
+                header: {
+                    height: 60,
+                    complexColumns: [
+                    {
+                        header: 'Count',
+                        name: 'mergeColumn1',
+                        childNames: ['COMMIT_COUNT','READ_COUNT','FILTER_COUNT', 'WRITE_COUNT' , 'READ_SKIP_COUNT','WRITE_SKIP_COUNT','PROCESS_SKIP_COUNT','ROLLBACK_COUNT']
+                    }                   
+                    ]
+                },
 			},
 			[ {
-				header : 'Step 아이디',
-				name : 'USER_NO',
-				width : 100,
+				header : 'Step Id',
+				name : 'STEP_EXECUTION_ID',
+				width : 60,
                 align : "center"
 			}, {
 				header : 'Step 이름',
-				name : 'USER_NM',
+				name : 'STEP_NAME',
 				width : 200,
                 align : "center"
 			},{
+				header : 'Commit',
+				name : 'COMMIT_COUNT',
+				width : 60,
+				align : "center"
+			},{
 				header : 'Read',
-				name : 'SNS_GUBUN',
-				width : 100,
+				name : 'READ_COUNT',
+				width : 60,
 				align : "center"
 			},{
-				header : 'Write',
-				name : 'SNS_ID',
-				width : 100,
-				align : "center"
-			},{
-				header : 'Read Skip',
-				name : 'USER_PWD',
-				width : 300,
+                header : 'Filter',
+                name : 'FILTER_COUNT',
+                width : 60,
                 align : "center"
-			},{
-				header : 'Process',
-				name : 'EMAIL',
-				width : 140,
-                align : "center"
-			},{
-                header: 'Write',
-                name: 'USE_YN',
-                formatter: 'listItemText',
-                width : 80,
+            }, {
+                header : 'Write',
+                name : 'WRITE_COUNT',
+                width : 60,
                 align : "center"
             },{
-                header : 'Total Skip',
-                name : 'RMK',
-                width : 140,
-                align : "center"
-            }, {
-                header : 'Commit',
-                name : 'LST_ACC_DTM',
-                width : 140,
-                align : "center"
-            }, {
-				header : 'Rollback',
-				name : 'CRT_DTM',
+				header : 'Read Skip',
+				name : 'READ_SKIP_COUNT',
 				width : 100,
+                align : "center"
+			},{
+                header: 'Write Skip',
+                name: 'WRITE_SKIP_COUNT',
+                width : 100,
+                align : "center"
+            },{
+				header : 'Process Skip',
+				name : 'PROCESS_SKIP_COUNT',
+				width : 100,
+                align : "center"
+			}, {
+				header : 'Rollback',
+				name : 'ROLLBACK_COUNT',
+				width : 60,
 				sortable : true,
 				align : "center"
 			}, {
 				header : '종료시 상태',
-				name : 'UPDT_DTM',
+				name : 'EXIT_CODE',
 				width : 100,
 				sortable : true,
 				align : "center"
 			} ]
 			);
 			grid.build();
+
+            function getDataBind(job_seq,job_instance_id){
+     
+                var param = {
+                    brRq: 'IN_PSET',
+                    brRs: 'OUT_RSET,OUT_REST_STEP_EXECUTION',
+                    IN_PSET: [{
+                        JOB_SEQ : job_seq,
+                        JOB_INSTANCE_ID : job_instance_id
+                    }]
+                }
+                _this.showProgress();
+                _this.send_socket('BR_CM_BATCH_retrieveJob', param, function(data) {
+                    _this.hideProgress();
+                    if (data.OUT_RSET) {
+                        batchForm.setDataAll(data.OUT_RSET[0]);
+                        batchResultForm.setDataAll(data.OUT_RSET[0]);
+                        
+                    }
+                    if (data.OUT_REST_STEP_EXECUTION) {
+                        grid.resetData(data.OUT_REST_STEP_EXECUTION);
+                    }
+                });	
+
+            }
 
 			batchForm.addEvent("click", "input[type=button]", function(el) {
 				//console.log(el);
@@ -105,14 +125,15 @@ $(document).ready(function(){
                     _this.showProgress();
                     _this.send_proxy_get(param2, function(data) {
                         _this.hideProgress();
-                        if (data.OUT_RSET) {
-                            batchForm.setDataAll(data.OUT_RSET[0]);
-                        
+                        if(data.body.statusCode=="200"){
+                            getDataBind(p_param.param.JOB_SEQ,data.body.jobId);
                         }
                     });	
 					break;
 			    }
 			});
+
+            getDataBind(p_param.param.JOB_SEQ,p_param.param.JOB_INSTANCE_ID);
 		});
 	});
 </script>
