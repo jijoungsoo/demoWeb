@@ -5,28 +5,19 @@
 		BINANCE_0255.init(function(p_param) {
 			var _this = BINANCE_0255;
 			var searchForm = new FormMngr(_this, "search_area");
-			//value="BNBBTC"
-			//searchForm.setData('SYMBOL','BNBBTC');
 			const grid = new TuiGridMngr(_this,'grid',{
 				  editable: false
 				  ,showRowStatus: false
 				  ,rowNum: true
 				  ,checkbox: false
 				  ,pageable: false
-				  /*
-				  ,bodyHeight : 700
-				  ,width : 500
-				  */
-				  
-				  
-				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
 				  }
 			,[
-					{
+                    {
 					   header: 'SYMBOL',
 					   name: 'SYMBOL',
 					   width: 200,
-					   align : 'left',
+					   align : 'center',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc',
@@ -34,10 +25,26 @@
 							type : 'text',
 							showApplyBtn : true,
 							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+						}
 					},{
 					   header: 'PRICE',
 					   name: 'PRICE',
+					   width: 200,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                       renderer : {
+					      type: commaRenderer
+					   },
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}
+					},{
+					   header: 'MAKER_COMMISSION',
+					   name: 'MAKER_COMMISSION',
 					   width: 200,
 					   align : 'right',
 					   sortable : true,
@@ -47,8 +54,27 @@
 							type : 'text',
 							showApplyBtn : true,
 							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
-					}
+						}
+					},{
+					   header: 'TAKER_COMMISSION',
+					   name: 'TAKER_COMMISSION',
+					   width: 200,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+					   filter : {
+							type : 'text',
+							showApplyBtn : true,
+							showClearBtn : true
+						}					
+					},{
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        width : 200,
+                        sortable : true,
+                        align : "center"
+                    }
 				]
 			);
 			grid.build();
@@ -56,22 +82,37 @@
 			searchForm.addEvent("click","input[type=button]",function(el){
 			//console.log(el);
 				switch(el.target.name){
-			case 'search':
-				var data = searchForm.getData();
-				console.log('data');
-				console.log(data);
-				var param ={
-					 brRq : 'IN_DATA'
-					,brRs : 'OUT_RSET'
-					,IN_DATA: [data]
-				}
-			
-				grid.loadData('BR_BINANCE_MARKET_GET_API_V3_SymbolPriceTicker', param, function(data) {
-					if (data) {
-					}
-				});
-				
-				break;
+                case 'search':
+                    var data = searchForm.getData();
+                    console.log('data');
+                    console.log(data);
+                    var param ={
+                        brRq : 'IN_DATA'
+                        ,brRs : 'OUT_RSET'
+                        ,IN_DATA: [data]
+                    }
+                
+                    grid.loadData('BR_BINANCE_retrieveBinanceList', param, function(data) {
+                        if (data) {
+                        }
+                    });
+                    
+                    break;
+                case 'sync':
+                    Message.confirm('싱크하시겠습니까?', function() {
+                        _this.showProgress();
+                        var param = {
+                            brRq : '',
+                            brRs : ''
+                        }
+                        _this.send_api('BR_BINANCE_syncSymbol', param, function(data) {
+                            _this.hideProgress();
+                            Message.alert('싱크되었습니다.', function() {
+                                searchForm.get("search").trigger("click");
+                            });
+                        });                    
+                    });                    
+                    break;
 				}
 			});
 			searchForm.get("search").trigger("click");
