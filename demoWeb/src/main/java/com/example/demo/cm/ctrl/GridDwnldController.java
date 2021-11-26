@@ -27,14 +27,14 @@ public class GridDwnldController {
     @Autowired
 	PjtUtil pjtU;
 
-    @RequestMapping(value = "/GRID_DWNLD/{br}", method = RequestMethod.POST, consumes = "application/json", produces="text/plain;Charset=UTF-8")
-    public void exceldownload(@PathVariable("br") String br, @RequestBody String jsonInString, HttpServletRequest req,
+    @RequestMapping(value = "/GRID_DWNLD/{fileName}", method = RequestMethod.POST, consumes = "application/json", produces="text/plain;Charset=UTF-8")
+    public void exceldownload(@PathVariable("fileName") String fileName, @RequestBody String jsonInString, HttpServletRequest req,
             HttpServletResponse res, Authentication authentication, HttpSession session) throws Exception {
-        //log.info("jsonInString=>" + jsonInString);
+        log.info("GRID_DWNLD==fileName=>" + fileName);
         try {
             
             IN_DS inDS= pjtU.JsonStringToObject(jsonInString, IN_DS.class);
-            ExportExcelVOList exl = new ExportExcelVOList(req, res);
+            ExportExcelVOList exl = new ExportExcelVOList(req, res,fileName);
             ArrayList<LinkedHashMap<String,Object>>  al= (ArrayList<LinkedHashMap<String,Object>>) inDS.get("IN_DATA");
             HSSFSheet st = exl.setDataToExcelList(al, "sheet0");
             exl.setSheetArray(0, st);

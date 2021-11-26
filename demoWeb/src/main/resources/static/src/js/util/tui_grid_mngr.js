@@ -32,6 +32,7 @@ class TuiGridMngr {
         ,columnOptions: {  /*컬럼 너비 조절 */
             resizable: true
         }
+        ,visibleTotalCnt: true 
       };
       this.options = $.extend(basic_options, p_options);
       var o_columns = [];
@@ -284,6 +285,15 @@ class TuiGridMngr {
 				}
 			_this.appendLoadData('all');
 		});  
+    } else {
+        if(this.options.visibleTotalCnt){
+            const page_element = `
+            <div>
+                (<span name='total_size'>0</span>)
+            </div>
+            `
+            $(this.options.el).append(page_element);
+        }
     }
 	
 	const context_menu_div = `
@@ -418,6 +428,8 @@ class TuiGridMngr {
       		 _this.curr_size  = _this.grid.getRowCount()
       		// _this.page_num   = data["__PAGING_INFO_OUT__"]["PAGE_NUM"]
 			  _this.page_num    = Math.ceil(_this.curr_size/_this.options.pageSize)			   
+      } else {
+        _this.total_size  = _this.grid.getRowCount()
       }
       progress.hideProgress();
       if(p_func){
@@ -425,12 +437,13 @@ class TuiGridMngr {
       }
         
 	    if(_this.options.pageable==false) {
-	    	return;
-	    }
-      _this.pgm_mngr.get("curr_size")[0].innerText=_this.curr_size;
-      _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
-      _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num);
-      _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
+	    	_this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
+	    } else {
+            _this.pgm_mngr.get("curr_size")[0].innerText=_this.curr_size;
+            _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
+            _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num);
+            _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
+        }
     }
     ,this.pgm_mngr.getId()
     )
@@ -659,11 +672,11 @@ class TuiGridMngr {
   		//return sum;
   		return this.grid.getSummaryValues(columnName);
   }
-  download(br ,p_param,func){
+  download(fileName ,p_param,func){
 	/*데이터를 서버로 올리고   그걸 다운로드 하자.
 	  이렇게 해야 다운로드 로그를 남길수있다.
 	*/
-	 var req_url = '/GRID_DWNLD/'+br;
+	 var req_url = '/GRID_DWNLD/'+fileName;
 	 $.ajax({
 	        url: req_url,
 	        method: 'POST',
@@ -720,4 +733,39 @@ class TuiGridMngr {
 	        }
 		});
 	}   
+    serverExcelDownload(fileName,cmd){
+        console.log(cmd);
+        var arr_header = {};
+        var arr_name = []
+        var arr_data = [];
+        let _this = this;
+        var data = _this.grid.getColumns();
+        for(var i=0;i<data.length;i++){
+            var name = data[i].name;
+            var header = data[i].header;
+            if(name !=undefined && name !='_ROW_STATUS'){
+                arr_header[name] = header
+                arr_name.push(name);
+            }
+        }
+        arr_data.push(arr_header);
+        var data = _this.grid.getData();
+        for (var i=0;i<data.length;i++){
+            var rowKey = data[i].rowKey
+            var row_data = {}
+            for (var j=0;j<arr_name.length;j++){
+                var columnName 	= arr_name[j];
+                var value 		= _this.grid.getFormattedValue(rowKey, columnName);
+                row_data[columnName]=value;
+            }
+            arr_data.push(row_data);
+        }
+        console.log(arr_data);
+        var param ={
+                brRq 		: 'IN_DATA'
+                ,brRs 		: ''
+                ,IN_DATA	: arr_data
+            }
+        _this.download(fileName ,param ,cmd);
+    }
 }

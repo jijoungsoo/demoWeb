@@ -15,16 +15,31 @@ class commaStRenderer {
     }
 
     render(props) {
+        //console.log(this.el);
+        //console.log(this.el);
+      
+        if(this.el.parentElement){
+            console.log(this.el.parentElement.getAttribute("data-column-name"));
+        }
    	    if(props.value){
    	     	var row_data=props.grid.getRow(props.rowKey);
 			var src_amt = row_data[this.src];
 			var tgt_amt = row_data[this.tgt];
+
+            if(!isNaN(src_amt)){
+                src_amt = Number(src_amt);
+            }
+
+            if(!isNaN(tgt_amt)){
+                tgt_amt = Number(tgt_amt);
+            }
 			
    	    	var tmp=String(props.value);
             var tmp2 = PjtUtil.numberComma(tmp);
             this.el.innerText = tmp2;
-            
+     
             if(src_amt<tgt_amt){
+        
             	this.el.style="color:#f10808";
             } else if(src_amt>tgt_amt){
             	this.el.style="color:#0080ff";

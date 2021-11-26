@@ -57,7 +57,7 @@ server:
         development: true
   tomcat:
     uri-encoding: UTF-8   
-spring.mandatory-file-encoding: UTF-8
+spring:mandatory-file-encoding: UTF-8
 ####HTML 한글깨짐을 고칠수가 없었다.
 
 logging:
@@ -147,3 +147,4 @@ spring.session:
 spring.liquibase: 
     change-log: classpath:db/liquibase/db.changelog-master.xml
     enabled: false
+

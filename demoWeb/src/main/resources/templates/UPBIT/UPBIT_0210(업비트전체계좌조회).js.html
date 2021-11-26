@@ -120,13 +120,14 @@ $(document).ready(function(){
                         var row_data=grid.getRow(ev.rowKey);
                         console.log(row_data);
 
+                        var tmp = "KRW-"+row_data.CURRENCY;
                         var param = {
-                            MARKET: row_data.CURRENCY
+                            MARKET: tmp
                         }
                         var popup = new PopupManger(_this, 'UPBIT_0215', {
                                 width: 1800,
                                 height: 1000,
-                                title: "업비트주문가능정보["+row_data.CURRENCY+"]"
+                                title: "업비트주문가능정보["+tmp+"]"
                             },
                             param
                         );

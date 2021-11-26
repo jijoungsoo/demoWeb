@@ -1,9 +1,9 @@
 
 <script>
 	$(document).ready(function(){
-		var BINANCE_0255 = new PgmPageMngr('[[${uuid}]]');
-		BINANCE_0255.init(function(p_param) {
-			var _this = BINANCE_0255;
+		var BINANCE_0110 = new PgmPageMngr('[[${uuid}]]');
+		BINANCE_0110.init(function(p_param) {
+			var _this = BINANCE_0110;
 			var searchForm = new FormMngr(_this, "search_area");
 			//value="BNBBTC"
 			//searchForm.setData('SYMBOL','BNBBTC');
@@ -21,6 +21,7 @@
                             header: '매수시점-단가',
                             name: 'mergeColumn1',
                             childNames: [
+                                'BTN_UPBIT_SELL',
                             'FST_UPBIT_MARKET','FST_UPBIT_PRICE'
                             ,'FST_BINANCE_PRICE','FST_GAP','FST_PER'
                             ]
@@ -73,7 +74,21 @@
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc'
-					},{
+					},  {
+                        header : 'UPBIT_매도/매수',
+                        name : 'BTN_UPBIT_SELL',
+                        renderer : {
+                            type: buttonRenderer,
+                            options : {
+                                txt : '매도/매수',
+                                fn : function(el,data){
+                                }
+                            }
+                        },
+                        width : 130,
+                        sortable : true,
+                        align : "center"
+                    },{
 					   header: '코인',
 					   name: 'FST_UPBIT_MARKET',
 					   width: 140,
@@ -344,8 +359,8 @@
                         renderer : {
                             type: commaStRenderer,
                             options : {
-                                src : 'LST_LST_SUM_AMT',
-                                tgt : 'LST_FST_SUM_AMT'
+                                src : 'LST_FST_SUM_AMT',
+                                tgt : 'LST_LST_SUM_AMT'
                             }
                         },
                     },{
@@ -359,8 +374,8 @@
                         renderer : {
                             type: commaStRenderer,
                             options : {
-                                src : 'LST_LST_SUM_AMT',
-                                tgt : 'LST_FST_SUM_AMT'
+                                src : 'LST_FST_SUM_AMT',
+                                tgt : 'LST_LST_SUM_AMT'
                             }
                         },
 					},{
@@ -374,8 +389,8 @@
                         renderer : {
                             type: commaStRenderer,
                             options : {
-                                src : 'LST_LST_SUM_AMT',
-                                tgt : 'LST_FST_SUM_AMT'
+                                src : 'FST_FST_SUM_AMT',
+                                tgt : 'LST_LST_SUM_AMT'
                             }
                         },
 					},{
@@ -389,14 +404,52 @@
                         renderer : {
                             type: commaStRenderer,
                             options : {
-                                src : 'LST_LST_SUM_AMT',
-                                tgt : 'LST_FST_SUM_AMT'
+                                src : 'FST_FST_SUM_AMT',
+                                tgt : 'LST_LST_SUM_AMT'
                             }
                         },
-					}
+					},{
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        renderer : {
+                            type : datetimeRenderer,
+                            options : {
+                                format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+                                ,source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+                            }
+                        },
+                        width : 120,
+                        sortable : true,
+                        align : "center"
+                    }
 				]
 			);
 			grid.build();
+
+            grid.on('click', (ev) => {
+                if (ev.rowKey >=0) {
+                    if(ev.columnName=="BTN_UPBIT_SELL"){
+                        var row_data=grid.getRow(ev.rowKey);
+                        console.log(row_data);
+
+                        var param = {
+                            MARKET: row_data.FST_UPBIT_MARKET
+                        }
+                        var popup = new PopupManger(_this, 'UPBIT_0215', {
+                                width: 1800,
+                                height: 1000,
+                                title: "업비트주문가능정보["+row_data.MARKET+"]"
+                            },
+                            param
+                        );
+                        popup.open(function (data) {
+                            if (data) {
+
+                            }
+                        });
+                    }		
+                }
+            });
 		
 			searchForm.addEvent("click","input[type=button]",function(el){
 			//console.log(el);
@@ -431,6 +484,17 @@
                         });                    
                     });                    
                     break;
+                case 'excel':
+                    Message.confirm('엑셀다운로드 하시겠습니까?', function() {
+                        grid.serverExcelDownload('KRW업비트TO바이낸스', function() {
+                            Message.alert('엑셀다운로드 되었습니다.', function() {
+                                //searchForm.get("search").trigger("click");
+                            });
+                        });                 
+                    });                    
+                    break;
+
+                    
 				}
 			});
 			searchForm.get("search").trigger("click");

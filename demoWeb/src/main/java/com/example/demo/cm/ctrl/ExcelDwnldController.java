@@ -37,8 +37,8 @@ public class ExcelDwnldController {
     /*
      * consumes 입력타입 produces 리턴타입
      */
-    @RequestMapping(value = "/EXCEL_DWNLD/{br}", method = RequestMethod.POST, consumes = "application/json", produces="text/plain;Charset=UTF-8")
-    public void exceldownload(@PathVariable("br") String br, @RequestBody String jsonInString, HttpServletRequest req,
+    @RequestMapping(value = "/EXCEL_DWNLD/{br}/{fileName}", method = RequestMethod.POST, consumes = "application/json", produces="text/plain;Charset=UTF-8")
+    public void exceldownload(@PathVariable("br") String br, @PathVariable("fileName") String fileName,@RequestBody String jsonInString, HttpServletRequest req,
             HttpServletResponse res, Authentication authentication, HttpSession session) throws Exception {
         log.info("jsonInString=>" + jsonInString);
         String jsonOutString = null;
@@ -78,7 +78,7 @@ public class ExcelDwnldController {
                 String brRs = inDS.get("brRs").toString();
                 System.out.println(brRs);
                 String[] arrBrRs = brRs.split(",");
-                ExportExcelVOList exl = new ExportExcelVOList(req, res);
+                ExportExcelVOList exl = new ExportExcelVOList(req, res,fileName);
                 for(int i=0;i<arrBrRs.length;i++) {
                     String tmp = arrBrRs[i];
                     System.out.println(tmp);

@@ -6,74 +6,285 @@
 			var _this = FX_0140;
 			var searchForm = new FormMngr(_this, "search_area");
 			//value="BNBBTC"
-			//searchForm.setData('SYMBOL','BNBBTC');
+			searchForm.setData('START_AMT','900000');
+            searchForm.setData('END_AMT','1000000');
+            /*
+	
+
+            
+            */
 			const grid = new TuiGridMngr(_this,'grid',{
 				  editable: false
 				  ,showRowStatus: false
 				  ,rowNum: true
 				  ,checkbox: false
 				  ,pageable: false
+                  ,header: {
+                        height: 60,
+                        complexColumns: [
+                        {
+                            header: '바이낸스-단가',
+                            name: 'mergeColumn1',
+                            childNames: [
+                            'COIN','MARKET','SYMBOL'
+                            ,'UPBIT_PRICE','BINANCE_PRICE'
+                            ,'GAP','PER'
+                            ]
+                        } ,{
+                            header: '바이낸스-합',
+                            name: 'mergeColumn2',
+                            childNames: ['CNT',
+                            'BINANCE_MAKER_COMMISSION_AMT','BINANCE_WITHDRAW_FEE_AMT'
+                            ,'UPBIT_SUM_PRICE','UPBIT_SUM_AMT'
+                            ,'BINANCE_SUM_AMT'
+                            ,'SUM_GAP','SUM_PER'
+                            ]
+                        }                     
+                        ]
+                    }
 				  }
 			,[
-                    {
-					   header: 'SYMBOL',
-					   name: 'SYMBOL',
-					   width: 200,
+					{
+					   header: 'RNK',
+					   name: 'RNK',
+					   width: 60,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: '(C)RNK',
+					   name: 'COIN_RNK',
+					   width: 80,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: '코인',
+					   name: 'COIN',
+					   width: 100,
 					   align : 'center',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
+					   sortingType: 'desc'
 					},{
-					   header: 'PRICE',
-					   name: 'PRICE',
-					   width: 200,
+					   header: '업비트',
+					   name: 'MARKET',
+					   width: 120,
+					   align : 'center',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: '바이낸스',
+					   name: 'SYMBOL',
+					   width: 120,
+					   align : 'center',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: '업비트',
+					   name: 'UPBIT_PRICE',
+					   width: 80,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: '바이낸스',
+					   name: 'BINANCE_PRICE',
+					   width: 80,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'GAP',
+					   name: 'GAP',
+					   width: 60,
 					   align : 'right',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc',
                        renderer : {
-					      type: commaRenderer
-					   },
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
+                            type: commaStRenderer,
+                            options : {
+                                src : 'BINANCE_PRICE',
+                                tgt : 'UPBIT_PRICE'
+                            }
+                        },
 					},{
-					   header: 'MAKER_COMMISSION',
-					   name: 'MAKER_COMMISSION',
-					   width: 200,
+					   header: 'PER',
+					   name: 'PER',
+					   width: 60,
 					   align : 'right',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}
+                       renderer : {
+                            type: commaStRenderer,
+                            options : {
+                                src : 'BINANCE_PRICE',
+                                tgt : 'UPBIT_PRICE'
+                            }
+                        },
 					},{
-					   header: 'TAKER_COMMISSION',
-					   name: 'TAKER_COMMISSION',
-					   width: 200,
+					   header: '수량',
+					   name: 'CNT',
+					   width: 60,
 					   align : 'right',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						}					
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: '수수료',
+					   name: 'BINANCE_MAKER_COMMISSION_AMT',
+					   width: 80,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: '출금',
+					   name: 'BINANCE_WITHDRAW_FEE_AMT',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: '업비트(수X)',
+					   name: 'UPBIT_SUM_PRICE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: '업비트(수O)',
+					   name: 'UPBIT_SUM_AMT',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: '바이낸스',
+					   name: 'BINANCE_SUM_AMT',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+                    },{
+					   header: 'GAP',
+					   name: 'SUM_GAP',
+					   width: 80,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                       renderer : {
+                            type: commaStRenderer,
+                            options : {
+                                src : 'BINANCE_SUM_AMT',
+                                tgt : 'UPBIT_SUM_AMT'
+                            }
+                        },
+					},{
+					   header: 'PER',
+					   name: 'SUM_PER',
+					   width: 80,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                       renderer : {
+                            type: commaStRenderer,
+                            options : {
+                                src : 'BINANCE_SUM_AMT',
+                                tgt : 'UPBIT_SUM_AMT'
+                            }
+                        },
+					},{
+					   header: '최소출금CNT',
+					   name: 'BINANCE_WITHDRAW_MIN',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: '(B)수수료율',
+					   name: 'BINANCE_MAKER_COMMISSION',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: '(U)수수료율',
+					   name: 'UPBIT_BID_FEE',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: '환율',
+					   name: 'KRW_USD',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+                        renderer : {
+                            type: commaRenderer
+                        }
 					},{
                         header : '생성일',
                         name : 'CRT_DTM',
-                        width : 200,
+                        renderer : {
+                            type : datetimeRenderer,
+                            options : {
+                                format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+                                ,source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+                            }
+                        },
+                        width : 120,
                         sortable : true,
                         align : "center"
                     }
@@ -89,13 +300,12 @@
                     console.log('data');
                     console.log(data);
                     var param ={
-                        brRq : 'IN_PSET',
-                        brRs : 'OUT_RSET',
-                        IN_PSET : [data]
-
+                        brRq : 'IN_PSET'
+                        ,brRs : 'OUT_RSET'
+                        ,IN_PSET :  [ data ]
                     }
                 
-                    grid.loadData('BR_BINANCE_retrieveBinanceList', param, function(data) {
+                    grid.loadData('BR_FX_retrieveTmpBinance', param, function(data) {
                         if (data) {
                         }
                     });
@@ -108,7 +318,7 @@
                             brRq : '',
                             brRs : ''
                         }
-                        _this.send_api('BR_FX_UPBIT_SYNC', param, function(data) {
+                        _this.send_api('BR_FX_TMP_calculate', param, function(data) {
                             _this.hideProgress();
                             Message.alert('싱크되었습니다.', function() {
                                 searchForm.get("search").trigger("click");

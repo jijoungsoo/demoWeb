@@ -27,8 +27,8 @@ public class ExportExcelVOList {
     protected String colN[];
     protected CellStyle headStyle;
     protected CellStyle bodyStyle;
-
-    public ExportExcelVOList(HttpServletRequest request, HttpServletResponse response) {
+    
+    public ExportExcelVOList(HttpServletRequest request, HttpServletResponse response,String fileName) {
         this.req = request;
         this.res = response;
         this.sheetArray = new HSSFSheet[1];
@@ -38,7 +38,7 @@ public class ExportExcelVOList {
             this.colN = colN.split(",");
         }
         */
-        this.setExcelFormat();
+        this.setExcelFormat(fileName);
     }
 
     /* 필수 exl.setListData 로 가져온 HSSFSheet를 넘겨줘야함 */ 
@@ -52,10 +52,12 @@ public class ExportExcelVOList {
     }
 
     /* 파라메터로 넘어온 엑셀명 혹은 다운받은 일시를 파일명으로 엑셀파일 생성 */ 
-    private void setExcelFormat() {
+    private void setExcelFormat(String fileName) {
         long time = System.currentTimeMillis();
         SimpleDateFormat day = new SimpleDateFormat("yyyyMMddhhmmss");
-        String excelnm = day.format(time);
+        String excelnm = fileName+"-"+day.format(time);
+        System.out.println("excelnm");
+        System.out.println(excelnm);
         this.downloadExcel = new DownloadExcel(excelnm + ".xls", req, res, wb);
         this.headStyle = downloadExcel.headStyle();
         this.bodyStyle = downloadExcel.bodyStyle();
