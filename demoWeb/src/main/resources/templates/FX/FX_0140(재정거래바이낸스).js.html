@@ -18,7 +18,7 @@
 				  ,showRowStatus: false
 				  ,rowNum: true
 				  ,checkbox: false
-				  ,pageable: false
+				  ,pageable: true
                   ,header: {
                         height: 60,
                         complexColumns: [
@@ -45,27 +45,27 @@
 				  }
 			,[
 					{
-					   header: 'RNK',
+					   header: 'R',
 					   name: 'RNK',
-					   width: 60,
+					   width: 30,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
-					   header: '(C)RNK',
+					   header: '(C)',
 					   name: 'COIN_RNK',
-					   width: 80,
+					   width: 30,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
 					   header: '코인',
 					   name: 'COIN',
-					   width: 100,
+					   width: 60,
 					   align : 'center',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
 					},{

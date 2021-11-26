@@ -6,7 +6,7 @@ $(document).ready(function(){
 		var _this = UPBIT_0120;
 		var searchForm = new FormMngr(_this, "search_area");
 		searchForm.initCombo("MARKET_WARNING",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_WARNING', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
-		searchForm.initCombo("MARKET_CD",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+		searchForm.initCombo("CURRENCY",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_MARKET_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
 
 		const grid = new TuiGridMngr(_this,'grid',{
 		      editable: false
@@ -23,7 +23,7 @@ $(document).ready(function(){
 		,[
              {
 				header : 'UPBIT_매도/매수',
-				name : 'BTN_UPBIT_SELL',
+				name : 'BTN_SELL',
 				renderer : {
 					type: buttonRenderer,
 					options : {

@@ -11,11 +11,13 @@ class TuiGridMngr {
         editable: false
         ,scrollX: true
         ,scrollY: true
-        ,bodyHeight: 700           /*그리드 높이지정 */
+        ,bodyHeight: 620           /*그리드 높이지정 */
         /*,editingEvent: 'dblclick'  더블클릭 수정 */
 		,editingEvent: 'click'   /*한번 클릭으로 그리드 수정하게 */
         ,contextMenu: true 
         ,minBodyHeight: 30
+        ,rowHeight: 30
+        ,minRowHeight: 30
         ,copyOptions: {
           useFormattedValue: true,   /*셀의 formatter와 함께 텍스트를 복사한다.*/
           useListItemText: true,    /*선택 또는 체크 박스 셀의 값을 listItem의 value가 아닌 text로 복사한다.*/

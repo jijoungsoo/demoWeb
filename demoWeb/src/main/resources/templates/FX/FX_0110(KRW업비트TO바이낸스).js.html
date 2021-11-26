@@ -22,8 +22,10 @@
                             name: 'mergeColumn1',
                             childNames: [
                                 'BTN_UPBIT_SELL',
-                            'FST_UPBIT_MARKET','FST_UPBIT_PRICE'
-                            ,'FST_BINANCE_PRICE','FST_GAP','FST_PER'
+                            'FST_UPBIT_MARKET','FST_BINANCE_SYMBOL',
+                            'FST_UPBIT_PRICE'
+                            ,'FST_BINANCE_PRICE_KRW','FST_BINANCE_PRICE_USD'
+                            ,'FST_GAP','FST_PER'
                             ]
                         } , {
                             header: '매수시점-총',
@@ -36,8 +38,9 @@
                         } ,{
                             header: '매도시점-단가',
                             name: 'mergeColumn3',
-                            childNames: ['LST_COIN',
-                            ,'LST_BINANCE_PRICE','LST_UPBIT_PRICE'
+                            childNames: ['LST_UPBIT_MARKET','LST_BINANCE_SYMBOL',
+                            ,'LST_BINANCE_PRICE_KRW','LST_BINANCE_PRICE_USD'
+                            ,'LST_UPBIT_PRICE'
                             ,'LST_GAP','LST_PER'
                             ]
                         }  ,{
@@ -58,24 +61,8 @@
                     }
 				  }
 			,[
-					{
-					   header: 'RNK',
-					   name: 'RNK',
-					   width: 60,
-					   align : 'right',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: '(C)RNK',
-					   name: 'COIN_RNK',
-					   width: 80,
-					   align : 'right',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc'
-					},  {
-                        header : 'UPBIT_매도/매수',
+					 {
+                        header : 'UPBIT매도/매수',
                         name : 'BTN_UPBIT_SELL',
                         renderer : {
                             type: buttonRenderer,
@@ -85,23 +72,31 @@
                                 }
                             }
                         },
-                        width : 130,
-                        sortable : true,
+                        width : 90,
+                        sortable : false,
                         align : "center"
                     },{
 					   header: '코인',
 					   name: 'FST_UPBIT_MARKET',
-					   width: 140,
+					   width: 80,
 					   align : 'center',
-					   sortable : true,
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: '바이낸스',
+					   name: 'FST_BINANCE_SYMBOL',
+					   width: 80,
+					   align : 'center',
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
 					   header: '업비트',
 					   name: 'FST_UPBIT_PRICE',
-					   width: 80,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -109,10 +104,21 @@
                         },
 					},{
 					   header: '바이낸스',
-					   name: 'FST_BINANCE_PRICE',
-					   width: 80,
+					   name: 'FST_BINANCE_PRICE_KRW',
+					   width: 50,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        },
+					},{
+					   header: '$바이낸스',
+					   name: 'FST_BINANCE_PRICE_USD',
+					   width: 60,
+					   align : 'right',
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -121,9 +127,9 @@
 					},{
 					   header: 'GAP',
 					   name: 'FST_GAP',
-					   width: 60,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
                        renderer : {
                             type: commaStRenderer,
@@ -136,9 +142,9 @@
 					},{
 					   header: 'PER',
 					   name: 'FST_PER',
-					   width: 60,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                        renderer : {
@@ -151,9 +157,9 @@
 					},{
 					   header: '수량',
 					   name: 'FST_UPBIT_CNT',
-					   width: 60,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -162,9 +168,9 @@
 					},{
 					   header: '수수료',
 					   name: 'FST_UPBIT_BID_FEE_AMT',
-					   width: 60,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -173,9 +179,9 @@
 					},{
 					   header: '출금',
 					   name: 'FST_UPBIT_WITHDRAW_FEE_AMT',
-					   width: 60,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -186,7 +192,7 @@
 					   name: 'FST_FST_SUM_AMT',
 					   width: 80,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -197,7 +203,7 @@
 					   name: 'FST_LST_SUM_AMT',
 					   width: 80,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -208,7 +214,7 @@
 					   name: 'FST_SUM_GAP',
 					   width: 60,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                        renderer : {
@@ -223,7 +229,7 @@
 					   name: 'FST_SUM_PER',
 					   width: 60,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                        renderer : {
@@ -234,19 +240,38 @@
                             }
                         },
 					},{
-					   header: '코인',
-					   name: 'LST_COIN',
-					   width: 100,
+					   header: '업비트',
+					   name: 'LST_UPBIT_MARKET',
+					   width: 80,
 					   align : 'center',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
 					   header: '바이낸스',
-					   name: 'LST_BINANCE_PRICE',
+					   name: 'LST_BINANCE_SYMBOL',
 					   width: 80,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: '바이낸스',
+					   name: 'LST_BINANCE_PRICE_KRW',
+					   width: 50,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        },
+					},{
+					   header: '$바이낸스',
+					   name: 'LST_BINANCE_PRICE_USD',
+					   width: 60,
+					   align : 'right',
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -255,9 +280,9 @@
 					},{
 					   header: '업비트',
 					   name: 'LST_UPBIT_PRICE',
-					   width: 80,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -266,9 +291,9 @@
 					},{
 					   header: 'GAP',
 					   name: 'LST_GAP',
-					   width: 60,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
                        renderer : {
                             type: commaStRenderer,
@@ -281,9 +306,9 @@
 					},{
 					   header: 'PER',
 					   name: 'LST_PER',
-					   width: 60,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                        renderer : {
@@ -296,9 +321,9 @@
 					},{
 					   header: '수량',
 					   name: 'LST_BINANCE_CNT',
-					   width: 60,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -307,9 +332,9 @@
 					},{
 					   header: '수수료',
 					   name: 'LST_BINANCE_MAKER_COMMISSION_AMT',
-					   width: 60,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -318,9 +343,9 @@
 					},{
 					   header: '출금',
 					   name: 'LST_BINANCE_WITHDRAW_FEE_AMT',
-					   width: 60,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -329,9 +354,9 @@
 					},{
 					   header: '총매수',
 					   name: 'LST_FST_SUM_AMT',
-					   width: 80,
+					   width: 60,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -340,9 +365,9 @@
 					},{
 					   header: '총매도',
 					   name: 'LST_LST_SUM_AMT',
-					   width: 80,
+					   width: 60,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -351,9 +376,9 @@
 					},{
 					   header: 'GAP',
 					   name: 'LST_SUM_GAP',
-					   width: 80,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -366,9 +391,9 @@
                     },{
 					   header: 'PER',
 					   name: 'LST_SUM_PER',
-					   width: 80,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -381,9 +406,9 @@
 					},{
 					   header: 'GAP',
 					   name: 'FINAL_GAP',
-					   width: 80,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -396,9 +421,9 @@
 					},{
 					   header: 'PER',
 					   name: 'FINAL_PER',
-					   width: 80,
+					   width: 40,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
                         renderer : {
@@ -418,9 +443,15 @@
                                 ,source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
                             }
                         },
-                        width : 120,
-                        sortable : true,
+                        width : 100,
+                        sortable : false,
                         align : "center"
+                    },{
+                        header : 'ERR',
+                        name : 'ERR',
+                        width : 40,
+                        sortable : false,
+                        align : "right"
                     }
 				]
 			);
@@ -459,8 +490,9 @@
                     console.log('data');
                     console.log(data);
                     var param ={
-                        brRq : ''
+                        brRq : 'IN_PSET'
                         ,brRs : 'OUT_RSET'
+                        ,IN_PSET: [ data ]
                     }
                 
                     grid.loadData('BR_FX_UPBIT_retrieveTmpUpbitTOBinance', param, function(data) {
