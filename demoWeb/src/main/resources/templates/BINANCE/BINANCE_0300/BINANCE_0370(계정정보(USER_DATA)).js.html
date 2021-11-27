@@ -4,136 +4,117 @@
 		var BINANCE_0370 = new PgmPageMngr('[[${uuid}]]');
 		BINANCE_0370.init(function(p_param) {
 			var _this = BINANCE_0370;
-			var sendForm = new FormMngr(_this, "send_area");
+			var searchForm = new FormMngr(_this, "search_area");
 			const grid = new TuiGridMngr(_this,'grid',{
 				  editable: false
 				  ,showRowStatus: false
 				  ,rowNum: true
 				  ,checkbox: false
 				  ,pageable: false
+                  ,bodyHeight: 100 
+                  ,visibleTotalCnt:false
 				  }
 			,[
 			{
 					   header: 'MAKER_COMMISSION',
 					   name: 'MAKER_COMMISSION',
-					   width: 160,
-					   align : 'left',
-					   sortable : true,
+					   width: 130,
+					   align : 'right',
+					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'TAKER_COMMISSION',
 					   name: 'TAKER_COMMISSION',
-					   width: 160,
-					   align : 'left',
-					   sortable : true,
+					   width: 130,
+					   align : 'right',
+					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'BUYER_COMMISSION',
 					   name: 'BUYER_COMMISSION',
-					   width: 160,
-					   align : 'left',
-					   sortable : true,
+					   width: 130,
+					   align : 'right',
+					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'SELLER_COMMISSION',
 					   name: 'SELLER_COMMISSION',
-					   width: 160,
-					   align : 'left',
-					   sortable : true,
+					   width: 130,
+					   align : 'right',
+					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'CAN_TRADE',
 					   name: 'CAN_TRADE',
-					   width: 160,
-					   align : 'left',
-					   sortable : true,
+					   width: 80,
+					   align : 'center',
+					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'CAN_WITHDRAW',
 					   name: 'CAN_WITHDRAW',
-					   width: 160,
-					   align : 'left',
-					   sortable : true,
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'CAN_DEPOSIT',
 					   name: 'CAN_DEPOSIT',
-					   width: 160,
-					   align : 'left',
-					   sortable : true,
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'UPDATE_TIME',
 					   name: 'UPDATE_TIME',
-					   width: 160,
-					   align : 'left',
-					   sortable : true,
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'ACCOUNT_TYPE',
 					   name: 'ACCOUNT_TYPE',
-					   width: 160,
-					   align : 'left',
-					   sortable : true,
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					}
 				]
 			);
 			grid.build();
+
+            
+			const grid_permissions = new TuiGridMngr(_this,'grid_permissions',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+                  ,bodyHeight: 100 
+                  ,visibleTotalCnt:false
+				  }
+			,[
+			{
+					   header: 'TYPE',
+					   name: 'TYPE',
+					   width: 80,
+					   align : 'center',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}				
+				]
+			);
+			grid_permissions.build();
 
 
 			const grid_balances = new TuiGridMngr(_this,'grid_balances',{
@@ -142,14 +123,16 @@
 				  ,rowNum: true
 				  ,checkbox: false
 				  ,pageable: false
+                  ,visibleTotalCnt:false
+                  ,bodyHeight: 300 
 				  }
 			,[
 			{
 					   header: 'ASSET',
 					   name: 'ASSET',
 					   width: 100,
-					   align : 'left',
-					   sortable : true,
+					   align : 'center',
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc',
 					   filter : {
@@ -189,37 +172,12 @@
 			grid_balances.build();
 
 
-			const grid_permissions = new TuiGridMngr(_this,'grid_permissions',{
-				  editable: false
-				  ,showRowStatus: false
-				  ,rowNum: true
-				  ,checkbox: false
-				  ,pageable: false
-				  }
-			,[
-			{
-					   header: 'TYPE',
-					   name: 'TYPE',
-					   width: 100,
-					   align : 'left',
-					   sortable : true,
-					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
-					}				
-				]
-			);
-			grid_permissions.build();
 		
-			sendForm.addEvent("click","input[type=button]",function(el){
+			searchForm.addEvent("click","input[type=button]",function(el){
 				//console.log(el);
 				switch(el.target.name){
-				case 'account_search':
-					var data = sendForm.getData();
+				case 'search':
+					var data = searchForm.getData();
 					console.log('data');
 					console.log(data);
 					var param ={
@@ -241,6 +199,8 @@
 					});
 				}
 			});
+
+            searchForm.get("search").trigger("click");
 	});	
 });
 

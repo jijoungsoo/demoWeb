@@ -35,8 +35,8 @@
 							showClearBtn : true
 						} /*text, number, select, date 4가지가 있다.*/
 					},{
-					   header: 'PRICE',
-					   name: 'PRICE',
+					   header: 'BID_PRICE',
+					   name: 'BID_PRICE',
 					   width: 100,
 					   align : 'left',
 					   sortable : true,
@@ -48,8 +48,8 @@
 							showClearBtn : true
 						} /*text, number, select, date 4가지가 있다.*/
 					},{
-					   header: 'QTY',
-					   name: 'QTY',
+					   header: 'BID_QTY',
+					   name: 'BID_QTY',
 					   width: 100,
 					   align : 'left',
 					   sortable : true,
@@ -106,8 +106,8 @@
 							showClearBtn : true
 						} /*text, number, select, date 4가지가 있다.*/
 					},{
-					   header: 'PRICE',
-					   name: 'PRICE',
+					   header: 'ASK_PRICE',
+					   name: 'ASK_PRICE',
 					   width: 100,
 					   align : 'left',
 					   sortable : true,
@@ -119,8 +119,8 @@
 							showClearBtn : true
 						} /*text, number, select, date 4가지가 있다.*/
 					},{
-					   header: 'QTY',
-					   name: 'QTY',
+					   header: 'ASK_QTY',
+					   name: 'ASK_QTY',
 					   width: 100,
 					   align : 'left',
 					   sortable : true,
@@ -158,7 +158,7 @@
 				console.log(data);
 				var param ={
 					 brRq : 'IN_DATA'
-					,brRs : 'OUT_RSET,OUT_RSET_BID,OUT_RSET_ASK'
+					,brRs : 'OUT_RSET,OUT_RSET_ORDER_BOOK'
 					,IN_DATA: [data]
 				}
 			
@@ -169,8 +169,8 @@
 									
 						console.log(data);
 								
-						grid_bid.resetData(data.OUT_RSET_BID);
-						grid_ask.resetData(data.OUT_RSET_ASK);
+						grid_bid.resetData(data.OUT_RSET_ORDER_BOOK);
+						grid_ask.resetData(data.OUT_RSET_ORDER_BOOK);
 						
 
 					}

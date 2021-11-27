@@ -28,7 +28,7 @@
                             name: 'mergeColumn1',
                             childNames: [
                             'COIN','MARKET','SYMBOL'
-                            ,'UPBIT_PRICE','BINANCE_PRICE'
+                            ,'UPBIT_PRICE','BINANCE_PRICE_KRW','BINANCE_PRICE_USD'
                             ,'GAP','PER'
                             ]
                         } ,{
@@ -129,7 +129,7 @@
                        renderer : {
                             type: commaStRenderer,
                             options : {
-                                src : 'BINANCE_PRICE',
+                                src : 'BINANCE_PRICE_KRW',
                                 tgt : 'UPBIT_PRICE'
                             }
                         },
@@ -144,7 +144,7 @@
                        renderer : {
                             type: commaStRenderer,
                             options : {
-                                src : 'BINANCE_PRICE',
+                                src : 'BINANCE_PRICE_KRW',
                                 tgt : 'UPBIT_PRICE'
                             }
                         },

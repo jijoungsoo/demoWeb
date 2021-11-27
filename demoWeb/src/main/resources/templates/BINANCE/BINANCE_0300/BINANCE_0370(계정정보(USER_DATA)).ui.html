@@ -1,16 +1,21 @@
-<div name="send_area">
-<pre class="tal lh12">
-<h3>Account Information (USER_DATA)</h3>
-GET /api/v3/account (HMAC SHA256)
-Get current account information.
-<b>Weight(IP):</b> 10
-</pre>
-  <table>
-  <tr>    
-    <td><input type="button" name="account_search" value="계좌정보" /></td>
-  </tr>
-  </table>
+<div name="search_area">
+    <pre class="tal lh12">
+    <h3>Account Information (USER_DATA)</h3>
+    GET /api/v3/account (HMAC SHA256)
+    Get current account information.
+    <b>Weight(IP):</b> 10
+    </pre>
+    <table>
+    <tr>    
+    <td><input type="button" name="search" value="계좌정보" /></td>
+    </tr>
+    </table>
 </div>
-<div name="grid"></div>
+<table>
+<tr> 
+    <td><div name="grid"></div></td>
+    <td><div name="grid_permissions"></div></td>
+</tr>
+</table>
 <div name="grid_balances"></div>
-<div name="grid_permissions"></div>
+
