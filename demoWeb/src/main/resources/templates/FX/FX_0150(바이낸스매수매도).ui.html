@@ -1,0 +1,131 @@
+<div name="search_area">   
+      <table>
+      <tr>    
+        <td>
+          <div class="form-group">
+            <div class="input-group">
+              <span class="input-group-addon">SYMBOL(필수)</span> 
+              <input class="form-control" data-ax-path="SYMBOL"  name="SYMBOL" style="width:140px;"  />          
+            </div>
+          </div>
+        </td>
+        <td><input type="button" name="search" value="조회" /></td>
+      </tr>
+      </table>
+    </div>
+    <table>
+        <tr>
+            <td>거래수수료</td>
+        </tr>
+        <tr>
+            <td><div name="grid_trade_fee"></div></td>
+        </tr>
+    </table>
+        
+    
+    
+    <table>
+      <tr>
+        <td>매수(BID)</td>
+        <td>매도(ASK)</td>
+        <td>잔액</td>
+      </tr>
+      <tr>
+        <td><div name="grid_bid"></div></td>
+        <td><div name="grid_ask"></div></td>
+        <td><div name="grid_balances"></div></td>
+      </tr>
+    </table>
+    <div name="send_area">
+        <div style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+            <div class="row row-cols-5">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <span class="input-group-addon">SIDE(ENUM)</span> 
+                        <select class="form-control" data-ax-path="SIDE"  name="SIDE" style="width:140px;">
+                        </select>
+                        </div>
+                    </div>       
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <span class="input-group-addon">TYPE(ENUM)</span> 
+                        <select class="form-control" data-ax-path="TYPE"  name="TYPE" style="width:140px;">
+                        </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <span class="input-group-addon">TIME_IN_FORCE(ENUM)</span> 
+                        <select class="form-control" data-ax-path="TIME_IN_FORCE"  name="TIME_IN_FORCE" style="width:140px;">
+                        </select> 
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <span class="input-group-addon">QUANTITY</span> 
+                        <input class="form-control" data-ax-path="QUANTITY"  name="QUANTITY" style="width:140px;"  />          
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <span class="input-group-addon">QUOTE_ORDER_QTY</span> 
+                        <input class="form-control" data-ax-path="QUOTE_ORDER_QTY"  name="QUOTE_ORDER_QTY" style="width:140px;"  />          
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <span class="input-group-addon">PRICE</span> 
+                        <input class="form-control" data-ax-path="PRICE"  name="PRICE" style="width:140px;"  />          
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <span class="input-group-addon">NEW_CLIENT_ORDER_ID</span> 
+                        <input class="form-control" data-ax-path="NEW_CLIENT_ORDER_ID"  name="NEW_CLIENT_ORDER_ID" style="width:140px;"  />          
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <span class="input-group-addon">STOP_PRICE</span> 
+                        <input class="form-control" data-ax-path="STOP_PRICE"  name="STOP_PRICE" style="width:140px;"  />          
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                        <span class="input-group-addon">ICEBERG_QTY</span> 
+                        <input class="form-control" data-ax-path="ICEBERG_QTY"  name="ICEBERG_QTY" style="width:140px;"  />          
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <input type="button" name="new_order" value="신규주문" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div name="grid"></div>
+    <div name="grid_fills"></div>
+    
+    
+    
+    
+    
+    
+    

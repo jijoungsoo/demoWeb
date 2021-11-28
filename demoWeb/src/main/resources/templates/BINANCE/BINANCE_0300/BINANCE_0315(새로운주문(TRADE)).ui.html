@@ -1,100 +1,100 @@
 <div name="send_area">
-<pre class="tal lh12">
-<h3>New Order (TRADE)</h3>
-POST /api/v3/order (HMAC SHA256)
-Send in a new order.
-<b>Weight(UID):</b> 1
-</pre>
-  <table>
-  <tr>    
-    <td>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon">SYMBOL</span> 
-          <input class="form-control" data-ax-path="SYMBOL"  name="SYMBOL" style="width:140px;"  />          
+    <pre class="tal lh12">
+    <h3>New Order (TRADE)</h3>
+    POST /api/v3/order (HMAC SHA256)
+    Send in a new order.
+    <b>Weight(UID):</b> 1
+    </pre>
+    <table>
+    <tr>    
+        <td>
+        <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon">SYMBOL</span> 
+            <input class="form-control" data-ax-path="SYMBOL"  name="SYMBOL" style="width:140px;"  />          
+            </div>
         </div>
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon">SIDE(ENUM)</span> 
-          <select class="form-control" data-ax-path="SIDE"  name="SIDE" style="width:140px;">
-          </select>
+        </td>
+        <td>
+        <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon">SIDE(ENUM)</span> 
+            <select class="form-control" data-ax-path="SIDE"  name="SIDE" style="width:140px;">
+            </select>
+            </div>
         </div>
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon">TYPE(ENUM)</span> 
-          <select class="form-control" data-ax-path="TYPE"  name="TYPE" style="width:140px;">
-          </select>
+        </td>
+        <td>
+        <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon">TYPE(ENUM)</span> 
+            <select class="form-control" data-ax-path="TYPE"  name="TYPE" style="width:140px;">
+            </select>
+            </div>
         </div>
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon">TIME_IN_FORCE(ENUM)</span> 
-          <select class="form-control" data-ax-path="TIME_IN_FORCE"  name="TIME_IN_FORCE" style="width:140px;">
-          </select> 
+        </td>
+        <td>
+        <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon">TIME_IN_FORCE(ENUM)</span> 
+            <select class="form-control" data-ax-path="TIME_IN_FORCE"  name="TIME_IN_FORCE" style="width:140px;">
+            </select> 
+            </div>
         </div>
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon">QUANTITY</span> 
-          <input class="form-control" data-ax-path="QUANTITY"  name="QUANTITY" style="width:140px;"  />          
+        </td>
+        <td>
+        <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon">QUANTITY</span> 
+            <input class="form-control" data-ax-path="QUANTITY"  name="QUANTITY" style="width:140px;"  />          
+            </div>
         </div>
-      </div>
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon">QUOTE_ORDER_QTY</span> 
-          <input class="form-control" data-ax-path="QUOTE_ORDER_QTY"  name="QUOTE_ORDER_QTY" style="width:140px;"  />          
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon">QUOTE_ORDER_QTY</span> 
+            <input class="form-control" data-ax-path="QUOTE_ORDER_QTY"  name="QUOTE_ORDER_QTY" style="width:140px;"  />          
+            </div>
         </div>
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon">PRICE</span> 
-          <input class="form-control" data-ax-path="PRICE"  name="PRICE" style="width:140px;"  />          
+        </td>
+        <td>
+        <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon">PRICE</span> 
+            <input class="form-control" data-ax-path="PRICE"  name="PRICE" style="width:140px;"  />          
+            </div>
         </div>
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon">NEW_CLIENT_ORDER_ID</span> 
-          <input class="form-control" data-ax-path="NEW_CLIENT_ORDER_ID"  name="NEW_CLIENT_ORDER_ID" style="width:140px;"  />          
+        </td>
+        <td>
+        <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon">NEW_CLIENT_ORDER_ID</span> 
+            <input class="form-control" data-ax-path="NEW_CLIENT_ORDER_ID"  name="NEW_CLIENT_ORDER_ID" style="width:140px;"  />          
+            </div>
         </div>
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon">STOP_PRICE</span> 
-          <input class="form-control" data-ax-path="STOP_PRICE"  name="STOP_PRICE" style="width:140px;"  />          
+        </td>
+        <td>
+        <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon">STOP_PRICE</span> 
+            <input class="form-control" data-ax-path="STOP_PRICE"  name="STOP_PRICE" style="width:140px;"  />          
+            </div>
         </div>
-      </div>
-    </td>
-    <td>
-      <div class="form-group">
-        <div class="input-group">
-          <span class="input-group-addon">ICEBERG_QTY</span> 
-          <input class="form-control" data-ax-path="ICEBERG_QTY"  name="ICEBERG_QTY" style="width:140px;"  />          
+        </td>
+        <td>
+        <div class="form-group">
+            <div class="input-group">
+            <span class="input-group-addon">ICEBERG_QTY</span> 
+            <input class="form-control" data-ax-path="ICEBERG_QTY"  name="ICEBERG_QTY" style="width:140px;"  />          
+            </div>
         </div>
-      </div>
-    </td>
-    <td><input type="button" name="new_order" value="신규주문" /></td>
-  </tr>
-  </table>
+        </td>
+        <td><input type="button" name="new_order" value="신규주문" /></td>
+    </tr>
+    </table>
 </div>
 <div name="grid"></div>
 <div name="grid_fills"></div>

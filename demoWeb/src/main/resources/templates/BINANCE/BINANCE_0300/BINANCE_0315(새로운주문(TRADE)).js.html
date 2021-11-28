@@ -17,13 +17,8 @@
 				  ,rowNum: true
 				  ,checkbox: false
 				  ,pageable: false
-				  /*
-				  ,bodyHeight : 700
-				  ,width : 500
-				  */
-				  
-				  
-				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+                  ,bodyHeight : 140		
+                  ,visibleTotalCnt:false	  
 				  }
 			,[
 			{
@@ -33,12 +28,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'ORDER_ID',
 					   name: 'ORDER_ID',
@@ -46,12 +36,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'ORDER_LIST_ID',
 					   name: 'ORDER_LIST_ID',
@@ -59,12 +44,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'CLIENT_ORDER_ID',
 					   name: 'CLIENT_ORDER_ID',
@@ -72,12 +52,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'TRANSACT_TIME',
 					   name: 'TRANSACT_TIME',
@@ -85,12 +60,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'PRICE',
 					   name: 'PRICE',
@@ -98,12 +68,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'ORIG_QTY',
 					   name: 'ORIG_QTY',
@@ -111,12 +76,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'EXECUTED_QTY',
 					   name: 'EXECUTED_QTY',
@@ -124,12 +84,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'CUMMULATIVE_QUOTE_QTY',
 					   name: 'CUMMULATIVE_QUOTE_QTY',
@@ -137,12 +92,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'STATUS',
 					   name: 'STATUS',
@@ -150,12 +100,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'TIME_IN_FORCE',
 					   name: 'TIME_IN_FORCE',
@@ -163,12 +108,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'TYPE',
 					   name: 'TYPE',
@@ -176,12 +116,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'SIDE',
 					   name: 'SIDE',
@@ -189,12 +124,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					}
 				]
 			);
@@ -207,13 +137,8 @@
 				  ,rowNum: true
 				  ,checkbox: false
 				  ,pageable: false
-				  /*
-				  ,bodyHeight : 700
-				  ,width : 500
-				  */
-				  
-				  
-				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
+                  ,bodyHeight : 140	
+                  ,visibleTotalCnt:false		  
 				  }
 			,[
 			{
@@ -223,12 +148,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'PRICE',
 					   name: 'PRICE',
@@ -236,12 +156,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'QTY',
 					   name: 'QTY',
@@ -249,12 +164,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'COMMISSION',
 					   name: 'COMMISSION',
@@ -262,12 +172,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					},{
 					   header: 'COMMISSION_ASSET',
 					   name: 'COMMISSION_ASSET',
@@ -275,12 +180,7 @@
 					   align : 'left',
 					   sortable : true,
 					   resizable: true,
-					   sortingType: 'desc',
-					   filter : {
-							type : 'text',
-							showApplyBtn : true,
-							showClearBtn : true
-						} /*text, number, select, date 4가지가 있다.*/
+					   sortingType: 'desc'
 					}
 				]
 			);

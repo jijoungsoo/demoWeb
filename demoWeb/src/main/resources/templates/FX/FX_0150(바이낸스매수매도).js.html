@@ -1,0 +1,446 @@
+
+<script>
+	$(document).ready(function(){
+		var FX_0150 = new PgmPageMngr('[[${uuid}]]');
+		FX_0150.init(function(p_param) {
+            console.log(p_param.param.SYMBOL);
+			var _this = FX_0150;
+			var searchForm = new FormMngr(_this, "search_area");
+			searchForm.setData('SYMBOL',p_param.param.SYMBOL);
+
+            var sendForm = new FormMngr(_this, "send_area");
+			sendForm.initCombo("TYPE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_TYPE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+			sendForm.initCombo("SIDE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_SIDE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+			sendForm.initCombo("TIME_IN_FORCE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_TIME_IN_FORCE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+
+
+			const grid_bid = new TuiGridMngr(_this,'grid_bid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+                  ,visibleTotalCnt:false
+                  ,bodyHeight : 100
+				  ,width : 500
+				  }
+			,[
+			{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BID_PRICE',
+					   name: 'BID_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BID_QTY',
+					   name: 'BID_QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid_bid.build();
+
+			const grid_ask = new TuiGridMngr(_this,'grid_ask',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+                  ,visibleTotalCnt:false
+				  ,bodyHeight : 100
+				  ,width : 500
+				  }
+			,[
+					{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ASK_PRICE',
+					   name: 'ASK_PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ASK_QTY',
+					   name: 'ASK_QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+		  	grid_ask.build();
+
+
+              const grid_trade_fee = new TuiGridMngr(_this,'grid_trade_fee',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+                  ,bodyHeight: 60
+                  ,visibleTotalCnt:false
+                  ,width : 500
+				  }
+			,[
+					{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 120,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'MAKER_COMMISSION',
+					   name: 'MAKER_COMMISSION',
+					   width: 140,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TAKER_COMMISSION',
+					   name: 'TAKER_COMMISSION',
+					   width: 140,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'				
+					}
+				]
+			);
+		  	grid_trade_fee.build();
+
+
+              
+			const grid_balances = new TuiGridMngr(_this,'grid_balances',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+                  ,visibleTotalCnt:false
+                  ,bodyHeight: 100 
+                  ,width: 500
+				  }
+			,[
+                    {
+					   header: 'ASSET',
+					   name: 'ASSET',
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'FREE',
+					   name: 'FREE',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'LOCKED',
+					   name: 'LOCKED',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}				
+				]
+			);
+			grid_balances.build();
+
+              const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  ,bodyHeight : 100
+                  ,visibleTotalCnt:false
+				  ,width : 1400
+				  }
+			,[
+			{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ORDER_ID',
+					   name: 'ORDER_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ORDER_LIST_ID',
+					   name: 'ORDER_LIST_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'CLIENT_ORDER_ID',
+					   name: 'CLIENT_ORDER_ID',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TRANSACT_TIME',
+					   name: 'TRANSACT_TIME',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'PRICE',
+					   name: 'PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ORIG_QTY',
+					   name: 'ORIG_QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'EXECUTED_QTY',
+					   name: 'EXECUTED_QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'CUMMULATIVE_QUOTE_QTY',
+					   name: 'CUMMULATIVE_QUOTE_QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'STATUS',
+					   name: 'STATUS',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TIME_IN_FORCE',
+					   name: 'TIME_IN_FORCE',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'TYPE',
+					   name: 'TYPE',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SIDE',
+					   name: 'SIDE',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+			grid.build();
+
+
+			const grid_fills = new TuiGridMngr(_this,'grid_fills',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+                  ,visibleTotalCnt:false
+				  ,bodyHeight : 100
+				  ,width : 700
+				  }
+			,[
+			{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'PRICE',
+					   name: 'PRICE',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QTY',
+					   name: 'QTY',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'COMMISSION',
+					   name: 'COMMISSION',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'COMMISSION_ASSET',
+					   name: 'COMMISSION_ASSET',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+			grid_fills.build();
+		
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+				switch(el.target.name){
+			case 'search':
+				var data = searchForm.getData();
+				console.log('data');
+				console.log(data);
+				var param ={
+					 brRq : 'IN_DATA'
+					,brRs : 'OUT_RSET,OUT_RSET_ORDER_BOOK'
+					,IN_DATA: [data]
+				}
+			
+				_this.showProgress();
+				_this.send_api('BR_BINANCE_MARKET_GET_API_V3_OrderBook', param, function(data) {
+					_this.hideProgress();
+					if (data) {
+									
+						console.log(data);
+								
+						grid_bid.resetData(data.OUT_RSET_ORDER_BOOK);
+						grid_ask.resetData(data.OUT_RSET_ORDER_BOOK);
+						
+
+					}
+				});
+
+                var data = searchForm.getData();
+				var param ={
+					 brRq : 'IN_PSET'
+					,brRs : 'OUT_RSET'
+					,IN_PSET : [ data ]
+				}
+
+				_this.showProgress();
+				_this.send_api('BR_BINANCE_WALLET_GET_SAPI_V1_TradeFee', param, function(data) {
+					_this.hideProgress();
+					if (data) {
+									
+						console.log(data);
+								
+						grid_trade_fee.resetData(data.OUT_RSET);
+					}
+				});
+
+                var data = searchForm.getData();
+					console.log('data');
+					console.log(data);
+					var param ={
+						brRq : 'IN_PSET'
+						,brRs : 'OUT_RSET,OUT_RSET_BALANCES,OUT_RSET_PERMISSIONS'
+						,IN_PSET: [data]
+					}
+					_this.showProgress();
+					_this.send_socket('BR_SPOT_ACCOUNT_TRADE_GET_API_V3_AccountInformation', param, function(data) {
+						_this.hideProgress();
+						if (data) {
+							var row_data = data.OUT_RSET;
+							console.log(data);
+							//grid.resetData(data.OUT_RSET);
+							grid_balances.resetData(data.OUT_RSET_BALANCES);
+							//grid_permissions.resetData(data.OUT_RSET_PERMISSIONS);
+						} 
+					
+					});
+				
+				break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>

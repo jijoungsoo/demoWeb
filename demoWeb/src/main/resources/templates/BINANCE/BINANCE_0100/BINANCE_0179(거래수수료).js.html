@@ -11,6 +11,8 @@
 				  ,rowNum: true
 				  ,checkbox: false
 				  ,pageable: false
+                  ,bodyHeight: 400
+                  ,visibleTotalCnt:false
 				  }
 			,[
 					{
@@ -61,7 +63,6 @@
 						console.log(data);
 								
 						grid.resetData(data.OUT_RSET);
-						grid_transfer.resetData(data.OUT_RSET_DATA__TRANSFER_RESULT);
 					}
 				});
 				break;
