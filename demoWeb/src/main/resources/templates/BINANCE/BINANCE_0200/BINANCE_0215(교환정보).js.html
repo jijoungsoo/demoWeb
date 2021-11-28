@@ -154,20 +154,18 @@
 			searchForm.addEvent("click","input[type=button]",function(el){
 			//console.log(el);
 				switch(el.target.name){
-			case 'search':
-				var data = searchForm.getData();
-				var brRsStr = 'OUT_RSET'
-				
-
-				var param ={
-					 brRq : 'IN_DATA'
-					,brRs : brRsStr
-				}
-				grid.loadData('BR_BINANCE_MARKET_retrieveExchangeInfo',param,function(data){
-					console.log(data);
-					//gridLoadData에서 자동으로 로드됨..
-					
-				});
+                case 'search':
+                    var data = searchForm.getData();
+                    var param ={
+                        brRq : 'IN_DATA'
+                        ,brRs : 'OUT_RSET'
+                        ,IN_DATA : [data]
+                    }
+                    grid.loadData('BR_BINANCE_MARKET_retrieveExchangeInfo',param,function(data){
+                        console.log(data);
+                        //gridLoadData에서 자동으로 로드됨..
+                        
+                    });
 				break;
             case 'sync':
                     Message.confirm('싱크하시겠습니까?', function() {
