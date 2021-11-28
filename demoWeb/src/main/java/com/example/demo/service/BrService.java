@@ -13,6 +13,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class BrService {
 
@@ -47,8 +50,7 @@ public class BrService {
 			try {
 				jsonOutString = goS.callAPI("BR_CM_MAIN_FIND_TREE_BY_USER_NO", JsonInStringWithSesstion);
 			} catch (ResourceAccessException | BizException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage(),e);
 			}
 			outDs=pjtU.JsonStringToObject(jsonOutString, HashMap.class);
 
@@ -73,8 +75,7 @@ public class BrService {
 
 			OUT_DATA= al;
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		return OUT_DATA; 
     }
@@ -109,13 +110,11 @@ public class BrService {
 			try {
 				jsonOutString = goS.callAPI("BR_CM_MAIN_PGM_FIND", jsonInString);
 			} catch (ResourceAccessException | BizException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage(),e);
 			}
 			outDs=pjtU.JsonStringToObject(jsonOutString, HashMap.class);
 		} catch (JsonProcessingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		
 		ArrayList<HashMap<String,Object>> OUT_DATA= outDs.get("OUT_DATA");
@@ -141,12 +140,12 @@ public class BrService {
 				jsonOutString = goS.callAPI("BR_CM_MAIN_PGM_FIND_BY_PGM_ID", jsonInString);
 			} catch (ResourceAccessException | BizException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage(),e);
 			}
             outDs=pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         HashMap<String, Object> pgmLink =new HashMap<String, Object>();
         ArrayList<HashMap<String,Object>> OUT_DATA= outDs.get("OUT_DATA");
@@ -184,13 +183,13 @@ public class BrService {
 					jsonOutString = goS.callAPI("BR_CM_LOGIN_SNS",jsonInString);
 				} catch (ResourceAccessException | BizException e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error(e.getMessage(),e);
 				}
 				outDs=pjtU.JsonStringToObject(jsonOutString, HashMap.class);
 				OUT_DATA= outDs.get("OUT_DATA");
 			} catch (JsonProcessingException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage(),e);
 			}
 			return OUT_DATA; 
 		}

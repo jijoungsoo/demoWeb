@@ -413,7 +413,7 @@ public class LiquibaseApiRestController {
             writer.write(trimmedXML);
             writer.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         
     }

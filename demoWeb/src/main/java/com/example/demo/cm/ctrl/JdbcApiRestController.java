@@ -60,7 +60,7 @@ public class JdbcApiRestController {
             result.put("status","ok");
             result.put("data",al);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             result.put("status","nok");
             result.put("error",e.getMessage());            
         } finally{
@@ -104,7 +104,7 @@ public class JdbcApiRestController {
             result.put("status","ok");
             result.put("data",al);
         } catch (Exception e){
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             result.put("status","nok");
             result.put("error",e.getMessage());            
         } finally {
@@ -131,7 +131,7 @@ public class JdbcApiRestController {
             result.put("affected_row",cnt);
             result.put("status","ok");
         } catch (Exception e){
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             result.put("error",e.getMessage());
             result.put("status","nok");
         } finally{

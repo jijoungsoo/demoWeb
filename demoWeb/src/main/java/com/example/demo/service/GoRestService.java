@@ -59,7 +59,7 @@ public class GoRestService {
             jsonOutString = resultMap.getBody();
             return jsonOutString;
         } catch (ResourceAccessException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             throw new ResourceAccessException("제한시간이 100초가 초과되었습니다.");
             // 이렇게 에러를 던지는게 아니라 결과셋을 보내야한다.
         }
@@ -100,7 +100,7 @@ public class GoRestService {
             jsonOutString = resultMap.getBody();
             return jsonOutString;
         } catch (ResourceAccessException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             throw new ResourceAccessException("제한시간이 100초가 초과되었습니다.");
             // 이렇게 에러를 던지는게 아니라 결과셋을 보내야한다.
         }
@@ -234,7 +234,7 @@ public class GoRestService {
         try {
             resultMap = restTemplate.exchange(uriBuilder.build().toString(), HttpMethod.POST, entity, String.class);
         } catch (ResourceAccessException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             throw new ResourceAccessException("제한시간이 100초가 초과되었습니다.");
             // 이렇게 에러를 던지는게 아니라 결과셋을 보내야한다.
         }
@@ -250,10 +250,10 @@ public class GoRestService {
             out_msg = pjtU.JsonStringToObject(body, HashMap.class);
         } catch (JsonMappingException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
         if (statusCode == 200 && out_msg.get("status").toString().equals("SUCCESS")) {
@@ -265,7 +265,7 @@ public class GoRestService {
                 jsonOutString = pjtU.ObjectToJsonString(out_msg.get("result"));
             } catch (JsonProcessingException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
 
             /*
@@ -375,7 +375,7 @@ public class GoRestService {
         try {
             resultMap = restTemplate.exchange(uriBuilder.build().toString(), HttpMethod.POST, entity, String.class);
         } catch (ResourceAccessException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             throw new ResourceAccessException("제한시간이 100초가 초과되었습니다.");
             // 이렇게 에러를 던지는게 아니라 결과셋을 보내야한다.
         }
@@ -391,10 +391,10 @@ public class GoRestService {
             out_msg = pjtU.JsonStringToObject(body, HashMap.class);
         } catch (JsonMappingException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
         if (statusCode == 200 && out_msg.get("status").toString().equals("SUCCESS")) {
@@ -402,7 +402,7 @@ public class GoRestService {
                 jsonOutString = pjtU.ObjectToJsonString(out_msg.get("result"));
             } catch (JsonProcessingException e) {
                 // TODO Auto-generated catch block
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
             }
         } else {
             System.out.println(out_msg.get("message").toString());

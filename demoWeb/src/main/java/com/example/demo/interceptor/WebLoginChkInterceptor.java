@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class WebLoginChkInterceptor implements HandlerInterceptor {
     // https://www.leafcats.com/40
@@ -39,8 +42,7 @@ public class WebLoginChkInterceptor implements HandlerInterceptor {
             response.getWriter().write(
                     "<script>if(this==top){ document.location.href='/login' } else { top.document.location.href='/login' }</script>");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
     }

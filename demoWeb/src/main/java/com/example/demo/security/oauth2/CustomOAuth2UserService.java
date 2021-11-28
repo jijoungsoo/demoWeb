@@ -30,6 +30,9 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestOperations;
 import org.springframework.web.client.RestTemplate;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class CustomOAuth2UserService extends DefaultOAuth2UserService {
     @Autowired
@@ -124,8 +127,7 @@ public class CustomOAuth2UserService extends DefaultOAuth2UserService {
         try {
             ud = saveOrUpdate(attributes);
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
         // return new DefaultOAuth2User(authorities, attributes.getAttributes(),

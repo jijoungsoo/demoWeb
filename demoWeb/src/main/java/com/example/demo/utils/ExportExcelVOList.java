@@ -18,6 +18,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class ExportExcelVOList {
     private HttpServletRequest req;
     private HttpServletResponse res;
@@ -103,7 +106,7 @@ public class ExportExcelVOList {
                 row = setRowData(row, data.get(i), 0,st);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         return st;
     }

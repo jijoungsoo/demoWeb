@@ -80,8 +80,7 @@ public class LoginPageController {
 				
 				
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+                log.error(e.getMessage(),e);
 			}
 			log.info("v_userId=>"+v_userId);
 			log.info("v_userPwd=>"+v_userPwd);
@@ -102,8 +101,7 @@ public class LoginPageController {
 		    try {
 				userService.save(infoDto);
 			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage(),e);
 			}
 		  return "redirect:/login";
 		}
@@ -122,8 +120,7 @@ public class LoginPageController {
 		    try {
 				userService.save(infoDto);
 			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage(),e);
 			}
 		  return "redirect:/login";
 		}

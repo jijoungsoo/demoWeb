@@ -411,30 +411,29 @@
                             return;
                         }
 
-                        var data = sendForm.getData();
-                        console.log('data');
-                        console.log(data);
-                        var param ={
-                            brRq : 'IN_PSET'
-                            ,brRs : 'OUT_RSET,OUT_RSET_FILLS'
-                            ,IN_PSET: [data]
-                        }
-                        _this.showProgress();
-                        _this.send_socket('BR_SPOT_ACCOUNT_TRADE_POST_API_V3_TestNewOrder', param, function(data) {
-                            _this.hideProgress();
-                            if (data) {
-                                var row_data = data.OUT_RSET;
-                                console.log(data);
-                                grid.resetData(data.OUT_RSET);
-                                grid_fills.resetData(data.OUT_RSET_FILLS);
-                            } 
+                        Message.confirm('신규주문Test를 하겠습니까?',function()  {
+                            var data = sendForm.getData();
+                            console.log('data');
+                            console.log(data);
+                            var param ={
+                                brRq : 'IN_PSET'
+                                ,brRs : 'OUT_RSET,OUT_RSET_FILLS'
+                                ,IN_PSET: [data]
+                            }
+                            _this.showProgress();
+                            _this.send_socket('BR_SPOT_ACCOUNT_TRADE_POST_API_V3_TestNewOrder', param, function(data) {
+                                _this.hideProgress();
+                                if (data) {
+                                    var row_data = data.OUT_RSET;
+                                    console.log(data);
+                                    grid.resetData(data.OUT_RSET);
+                                    grid_fills.resetData(data.OUT_RSET_FILLS);
+                                } 
 
-                        },function(data){
-                            /*fail*/
-                            _this.hideProgress();
-                            Message.alert(JSON.stringify(data));
+                            });
+				        });
 
-                        });
+                    
                         break;
 				}
 			});

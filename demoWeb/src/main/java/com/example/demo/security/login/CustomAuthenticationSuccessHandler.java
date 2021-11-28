@@ -19,6 +19,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class CustomAuthenticationSuccessHandler  extends SimpleUrlAuthenticationSuccessHandler {
 
@@ -67,14 +71,12 @@ public class CustomAuthenticationSuccessHandler  extends SimpleUrlAuthentication
 
 
             } catch (ResourceAccessException | BizException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
                 new BizException(e.getMessage());
             }
             //OUT_DS = ptjU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             new BizException(e.getMessage());
         }
 		handle(request, response, authentication);

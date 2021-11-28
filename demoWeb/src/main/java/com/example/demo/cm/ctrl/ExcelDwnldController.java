@@ -49,17 +49,17 @@ public class ExcelDwnldController {
         } catch (HttpClientErrorException  e) {
             result.put("statusCode", e.getRawStatusCode());
             result.put("body", e.getStatusText());
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             throw  e;
         } catch (HttpServerErrorException e) {
             result.put("statusCode", e.getRawStatusCode());
             result.put("body", e.getStatusText());
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             throw  e;
         } catch (Exception e) {
             result.put("statusCode", "999");
             result.put("body", "excpetion오류");
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             throw  e;
         }
         try {
@@ -96,7 +96,7 @@ public class ExcelDwnldController {
                 exl.actionDownloadExcel();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
     }
 }

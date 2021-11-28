@@ -158,7 +158,7 @@ public class adbdsActor {
           try {
             Thread.sleep(3000);
           } catch(Exception e){
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
           }
           
 

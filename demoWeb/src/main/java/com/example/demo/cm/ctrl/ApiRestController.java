@@ -98,14 +98,14 @@ public class ApiRestController {
 		} catch (HttpClientErrorException e) {
 			result.put("statusCode", "999");
 			result.put("body", e.getMessage());
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			// https://owin2828.github.io/devlog/2019/12/30/spring-16.html
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
 		} catch (HttpServerErrorException e) {
 			result.put("statusCode", e.getRawStatusCode());
 			result.put("body", e.getStatusText());
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			// https://owin2828.github.io/devlog/2019/12/30/spring-16.html
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
@@ -127,20 +127,20 @@ public class ApiRestController {
 		} catch (HttpClientErrorException e) {
 			result.put("statusCode", "999");
 			result.put("body", e.getMessage());
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			// https://owin2828.github.io/devlog/2019/12/30/spring-16.html
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 
 		} catch (HttpServerErrorException e) {
 			result.put("statusCode", e.getRawStatusCode());
 			result.put("body", e.getStatusText());
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			// https://owin2828.github.io/devlog/2019/12/30/spring-16.html
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		} catch (BizException e) {
 			result.put("statusCode", "500");
 			result.put("body", e.getMessage());
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			// https://owin2828.github.io/devlog/2019/12/30/spring-16.html
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}

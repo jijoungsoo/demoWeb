@@ -17,6 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class FileService {
     @Autowired
@@ -42,10 +45,10 @@ public class FileService {
             outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (BizException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         ArrayList<HashMap<String, Object>> tmp = outDs.get("OUT_DATA");
         ArrayList<FileDto> OUT_DATA = new ArrayList<FileDto>();

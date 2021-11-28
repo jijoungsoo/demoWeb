@@ -351,7 +351,7 @@ class AjaxMngr {
 	        }
 	    });   
 	}
-	static send_socket(p_url, p_param, p_func,p_fail_func,uuid){
+	static send_socket(p_url, p_param, p_func,uuid){
 		console.log('send_socket');
 		p_param.br=p_url;
 		var ws_stomp  = new SockJS("/ws-stomp");
@@ -383,11 +383,15 @@ class AjaxMngr {
                     }
 
                     if(tmp.STATUS_CODE=='NOK'){
-                        if(p_fail_func){
-                            p_fail_func(tmp);
-                        } else {
-                            alert(tmp.ERR_MSG);
-                        }
+                        var tmp2 = JSON.stringify(tmp);
+                        var tmp3 ="<div style='height:400px;text-align:left;overflow-y:scroll'>"+tmp2+ "</div>";
+                        Message.alert(tmp3,function(){
+                                if(p_func){
+                                    p_func();
+                                }
+
+
+                        });
                     }
 					
 

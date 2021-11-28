@@ -16,6 +16,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	/*  https://ayoteralab.tistory.com/entry/Spring-Boot-22-Spring-Security-3-Authorization?category=860804  */
@@ -47,7 +50,7 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 			ud = (UserInfo) userService.loadUserByUsername(loginId);
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+            log.error(e.getMessage(),e);
 			throw new InternalAuthenticationServiceException(e.getMessage());
 		}
 		if(ud == null) {

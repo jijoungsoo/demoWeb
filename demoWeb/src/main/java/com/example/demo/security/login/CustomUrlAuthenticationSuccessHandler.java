@@ -92,8 +92,7 @@ public class CustomUrlAuthenticationSuccessHandler extends SimpleUrlAuthenticati
 	    		v_userPwd			= pjtU.encAES256AndUrl(v_userPwd);
 	    		v_autoLoginYn		= pjtU.encAES256AndUrl(v_autoLoginYn);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage(),e);
 			}
 	    	
 	    	/*로그인을 할때마다 세션을 다 날리자.!!*/

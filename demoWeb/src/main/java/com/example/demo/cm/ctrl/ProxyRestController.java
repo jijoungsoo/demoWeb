@@ -69,19 +69,18 @@ public class ProxyRestController {
 			result.put("body", pjtU.readTree(resultMap.getBody())); // 실제 데이터 정보 확인
 			return ResponseEntity.ok(result);
 		} catch (ResourceAccessException e) {
-			e.printStackTrace();
 			result.put("statusCode", "999");
 			result.put("body", e.getMessage());
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 			// 이렇게 에러를 던지는게 아니라 결과셋을 보내야한다.
 		} catch (HttpClientErrorException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			result.put("statusCode", "999");
 			result.put("body", e.getMessage());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 		} catch (HttpServerErrorException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			result.put("statusCode", e.getRawStatusCode());
 			result.put("body", e.getStatusText());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);
@@ -134,19 +133,18 @@ public class ProxyRestController {
 			result.put("body", pjtU.readTree(resultMap.getBody())); // 실제 데이터 정보 확인
 			return ResponseEntity.ok(result);
 		} catch (ResourceAccessException e) {
-			e.printStackTrace();
 			result.put("statusCode", "999");
 			result.put("body", e.getMessage());
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 			// 이렇게 에러를 던지는게 아니라 결과셋을 보내야한다.
 		} catch (HttpClientErrorException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			result.put("statusCode", "999");
 			result.put("body", e.getMessage());
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
 		} catch (HttpServerErrorException e) {
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 			result.put("statusCode", e.getRawStatusCode());
 			result.put("body", e.getStatusText());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(result);

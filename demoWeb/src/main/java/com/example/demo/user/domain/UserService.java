@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserService implements UserDetailsService {
@@ -58,7 +60,7 @@ public class UserService implements UserDetailsService {
 				jsonOutString = goS.callAPI("BR_CM_LOGIN_LOAD_USER_BY_USER_NAME",jsonInString);
 			} catch (ResourceAccessException | BizException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				log.error(e.getMessage(),e);
 				throw new UsernameNotFoundException(e.getMessage());
 				
 			}
@@ -106,10 +108,10 @@ public class UserService implements UserDetailsService {
 			}
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		} catch (JsonProcessingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			log.error(e.getMessage(),e);
 		}
 		if(userInfo==null) {
 			throw new UsernameNotFoundException(userId+"사용자가 없거나 비밀번호가 다릅니다.[1]");
@@ -145,7 +147,7 @@ public class UserService implements UserDetailsService {
 		String tmp = goS.callAPI("saveUser", jsonString);
 	} catch (ResourceAccessException | BizException e) {
 		// TODO Auto-generated catch block
-		e.printStackTrace();
+        log.error(e.getMessage(),e);
 	}
 	
   }	

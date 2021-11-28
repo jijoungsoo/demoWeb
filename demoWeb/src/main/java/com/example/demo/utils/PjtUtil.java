@@ -34,6 +34,9 @@ import org.json.JSONObject;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class PjtUtil {
     public static String key = "demo exmaple key";
@@ -122,7 +125,7 @@ public class PjtUtil {
             return formattedJson;
         } catch (JsonProcessingException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
             return InJsonString;
         }
     }

@@ -45,7 +45,7 @@ public class FileUpldController {
                 
                 fService.createFile(tmp,authentication);
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error(e.getMessage(),e);
                 File f= new File(tmp.getSvrDirPath(),tmp.getSvrFileNm());
                 if(f.exists()) {
                     f.delete();
@@ -89,7 +89,7 @@ public class FileUpldController {
             }
             catch(IOException ie) {
                 // 파일 생성 중 오류
-                ie.printStackTrace();
+                log.error(ie.getMessage(),ie);
                 throw new Exception("파일이 생성중 에러가 발생하였습니다.");
                 //return ResponseEntity.status(HttpStatus.CONFLICT).build();
             }           
@@ -100,7 +100,7 @@ public class FileUpldController {
         }
         catch(IOException ie) {
             // 덮어쓰기 중 오류
-            ie.printStackTrace();
+            log.error(ie.getMessage(),ie);
             throw new Exception("파일이 복사중 에러가 발생하였습니다.");
             //return ResponseEntity.status(HttpStatus.CONFLICT).build();
         }

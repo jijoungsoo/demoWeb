@@ -18,6 +18,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Component
 public class SessionDestoryListener implements ApplicationListener<SessionDestroyedEvent>{
 
@@ -60,14 +63,11 @@ public class SessionDestoryListener implements ApplicationListener<SessionDestro
             String jsonOutString = goS.callAPI("BR_CM_SESSION_LOG_CRT", jsonInString);
             //OUT_DS = ptjU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (ResourceAccessException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (BizException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
 
     }

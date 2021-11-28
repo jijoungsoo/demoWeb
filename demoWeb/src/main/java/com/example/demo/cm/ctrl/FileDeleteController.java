@@ -25,7 +25,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Tag(name = "CM_FILE", description = "파일")
 @RestController
 public class FileDeleteController {
@@ -111,7 +113,7 @@ public class FileDeleteController {
                                 fService.rmFile(fDto, authentication);
                             } catch (Exception e) {
                                 org.apache.commons.io.FileUtils.moveFile(fileToMove,f);
-                                e.printStackTrace();
+                                log.error(e.getMessage(),e);
                             }    
                         }
                     }

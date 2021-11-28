@@ -26,8 +26,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import lombok.extern.slf4j.Slf4j;
 
 
+@Slf4j
 @Controller
 public class AvImgFileController {
 
@@ -64,8 +66,7 @@ public class AvImgFileController {
             String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_PF_IMG_FIND_BY_ACTOR_IDX", jsonInString);
             outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         ArrayList<HashMap<String, Object>> tmp = outDs.get("OUT_DATA");
         ArrayList<FileDto> OUT_DATA = new ArrayList<FileDto>();
@@ -133,8 +134,7 @@ public class AvImgFileController {
             String jsonOutString = goS.callAPI("BS_MIG_AV_ACTR_IMG_FIND_BY_IMG_SEQ", jsonInStringWithSesstion);
             outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         ArrayList<HashMap<String, Object>> tmp = outDs.get("OUT_DATA");
         ArrayList<FileDto> OUT_DATA = new ArrayList<FileDto>();
@@ -202,8 +202,7 @@ public class AvImgFileController {
             String jsonOutString = goS.callAPI("BS_MIG_AV_MV_IMG_FIND_BY_DVD_IDX", jsonInStringWithSesstion);
             outDs = pjtU.JsonStringToObject(jsonOutString, HashMap.class);
         } catch (JsonProcessingException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         ArrayList<HashMap<String, Object>> tmp = outDs.get("OUT_DATA");
         ArrayList<FileDto> OUT_DATA = new ArrayList<FileDto>();

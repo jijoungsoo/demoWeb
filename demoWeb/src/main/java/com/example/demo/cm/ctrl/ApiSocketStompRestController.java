@@ -62,9 +62,9 @@ public class ApiSocketStompRestController {
         try {
             jsonOutString = goS.callAPI(br, jsonInString);
         } catch (HttpClientErrorException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         } catch (HttpServerErrorException e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
         // https://withseungryu.tistory.com/136
         smt.convertAndSendToUser(p.getName(), "/topic/message", jsonOutString);// 동작을 안함.

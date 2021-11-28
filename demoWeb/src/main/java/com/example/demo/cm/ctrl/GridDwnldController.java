@@ -44,7 +44,7 @@ public class GridDwnldController {
             }
             exl.actionDownloadExcel();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error(e.getMessage(),e);
         }
     }
 }
