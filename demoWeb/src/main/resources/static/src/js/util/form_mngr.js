@@ -181,6 +181,9 @@ class FormMngr {
 		//https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=horajjan&logNo=220586383301
 		var t=this.container_area;
 		var tmp =t[0];
+        console.log('jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj');
+        console.log(t);
+        console.log(tmp);
 		//console.log(tmp.checkValidity()); 이것으로 전체 다 되는데 순회하는걸 하나 더 만들자 알림메시지를 보여주려고
 
 		for(var i=0;i<tmp.elements.length;i++){

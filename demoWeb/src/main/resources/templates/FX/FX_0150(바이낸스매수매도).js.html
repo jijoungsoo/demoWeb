@@ -13,23 +13,32 @@
 			sendForm.initCombo("SIDE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_SIDE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
 			sendForm.initCombo("TIME_IN_FORCE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BINANCE_TIME_IN_FORCE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
 
+            sendForm.setData('SYMBOL',p_param.param.SYMBOL);
 
 			const grid_bid = new TuiGridMngr(_this,'grid_bid',{
 				  editable: false
 				  ,showRowStatus: false
-				  ,rowNum: true
+				  ,rowNum: false
 				  ,checkbox: false
 				  ,pageable: false
                   ,visibleTotalCnt:false
                   ,bodyHeight : 100
-				  ,width : 500
+				  ,width : 370
 				  }
 			,[
-			{
+                    {
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 30,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
 					   header: 'SYMBOL',
 					   name: 'SYMBOL',
 					   width: 100,
-					   align : 'left',
+					   align : 'center',
 					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
@@ -37,7 +46,7 @@
 					   header: 'BID_PRICE',
 					   name: 'BID_PRICE',
 					   width: 100,
-					   align : 'left',
+					   align : 'right',
 					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
@@ -45,15 +54,7 @@
 					   header: 'BID_QTY',
 					   name: 'BID_QTY',
 					   width: 100,
-					   align : 'left',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'SEQ',
-					   name: 'SEQ',
-					   width: 100,
-					   align : 'left',
+					   align : 'right',
 					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
@@ -65,19 +66,27 @@
 			const grid_ask = new TuiGridMngr(_this,'grid_ask',{
 				  editable: false
 				  ,showRowStatus: false
-				  ,rowNum: true
+				  ,rowNum: false
 				  ,checkbox: false
 				  ,pageable: false
                   ,visibleTotalCnt:false
 				  ,bodyHeight : 100
-				  ,width : 500
+				  ,width : 370
 				  }
 			,[
-					{
+                    {
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 30,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
 					   header: 'SYMBOL',
 					   name: 'SYMBOL',
 					   width: 100,
-					   align : 'left',
+					   align : 'center',
 					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
@@ -85,7 +94,7 @@
 					   header: 'ASK_PRICE',
 					   name: 'ASK_PRICE',
 					   width: 100,
-					   align : 'left',
+					   align : 'right',
 					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
@@ -93,15 +102,7 @@
 					   header: 'ASK_QTY',
 					   name: 'ASK_QTY',
 					   width: 100,
-					   align : 'left',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'SEQ',
-					   name: 'SEQ',
-					   width: 100,
-					   align : 'left',
+					   align : 'right',
 					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
@@ -109,48 +110,6 @@
 				]
 			);
 		  	grid_ask.build();
-
-
-              const grid_trade_fee = new TuiGridMngr(_this,'grid_trade_fee',{
-				  editable: false
-				  ,showRowStatus: false
-				  ,rowNum: true
-				  ,checkbox: false
-				  ,pageable: false
-                  ,bodyHeight: 60
-                  ,visibleTotalCnt:false
-                  ,width : 500
-				  }
-			,[
-					{
-					   header: 'SYMBOL',
-					   name: 'SYMBOL',
-					   width: 120,
-					   align : 'center',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'				
-					},{
-					   header: 'MAKER_COMMISSION',
-					   name: 'MAKER_COMMISSION',
-					   width: 140,
-					   align : 'right',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'				
-					},{
-					   header: 'TAKER_COMMISSION',
-					   name: 'TAKER_COMMISSION',
-					   width: 140,
-					   align : 'right',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'				
-					}
-				]
-			);
-		  	grid_trade_fee.build();
-
 
               
 			const grid_balances = new TuiGridMngr(_this,'grid_balances',{
@@ -161,7 +120,7 @@
 				  ,pageable: false
                   ,visibleTotalCnt:false
                   ,bodyHeight: 100 
-                  ,width: 500
+                  ,width: 360
 				  }
 			,[
                     {
@@ -176,7 +135,7 @@
 					   header: 'FREE',
 					   name: 'FREE',
 					   width: 100,
-					   align : 'left',
+					   align : 'right',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc'
@@ -184,7 +143,7 @@
 					   header: 'LOCKED',
 					   name: 'LOCKED',
 					   width: 100,
-					   align : 'left',
+					   align : 'right',
 					   sortable : true,
 					   resizable: true,
 					   sortingType: 'desc'
@@ -192,6 +151,50 @@
 				]
 			);
 			grid_balances.build();
+
+
+              const grid_trade_fee = new TuiGridMngr(_this,'grid_trade_fee',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+                  ,bodyHeight: 60
+                  ,visibleTotalCnt:false
+                  ,width : 440
+				  }
+			,[
+					{
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'MAKER_COMMISSION',
+					   name: 'MAKER_COMMISSION',
+					   width: 130,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'				
+					},{
+					   header: 'TAKER_COMMISSION',
+					   name: 'TAKER_COMMISSION',
+					   width: 120,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'				
+					}
+				]
+			);
+		  	grid_trade_fee.build();
+
+
+              
 
               const grid = new TuiGridMngr(_this,'grid',{
 				  editable: false
@@ -371,72 +374,68 @@
 			grid_fills.build();
 		
 			searchForm.addEvent("click","input[type=button]",function(el){
-			//console.log(el);
 				switch(el.target.name){
-			case 'search':
-				var data = searchForm.getData();
-				console.log('data');
-				console.log(data);
-				var param ={
-					 brRq : 'IN_DATA'
-					,brRs : 'OUT_RSET,OUT_RSET_ORDER_BOOK'
-					,IN_DATA: [data]
-				}
-			
-				_this.showProgress();
-				_this.send_api('BR_BINANCE_MARKET_GET_API_V3_OrderBook', param, function(data) {
-					_this.hideProgress();
-					if (data) {
-									
-						console.log(data);
-								
-						grid_bid.resetData(data.OUT_RSET_ORDER_BOOK);
-						grid_ask.resetData(data.OUT_RSET_ORDER_BOOK);
-						
+                case 'search':
+                    var data = searchForm.getData();
+                    console.log('data');
+                    console.log(data);
+                    var param ={
+                        brRq : 'IN_PSET'
+                        ,brRs : 'OUT_RSET_ORDER_BOOK,OUT_RSET_TRADE_FEE,OUT_RSET_BALANCES'
+                        ,IN_PSET: [data]
+                    }
+                
+                    _this.showProgress();
+                    _this.send_api('BR_FX_retrieveBinanceOrderBookTradeFeeAccount', param, function(data) {
+                        _this.hideProgress();
+                        if (data) {
+                                        
+                            console.log(data);
+                                    
+                            grid_bid.resetData(data.OUT_RSET_ORDER_BOOK);
+                            grid_ask.resetData(data.OUT_RSET_ORDER_BOOK);
+                            grid_trade_fee.resetData(data.OUT_RSET_TRADE_FEE);
+                            grid_balances.resetData(data.OUT_RSET_BALANCES);
+                            
 
-					}
-				});
+                        }
+                    });
+				    break;
+                }
+            });
 
-                var data = searchForm.getData();
-				var param ={
-					 brRq : 'IN_PSET'
-					,brRs : 'OUT_RSET'
-					,IN_PSET : [ data ]
-				}
+            sendForm.addEvent("click","input[type=button]",function(el){
+                switch(el.target.name){
+                    case 'test_new_order':
+                        if(!sendForm.isValid()){
+                            return;
+                        }
 
-				_this.showProgress();
-				_this.send_api('BR_BINANCE_WALLET_GET_SAPI_V1_TradeFee', param, function(data) {
-					_this.hideProgress();
-					if (data) {
-									
-						console.log(data);
-								
-						grid_trade_fee.resetData(data.OUT_RSET);
-					}
-				});
+                        var data = sendForm.getData();
+                        console.log('data');
+                        console.log(data);
+                        var param ={
+                            brRq : 'IN_PSET'
+                            ,brRs : 'OUT_RSET,OUT_RSET_FILLS'
+                            ,IN_PSET: [data]
+                        }
+                        _this.showProgress();
+                        _this.send_socket('BR_SPOT_ACCOUNT_TRADE_POST_API_V3_TestNewOrder', param, function(data) {
+                            _this.hideProgress();
+                            if (data) {
+                                var row_data = data.OUT_RSET;
+                                console.log(data);
+                                grid.resetData(data.OUT_RSET);
+                                grid_fills.resetData(data.OUT_RSET_FILLS);
+                            } 
 
-                var data = searchForm.getData();
-					console.log('data');
-					console.log(data);
-					var param ={
-						brRq : 'IN_PSET'
-						,brRs : 'OUT_RSET,OUT_RSET_BALANCES,OUT_RSET_PERMISSIONS'
-						,IN_PSET: [data]
-					}
-					_this.showProgress();
-					_this.send_socket('BR_SPOT_ACCOUNT_TRADE_GET_API_V3_AccountInformation', param, function(data) {
-						_this.hideProgress();
-						if (data) {
-							var row_data = data.OUT_RSET;
-							console.log(data);
-							//grid.resetData(data.OUT_RSET);
-							grid_balances.resetData(data.OUT_RSET_BALANCES);
-							//grid_permissions.resetData(data.OUT_RSET_PERMISSIONS);
-						} 
-					
-					});
-				
-				break;
+                        },function(data){
+                            /*fail*/
+                            _this.hideProgress();
+                            Message.alert(JSON.stringify(data));
+
+                        });
+                        break;
 				}
 			});
 			searchForm.get("search").trigger("click");

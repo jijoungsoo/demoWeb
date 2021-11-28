@@ -32,7 +32,6 @@ public class CustomAuthenticationSuccessHandler  extends SimpleUrlAuthentication
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		System.out.println("cccccccccccccccccccccccccccccccccccccccc");
 		UserInfo u = (UserInfo)  authentication.getPrincipal();
 		String ipaddr = getRemoteAddr(request);
 

@@ -13,32 +13,33 @@
       </tr>
       </table>
     </div>
-    <table>
-        <tr>
-            <td>거래수수료</td>
-        </tr>
-        <tr>
-            <td><div name="grid_trade_fee"></div></td>
-        </tr>
-    </table>
-        
-    
     
     <table>
       <tr>
         <td>매수(BID)</td>
         <td>매도(ASK)</td>
         <td>잔액</td>
+        <td>거래수수료</td>
       </tr>
       <tr>
         <td><div name="grid_bid"></div></td>
         <td><div name="grid_ask"></div></td>
         <td><div name="grid_balances"></div></td>
+        <td class="vat"><div name="grid_trade_fee"></div></td>
       </tr>
     </table>
-    <div name="send_area">
+    <form name="send_area">
         <div style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
             <div class="row row-cols-5">
+                <div class="col">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">SYMBOL(필수)</span> 
+                            <input class="form-control" data-ax-path="SYMBOL"  name="SYMBOL" style="width:140px;"  />          
+                        </div>
+                    </div>
+                </div>
+
                 <div class="col">
                     <div class="form-group">
                         <div class="input-group">
@@ -116,10 +117,11 @@
                 </div>
                 <div class="col">
                     <input type="button" name="new_order" value="신규주문" />
+                    <input type="button" name="test_new_order" value="신규주문Test" />
                 </div>
             </div>
         </div>
-    </div>
+    </form>
     <div name="grid"></div>
     <div name="grid_fills"></div>
     

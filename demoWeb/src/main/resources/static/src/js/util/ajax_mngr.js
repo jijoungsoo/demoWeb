@@ -351,7 +351,7 @@ class AjaxMngr {
 	        }
 	    });   
 	}
-	static send_socket(p_url, p_param, p_funtion,uuid){
+	static send_socket(p_url, p_param, p_func,p_fail_func,uuid){
 		console.log('send_socket');
 		p_param.br=p_url;
 		var ws_stomp  = new SockJS("/ws-stomp");
@@ -372,12 +372,24 @@ class AjaxMngr {
 					성공,실패를 알고 보내줘야 하는데 일단 무시하자
 					안나오면 프로그래머가 보면되지..
 					*/
+                    var tmp = JSON.parse(msg.body);
+					console.log(tmp);
+                    if(tmp.STATUS_CODE=='OK'){
+                        if(p_func){
+                            var tmp2 = JSON.parse(tmp.RESULT);
+                            console.log(tmp2);
+                            p_func(tmp2);
+                        }
+                    }
 
-					if(p_funtion){
-						var tmp = JSON.parse(msg.body);
-						console.log(tmp);
-						p_funtion(tmp);
-					}
+                    if(tmp.STATUS_CODE=='NOK'){
+                        if(p_fail_func){
+                            p_fail_func(tmp);
+                        } else {
+                            alert(tmp.ERR_MSG);
+                        }
+                    }
+					
 
 					stomp_client.disconnect()
 					ws_stomp.close();

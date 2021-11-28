@@ -89,18 +89,33 @@ public class ApiSocketStompRestController {
         String jsonOutString = null;
         HashMap<String, Object> inDs = pjtU.JsonStringToObject(jsonInString, HashMap.class);
         String br = inDs.get("br").toString();
-        jsonOutString = goS.callAPIMap(br, inDs);
+        try {
+            jsonOutString = goS.callAPIMap(br, inDs);
 
-        /*
-         * status ==> true status ==> false
-         * 
-         * 
-         */
+            /* status ==> true status ==> false */
+            // https://withseungryu.tistory.com/136
+            //System.out.println(jsonOutString);
+            //System.out.println("ddddddddddddddddddddddd");
 
-        // https://withseungryu.tistory.com/136
-        //System.out.println(jsonOutString);
-        //System.out.println("ddddddddddddddddddddddd");
-        smt.convertAndSendToUser(p.getName(), "/topic/message", jsonOutString);// 동작을 안함.
+            /* map에 상태를 담아서   js에서 공통으로 처리해야한다. */
+            HashMap<String, Object> ret =new HashMap<String, Object>();
+            ret.put("STATUS_CODE", "OK");
+            ret.put("RESULT", jsonOutString);
+            String tmp = pjtU.ObjectToJsonString(ret);
+            smt.convertAndSendToUser(p.getName(), "/topic/message", tmp);
+        } catch (Exception e){
+            HashMap<String, Object> ret =new HashMap<String, Object>();
+            ret.put("STATUS_CODE", "NOK");
+            ret.put("ERR_MSG", e.getMessage());
+            ret.put("RESULT", jsonOutString);
+            String tmp = pjtU.ObjectToJsonString(ret);
+            log.error(e.getMessage(),e);
+
+            smt.convertAndSendToUser(p.getName(), "/topic/message", tmp);
+        }
+        
+
+
     }
 
 }
