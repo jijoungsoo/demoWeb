@@ -7,6 +7,7 @@ class TuiGridMngr {
 		this.param  =[];        /*페이징 처리를 하려면 화면에서 넘어온 파라미터를 알고있어야한다. */ 
 		this.page_num =0;       /*현재페이지 번호  첫번째 페이지가 0 번이다. */
 		this.total_page = 1;    /*전체페이지 수*/
+        this.grid_name=grid_name;
       var basic_options = {
         editable: false
         ,scrollX: true
@@ -253,7 +254,7 @@ class TuiGridMngr {
     
     if(this.options.pageable==true) {
     	const page_element = `
-	    <div>
+	    <div name='`+this.grid_name+`_page_div'>
 	    	(<span name='curr_size'>0</span>/
 	    	<span name='total_size'>0</span>
 	    	)
@@ -265,7 +266,9 @@ class TuiGridMngr {
 		`
 		$(this.options.el).append(page_element);
 		let _this=this;
-		this.pgm_mngr.get('more')[0].addEventListener('click', function(event){
+        console.log('cccccccccccccccccccccc');
+        console.log(this.pgm_mngr.get(this.grid_name+'_page_div'));
+		this.pgm_mngr.get(this.grid_name+'_page_div').find('[name=more]')[0].addEventListener('click', function(event){
 				if(_this.total_size==0){
 					alert('조회버튼을 눌러주세요.');
 					return;
@@ -276,7 +279,7 @@ class TuiGridMngr {
 				}
 			_this.appendLoadData('one');
 		});
-		this.pgm_mngr.get('more_all')[0].addEventListener('click', function(event){
+		this.pgm_mngr.get(this.grid_name+'_page_div').find('[name=more_all]')[0].addEventListener('click', function(event){
 				if(_this.total_size==0){
 					alert('조회버튼을 눌러주세요.');
 					return;
@@ -290,7 +293,7 @@ class TuiGridMngr {
     } else {
         if(this.options.visibleTotalCnt){
             const page_element = `
-            <div>
+            <div name='`+this.grid_name+`_page_div'>
                 (<span name='total_size'>0</span>)
             </div>
             `
@@ -439,12 +442,12 @@ class TuiGridMngr {
       }
         
 	    if(_this.options.pageable==false) {
-	    	_this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
+            _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=total_size]')[0].innerText=_this.total_size;
 	    } else {
-            _this.pgm_mngr.get("curr_size")[0].innerText=_this.curr_size;
-            _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
-            _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num);
-            _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
+            _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=curr_size]')[0].innerText=_this.curr_size;
+            _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=total_size]')[0].innerText=_this.total_size;
+            _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=page_num]')[0].innerText=_this.page_num;
+            _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=total_page]')[0].innerText=_this.total_page;
         }
     }
     ,this.pgm_mngr.getId()
@@ -500,10 +503,10 @@ class TuiGridMngr {
 	      		_this.page_num    = Math.ceil(_this.curr_size/_this.options.pageSize)
 	      		
 	      }
-	      _this.pgm_mngr.get("curr_size")[0].innerText=_this.curr_size;
-      	  _this.pgm_mngr.get("total_size")[0].innerText=_this.total_size;
-      	  _this.pgm_mngr.get("page_num")[0].innerText=(_this.page_num);
-      	  _this.pgm_mngr.get("total_page")[0].innerText=_this.total_page;
+          _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=curr_size]')[0].innerText=_this.curr_size;
+          _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=total_size]')[0].innerText=_this.total_size;
+          _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=page_num]')[0].innerText=(_this.page_num);
+          _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=total_page]')[0].innerText=_this.total_page;
       	  if(p_data_flag_all!='all'){  //all 이 아니라면 종료
 			progress.hideProgress();
       	  	return;   

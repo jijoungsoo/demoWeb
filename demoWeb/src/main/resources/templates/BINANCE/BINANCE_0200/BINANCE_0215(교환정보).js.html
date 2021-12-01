@@ -10,12 +10,9 @@
 				  ,showRowStatus: false
 				  ,rowNum: true
 				  ,checkbox: false
-				  ,pageable: false
-				  /*
-				  ,bodyHeight : 700
+				  ,pageable: true
+				  ,bodyHeight : 300
 				  ,width : 700
-				  */
-				   /*,useClientSort: false   서버정렬 이걸로 안됨.  tui_grid_mngr에서  이벤트에서 beforeSort를 사용해서 서버쪽 호출을 하도록 하자*/
 				  }
 			,[
                     {
@@ -150,9 +147,352 @@
 				]
 			);
 		  	grid.build();
-		
+
+
+            const grid_iceberg_parts = new TuiGridMngr(_this,'grid_iceberg_parts',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: true
+				  ,bodyHeight : 200
+				  ,width : 340
+				  }
+			,[
+                    {
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'LIMIT',
+					   name: 'LIMIT',
+					   width: 40,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}, {
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        width : 140,
+                        resizable : false,
+                        sortable : true,
+                        align : "center",
+                            filter : {
+                                type : 'date',
+                                format : 'yyyy-MM-DD'
+                        }	
+                    }
+				]
+			);
+            grid_iceberg_parts.build();
+
+            const grid_market_lot_size = new TuiGridMngr(_this,'grid_market_lot_size',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: true
+				  ,bodyHeight : 200
+				  ,width : 500
+				  }
+			,[
+                    {
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 80,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MAX_QTY',
+					   name: 'MAX_QTY',
+					   width: 100,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MIN_QTY',
+					   name: 'MIN_QTY',
+					   width: 120,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'STEP_SIZE',
+					   name: 'STEP_SIZE',
+					   width: 120,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}, {
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        width : 200,
+                        resizable : false,
+                        sortable : true,
+                        align : "center",
+                            filter : {
+                                type : 'date',
+                                format : 'yyyy-MM-DD'
+                        }	
+                    }
+				]
+			);
+            grid_market_lot_size.build();
+
+            const grid_max_num_algo_orders = new TuiGridMngr(_this,'grid_max_num_algo_orders',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: true
+				  ,bodyHeight : 200
+				  ,width : 340
+				  }
+			,[
+                    {
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 80,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MAX_NUM_ALGO_ORDERS',
+					   name: 'MAX_NUM_ALGO_ORDERS',
+					   width: 120,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}, {
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        width : 120,
+                        resizable : false,
+                        sortable : true,
+                        align : "center",
+                            filter : {
+                                type : 'date',
+                                format : 'yyyy-MM-DD'
+                        }	
+                    }
+				]
+			);
+            grid_max_num_algo_orders.build();
+
+            const grid_max_num_orders = new TuiGridMngr(_this,'grid_max_num_orders',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: true
+				  ,bodyHeight : 200
+				  ,width : 400
+				  }
+			,[
+                    {
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MAX_NUM_ORDERS',
+					   name: 'MAX_NUM_ORDERS',
+					   width: 120,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}, {
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        width : 200,
+                        resizable : false,
+                        sortable : true,
+                        align : "center",
+                            filter : {
+                                type : 'date',
+                                format : 'yyyy-MM-DD'
+                        }	
+                    }
+				]
+			);
+            grid_max_num_orders.build();
+
+
+            const grid_percent_price = new TuiGridMngr(_this,'grid_percent_price',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: false
+				  ,bodyHeight : 200
+				  ,width : 700
+				  }
+			,[
+                    {
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MULTIPLIER_UP',
+					   name: 'MULTIPLIER_UP',
+					   width: 120,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MULTIPLIER_DOWN',
+					   name: 'MULTIPLIER_DOWN',
+					   width: 120,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'AVG_PRICE_MINS',
+					   name: 'AVG_PRICE_MINS',
+					   width: 120,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}, {
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        width : 200,
+                        resizable : false,
+                        sortable : true,
+                        align : "center",
+                            filter : {
+                                type : 'date',
+                                format : 'yyyy-MM-DD'
+                        }	
+                    }
+				]
+			);
+            grid_percent_price.build();
+
+            const grid_price_filter = new TuiGridMngr(_this,'grid_price_filter',{
+                editable: false
+                ,showRowStatus: false
+                ,rowNum: true
+                ,checkbox: false
+                ,pageable: true
+                ,bodyHeight : 200
+                ,width : 700
+                }
+            ,[
+                {
+                    header: 'SYMBOL',
+                    name: 'SYMBOL',
+                    width: 100,
+                    align : 'left',
+                    sortable : true,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'MAX_PRICE',
+                    name: 'MAX_PRICE',
+                    width: 120,
+                    align : 'left',
+                    sortable : true,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'MIN_PRICE',
+                    name: 'MIN_PRICE',
+                    width: 120,
+                    align : 'left',
+                    sortable : true,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'TICK_SIZE',
+                    name: 'TICK_SIZE',
+                    width: 120,
+                    align : 'left',
+                    sortable : true,
+                    resizable: true,
+                    sortingType: 'desc'
+                }, {
+                    header : '생성일',
+                    name : 'CRT_DTM',
+                    width : 200,
+                    resizable : false,
+                    sortable : true,
+                    align : "center",
+                        filter : {
+                            type : 'date',
+                            format : 'yyyy-MM-DD'
+                    }	
+                }
+            ]
+            );
+            grid_price_filter.build();
+
+            const grid_order_types = new TuiGridMngr(_this,'grid_order_types',{
+                editable: false
+                ,showRowStatus: false
+                ,rowNum: true
+                ,checkbox: false
+                ,pageable: false
+                ,bodyHeight : 200
+                ,width : 400
+                }
+            ,[
+                {
+                    header: 'SYMBOL',
+                    name: 'SYMBOL',
+                    width: 100,
+                    align : 'left',
+                    sortable : true,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'ORDER_TYPE',
+                    name: 'ORDER_TYPE',
+                    width: 120,
+                    align : 'left',
+                    sortable : true,
+                    resizable: true,
+                    sortingType: 'desc'
+                }, {
+                    header : '생성일',
+                    name : 'CRT_DTM',
+                    width : 140,
+                    resizable : false,
+                    sortable : true,
+                    align : "center",
+                        filter : {
+                            type : 'date',
+                            format : 'yyyy-MM-DD'
+                    }	
+                }
+            ]
+            );
+            grid_order_types.build();
+	
 			searchForm.addEvent("click","input[type=button]",function(el){
-			//console.log(el);
 				switch(el.target.name){
                 case 'search':
                     var data = searchForm.getData();
@@ -163,8 +503,34 @@
                     }
                     grid.loadData('BR_BINANCE_MARKET_retrieveExchangeInfo',param,function(data){
                         console.log(data);
-                        //gridLoadData에서 자동으로 로드됨..
-                        
+                    });
+
+                    grid_iceberg_parts.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersIcebergParts',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_market_lot_size.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersMarketLotSize',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_max_num_algo_orders.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersMaxNumAlgoOrders',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_max_num_orders.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersMaxNumOrders',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_percent_price.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersPercentPrice',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_price_filter.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersPriceFilter',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_order_types.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoOrderTypes',param,function(data){
+                        console.log(data);
                     });
 				break;
             case 'sync':
@@ -179,7 +545,7 @@
                             Message.alert('싱크되었습니다.', function() {
                                 searchForm.get("search").trigger("click");
                             });
-                        });                    
+                        });           
                     });                    
                     break;
 				}
