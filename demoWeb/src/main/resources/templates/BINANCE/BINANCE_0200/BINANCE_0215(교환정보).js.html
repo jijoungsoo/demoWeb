@@ -191,6 +191,65 @@
 			);
             grid_iceberg_parts.build();
 
+            
+            const grid_min_notional = new TuiGridMngr(_this,'grid_min_notional',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: true
+				  ,bodyHeight : 200
+				  ,width : 500
+				  }
+			,[
+                    {
+					   header: 'SYMBOL',
+					   name: 'SYMBOL',
+					   width: 100,
+					   align : 'left',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MIN_NOTIONAL',
+					   name: 'MIN_NOTIONAL',
+					   width: 120,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'APPLY_TO_MARKET',
+					   name: 'APPLY_TO_MARKET',
+					   width: 120,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'AVG_PRICE_MINS',
+					   name: 'AVG_PRICE_MINS',
+					   width: 120,
+					   align : 'right',
+					   sortable : true,
+					   resizable: true,
+					   sortingType: 'desc'
+					}, {
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        width : 140,
+                        resizable : false,
+                        sortable : true,
+                        align : "center",
+                            filter : {
+                                type : 'date',
+                                format : 'yyyy-MM-DD'
+                        }	
+                    }
+				]
+			);
+            grid_min_notional.build();
+
             const grid_market_lot_size = new TuiGridMngr(_this,'grid_market_lot_size',{
 				  editable: false
 				  ,showRowStatus: false
@@ -491,7 +550,66 @@
             ]
             );
             grid_order_types.build();
-	
+
+
+            const grid_lot_size = new TuiGridMngr(_this,'grid_lot_size',{
+                editable: false
+                ,showRowStatus: false
+                ,rowNum: true
+                ,checkbox: false
+                ,pageable: false
+                ,bodyHeight : 200
+                ,width : 400
+                }
+            ,[
+                {
+                    header: 'SYMBOL',
+                    name: 'SYMBOL',
+                    width: 100,
+                    align : 'left',
+                    sortable : true,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'MAX_QTY',
+                    name: 'MAX_QTY',
+                    width: 120,
+                    align : 'left',
+                    sortable : true,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'MIN_QTY',
+                    name: 'MIN_QTY',
+                    width: 120,
+                    align : 'left',
+                    sortable : true,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'STEP_SIZE',
+                    name: 'STEP_SIZE',
+                    width: 120,
+                    align : 'left',
+                    sortable : true,
+                    resizable: true,
+                    sortingType: 'desc'
+                }, {
+                    header : '생성일',
+                    name : 'CRT_DTM',
+                    width : 140,
+                    resizable : false,
+                    sortable : true,
+                    align : "center",
+                        filter : {
+                            type : 'date',
+                            format : 'yyyy-MM-DD'
+                    }	
+                }
+            ]
+            );
+            grid_lot_size.build();
+
 			searchForm.addEvent("click","input[type=button]",function(el){
 				switch(el.target.name){
                 case 'search':
@@ -506,6 +624,10 @@
                     });
 
                     grid_iceberg_parts.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersIcebergParts',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_min_notional.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersMinNotional',param,function(data){
                         console.log(data);
                     });
 
@@ -532,13 +654,21 @@
                     grid_order_types.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoOrderTypes',param,function(data){
                         console.log(data);
                     });
+
+
+                    grid_lot_size.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersLotSize',param,function(data){
+                        console.log(data);
+                    });
+                    
 				break;
             case 'sync':
                     Message.confirm('싱크하시겠습니까?', function() {
                         _this.showProgress();
+                        var data = searchForm.getData();
                         var param = {
-                            brRq : '',
-                            brRs : ''
+                            brRq : 'IN_PSET',
+                            brRs : '',
+                            IN_PSET : [data]
                         }
                         _this.send_api('BR_FX_syncBinanceExchangeInfo', param, function(data) {
                             _this.hideProgress();
