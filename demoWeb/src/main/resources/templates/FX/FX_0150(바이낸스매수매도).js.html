@@ -15,6 +15,424 @@
 
             sendForm.setData('SYMBOL',p_param.param.SYMBOL);
 
+            
+            const grid_iceberg_parts = new TuiGridMngr(_this,'grid_iceberg_parts',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: false
+				  ,checkbox: false
+				  ,pageable: false
+                  ,visibleTotalCnt: false 
+				  ,bodyHeight : 40
+				  ,width : 80
+				  }
+			,[
+                    {
+					   header: 'LIMIT',
+					   name: 'LIMIT',
+					   width: 40,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+            grid_iceberg_parts.build();
+
+            const grid_max_num_orders = new TuiGridMngr(_this,'grid_max_num_orders',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: false
+				  ,checkbox: false
+				  ,pageable: false
+                  ,visibleTotalCnt: false
+				  ,bodyHeight : 40
+				  ,width : 140
+				  }
+			,[
+                    {
+					   header: 'MAX_NUM_ORDERS',
+					   name: 'MAX_NUM_ORDERS',
+					   width: 120,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+            grid_max_num_orders.build();
+
+            const grid_lot_size = new TuiGridMngr(_this,'grid_lot_size',{
+                editable: false
+                ,showRowStatus: false
+                ,rowNum: false
+                ,checkbox: false
+                ,pageable: false
+                ,visibleTotalCnt: false
+                ,bodyHeight : 40
+                ,width : 300
+                }
+            ,[
+                {
+                    header: 'MAX_QTY',
+                    name: 'MAX_QTY',
+                    width: 100,
+                    align : 'right',
+                    sortable : false,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'MIN_QTY',
+                    name: 'MIN_QTY',
+                    width: 80,
+                    align : 'right',
+                    sortable : false,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'STEP_SIZE',
+                    name: 'STEP_SIZE',
+                    width: 80,
+                    align : 'right',
+                    sortable : false,
+                    resizable: true,
+                    sortingType: 'desc'
+                }
+            ]
+            );
+            grid_lot_size.build();
+
+            const grid_market_lot_size = new TuiGridMngr(_this,'grid_market_lot_size',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: false
+				  ,checkbox: false
+                  ,visibleTotalCnt: false
+				  ,pageable: false
+				  ,bodyHeight : 40
+				  ,width : 300
+				  }
+			,[
+                    {
+					   header: 'MAX_QTY',
+					   name: 'MAX_QTY',
+					   width: 100,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MIN_QTY',
+					   name: 'MIN_QTY',
+					   width: 80,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'STEP_SIZE',
+					   name: 'STEP_SIZE',
+					   width: 80,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+            grid_market_lot_size.build();
+
+            const grid_max_num_algo_orders = new TuiGridMngr(_this,'grid_max_num_algo_orders',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: false
+				  ,checkbox: false
+                  ,visibleTotalCnt: false
+				  ,pageable: false
+				  ,bodyHeight : 40
+				  ,width : 320
+				  }
+			,[
+                   {
+					   header: 'MAX_NUM_ALGO_ORDERS',
+					   name: 'MAX_NUM_ALGO_ORDERS',
+					   width: 160,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}, {
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        width : 120,
+                        sortable : false,
+					    resizable: true,
+                        align : "center"
+                    }
+				]
+			);
+            grid_max_num_algo_orders.build();
+
+
+            const grid_symbol = new TuiGridMngr(_this,'grid_symbol',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: false
+				  ,checkbox: false
+                  ,visibleTotalCnt: false
+				  ,pageable: false
+				  ,bodyHeight : 40
+				  ,width : 1500
+				  }
+			,[
+                    {
+					   header: 'STATUS',
+					   name: 'STATUS',
+					   width: 60,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BASE_ASSET_PRECISION',
+					   name: 'BASE_ASSET_PRECISION',
+					   width: 150,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BASE_COMMISSION_PRECISION',
+					   name: 'BASE_COMMISSION_PRECISION',
+					   width: 180,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ICEBERG_ALLOWED',
+					   name: 'ICEBERG_ALLOWED',
+					   width: 120,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IS_MARGIN_TRADING_ALLOWED',
+					   name: 'IS_MARGIN_TRADING_ALLOWED',
+					   width: 170,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'IS_SPOT_TRADING_ALLOWED',
+					   name: 'IS_SPOT_TRADING_ALLOWED',
+					   width: 160,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'OCO_ALLOWED',
+					   name: 'OCO_ALLOWED',
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QUOTE_ORDER_QTY_MARKET_ALLOWED',
+					   name: 'QUOTE_ORDER_QTY_MARKET_ALLOWED',
+					   width: 140,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QUOTE_ASSET_PRECISION',
+					   name: 'QUOTE_ASSET_PRECISION',
+					   width: 140,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QUOTE_COMMISSION_PRECISION',
+					   name: 'QUOTE_COMMISSION_PRECISION',
+					   width: 140,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'QUOTE_PRECISION',
+					   name: 'QUOTE_PRECISION',
+					   width: 120,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+            grid_symbol.build();
+
+
+
+            
+            const grid_min_notional = new TuiGridMngr(_this,'grid_min_notional',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: false
+                  ,visibleTotalCnt: false
+				  ,checkbox: false
+				  ,pageable: false
+				  ,bodyHeight : 40
+				  ,width : 340
+				  }
+			,[
+                    {
+					   header: 'MIN_NOTIONAL',
+					   name: 'MIN_NOTIONAL',
+					   width: 100,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'APPLY_TO_MARKET',
+					   name: 'APPLY_TO_MARKET',
+					   width: 120,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'AVG_PRICE_MINS',
+					   name: 'AVG_PRICE_MINS',
+					   width: 100,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+            grid_min_notional.build();
+           
+            const grid_price_filter = new TuiGridMngr(_this,'grid_price_filter',{
+                editable: false
+                ,showRowStatus: false
+                ,rowNum: false
+                ,checkbox: false
+                ,visibleTotalCnt: false
+                ,pageable: false
+                ,bodyHeight : 40
+                ,width : 320
+                }
+            ,[
+                {
+                    header: 'MAX_PRICE',
+                    name: 'MAX_PRICE',
+                    width: 100,
+                    align : 'left',
+                    sortable : false,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'MIN_PRICE',
+                    name: 'MIN_PRICE',
+                    width: 100,
+                    align : 'left',
+                    sortable : false,
+                    resizable: true,
+                    sortingType: 'desc'
+                },{
+                    header: 'TICK_SIZE',
+                    name: 'TICK_SIZE',
+                    width: 100,
+                    align : 'left',
+                    sortable : false,
+                    resizable: true,
+                    sortingType: 'desc'
+                }
+            ]
+            );
+            grid_price_filter.build();
+
+            const grid_percent_price = new TuiGridMngr(_this,'grid_percent_price',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: false
+                  ,visibleTotalCnt: false
+				  ,checkbox: false
+				  ,pageable: false
+				  ,bodyHeight : 40
+				  ,width : 340
+				  }
+			,[
+                   {
+					   header: 'MULTIPLIER_UP',
+					   name: 'MULTIPLIER_UP',
+					   width: 100,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MULTIPLIER_DOWN',
+					   name: 'MULTIPLIER_DOWN',
+					   width: 110,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'AVG_PRICE_MINS',
+					   name: 'AVG_PRICE_MINS',
+					   width: 110,
+					   align : 'left',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					}
+				]
+			);
+            grid_percent_price.build();
+
+           
+            const grid_order_types = new TuiGridMngr(_this,'grid_order_types',{
+                editable: false
+                ,showRowStatus: false
+                ,rowNum: false
+                ,checkbox: false
+                ,pageable: false
+                ,visibleTotalCnt: false
+                ,bodyHeight : 40
+                ,width : 140
+                }
+            ,[
+                {
+                    header: 'ORDER_TYPE',
+                    name: 'ORDER_TYPE',
+                    width: 120,
+                    align : 'left',
+                    sortable : false,
+                    resizable: true,
+                    sortingType: 'desc'
+                }
+            ]
+            );
+            grid_order_types.build();
+
+            
+
+
+
+
 			const grid_bid = new TuiGridMngr(_this,'grid_bid',{
 				  editable: false
 				  ,showRowStatus: false
@@ -62,6 +480,65 @@
 				]
 			);
 		  	grid_bid.build();
+            grid_bid.on('click', (ev) => {
+				var rowKey = ev.rowKey;
+				if (rowKey >=0) {
+                    var row_data=grid_bid.getRow(rowKey);
+                    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                    console.log(row_data);
+                    var bid_price = row_data.BID_PRICE;//매수호가
+                    sendForm.setData('PRICE',bid_price);		
+                    
+                    var balance_data = grid_balances.getData();
+                    console.log(balance_data);
+                    balance_data=balance_data.filter(function(a) {
+                        console.log(a.ASSET)
+                        if(a.ASSET=='USDT'){
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                    console.log(balance_data);
+                    var free = Number(balance_data[0].FREE);
+                    console.log(free);
+                    console.log('free==>'+free);
+                    console.log('bid_price==>'+bid_price);
+                    var qty = (free/bid_price);
+                    console.log('qty==>'+qty);
+                   
+
+                    var row_data = grid_symbol.getData();
+                    console.log(row_data);
+                    var base_asset_precision = Number(row_data[0].BASE_ASSET_PRECISION);
+                    var qty = Number(qty.toFixed(base_asset_precision));  /*소숫점 정리작업을 해준단.*/
+                    console.log('qty-2==>'+qty);
+                    /*LOT_SIZE가 문제가 되는데   STEP_SIZE를 구해서 
+                    버림작업을 해줘야한다.
+                    */
+                    var row_data = grid_lot_size.getData();
+                    console.log(row_data);
+                    var step_size = Number(row_data[0].STEP_SIZE);
+                    console.log('step_size==>'+step_size);
+                    
+                    var cnt = parseInt(qty/step_size);
+                    console.log('cnt==>'+cnt);
+                    var  qty = cnt*step_size;
+                    console.log(qty);
+                    console.log('qty-3==>'+qty);
+
+                    /*
+                    The minimum trade price is json.symbols[i].filters[0].minPrice
+                    The tickSize for the price is json.symbols[i].filters[0].tickSize
+                    The minimum tradeable quantity is json.symbols[i].filters[1].minQty
+                    The stepSize for the quantity is json.symbols[i].filters[1].stepSize
+                    
+                    */
+
+
+                    sendForm.setData('QUANTITY',qty);	
+				}
+			});
 
 			const grid_ask = new TuiGridMngr(_this,'grid_ask',{
 				  editable: false
@@ -110,6 +587,55 @@
 				]
 			);
 		  	grid_ask.build();
+            grid_ask.on('click', (ev) => {
+				var rowKey = ev.rowKey;
+				if (rowKey >=0) {
+                    var row_data=grid_ask.getRow(rowKey);
+                    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
+                    console.log(row_data);
+                    var ask_price = Number(row_data.ASK_PRICE);//매수호가
+                    sendForm.setData('PRICE',ask_price);	
+                    
+                    var balance_data = grid_balances.getData();
+                    console.log(balance_data);
+                    balance_data=balance_data.filter(function(a) {
+						console.log(a.ASSET)
+						if(a.ASSET=='USDT'){
+							return true;
+						} else {
+							return false;
+						}
+					});
+                    console.log(balance_data);
+                    var free = Number(balance_data[0].FREE);
+                    console.log(free);
+                    console.log(ask_price);
+                    var qty = (free/ask_price);
+                    console.log(qty);
+                            
+
+                    var row_data = grid_symbol.getData();
+                    console.log(row_data);
+                    var base_asset_precision = Number(row_data[0].BASE_ASSET_PRECISION);
+                    var qty = Number(qty.toFixed(base_asset_precision));  /*소숫점 정리작업을 해준단.*/
+                    console.log('qty-2==>'+qty);
+                    /*LOT_SIZE가 문제가 되는데   STEP_SIZE를 구해서 
+                    버림작업을 해줘야한다.
+                    */
+                    var row_data = grid_lot_size.getData();
+                    console.log(row_data);
+                    var step_size = Number(row_data[0].STEP_SIZE);
+                    console.log('step_size==>'+step_size);
+                    
+                    var cnt = parseInt(qty/step_size);
+                    console.log('cnt==>'+cnt);
+                    var  qty = cnt*step_size;
+                    console.log(qty);
+                    console.log('qty-3==>'+qty);
+                    sendForm.setData('QUANTITY',qty);	
+                    
+				}
+			});
 
               
 			const grid_balances = new TuiGridMngr(_this,'grid_balances',{
@@ -151,6 +677,7 @@
 				]
 			);
 			grid_balances.build();
+           
 
 
               const grid_trade_fee = new TuiGridMngr(_this,'grid_trade_fee',{
@@ -372,6 +899,11 @@
 				]
 			);
 			grid_fills.build();
+
+
+
+
+            
 		
 			searchForm.addEvent("click","input[type=button]",function(el){
 				switch(el.target.name){
@@ -399,6 +931,54 @@
                             
 
                         }
+                    });
+
+
+                    var data = searchForm.getData();
+                    var param ={
+                        brRq : 'IN_DATA'
+                        ,brRs : 'OUT_RSET'
+                        ,IN_DATA : [data]
+                    }
+                    grid_symbol.loadData('BR_BINANCE_MARKET_retrieveExchangeInfo',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_iceberg_parts.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersIcebergParts',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_min_notional.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersMinNotional',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_market_lot_size.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersMarketLotSize',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_max_num_algo_orders.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersMaxNumAlgoOrders',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_max_num_orders.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersMaxNumOrders',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_percent_price.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersPercentPrice',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_price_filter.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersPriceFilter',param,function(data){
+                        console.log(data);
+                    });
+
+                    grid_order_types.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoOrderTypes',param,function(data){
+                        console.log(data);
+                    });
+
+
+                    grid_lot_size.loadData('BR_BINANCE_MARKET_retrieveExchangeInfoFiltersLotSize',param,function(data){
+                        console.log(data);
                     });
 				    break;
                 }

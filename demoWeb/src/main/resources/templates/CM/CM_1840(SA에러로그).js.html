@@ -1,0 +1,131 @@
+<script>
+$(document).ready(function(){
+	var CM_1850 = new PgmPageMngr('[[${uuid}]]');
+		CM_1850.init(function(p_param) {
+			var _this = CM_1850;
+			var searchForm = new FormMngr(_this, "search_area");
+
+			const grid = new TuiGridMngr(_this, 'grid', {
+				editable : false,
+				showRowStatus : false,
+				rowNum : true,
+				checkbox : false,
+				bodyHeight : 700 /*그리드 높이지정 */
+				,
+				showDummyRows : false
+			},
+			[ 
+				
+			{
+				header : 'BR_NM',
+				name : 'BR_NM',
+				width : 200,
+				resizable : false,
+				sortable : true
+            },{
+				header : 'SA_NM',
+				name : 'SA_NM',
+				width : 200,
+				resizable : false,
+				sortable : true
+			},{
+				header : 'URL',
+				name : 'URL',
+				width : 200,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc'
+			},
+			{
+				header : 'JSON_OUT',
+				name : 'JSON_OUT',
+				width : 80,
+				sortable : false,
+				align : "center",
+				sortingType : 'desc'
+			},
+
+			{
+				header : 'STATUS',
+				name : 'STATUS',
+				width : 60,
+				sortable : false,
+				align : "center",
+				sortingType : 'desc'				
+			},  {
+				header : 'ERR_CODE',
+				name : 'ERR_CODE',
+				width : 70,
+				resizable : false,
+				sortable : false,
+				sortingType : 'desc'			
+			}, {
+				header : 'ERR_MSG',
+				name : 'ERR_MSG',
+				width : 300,
+				sortable : false,
+				align : "center"
+			},{
+				header : 'ERR_STACK_TRACE',
+				name : 'ERR_STACK_TRACE',
+				width : 300,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc'			
+			} , {
+				header : 'QUERY_STRING',
+				name : 'QUERY_STRING',
+				width : 100,
+				resizable : false,
+				sortable : false,
+				sortingType : 'desc'			
+			}, {
+				header : 'ERR_STACK_TRACE',
+				name : 'ERR_STACK_TRACE',
+				width : 300,
+				resizable : false,
+				sortable : true,
+				sortingType : 'desc'			
+			},{
+		             header: '생성일',
+		             name: 'CRT_DTM',
+		             width: 120,
+		             sortable: true,
+		             align: "center"
+			}]
+			);
+			grid.build();
+
+			searchForm.addEvent("click","input[type=button]", function(el) {
+				switch (el.target.name) {
+				case 'search':
+					var param = {
+						brRq : 'IN_DATA',
+						brRs : 'OUT_DATA',
+						IN_DATA : [ {} ]
+					}
+					grid.loadData('BR_CM_API_LOG_retrieveBizActorSaErrLog', param, function(data) {
+						console.log(data);
+						//gridLoadData에서 자동으로 로드됨..
+					
+					});
+					break;
+				case "del":				
+					Message.confirm('삭제하시겠습니까?', function() {
+						var param = {
+							brRq : '',
+							brRs : '',
+						}
+						_this.send_api('BR_CM_API_LOG_DropLog', param, function(data) {
+							Message.alert('삭제되었습니다.', function() {
+								searchForm.get("search").trigger("click");
+							});
+						});
+					});
+					break;
+				}
+			});
+			searchForm.get("search").trigger("click");
+		});
+	});
+</script>

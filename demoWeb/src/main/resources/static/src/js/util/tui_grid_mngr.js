@@ -442,7 +442,9 @@ class TuiGridMngr {
       }
         
 	    if(_this.options.pageable==false) {
-            _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=total_size]')[0].innerText=_this.total_size;
+            if(_this.visibleTotalCnt==true){
+                _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=total_size]')[0].innerText=_this.total_size;
+            }
 	    } else {
             _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=curr_size]')[0].innerText=_this.curr_size;
             _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=total_size]')[0].innerText=_this.total_size;
