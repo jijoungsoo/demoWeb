@@ -6,22 +6,24 @@
 			var _this = UPBIT_0265;
 			console.log(p_param.param.P_CURRENCY);
 			var currency = p_param.param.P_CURRENCY;
-
+            console.log('aaaaaaaaaaaaaaaaaaaa');
+            console.log(currency);
 			var depositCoinAddressForm = new FormMngr(_this, "deposit_coin_address_area");
+            depositCoinAddressForm.setData("CURRENCY", currency);
 		    $('[data-ax5formatter]').ax5formatter();
 
 			var param ={
-				brRq : 'IN_DATA'
-				,brRs : 'OUT_DATA'
-				,IN_DATA:[ {
+				brRq : 'IN_PSET'
+				,brRs : 'OUT_RSET'
+				,IN_PSET:[ {
 					CURRENCY : currency
 				} ]
 			}
 			_this.showProgress();
-			_this.send('BR_UPBIT_EXCHANGE_GET_DEPOSITS_COIN_ADDRESS', param, function(data) {
+			_this.send_api('BR_UPBIT_EXCHANGE_GET_DEPOSITS_COIN_ADDRESS', param, function(data) {
 				_this.hideProgress();
 				if (data) {
-					depositCoinAddressForm.setDataAll(data.OUT_DATA[0]);		
+					depositCoinAddressForm.setDataAll(data.OUT_RSET[0]);		
 				}
 			});	
 
@@ -36,7 +38,7 @@
 						,IN_PSET:[ {CURRENCY : data.CURRENCY } ]
 					}
 					_this.showProgress();
-					_this.send('BR_UPBIT_EXCHANGE_POST_DEPOSITS_GENERATE_COIN_ADDRESS', param, function(data) {
+					_this.send_api('BR_UPBIT_EXCHANGE_POST_DEPOSITS_GENERATE_COIN_ADDRESS', param, function(data) {
 						_this.hideProgress();
 						if (data) {
 							

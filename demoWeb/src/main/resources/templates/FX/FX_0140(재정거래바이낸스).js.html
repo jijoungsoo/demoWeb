@@ -28,6 +28,7 @@
                             childNames: [
                             'COIN','MARKET','SYMBOL'
                             ,'UPBIT_PRICE','BINANCE_PRICE_KRW'
+                            ,'BTN_BINANCE_BUY','BTN_UPBIT_SELL','BTN_UPBIT_DEPOSIT'
                             ,'GAP','PER'
                             ]
                         } ,{
@@ -69,6 +70,34 @@
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
+                        header : '(U)매도',
+                        name : 'BTN_UPBIT_SELL',
+                        renderer : {
+                            type: buttonRenderer,
+                            options : {
+                                txt : '(U)매도',
+                                fn : function(el,data){
+                                }
+                            }
+                        },
+                        width : 90,
+                        sortable : false,
+                        align : "center"
+                    },{
+                        header : '(U)입금주소생성',
+                        name : 'BTN_UPBIT_DEPOSIT',
+                        renderer : {
+                            type: buttonRenderer,
+                            options : {
+                                txt : '(U)입금주소생성',
+                                fn : function(el,data){
+                                }
+                            }
+                        },
+                        width : 90,
+                        sortable : false,
+                        align : "center"
+                    },{
 					   header: '업비트',
 					   name: 'MARKET',
 					   width: 120,
@@ -77,6 +106,20 @@
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
+                        header : '(B)매수',
+                        name : 'BTN_BINANCE_BUY',
+                        renderer : {
+                            type: buttonRenderer,
+                            options : {
+                                txt : '(B)매수',
+                                fn : function(el,data){
+                                }
+                            }
+                        },
+                        width : 90,
+                        sortable : false,
+                        align : "center"
+                    },{
 					   header: '바이낸스',
 					   name: 'SYMBOL',
 					   width: 120,
@@ -291,6 +334,75 @@
 				]
 			);
 			grid.build();
+
+            grid.on('click', (ev) => {
+                if (ev.rowKey >=0) {
+                    if(ev.columnName=="BTN_UPBIT_SELL"){
+                        var row_data=grid.getRow(ev.rowKey);
+                        console.log(row_data);
+
+                        var param = {
+                            MARKET: row_data.MARKET
+                        }
+                        var popup = new PopupManger(_this, 'UPBIT_0215', {
+                                width: 1100,
+                                height: 700,
+                                title: "업비트주문가능정보["+row_data.MARKET+"]"
+                            },
+                            param
+                        );
+                        popup.open(function (data) {
+                            if (data) {
+
+                            }
+                        });
+                    }		
+
+                    if(ev.columnName=="BTN_UPBIT_DEPOSIT"){
+                        var row_data=grid.getRow(ev.rowKey);
+                        console.log(row_data);
+
+                        var param = {
+                            P_CURRENCY: row_data.COIN
+                        }
+                        var popup = new PopupManger(_this, 'UPBIT_0265', {
+                                width: 1100,
+                                height: 400,
+                                title: "개별입금주소조회"
+                            },
+                            param
+                        );
+                        popup.open(function (data) {
+                            if (data) {
+
+                            }
+                        });
+                    }
+
+                    if(ev.columnName=="BTN_BINANCE_BUY"){
+                        var row_data=grid.getRow(ev.rowKey);
+                        console.log(row_data);
+
+                        var tmp =row_data.SYMBOL;
+
+                        var param = {
+                            SYMBOL: tmp
+                        }
+                        var popup = new PopupManger(_this, 'FX_0150', {
+                                width: 1600,
+                                height: 760,
+                                title: "바이낸스주문-매수["+tmp+"]"
+                            },
+                            param
+                        );
+                        popup.open(function (data) {
+                            if (data) {
+
+                            }
+                        });
+                    }	
+                }
+            });
 		
 			searchForm.addEvent("click","input[type=button]",function(el){
 			//console.log(el);

@@ -3,339 +3,100 @@
 </div>
 <div name="grid"></div>
 
-<table>
-<tbody name="order_chance_area">
-    
-<tr>
-    <td colspan="2">
-        <div style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
-            <div class="row row-cols-6">
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">마켓의 유일 키</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="MARKET__ID" name="MARKET__ID">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">마켓 이름</span> 
-                            <input type="text" disabled class="form-control"  data-ax-path="MARKET__NAME" name="MARKET__NAME">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">지원 주문 방식</span> 
-                            <input type="text" disabled  class="form-control"  data-ax-path="MARKET__ORDER_TYPES" name="MARKET__ORDER_TYPES">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">지원 주문 종류</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="MARKET__ORDER_SIDES"  name="MARKET__ORDER_SIDES">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">최대 매도/매수 금액</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="MARKET__MAX_TOTAL"  name="MARKET__MAX_TOTAL">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">마켓 운영 상태</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="MARKET__STATE"  name="MARKET__STATE">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-</tr>
-<tr>    
-    <td>
-        <div class="container" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">매수 시 사용하는 화폐의 계좌 상태
-            <div class="row row-cols-3">  
-            <div class="col">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon">코드</span> 
-                        <input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__CURRENCY"  name="BID_ACCOUNT__CURRENCY">
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon">주문가능 금액</span> 
-                        <input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__BALANCE"  name="BID_ACCOUNT__BALANCE">
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon">주문 중 묶여있는 금액/수량</span> 
-                        <input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__LOCKED"  name="BID_ACCOUNT__LOCKED">
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon">매수평균가</span> 
-                        <input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__AVG_BUY_PRICE"  name="BID_ACCOUNT__AVG_BUY_PRICE">
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon">매수평균가 수정 여부</span> 
-                        <input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__AVG_BUY_PRICE_MODIFIED"  name="BID_ACCOUNT__AVG_BUY_PRICE_MODIFIED">
-                    </div>
-                </div>
-            </div>
-            <div class="col">
-                <div class="form-group">
-                    <div class="input-group">
-                        <span class="input-group-addon">평단가 기준 화폐</span> 
-                        <input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__UNIT_CURRENCY"  name="BID_ACCOUNT__UNIT_CURRENCY">
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-    <td>
-        <div class="container" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">	매도 시 사용하는 화폐의 계좌 상태
-            <div class="row row-cols-3">  
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                        <span class="input-group-addon">코드</span> 
-                        <input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__CURRENCY"  name="ASK_ACCOUNT__CURRENCY">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">주문가능 수량</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__BALANCE"  name="ASK_ACCOUNT__BALANCE">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">주문 중 묶여있는 금액/수량</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__LOCKED"  name="ASK_ACCOUNT__LOCKED">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">매수평균가</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__AVG_BUY_PRICE"  name="ASK_ACCOUNT__AVG_BUY_PRICE">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">매수평균가 수정 여부</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__AVG_BUY_PRICE_MODIFIED"  name="ASK_ACCOUNT__AVG_BUY_PRICE_MODIFIED">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">평단가 기준 화폐</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__UNIT_CURRENCY"  name="ASK_ACCOUNT__UNIT_CURRENCY">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>        
-    </td>
-</tr>  
-<tr>
-    <td style="width:50%"><div name="grid_orderbook_units_bid"></div></td>
-    <td style="width:50%"><div name="grid_orderbook_units_ask"></div></td>
-</tr>
-<tr>
-    <td>
-        <div style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">매수 시 제약사항
-            <div class="row row-cols-2">
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">코드</span>
-                            <input type="text" disabled class="form-control" data-ax-path="MARKET__BID__CURRENCY"  name="MARKET__BID__CURRENCY">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">주문금액 단위</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="MARKET__BID__PRICE_UNIT"  name="MARKET__BID__PRICE_UNIT">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">최소 매수 금액</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="MARKET__BID__MIN_TOTAL"  name="MARKET__BID__MIN_TOTAL">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">매수 수수료 비율</span> 
-                            <input type="text" disabled class="form-control"  data-ax-path="BID_FEE"  name="BID_FEE">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-    <td>
-        <div style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;"> 매도 시 제약사항
-            <div class="row row-cols-2">        
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">코드</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="MARKET__ASK__CURRENCY"  name="MARKET__ASK__CURRENCY">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">주문금액 단위</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="MARKET__ASK__PRICE_UNIT"  name="MARKET__ASK__PRICE_UNIT">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">최소 매도 금액</span> 
-                            <input type="text" disabled class="form-control" data-ax-path="MARKET__ASK__MIN_TOTAL"  name="MARKET__ASK__MIN_TOTAL">
-                        </div>
-                    </div>
-                </div>                
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">매도 수수료 비율</span> 
-                            <input type="text" disabled class="form-control"  data-ax-path="ASK_FEE" name="ASK_FEE">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </td>
-</tr>
-</tbody>
-<tbody>
-<tr>
-    <td>
-        <div class="container" name="order_buy_area" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
-            <div class="row row-cols-2">
-                <div class="col-sm">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">마켓</span> 
-                            <input type="text" disabled class="form-control"  data-ax-path="MARKET"  name="MARKET">
-                        </div>  
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">주문타입</span> 
-                            <select class="form-control"  data-ax-path="ORD_TYPE" name="ORD_TYPE"></select>
-                        </div>
-                    </div>
-                </div>      
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">주문가격</span> 
-                            <input type="text" class="form-control"  data-ax-path="PRICE" name="PRICE">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">주문량</span> 
-                            <input type="text"  class="VOLUME" data-ax-path="VOLUME" name="VOLUME">
-                        </div>
-                    </div>
-                </div>
-                <input type="button" name="btn_buy" value="사자" /> 
-                <input type="button" name="btn_calc" value="가능" /> 
-                시장가주문(매수[bid]-price)  주문가격을 입력하면 시장가에 맞춰 주문량을 자동으로 계산하여 사짐
-            </div>
-        </div>
-    </td>    
-    <td>
-        <div class="container" name="order_sell_area" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
-            <div class="row row-cols-2">
-                <div class="col-sm">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">마켓</span> 
-                            <input type="text" class="form-control"  data-ax-path="MARKET"  name="MARKET">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">주문타입</span> 
-                            <select class="form-control"  data-ax-path="ORD_TYPE" name="ORD_TYPE"></select>
-                        </div>
-                    </div>
-                </div>  
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">주문가격</span> 
-                            <input type="text" class="form-control"  data-ax-path="PRICE" name="PRICE">
-                        </div>
-                    </div>
-                </div>
-                <div class="col">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon">주문량</span> 
-                            <input type="text" class="VOLUME" data-ax-path="VOLUME" name="VOLUME">
-                        </div>
-                    </div>
-                </div>   
-                <input type="button" name="btn_sell" value="팔자" />  
-            </div>
-        </div>  
-    </td>
-</tr>
-</tbody>
-</table>
+<div name="order_chance_area"> 
+    <table>
+    <tr>
+        <td></td>
+        <td style="width:100px"><input type="text" disabled class="form-control" data-ax-path="MARKET__ID" name="MARKET__ID"></td>
+        <td ></td>
+        <td style="width:100px"><input type="text" disabled class="form-control"  data-ax-path="MARKET__NAME" name="MARKET__NAME"></td>
+        <td >지원 주문 방식</td>
+        <td style="width:80px"><input type="text" disabled  class="form-control"  data-ax-path="MARKET__ORDER_TYPES" name="MARKET__ORDER_TYPES"></td>
+        <td>지원 주문 종류</td>
+        <td style="width:80px"><input type="text" disabled class="form-control" data-ax-path="MARKET__ORDER_SIDES"  name="MARKET__ORDER_SIDES"></td>
+        <td>최대 매도/매수 금액</td> 
+        <td style="width:120px"><input type="text" disabled class="form-control" data-ax-path="MARKET__MAX_TOTAL"  name="MARKET__MAX_TOTAL"></td>
+        <td>마켓 운영 상태</td> 
+        <td style="width:80px"><input type="text" disabled class="form-control" data-ax-path="MARKET__STATE"  name="MARKET__STATE"></td>
+    </tr>
+    <tr>
+        <th>매수</th>
+        <td><input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__CURRENCY"  name="BID_ACCOUNT__CURRENCY"></td>
+        <td >주문가능 금액</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__BALANCE"  name="BID_ACCOUNT__BALANCE"></td>
+        <td >주문 중 묶여있는 금액/수량</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__LOCKED"  name="BID_ACCOUNT__LOCKED"></td>
+        <td >매수평균가</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__AVG_BUY_PRICE"  name="BID_ACCOUNT__AVG_BUY_PRICE"></td>
+        <td >매수평균가 수정 여부</td> 
+        <td> <input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__AVG_BUY_PRICE_MODIFIED"  name="BID_ACCOUNT__AVG_BUY_PRICE_MODIFIED"></td>
+        <td>기준 화폐</td>
+        <td><input type="text" disabled class="form-control" data-ax-path="BID_ACCOUNT__UNIT_CURRENCY"  name="BID_ACCOUNT__UNIT_CURRENCY"></td>
+    </tr>
+    <tr>
+        <th>매도</th>
+        <td><input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__CURRENCY"  name="ASK_ACCOUNT__CURRENCY"></td>
+        <td>주문가능 수량</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__BALANCE"  name="ASK_ACCOUNT__BALANCE"></td>
+        <td >주문 중 묶여있는 금액/수량</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__LOCKED"  name="ASK_ACCOUNT__LOCKED"></td>
+        <td >매수평균가</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__AVG_BUY_PRICE"  name="ASK_ACCOUNT__AVG_BUY_PRICE"></td>
+        <td>매수평균가 수정 여부</td>
+        <td><input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__AVG_BUY_PRICE_MODIFIED"  name="ASK_ACCOUNT__AVG_BUY_PRICE_MODIFIED"></td>
+        <td >기준 화폐</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="ASK_ACCOUNT__UNIT_CURRENCY"  name="ASK_ACCOUNT__UNIT_CURRENCY"></td>
+    </tr>
+    </table>
+
+
+    <table>
+    <tr>
+        <td><div name="grid_orderbook_units_bid"></div></td>
+        <td><div name="grid_orderbook_units_ask"></div></td>
+    </tr>
+    </table>
+
+    <table>
+    <tr>
+        <th>매수 시 제약사항</th>
+        <td><input type="text" disabled class="form-control" data-ax-path="MARKET__BID__CURRENCY"  name="MARKET__BID__CURRENCY"></td>
+        <td >주문금액 단위</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="MARKET__BID__PRICE_UNIT"  name="MARKET__BID__PRICE_UNIT"></td>
+        <td >최소 매수 금액</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="MARKET__BID__MIN_TOTAL"  name="MARKET__BID__MIN_TOTAL"></td>
+        <td>매수 수수료 비율</td>
+        <td><input type="text" disabled class="form-control"  data-ax-path="BID_FEE"  name="BID_FEE"></td>
+    </tr>
+    <tr>
+        <th>매도 시 제약사항</th>
+        <td><input type="text" disabled class="form-control" data-ax-path="MARKET__ASK__CURRENCY"  name="MARKET__ASK__CURRENCY"></td>
+        <td >주문금액 단위</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="MARKET__ASK__PRICE_UNIT"  name="MARKET__ASK__PRICE_UNIT"></td>
+        <td >최소 매도 금액</td> 
+        <td><input type="text" disabled class="form-control" data-ax-path="MARKET__ASK__MIN_TOTAL"  name="MARKET__ASK__MIN_TOTAL"></td>
+        <td >매도 수수료 비율</td> 
+        <td><input type="text" disabled class="form-control"  data-ax-path="ASK_FEE" name="ASK_FEE"></td>
+    </tr>
+    </table>
+</div>
+
+<div class="container" name="order_area" style="border: 1px solid #ccc; padding: 10px; border-radius: 10px;">
+    <table>
+    <tr>
+        <td >마켓</td> 
+        <td><input type="text" disabled class="form-control"  data-ax-path="MARKET"  name="MARKET"></td>
+        <td >주문타입</td> 
+        <td><select class="form-control"  data-ax-path="ORD_TYPE" name="ORD_TYPE"></select></td>
+        <td >주문가격</td> 
+        <td><input type="text" class="form-control"  data-ax-path="PRICE" name="PRICE"></td> 
+        <td >주문량</td> 
+        <td><input type="text"  class="VOLUME" data-ax-path="VOLUME" name="VOLUME"></td>
+    </tr>
+    </table>
+
+    <input type="button" name="btn_buy" value="사자" /> 
+    <input type="button" name="btn_sell" value="팔자" />  
+    <input type="button" name="btn_calc" value="가능" /> 
+    시장가주문(매수[bid]-price)  주문가격을 입력하면 시장가에 맞춰 주문량을 자동으로 계산하여 사짐
+</div>

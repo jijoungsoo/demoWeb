@@ -483,60 +483,37 @@
             grid_bid.on('click', (ev) => {
 				var rowKey = ev.rowKey;
 				if (rowKey >=0) {
-                    var row_data=grid_bid.getRow(rowKey);
-                    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-                    console.log(row_data);
-                    var bid_price = row_data.BID_PRICE;//매수호가
+
+                    var side      = sendForm.getData('SIDE');
+                    var row_data  = grid_bid.getRow(rowKey);
+                    var bid_price = row_data.BID_PRICE;
+                    var symbol    = row_data.SYMBOL;
                     sendForm.setData('PRICE',bid_price);		
-                    
-                    var balance_data = grid_balances.getData();
-                    console.log(balance_data);
-                    balance_data=balance_data.filter(function(a) {
-                        console.log(a.ASSET)
-                        if(a.ASSET=='USDT'){
-                            return true;
-                        } else {
-                            return false;
-                        }
-                    });
-                    console.log(balance_data);
-                    var free = Number(balance_data[0].FREE);
-                    console.log(free);
-                    console.log('free==>'+free);
-                    console.log('bid_price==>'+bid_price);
-                    var qty = (free/bid_price);
-                    console.log('qty==>'+qty);
-                   
+                    if(side=="BUY"){
+                        var balance_data = grid_balances.getData();
+                        balance_data=balance_data.filter(function(a) {
+                            if(a.ASSET=='USDT'){
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        });
+                        var free = Number(balance_data[0].FREE);
+                        var qty = (free/bid_price);
+                        var row_data = grid_symbol.getData();
+                        var base_asset_precision = Number(row_data[0].BASE_ASSET_PRECISION);
+                        var qty = Number(qty.toFixed(base_asset_precision));  /*소숫점 정리작업을 해준단.*/
+                        var row_data = grid_lot_size.getData();
+                        var step_size = Number(row_data[0].STEP_SIZE);
+                        var cnt = parseInt(qty/step_size);
+                        var  qty = cnt*step_size;
+                        sendForm.setData('QUANTITY',qty);	
+                    }
 
-                    var row_data = grid_symbol.getData();
-                    console.log(row_data);
-                    var base_asset_precision = Number(row_data[0].BASE_ASSET_PRECISION);
-                    var qty = Number(qty.toFixed(base_asset_precision));  /*소숫점 정리작업을 해준단.*/
-                    console.log('qty-2==>'+qty);
-                    /*LOT_SIZE가 문제가 되는데   STEP_SIZE를 구해서 
-                    버림작업을 해줘야한다.
-                    */
-                    var row_data = grid_lot_size.getData();
-                    console.log(row_data);
-                    var step_size = Number(row_data[0].STEP_SIZE);
-                    console.log('step_size==>'+step_size);
-                    
-                    var cnt = parseInt(qty/step_size);
-                    console.log('cnt==>'+cnt);
-                    var  qty = cnt*step_size;
-                    console.log(qty);
-                    console.log('qty-3==>'+qty);
-
-                    /*
-                    The minimum trade price is json.symbols[i].filters[0].minPrice
-                    The tickSize for the price is json.symbols[i].filters[0].tickSize
-                    The minimum tradeable quantity is json.symbols[i].filters[1].minQty
-                    The stepSize for the quantity is json.symbols[i].filters[1].stepSize
-                    
-                    */
-
-
-                    sendForm.setData('QUANTITY',qty);	
+                    if(side=="SELL"){
+                        var qty = get_enable_sell_qty(symbol);
+                        sendForm.setData('QUANTITY',qty);
+                    }
 				}
 			});
 
@@ -590,49 +567,38 @@
             grid_ask.on('click', (ev) => {
 				var rowKey = ev.rowKey;
 				if (rowKey >=0) {
+                    var side      = sendForm.getData('SIDE');
                     var row_data=grid_ask.getRow(rowKey);
-                    console.log('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa');
-                    console.log(row_data);
                     var ask_price = Number(row_data.ASK_PRICE);//매수호가
+                    var symbol    = row_data.SYMBOL;
                     sendForm.setData('PRICE',ask_price);	
-                    
-                    var balance_data = grid_balances.getData();
-                    console.log(balance_data);
-                    balance_data=balance_data.filter(function(a) {
-						console.log(a.ASSET)
-						if(a.ASSET=='USDT'){
-							return true;
-						} else {
-							return false;
-						}
-					});
-                    console.log(balance_data);
-                    var free = Number(balance_data[0].FREE);
-                    console.log(free);
-                    console.log(ask_price);
-                    var qty = (free/ask_price);
-                    console.log(qty);
-                            
 
-                    var row_data = grid_symbol.getData();
-                    console.log(row_data);
-                    var base_asset_precision = Number(row_data[0].BASE_ASSET_PRECISION);
-                    var qty = Number(qty.toFixed(base_asset_precision));  /*소숫점 정리작업을 해준단.*/
-                    console.log('qty-2==>'+qty);
-                    /*LOT_SIZE가 문제가 되는데   STEP_SIZE를 구해서 
-                    버림작업을 해줘야한다.
-                    */
-                    var row_data = grid_lot_size.getData();
-                    console.log(row_data);
-                    var step_size = Number(row_data[0].STEP_SIZE);
-                    console.log('step_size==>'+step_size);
-                    
-                    var cnt = parseInt(qty/step_size);
-                    console.log('cnt==>'+cnt);
-                    var  qty = cnt*step_size;
-                    console.log(qty);
-                    console.log('qty-3==>'+qty);
-                    sendForm.setData('QUANTITY',qty);	
+                    if(side=="BUY"){
+                        var balance_data = grid_balances.getData();
+                        balance_data=balance_data.filter(function(a) {
+                            console.log(a.ASSET)
+                            if(a.ASSET=='USDT'){
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        });
+                        var free = Number(balance_data[0].FREE);
+                        var qty = (free/ask_price);
+                        var row_data = grid_symbol.getData();
+                        var base_asset_precision = Number(row_data[0].BASE_ASSET_PRECISION);
+                        var qty = Number(qty.toFixed(base_asset_precision));
+                        var row_data = grid_lot_size.getData();
+                        var step_size = Number(row_data[0].STEP_SIZE);
+                        var cnt = parseInt(qty/step_size);
+                        var  qty = cnt*step_size;
+                        sendForm.setData('QUANTITY',qty);	
+                    }
+
+                    if(side=="SELL"){
+                        var qty = get_enable_sell_qty(symbol);
+                        sendForm.setData('QUANTITY',qty);
+                    }
                     
 				}
 			});
@@ -677,6 +643,68 @@
 				]
 			);
 			grid_balances.build();
+            grid_balances.on('click', (ev) => {
+				var rowKey = ev.rowKey;
+				if (rowKey >=0) {
+                    var row_data=grid_balances.getRow(rowKey);
+                    var asset   = row_data.ASSET;
+                    var free    = Number(row_data.FREE);
+                    var locked  = Number(row_data.LOCKED);
+                    var symbol  = searchForm.getData('SYMBOL');
+                    var assert2 = symbol.replace("USDT","");
+                    var side    = sendForm.getData('SIDE');
+                    if(side=="BUY"){
+                        var ask_row_data=grid_ask.getRow(0);
+                        var ask_price = Number(ask_row_data.ASK_PRICE);//매수호가
+                        sendForm.setData('PRICE',ask_price);	                        
+                        var balance_data = grid_balances.getData();
+                        balance_data=balance_data.filter(function(a) {
+                            console.log(a.ASSET)
+                            if(a.ASSET=='USDT'){
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        });
+                        var free = Number(balance_data[0].FREE);
+                        var qty = (free/ask_price);
+                        var symbol_row_data = grid_symbol.getData();
+                        var base_asset_precision = Number(symbol_row_data[0].BASE_ASSET_PRECISION);
+                        var qty = Number(qty.toFixed(base_asset_precision));  /*소숫점 정리작업을 해준단.*/
+                        var lot_size_row_data = grid_lot_size.getData();
+                        var step_size = Number(lot_size_row_data[0].STEP_SIZE);
+                        var cnt = parseInt(qty/step_size);
+                        var qty = cnt*step_size;
+                        sendForm.setData('QUANTITY',qty);
+                    }
+
+                    if(side=="SELL"){
+                        if(assert2!=asset){
+                            Message.alert('SYMBOL('+symbol+')과 잔액ASSET('+asset+')이 일치하지 않습니다.');
+                            return;
+                        } 
+                        var bid_row_data=grid_bid.getRow(0);
+                        var bid_price = Number(bid_row_data.BID_PRICE);//매도호가
+                        sendForm.setData('PRICE',bid_price);	                        
+                        var qty = (free);  //수량
+                        var row_data = grid_symbol.getData();
+                        console.log(row_data);
+                        var base_asset_precision = Number(row_data[0].BASE_ASSET_PRECISION);
+                        var qty = Number(qty.toFixed(base_asset_precision));  /*소숫점 정리작업을 해준단.*/
+                        var row_data = grid_lot_size.getData();
+                        console.log(row_data);
+                        var step_size = Number(row_data[0].STEP_SIZE);
+                        console.log('step_size==>'+step_size);
+                        
+                        var cnt = parseInt(qty/step_size);
+                        console.log('cnt==>'+cnt);
+                        var  qty = cnt*step_size;
+                        console.log(qty);
+                        console.log('qty-3==>'+qty);
+                        sendForm.setData('QUANTITY',qty);	
+                    }
+				}
+			});
            
 
 
@@ -900,10 +928,33 @@
 			);
 			grid_fills.build();
 
+            function get_enable_sell_qty(symbol){
+                var row_data  = grid_balances.getData();
+                var asset2    = symbol.replace("USDT","")
+                var flat_sell = false;
+                var row       = null;
+                for(var i=0;i<row_data.length;i++){
+                    var asset = row_data[i].ASSET;
+                    if(asset==asset2){
+                        row       = row_data[i];
+                        flat_sell = true;
+                        break;
+                    }
+                }
 
-
-
-            
+                if(flat_sell==false){
+                    Message.alert('SYMBOL('+symbol+')에 해당하는 balance가 없습니다.');
+                }
+                var qty = Number(row.FREE);
+                var row_data = grid_symbol.getData();
+                var base_asset_precision = Number(row_data[0].BASE_ASSET_PRECISION);
+                var qty = Number(qty.toFixed(base_asset_precision));  /*소숫점 정리작업을 해준단.*/
+                var row_data = grid_lot_size.getData();
+                var step_size = Number(row_data[0].STEP_SIZE);
+                var  cnt = parseInt(qty/step_size);
+                var  qty = cnt*step_size;
+                return qty;
+            }
 		
 			searchForm.addEvent("click","input[type=button]",function(el){
 				switch(el.target.name){
@@ -991,6 +1042,26 @@
                             return;
                         }
 
+                        var data = sendForm.getData();
+                        console.log(data);
+                        var price =data.PRICE;
+                        var quantity = data.QUANTITY;
+                        var amt = price * quantity;
+                        console.log(amt);
+                        var min_notional_data = grid_min_notional.getData();
+                        console.log(min_notional_data);
+
+                        if(min_notional_data.length==0){
+                            Message.alert('min notional이 존재하지 않음');
+                        }
+                        var min_notional = min_notional_data[0].MIN_NOTIONAL;
+                        console.log(min_notional);
+
+                        if(min_notional>amt){
+                            Message.alert('min notional('+min_notional+')보다 주문금액('+amt+')이 작음');
+                            return;
+                        }
+
                         Message.confirm('신규주문Test를 하겠습니까?',function()  {
                             var data = sendForm.getData();
                             console.log('data');
@@ -1002,6 +1073,54 @@
                             }
                             _this.showProgress();
                             _this.send_socket('BR_SPOT_ACCOUNT_TRADE_POST_API_V3_TestNewOrder', param, function(data) {
+                                _this.hideProgress();
+                                if (data) {
+                                    var row_data = data.OUT_RSET;
+                                    console.log(data);
+                                    grid.resetData(data.OUT_RSET);
+                                    grid_fills.resetData(data.OUT_RSET_FILLS);
+                                } 
+
+                            });
+				        });
+
+                    
+                        break;
+                    case 'new_order':
+                        if(!sendForm.isValid()){
+                            return;
+                        }
+                        var data = sendForm.getData();
+                        console.log(data);
+                        var price =data.PRICE;
+                        var quantity = data.QUANTITY;
+                        var amt = price * quantity;
+                        console.log(amt);
+                        var min_notional_data = grid_min_notional.getData();
+                        console.log(min_notional_data);
+
+                        if(min_notional_data.length==0){
+                            Message.alert('min notional이 존재하지 않음');
+                        }
+                        var min_notional = min_notional_data[0].MIN_NOTIONAL;
+                        console.log(min_notional);
+
+                        if(min_notional>amt){
+                            Message.alert('min notional('+min_notional+')보다 주문금액('+amt+')이 작음');
+                            return;
+                        }
+
+                        Message.confirm('신규주문를 하겠습니까?',function()  {
+                            
+                            console.log('data');
+                            console.log(data);
+                            var param ={
+                                brRq : 'IN_PSET'
+                                ,brRs : 'OUT_RSET,OUT_RSET_FILLS'
+                                ,IN_PSET: [data]
+                            }
+                            _this.showProgress();
+                            _this.send_socket('BR_SPOT_ACCOUNT_TRADE_POST_API_V3_NewOrder', param, function(data) {
                                 _this.hideProgress();
                                 if (data) {
                                     var row_data = data.OUT_RSET;

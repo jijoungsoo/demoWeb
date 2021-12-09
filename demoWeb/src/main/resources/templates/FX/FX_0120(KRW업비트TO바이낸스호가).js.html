@@ -38,7 +38,7 @@
                         } ,{
                             header: '매도시점-단가',
                             name: 'mergeColumn3',
-                            childNames: ['LST_UPBIT_MARKET','LST_BINANCE_SYMBOL',
+                            childNames: ['LST_UPBIT_MARKET','BTN_BINANCE_BUY','LST_BINANCE_SYMBOL',
                             ,'LST_BINANCE_PRICE_KRW','LST_BINANCE_PRICE_USD'
                             ,'LST_UPBIT_PRICE'
                             ,'LST_GAP','LST_PER'
@@ -248,6 +248,20 @@
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
+                        header : '(B)매수',
+                        name : 'BTN_BINANCE_BUY',
+                        renderer : {
+                            type: buttonRenderer,
+                            options : {
+                                txt : '(B)매수',
+                                fn : function(el,data){
+                                }
+                            }
+                        },
+                        width : 90,
+                        sortable : false,
+                        align : "center"
+                    },{
 					   header: '바이낸스',
 					   name: 'LST_BINANCE_SYMBOL',
 					   width: 80,
@@ -298,7 +312,7 @@
                        renderer : {
                             type: commaStRenderer,
                             options : {
-                                src : 'LST_BINANCE_PRICE',
+                                src : 'LST_BINANCE_PRICE_KRW',
                                 tgt : 'LST_UPBIT_PRICE'
                             }
                         },
@@ -314,7 +328,7 @@
                        renderer : {
                             type: commaStRenderer,
                             options : {
-                                src : 'LST_BINANCE_PRICE',
+                                src : 'LST_BINANCE_PRICE_KRW',
                                 tgt : 'LST_UPBIT_PRICE'
                             }
                         },
@@ -467,8 +481,8 @@
                             MARKET: row_data.FST_UPBIT_MARKET
                         }
                         var popup = new PopupManger(_this, 'UPBIT_0215', {
-                                width: 1800,
-                                height: 1000,
+                                width: 1100,
+                                height: 700,
                                 title: "업비트주문가능정보["+row_data.MARKET+"]"
                             },
                             param
@@ -478,7 +492,32 @@
 
                             }
                         });
-                    }		
+                    }	
+
+                    if(ev.columnName=="BTN_BINANCE_BUY"){
+                        var row_data=grid.getRow(ev.rowKey);
+                        console.log(row_data);
+
+                        var tmp =row_data.LST_BINANCE_SYMBOL;
+
+                        var param = {
+                            SYMBOL: tmp
+                        }
+                        var popup = new PopupManger(_this, 'FX_0150', {
+                                width: 1600,
+                                height: 760,
+                                title: "바이낸스주문-매수["+tmp+"]"
+                            },
+                            param
+                        );
+                        popup.open(function (data) {
+                            if (data) {
+
+                            }
+                        });
+                    }	
+                    
+                    
                 }
             });
 		

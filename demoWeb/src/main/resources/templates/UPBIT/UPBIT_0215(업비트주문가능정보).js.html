@@ -10,63 +10,51 @@
 
 			var orderChanceAreaForm = new FormMngr(_this, "order_chance_area");
 			var searchForm = new FormMngr(_this, "search_area");
-			var orderBuyForm = new FormMngr(_this, "order_buy_area");
-			var orderSellForm = new FormMngr(_this, "order_sell_area");
-			orderBuyForm.initCombo("ORD_TYPE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_ORD_TYPE_CD', USE_YN: 'Y', ATTR1: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
-			orderSellForm.initCombo("ORD_TYPE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_ORD_TYPE_CD', USE_YN: 'Y', ATTR2: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
+			var orderForm = new FormMngr(_this, "order_area");
+			orderForm.initCombo("ORD_TYPE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'UPBIT_ORD_TYPE_CD', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'N' , VALUE :'CD' , TEXT :'CD_NM' });
 			
 		    $('[data-ax5formatter]').ax5formatter();
-			orderBuyForm.setData("MARKET",market);
-			orderSellForm.setData("MARKET",market);
-					
+			orderForm.setData("MARKET",market);
+				
 			const grid = new TuiGridMngr(_this,'grid',{
 				  editable: false
 				  ,showRowStatus: false
-				  ,rowNum: true
+				  ,rowNum: false
 				  ,checkbox: false
 				  ,pageable: false
-				  ,bodyHeight : 70
+				  ,bodyHeight : 40
                   ,visibleTotalCnt :false
+                  ,width : 840
 				  }
 				,[
 					{
 					   header: '마켓 코드',
 					   name: 'MARKET',
-					   width: 200,
-					   align : 'center',
-					   filter : {
-						type : 'text',
-						showApplyBtn : true,
-						showClearBtn : true
-						}
+					   width: 100,
+					   align : 'center'
 					},{
 					   header: '호가 생성 시각',
 					   name: 'TIMESTAMP',
-					   width: 200,
+					   width: 100,
 					   align : 'center',
-					   filter : {
-						type : 'text',
-						showApplyBtn : true,
-						showClearBtn : true
-					   },
-					   resizable: true,
-					   sortable : true,
+					   resizable: false,
+					   sortable : false,
 					   sortingType: 'desc'
 					},{
 					   header: '호가 매도 총 잔량',
 					   name: 'TOTAL_ASK_SIZE',
-					   width: 400,
+					   width: 300,
 					   align : 'right',
-					   sortable : true,
-					   resizable: true,
+					   sortable : false,
+					   resizable: false,
 					   sortingType: 'desc'
 					},{
 					   header: '호가 매수 총 잔량',
 					   name: 'TOTAL_BID_SIZE',
-					   width: 400,
+					   width: 300,
 					   align : 'right',
-					   sortable : true,
-					   resizable: true,
+					   sortable : false,
+					   resizable: false,
 					   sortingType: 'desc'
 					 }
 				]
@@ -80,23 +68,24 @@
 				  ,checkbox: false
 				  ,pageable: false
 				  ,bodyHeight : 140
+                  ,width: 500
                   ,visibleTotalCnt :false
 				  }
 				,[
 					{
 					   header: '매수호가',
 					   name: 'BID_PRICE',
-					   width: 400,
+					   width: 120,
 					   align : 'right',
-					   sortable : true,
+					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
 					 },{
 						 header: '매수 잔량',
 						 name: 'BID_SIZE',
-						 width: 400,
+						 width: 300,
                          align : 'right',
-						 sortable: true
+						 sortable: false
 					 }
 				]
 			);
@@ -109,7 +98,7 @@
 						var row_data=grid_orderbook_units_bid.getRow(ev.rowKey);
 						console.log(row_data);
 						//orderBuyForm.setDataAll(row_data);
-						orderBuyForm.setData("PRICE",row_data.BID_PRICE);
+						orderForm.setData("PRICE",row_data.BID_PRICE);
 					}
 				}
 			});
@@ -121,29 +110,25 @@
 				  ,checkbox: false
 				  ,pageable: false
 				  ,bodyHeight : 140
+                  ,width: 500
                   ,visibleTotalCnt :false
 				  }
 				,[
 					{
 					   header: '매도호가',
 					   name: 'ASK_PRICE',
-					   width: 400,
+					   width: 120,
 					   align : 'right',
-					   filter : {
-						type : 'text',
-						showApplyBtn : true,
-						showClearBtn : true
-					   },
 					   resizable: true,
-					   sortable : true,
+					   sortable : false,
 					   sortingType: 'desc'
 					},{
 					   header: '매도 잔량',
 					   name: 'ASK_SIZE',
-					   width: 400,
+					   width: 300,
 					   align : 'right',
 					   sortable : true,
-					   resizable: true,
+					   resizable: false,
 					   sortingType: 'desc'
 					 }
 				]
@@ -158,54 +143,12 @@
 						var row_data=grid_orderbook_units_ask.getRow(ev.rowKey);
 						console.log(row_data);
 						//orderSellForm.setDataAll(row_data);
-						orderSellForm.setData("PRICE",row_data.ASK_PRICE);
+						orderForm.setData("PRICE",row_data.ASK_PRICE);
+
 					}
 				}
 			});
 
-			function chg_order_buy_combo(){
-				var ord_type = orderBuyForm.getData("ORD_TYPE");
-				console.log(ord_type);
-				if(ord_type=='price'){
-					/*
-                    매수--지정가주문  -- 주문가격,주문량 필요
-                    매수--시장가 주문  --주문가격만 필요  시장가 500원짜리 물건이라면    주문가격을 1000원으로 입력하면 2개가 사진다.
-					*/
-					//주문수량을 disable하자.
-					orderBuyForm.disable("VOLUME");
-					orderBuyForm.setData("VOLUME","");
-				} else {
-					orderBuyForm.enable("VOLUME");
-				}
-			}
-			function chg_order_sell_combo(){
-				var ord_type = orderSellForm.getData("ORD_TYPE");
-				console.log(ord_type);
-				if(ord_type=='market'){
-					/*
-					시장가 주문---매도
-					시장가 주문은 ord_type 필드를 price or market 으로 설정해야됩니다.
-					매도 주문의 경우 ord_type을 market로 설정하고 price을 null 혹은 제외해야됩니다.
-					*/
-					//주문가격을 disable하자.
-					orderSellForm.disable("PRICE");
-					orderSellForm.setData("PRICE","");
-				} else {
-					orderSellForm.enable("PRICE");
-				}
-			}
-			
-			orderBuyForm.addEvent("change","select[name=ORD_TYPE]",function(el){
-				chg_order_buy_combo();
-			});
-
-			orderSellForm.addEvent("change","select[name=ORD_TYPE]",function(el){
-				chg_order_sell_combo();
-			});
-
-			/*초기 init에 orderBuyFrom 과  orderSellFrom 콤보박스를 초기화해야한다. */
-			chg_order_buy_combo();
-			chg_order_sell_combo();
 			
 			searchForm.addEvent("click","input[type=button]",function(el){
 				//console.log(el);
@@ -247,17 +190,17 @@
 					break;		
 				}
 			});
-			orderBuyForm.addEvent("click","input[type=button]",function(el){
+			orderForm.addEvent("click","input[type=button]",function(el){
 				switch(el.target.name){
 					case 'btn_buy':
 						var param ={
 							brRq : 'IN_PSET'
 							,brRs : 'OUT_RSET'
 							,IN_PSET:[ {
-								MARKET : orderBuyForm.getData("MARKET"),
-								VOLUME : orderBuyForm.getData("VOLUME"),
-								PRICE : orderBuyForm.getData("PRICE"),
-								ORD_TYPE : orderBuyForm.getData("ORD_TYPE"),
+								MARKET : orderForm.getData("MARKET"),
+								VOLUME : orderForm.getData("VOLUME"),
+								PRICE : orderForm.getData("PRICE"),
+								ORD_TYPE : orderForm.getData("ORD_TYPE"),
 							} ]
 						}
 						_this.showProgress();
@@ -269,10 +212,10 @@
 						});	
 					break;			
                     case 'btn_calc':
-                        var ord_type = orderBuyForm.getData("ORD_TYPE");
+                        var ord_type = orderForm.getData("ORD_TYPE");
 
                         if(ord_type=='limit'){
-                            var data = orderBuyForm.getData();
+                            var data = orderForm.getData();
                             console.log(data);
                             if(price==''){
                                 var data = grid_orderbook_units_bid.getRowAt(0);
@@ -290,23 +233,19 @@
                             console.log(data.BID_ACCOUNT__BALANCE);
                             var bid_fee = data.BID_FEE*data.BID_ACCOUNT__BALANCE
                             var price =data.BID_ACCOUNT__BALANCE-bid_fee;
-                            orderBuyForm.setData("PRICE",price);
+                            orderForm.setData("PRICE",price);
                         }
 
                     break;
-				}
-			});
-			orderSellForm.addEvent("click","input[type=button]",function(el){
-				switch(el.target.name){
 					case 'btn_sell':
 						var param ={
 							brRq : 'IN_PSET'
 							,brRs : 'OUT_RSET'
 							,IN_PSET:[ {
-								MARKET : orderSellForm.getData("MARKET"),
-								VOLUME : orderSellForm.getData("VOLUME"),
-								PRICE : orderSellForm.getData("PRICE"),
-								ORD_TYPE : orderSellForm.getData("ORD_TYPE"),
+								MARKET : orderForm.getData("MARKET"),
+								VOLUME : orderForm.getData("VOLUME"),
+								PRICE : orderForm.getData("PRICE"),
+								ORD_TYPE : orderForm.getData("ORD_TYPE"),
 							} ]
 						}
 						_this.showProgress();

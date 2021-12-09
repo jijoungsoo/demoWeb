@@ -56,28 +56,28 @@
 			  grid.build();
 
 			  grid.on('click', (ev) => {
-			if (ev.rowKey >=0) {
-				var row_data=grid.getRow(ev.rowKey);
-				console.log(row_data);
+                if (ev.rowKey >=0) {
+                    var row_data=grid.getRow(ev.rowKey);
+                    console.log(row_data);
 
-				var param = {
-					P_CURRENCY: row_data.CURRENCY
-				}
-				var popup = new PopupManger(_this, 'UPBIT_0265', {
-						width: 1100,
-						height: 400,
-						title: "개별입금주소조회"
-					},
-					param
-				);
-				popup.open(function (data) {
-					if (data) {
+                    var param = {
+                        P_CURRENCY: row_data.CURRENCY
+                    }
+                    var popup = new PopupManger(_this, 'UPBIT_0265', {
+                            width: 1100,
+                            height: 400,
+                            title: "개별입금주소조회"
+                        },
+                        param
+                    );
+                    popup.open(function (data) {
+                        if (data) {
 
-					}
-				});
-				
-			}
-		});
+                        }
+                    });
+                    
+                }
+		    });
 	
 			  searchForm.addEvent("click","input[type=button]",function(el){
 			   //console.log(el);
