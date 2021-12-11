@@ -1,0 +1,10 @@
+diff a/demoWeb/src/main/resources/templates/BINANCE/BINANCE_0300/BINANCE_0360(OCO모든주문내역(USER_DATA)).js.html b/demoWeb/src/main/resources/templates/BINANCE/BINANCE_0300/BINANCE_0360(OCO모든주문내역(USER_DATA)).js.html	(rejected hunks)
+@@ -22,6 +22,8 @@
+ 
+                   브랜치 테스트 중이다.2
+ 
++                  노노
++
+ 				  */
+ 				  
+ 				  
