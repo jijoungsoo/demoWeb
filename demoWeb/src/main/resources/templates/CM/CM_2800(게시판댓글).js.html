@@ -55,7 +55,7 @@ $(document).ready(function(){
 						} ],
 				}
 				_this.showProgress();							    			
-				_this.send('BR_CM_BOARD_CMT_FIND', param, function(data) {
+				_this.send_api('BR_CM_BOARD_CMT_FIND', param, function(data) {
 					_this.hideProgress();
 					if(data){
 						console.log(data);
@@ -112,7 +112,7 @@ $(document).ready(function(){
 												CMT_SEQ : cmt_seq
 											} ],
 									}							    			
-									_this.send('BR_CM_BOARD_CMT_FIND_BY_CMT_SEQ', param, function(data2) {
+									_this.send_api('BR_CM_BOARD_CMT_FIND_BY_CMT_SEQ', param, function(data2) {
 										_this.hideProgress();
 										if(data2){
 											var row_data = data2.OUT_DATA[0];

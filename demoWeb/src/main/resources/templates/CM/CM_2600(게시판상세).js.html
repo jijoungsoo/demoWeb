@@ -28,7 +28,7 @@ $(document).ready(function(){
 						}]
 					}
 			_this.showProgress();
-			_this.send('BR_CM_BOARD_FIND_BY_BRD_SEQ', param, function(data) {
+			_this.send_api('BR_CM_BOARD_FIND_BY_BRD_SEQ', param, function(data) {
 				_this.hideProgress();
 				if (data) {
 					var row_data = data.OUT_DATA[0];
@@ -64,7 +64,7 @@ $(document).ready(function(){
 								}]
 							}
 							_this.showProgress();
-							_this.send('BR_CM_BOARD_RM',param,function(data2){
+							_this.send_api('BR_CM_BOARD_RM',param,function(data2){
 								_this.hideProgress();
 								if(data2){
 									Message.alert('삭제되었습니다.',function()  {
