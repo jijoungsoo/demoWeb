@@ -193,13 +193,22 @@
 			orderForm.addEvent("click","input[type=button]",function(el){
 				switch(el.target.name){
 					case 'btn_buy':
+                        var bid_min_total=Number(orderChanceAreaForm.getData("MARKET__BID__MIN_TOTAL"));
+                        var volume=Number(orderForm.getData("VOLUME"));
+                        var price=Number(orderForm.getData("PRICE"));
+                        var sum = volume*price;
+                        if(bid_min_total>(sum)){
+                            Message.alert("주문금액("+sum+")이 최소 주문금액("+bid_min_total+")보다 작습니다.");
+                            return;
+                        }
+                    
 						var param ={
 							brRq : 'IN_PSET'
 							,brRs : 'OUT_RSET'
 							,IN_PSET:[ {
 								MARKET : orderForm.getData("MARKET"),
-								VOLUME : orderForm.getData("VOLUME"),
-								PRICE : orderForm.getData("PRICE"),
+								VOLUME : volume,
+								PRICE : price,
 								ORD_TYPE : orderForm.getData("ORD_TYPE"),
 							} ]
 						}
@@ -238,13 +247,22 @@
 
                     break;
 					case 'btn_sell':
+                        var ask_min_total=Number(orderChanceAreaForm.getData("MARKET__ASK__MIN_TOTAL"));
+                        var volume=Number(orderForm.getData("VOLUME"));
+                        var price=Number(orderForm.getData("PRICE"));
+                        var sum = volume*price;
+                        if(ask_min_total>(sum)){
+                            Message.alert("주문금액("+sum+")이 최소 주문금액("+ask_min_total+")보다 작습니다.");
+                            return;
+                        }
+
 						var param ={
 							brRq : 'IN_PSET'
 							,brRs : 'OUT_RSET'
 							,IN_PSET:[ {
 								MARKET : orderForm.getData("MARKET"),
-								VOLUME : orderForm.getData("VOLUME"),
-								PRICE : orderForm.getData("PRICE"),
+                                VOLUME : volume,
+								PRICE : price,
 								ORD_TYPE : orderForm.getData("ORD_TYPE"),
 							} ]
 						}

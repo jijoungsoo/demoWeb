@@ -22,7 +22,7 @@
 				}
 
 				_this.showProgress();
-				_this.send('BR_BINANCE_WALLET_POST_SAPI_V1_Withdraw', param, function(data) {
+				_this.send_api('BR_BINANCE_WALLET_POST_SAPI_V1_Withdraw', param, function(data) {
 					_this.hideProgress();
 					if (data) {
 						console.log(data);

@@ -21,7 +21,7 @@
                             header: '매수시점-단가',
                             name: 'mergeColumn1',
                             childNames: [
-                                'BTN_UPBIT_SELL',
+                                'BTN_UPBIT_SELL','FST_COIN',
                             'FST_UPBIT_MARKET','FST_BINANCE_SYMBOL',
                             'FST_UPBIT_PRICE'
                             ,'FST_BINANCE_PRICE_KRW','FST_BINANCE_PRICE_USD'
@@ -38,7 +38,9 @@
                         } ,{
                             header: '매도시점-단가',
                             name: 'mergeColumn3',
-                            childNames: ['LST_UPBIT_MARKET','BTN_BINANCE_BUY','LST_BINANCE_SYMBOL',
+                            childNames: [
+                                
+                            'LST_COIN','LST_UPBIT_MARKET','BTN_BINANCE_BUY','LST_BINANCE_SYMBOL',
                             ,'LST_BINANCE_PRICE_KRW','LST_BINANCE_PRICE_USD'
                             ,'LST_UPBIT_PRICE'
                             ,'LST_GAP','LST_PER'
@@ -61,7 +63,15 @@
                     }
 				  }
 			,[
-					 {
+                    {
+					   header: 'FX_SEQ',
+					   name: 'FX_SEQ',
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
                         header : 'UPBIT매도/매수',
                         name : 'BTN_UPBIT_SELL',
                         renderer : {
@@ -76,6 +86,14 @@
                         sortable : false,
                         align : "center"
                     },{
+					   header: 'FST_COIN',
+					   name: 'FST_COIN',
+					   width: 80,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
 					   header: '코인',
 					   name: 'FST_UPBIT_MARKET',
 					   width: 80,
@@ -239,6 +257,14 @@
                                 tgt : 'FST_UPBIT_SUM_AMT'
                             }
                         },
+					},{
+					   header: 'LST_COIN',
+					   name: 'LST_COIN',
+					   width: 70,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
 					},{
 					   header: '업비트',
 					   name: 'LST_UPBIT_MARKET',
