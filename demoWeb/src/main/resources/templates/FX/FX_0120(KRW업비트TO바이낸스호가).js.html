@@ -59,6 +59,14 @@
                             name: 'mergeColumn5',
                             childNames: ['FINAL_GAP','FINAL_PER'
                             ]
+                        }   , {
+                            header: '잔액',
+                            name: 'mergeColumn0',
+                            childNames: [
+                            'BALANCE_TYPE','UPBIT_KRW_BALANCE',
+                            'BINANCE_USDT_BALANCE','BINANCE_KRW_BALANCE',
+                            'MIN_KRW_BALANCE','BASE_KRW_BALANCE'
+                            ]
                         }                    
                         ]
                     }
@@ -67,14 +75,6 @@
                     {
 					   header: 'FX_SEQ',
 					   name: 'FX_SEQ',
-					   width: 100,
-					   align : 'center',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'BALANCE_TYPE',
-					   name: 'BALANCE_TYPE',
 					   width: 100,
 					   align : 'center',
 					   sortable : false,
@@ -482,6 +482,69 @@
                                 tgt : 'LST_UPBIT_SUM_AMT'
                             }
                         },
+					},{
+					   header: 'TYPE',
+					   name: 'BALANCE_TYPE',
+					   width: 60,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'U_KRW',
+					   name: 'UPBIT_KRW_BALANCE',
+					   width: 70,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'B_USDT',
+					   name: 'BINANCE_USDT_BALANCE',
+					   width: 60,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'B_KRW',
+					   name: 'BINANCE_KRW_BALANCE',
+					   width: 60,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'MIN_KRW',
+					   name: 'MIN_KRW_BALANCE',
+					   width: 70,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'BASE_KRW',
+					   name: 'BASE_KRW_BALANCE',
+					   width: 70,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
 					},{
                         header : '생성일',
                         name : 'CRT_DTM',

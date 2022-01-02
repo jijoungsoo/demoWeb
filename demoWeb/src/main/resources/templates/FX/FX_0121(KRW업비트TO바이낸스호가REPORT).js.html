@@ -18,7 +18,7 @@
                   ,header: {
                         height: 60,
                         complexColumns: [
-                        {
+                         {
                             header: '매수시점-단가',
                             name: 'mergeColumn1',
                             childNames: [
@@ -56,7 +56,15 @@
                             name: 'mergeColumn5',
                             childNames: ['FINAL_GAP','FINAL_PER'
                             ]
-                        }                    
+                        }   , {
+                            header: '잔액',
+                            name: 'mergeColumn0',
+                            childNames: [
+                            'BALANCE_TYPE','UPBIT_KRW_BALANCE',
+                            'BINANCE_USDT_BALANCE','BINANCE_KRW_BALANCE',
+                            'MIN_KRW_BALANCE','BASE_KRW_BALANCE'
+                            ]
+                        }                 
                         ]
                     }
 				  }
@@ -64,14 +72,6 @@
                     {
 					   header: 'FX_SEQ',
 					   name: 'FX_SEQ',
-					   width: 100,
-					   align : 'center',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'BALANCE_TYPE',
-					   name: 'BALANCE_TYPE',
 					   width: 100,
 					   align : 'center',
 					   sortable : false,
@@ -436,6 +436,69 @@
                             }
                         },
 					},{
+					   header: 'TYPE',
+					   name: 'BALANCE_TYPE',
+					   width: 60,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'U_KRW',
+					   name: 'UPBIT_KRW_BALANCE',
+					   width: 70,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'B_USDT',
+					   name: 'BINANCE_USDT_BALANCE',
+					   width: 60,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'B_KRW',
+					   name: 'BINANCE_KRW_BALANCE',
+					   width: 60,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'MIN_KRW',
+					   name: 'MIN_KRW_BALANCE',
+					   width: 70,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'BASE_KRW',
+					   name: 'BASE_KRW_BALANCE',
+					   width: 70,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
                         header : '생성일',
                         name : 'CRT_DTM',
                         renderer : {
@@ -462,31 +525,46 @@
 			searchForm.addEvent("click","input[type=button]",function(el){
 			//console.log(el);
 				switch(el.target.name){
-                case 'search':
-                    var data = searchForm.getData();
-                    console.log('data');
-                    console.log(data);
-                    var param ={
-                        brRq : 'IN_PSET'
-                        ,brRs : 'OUT_RSET'
-                        ,IN_PSET: [ data ]
-                    }
-                
-                    grid.loadData('BR_FX_UPBIT_retrieveTmpUpbitTOBinanceHogaReport', param, function(data) {
-                        if (data) {
+                    case 'sync':
+                    Message.confirm('싱크하시겠습니까?', function() {
+                        _this.showProgress();
+                        var param = {
+                            brRq : '',
+                            brRs : ''
                         }
-                    });
-                    
-                    break;               
-                case 'excel':
-                    Message.confirm('엑셀다운로드 하시겠습니까?', function() {
-                        grid.serverExcelDownload('KRW업비트TO바이낸스', function() {
-                            Message.alert('엑셀다운로드 되었습니다.', function() {
-                                //searchForm.get("search").trigger("click");
+                        _this.send_api('BR_FX_TMP_calculate', param, function(data) {
+                            _this.hideProgress();
+                            Message.alert('싱크되었습니다.', function() {
+                                searchForm.get("search").trigger("click");
                             });
-                        });                 
+                        });                    
                     });                    
                     break;
+                    case 'search':
+                        var data = searchForm.getData();
+                        console.log('data');
+                        console.log(data);
+                        var param ={
+                            brRq : 'IN_PSET'
+                            ,brRs : 'OUT_RSET'
+                            ,IN_PSET: [ data ]
+                        }
+                    
+                        grid.loadData('BR_FX_UPBIT_retrieveTmpUpbitTOBinanceHogaReport', param, function(data) {
+                            if (data) {
+                            }
+                        });
+                        
+                        break;               
+                    case 'excel':
+                        Message.confirm('엑셀다운로드 하시겠습니까?', function() {
+                            grid.serverExcelDownload('KRW업비트TO바이낸스', function() {
+                                Message.alert('엑셀다운로드 되었습니다.', function() {
+                                    //searchForm.get("search").trigger("click");
+                                });
+                            });                 
+                        });                    
+                        break;
 
                     
 				}

@@ -41,7 +41,15 @@
                             ,'BINANCE_SUM_AMT'
                             ,'SUM_GAP','SUM_PER'
                             ]
-                        }                     
+                        }        , {
+                            header: '잔액',
+                            name: 'mergeColumn0',
+                            childNames: [
+                            'BALANCE_TYPE',
+                            'BINANCE_USDT_BALANCE','BINANCE_KRW_BALANCE',
+                            'MIN_KRW_BALANCE','BASE_KRW_BALANCE'
+                            ]
+                        }                   
                         ]
                     }
 				  }
@@ -55,45 +63,57 @@
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
-					   header: 'BALANCE_TYPE',
+					   header: 'TYPE',
 					   name: 'BALANCE_TYPE',
-					   width: 100,
+					   width: 60,
 					   align : 'center',
 					   sortable : false,
 					   resizable: true,
 					   sortingType: 'desc'
 					},{
-					   header: 'BINANCE_USDT_BALANCE',
+					   header: 'B_USDT',
 					   name: 'BINANCE_USDT_BALANCE',
-					   width: 100,
-					   align : 'center',
+					   width: 80,
+					   align : 'right',
 					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc'
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
 					},{
-					   header: 'BINANCE_KRW_BALANCE',
+					   header: 'B_KRW',
 					   name: 'BINANCE_KRW_BALANCE',
-					   width: 100,
-					   align : 'center',
+					   width: 80,
+					   align : 'right',
 					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc'
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
 					},{
-					   header: 'MIN_KRW_BALANCE',
+					   header: 'MIN_KRW',
 					   name: 'MIN_KRW_BALANCE',
-					   width: 100,
-					   align : 'center',
+					   width: 80,
+					   align : 'right',
 					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc'
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
 					},{
-					   header: 'BASE_KRW_BALANCE',
+					   header: 'BASE_KRW',
 					   name: 'BASE_KRW_BALANCE',
-					   width: 100,
-					   align : 'center',
+					   width: 80,
+                       align : 'right',
 					   sortable : false,
 					   resizable: true,
-					   sortingType: 'desc'
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
 					},{
 					   header: 'R',
 					   name: 'RNK',

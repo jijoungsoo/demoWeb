@@ -41,7 +41,14 @@
                             ,'BINANCE_SUM_AMT'
                             ,'SUM_GAP','SUM_PER'
                             ]
-                        }                     
+                        }       , {
+                            header: '잔액',
+                            name: 'mergeColumn0',
+                            childNames: [
+                            'BALANCE_TYPE','UPBIT_KRW_BALANCE',
+                            'MIN_KRW_BALANCE','BASE_KRW_BALANCE'
+                            ]
+                        }                  
                         ]
                     }
 				  }
@@ -49,38 +56,6 @@
                     {
 					   header: 'FX_SEQ',
 					   name: 'FX_SEQ',
-					   width: 100,
-					   align : 'center',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'BALANCE_TYPE',
-					   name: 'BALANCE_TYPE',
-					   width: 100,
-					   align : 'center',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'UPBIT_KRW_BALANCE',
-					   name: 'UPBIT_KRW_BALANCE',
-					   width: 100,
-					   align : 'center',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'MIN_KRW_BALANCE',
-					   name: 'MIN_KRW_BALANCE',
-					   width: 100,
-					   align : 'center',
-					   sortable : false,
-					   resizable: true,
-					   sortingType: 'desc'
-					},{
-					   header: 'BASE_KRW_BALANCE',
-					   name: 'BASE_KRW_BALANCE',
 					   width: 100,
 					   align : 'center',
 					   sortable : false,
@@ -346,6 +321,47 @@
 					   align : 'right',
 					   sortable : false,
 					   resizable: true,
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'TYPE',
+					   name: 'BALANCE_TYPE',
+					   width: 60,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'U_KRW',
+					   name: 'UPBIT_KRW_BALANCE',
+					   width: 80,
+                       align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'MIN_KRW',
+					   name: 'MIN_KRW_BALANCE',
+					   width: 80,
+                       align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'BASE_KRW',
+					   name: 'BASE_KRW_BALANCE',
+					   width: 80,
+                       align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
                         renderer : {
                             type: commaRenderer
                         }
