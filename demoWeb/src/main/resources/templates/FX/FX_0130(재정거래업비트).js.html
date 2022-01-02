@@ -5,6 +5,7 @@
 		FX_0130.init(function(p_param) {
 			var _this = FX_0130;
 			var searchForm = new FormMngr(_this, "search_area");
+            searchForm.initCombo("BALANCE_TYPE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'BALANCE_TYPE', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
 			//value="BNBBTC"
 			//searchForm.setData('SYMBOL','BNBBTC');
             searchForm.setData('START_AMT','900000');
@@ -48,6 +49,38 @@
                     {
 					   header: 'FX_SEQ',
 					   name: 'FX_SEQ',
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BALANCE_TYPE',
+					   name: 'BALANCE_TYPE',
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'UPBIT_KRW_BALANCE',
+					   name: 'UPBIT_KRW_BALANCE',
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MIN_KRW_BALANCE',
+					   name: 'MIN_KRW_BALANCE',
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BASE_KRW_BALANCE',
+					   name: 'BASE_KRW_BALANCE',
 					   width: 100,
 					   align : 'center',
 					   sortable : false,
