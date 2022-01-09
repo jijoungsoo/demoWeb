@@ -1,0 +1,264 @@
+<script>
+    $(document).ready(function(){
+        var FX_0160 = new PgmPageMngr('[[${uuid}]]');
+        FX_0160.init(function(p_param) {
+                var _this = FX_0160;
+                var searchFormIn = new FormMngr(_this, "search_area_in");
+                searchFormIn.initCombo("SIDE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [  { GRP_CD : 'UPBIT_SIDE_CD',  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+
+                var searchFormOut = new FormMngr(_this, "search_area_out");
+                searchFormOut.initCombo("SIDE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [  { GRP_CD : 'UPBIT_SIDE_CD',  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+        
+                const grid_in_log = new TuiGridMngr(_this, 'grid_in_log', {
+                    editable : false,
+                    showRowStatus : false,
+                    rowNum : false,
+                    checkbox : false,
+                    bodyHeight : 600,
+                    width : 640
+                }, [
+                
+                {
+                    header : 'IDENTIFIER',
+                    name : 'IDENTIFIER',
+                    width : 100,
+                    sortable : true,
+                    align : "center"
+                },{
+                    header : 'MARKET',
+                    name : 'MARKET',
+                    width : 100,
+                    resizable : false
+                },{
+                    header : 'SIDE',
+                    name : 'SIDE',
+                    width : 30,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    
+                    header : 'ORD_TYPE',
+                    name : 'ORD_TYPE',
+                    width : 70,
+                    align : "center"
+                }, {
+                    header : 'VOLUME',
+                    name : 'VOLUME',
+                    width : 80,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    header : 'PRICE',
+                    name : 'PRICE',
+                    width : 80,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    header : '생성일',
+                    name : 'CRT_DTM',
+                    width : 140,
+                    sortable : true,
+                    align : "center"
+                } ]);
+                grid_in_log.build();
+    
+    
+                grid_in_log.on('click', (ev) => {
+                    var rowKey = ev.rowKey;
+                    if (rowKey >=0) {
+                        if(ev.columnName=="PGM_ID"
+                            || ev.columnName=="PGM_NM"
+                        ){
+                            var row_data=grid_in_log.getRow(rowKey);
+                            
+                            var param = {
+                                    PGM_ID : row_data["PGM_ID"]
+                            }
+                          
+                        }	
+                    }
+                });
+
+
+                const grid_out_log = new TuiGridMngr(_this, 'grid_out_log', {
+                    editable : false,
+                    showRowStatus : false,
+                    rowNum : false,
+                    checkbox : false,
+                    bodyHeight : 600,
+                    width : 1220
+                }, [
+                
+                {
+                    header : 'IDENTIFIER',
+                    name : 'IDENTIFIER',
+                    width : 100,
+                    sortable : true,
+                    align : "center"
+                },{
+                    header : 'SEQ_UUID',
+                    name : 'SEQ_UUID',
+                    width : 100,
+                    resizable : false
+                }, {
+                    
+                    header : 'MARKET',
+                    name : 'MARKET',
+                    width : 100,
+                    align : "left"
+                },{
+                    header : 'SIDE',
+                    name : 'SIDE',
+                    width : 30,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    header : 'ORD_TYPE',
+                    name : 'ORD_TYPE',
+                    width : 70,
+                    align : "center"
+                }, {
+                    
+                    header : 'STATE',
+                    name : 'STATE',
+                    width : 40,
+                    align : "center"
+                }, {
+                    header : 'PRICE',
+                    name : 'PRICE',
+                    width : 80,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    
+                    header : 'AVG_PRICE',
+                    name : 'AVG_PRICE',
+                    width : 80,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    
+                    header : 'VOLUME',
+                    name : 'VOLUME',
+                    width : 80,
+                    align : "right"
+                }, {
+                    
+                    header : 'REMAINING_VOLUME',
+                    name : 'REMAINING_VOLUME',
+                    width : 130,
+                    align : "right"
+                }, {
+                    
+                    header : 'RESERVED_FEE',
+                    name : 'RESERVED_FEE',
+                    width : 100,
+                    align : "right"
+                }, {
+                    
+                    header : 'REMAINING_FEE',
+                    name : 'REMAINING_FEE',
+                    width : 100,
+                    align : "right"
+                }, {
+                    
+                    header : 'PAID_FEE',
+                    name : 'PAID_FEE',
+                    width : 70,
+                    align : "right"
+                }, {
+                    
+                    header : 'LOCKED',
+                    name : 'LOCKED',
+                    width : 80,
+                    align : "right"
+                }, {
+                    
+                    header : 'EXECUTED_VOLUME',
+                    name : 'EXECUTED_VOLUME',
+                    width : 120,
+                    align : "right"
+                }, {
+                    
+                    header : 'TRADE_COUNT',
+                    name : 'TRADE_COUNT',
+                    width : 100,
+                    align : "right"
+                }, {
+                    
+                    header : 'CREATED_AT',
+                    name : 'CREATED_AT',
+                    width : 120,
+                    align : "center"
+                }, {
+                    header : '생성일',
+                    name : 'CRT_DTM',
+                    width : 140,
+                    sortable : true,
+                    align : "center"
+                } ]);
+                grid_out_log.build();
+    
+    
+                grid_out_log.on('click', (ev) => {
+                    var rowKey = ev.rowKey;
+                    if (rowKey >=0) {
+                        if(ev.columnName=="PGM_ID"
+                            || ev.columnName=="PGM_NM"
+                        ){
+                            var row_data=grid_out_log.getRow(rowKey);
+                            
+                            var param = {
+                                    PGM_ID : row_data["PGM_ID"]
+                            }
+                          
+                        }	
+                    }
+                });
+    
+    
+                searchFormIn.addEvent("click", "input[type=button]", function(el) {
+                    switch (el.target.name) {
+                    case 'search':
+                        var data = searchFormIn.getData();
+                        var param = {
+                            brRq : 'IN_PSET',
+                            brRs : 'OUT_RSET',
+                            IN_PSET : [ data ]
+                        }
+                        
+                        grid_in_log.loadData('BR_FX_UPBIT_ORDER_retrieveUpbitOrderInLog', param, function(data) {
+                            console.log(data);
+                            //gridLoadData에서 자동으로 로드됨..
+    
+                        });
+                        break;
+    
+                    }
+                });
+                searchFormIn.get("search").trigger("click");
+
+
+                searchFormOut.addEvent("click", "input[type=button]", function(el) {
+                    switch (el.target.name) {
+                    case 'search':
+                        var data = searchFormOut.getData();
+                        var param = {
+                            brRq : 'IN_PSET',
+                            brRs : 'OUT_RSET',
+                            IN_PSET : [ data ]
+                        }
+                        
+                        grid_out_log.loadData('BR_FX_UPBIT_ORDER_retrieveUpbitOrderOutLog', param, function(data) {
+                            console.log(data);
+                            //gridLoadData에서 자동으로 로드됨..
+    
+                        });
+                        break;
+    
+                    }
+                });
+                searchFormOut.get("search").trigger("click");
+            });
+        });
+    </script>

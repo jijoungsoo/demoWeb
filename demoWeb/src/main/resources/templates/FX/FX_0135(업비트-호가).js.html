@@ -1,0 +1,128 @@
+
+<script>
+	$(document).ready(function(){
+		var FX_0130 = new PgmPageMngr('[[${uuid}]]');
+		FX_0130.init(function(p_param) {
+			var _this = FX_0130;
+			var searchForm = new FormMngr(_this, "search_area");
+
+            const grid = new TuiGridMngr(_this,'grid',{
+				  editable: false
+				  ,showRowStatus: false
+				  ,rowNum: true
+				  ,checkbox: false
+				  ,pageable: true
+                  ,bodyHeight : 600
+				  }
+			,[
+                    {
+					   header: 'FX_SEQ',
+					   name: 'FX_SEQ',
+					   width: 100,
+					   align : 'center',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'MARKET',
+					   name: 'MARKET',
+					   width: 100,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'SEQ',
+					   name: 'SEQ',
+					   width: 30,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ASK_PRICE',
+					   name: 'ASK_PRICE',
+					   width: 100,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BID_PRICE',
+					   name: 'BID_PRICE',
+					   width: 100,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'ASK_SIZE',
+					   name: 'ASK_SIZE',
+					   width: 100,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+					   header: 'BID_SIZE',
+					   name: 'BID_SIZE',
+					   width: 100,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc',
+                        renderer : {
+                            type: commaRenderer
+                        }
+					},{
+					   header: 'TRADE_TYPE',
+					   name: 'TRADE_TYPE',
+					   width: 100,
+					   align : 'right',
+					   sortable : false,
+					   resizable: true,
+					   sortingType: 'desc'
+					},{
+                        header : '생성일',
+                        name : 'CRT_DTM',
+                        renderer : {
+                            type : datetimeRenderer,
+                            options : {
+                                format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+                                ,source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+                            }
+                        },
+                        width : 100,
+                        sortable : false,
+                        align : "center"
+                    }
+				]
+			);
+			grid.build();
+		
+			searchForm.addEvent("click","input[type=button]",function(el){
+			//console.log(el);
+				switch(el.target.name){
+                case 'search':
+                    var data = searchForm.getData();
+                    console.log('data');
+                    console.log(data);
+                    var param ={
+                        brRq : 'IN_PSET'
+                        ,brRs : 'OUT_RSET'
+                        ,IN_PSET :  [ data ]
+                    }
+                
+                    grid.loadData('BR_FX_retrieveTmpUpbitHoga', param, function(data) {
+                        if (data) {
+                        }
+                    });
+                    
+                    break;           
+                }				
+			});
+			searchForm.get("search").trigger("click");
+	});	
+});
+
+</script>
