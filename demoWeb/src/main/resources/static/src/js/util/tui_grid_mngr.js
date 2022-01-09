@@ -42,7 +42,7 @@ class TuiGridMngr {
       /*상태넣기 */
       if (this.options.showRowStatus == true) {
         o_columns.push({
-          header: ' '
+          header: 'M'
           ,name: '_ROW_STATUS'
           ,width: 20
           ,align: 'center'

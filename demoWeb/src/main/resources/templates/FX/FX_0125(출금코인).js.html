@@ -1,0 +1,254 @@
+<script>
+    $(document).ready(function(){
+        var BINANCE_0125 = new PgmPageMngr('[[${uuid}]]');
+            BINANCE_0125.init(function(p_param) {
+                var _this = BINANCE_0125;
+                var searchForm = new FormMngr(_this, "search_area");
+    
+                const grid = new TuiGridMngr(_this, 'grid', {
+                    editable : true,
+                    showRowStatus : true,
+                    rowNum : true,
+                    checkbox : true,
+                    bodyHeight : 700 /*그리드 높이지정 */
+                    ,
+                    header: {
+                        height: 60,
+                        complexColumns: [
+                            {
+                                header: '업비트주소',
+                                name: 'mergeColumn1',
+                                childNames: [
+                                    'UPBIT_DEPOSIT_ADDRESS',
+                                    'UPBIT_DEPOSIT_ADDRESS_SECOND'
+                                ]
+                            } , {
+                                header: '바이낸스',
+                                name: 'mergeColumn2',
+                                childNames: [
+                                    'BINANCE_DEPOSIT_ADDRESS',
+                                    'BINANCE_DEPOSIT_ADDRESS_SECOND'
+                                ]
+                            }             
+                            ]
+                    },
+                    showDummyRows : false
+                },
+                [ 
+                    
+                {
+                    header : '코인(통화)',
+                    name : 'CURRENCY',
+                    width : 100,
+                    resizable : false,
+                    sortable : true,
+                    validation : {
+                        dataType : 'string', /*string ,number*/
+                        required : true, /*  true 필수, false 필수아님  */
+                        unique : true
+				    }
+                },{
+                    header : '코인명',
+                    name : 'CURRENCY_NM',
+                    width : 100,
+                    resizable : false,
+                    sortable : true
+                },{
+                    header : '코인명(EN)',
+                    name : 'CURRENCY_NM_EN',
+                    width : 100,
+                    resizable : false,
+                    sortable : true
+                },{
+                    header : 'U_YN',
+                    name : 'UPBIT_YN',
+                    width : 40,
+                    resizable : false,
+                    align : "center"                    
+                },{
+                    header : 'B_YN',
+                    name : 'BINANCE_YN',
+                    width : 40,
+                    resizable : false,
+                    align : "center"                    
+                },{
+                    header : 'TIME',
+                    name : 'TIME_GAP',
+                    width : 60,
+                    resizable : false,
+                    sortable : true,
+                    editor : 'text'
+                },{
+                    header : '비고',
+                    name : 'RMK',
+                    width : 200,
+                    resizable : false,
+                    sortable : true,
+                    editor : 'text'
+                },{
+                    header : '제외여부',
+                    name : 'EXCEPT_YN',
+                    width : 80,
+                    resizable : false,
+                    sortable : true,
+                    editor: {
+			              type: 'radio',
+			              options: {
+			                listItems: [
+			                  { text: 'Y', value: 'Y' },
+			                  { text: 'N', value: 'N' }
+			                ]
+			              }
+			            }
+                },{
+                    header : '제외사유',
+                    name : 'EXCEPT_RSN',
+                    width : 200,
+                    resizable : false,
+                    editor : 'text'
+                },{
+                    header : '입금주소',
+                    name : 'UPBIT_DEPOSIT_ADDRESS',
+                    width : 120,
+                    resizable : true
+                },{
+                    header : '입금2차주소',
+                    name : 'UPBIT_DEPOSIT_ADDRESS_SECOND',
+                    width : 120,
+                    resizable : true
+                },{
+                    header : '입금주소',
+                    name : 'BINANCE_DEPOSIT_ADDRESS',
+                    width : 120,
+                    resizable : true
+                },{
+                    header : '입금2차주소',
+                    name : 'BINANCE_DEPOSIT_ADDRESS_SECOND',
+                    width : 120,
+                    resizable : true
+                }
+                , {
+                    header : '생성일',
+                    name : 'CRT_DTM',
+                    renderer : {
+                        type : datetimeRenderer,
+                        options : {
+                            format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+                            ,
+                            source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+                        }
+                    },
+                    width : 100,
+                    align : "center"                    
+                }, {
+                    header : '수정일',
+                    name : 'UPDT_DTM',
+                    renderer : {
+                        type : datetimeRenderer,
+                        options : {
+                            format : 'yyyy-MM-DD HH:mm' /*YYYYMMDDHHmmss    이게 풀양식이다.*/
+                            ,
+                            source : 'YYYYMMDDHHmmss' /*TIME 초, YYYYMMDD , YYYYMMDDHHmm,  YYYYMMDDHHmmss  */
+                        }
+                    },
+                    width : 100,
+                    align : "center"
+                /*,  filter: 'number'  숫자일경우 비교 */
+                } ]
+                );
+                grid.build();
+    
+                searchForm.addEvent("click","input[type=button]", function(el) {
+                    switch (el.target.name) {
+                    case 'search':
+                        var data = searchForm.getData();
+                        console.log(data);
+                        var param = {
+                            brRq : 'IN_PSET',
+                            brRs : 'OUT_RSET',
+                            IN_PSET : [ data ]
+                        }
+                        grid.loadData('BR_FX_COIN_WITHDRAW_retrieveCurrency', param, function(data) {
+                            console.log(data);
+                            //gridLoadData에서 자동으로 로드됨..
+                        
+                        });
+                        break;
+                    case 'add_row':
+                        Message.confirm('행을 추가하시겠습니까?', function() {
+                            grid.appendRow();
+                        });
+                        break;
+
+                    case 'sync':
+                        Message.confirm('싱크하시겠습니까?', function() {
+                            var param = {
+                                brRq : '',
+                                brRs : ''
+                            }
+                            _this.send_api('BR_FX_COIN_WITHDRAW_syncCurrency', param, function(data) {
+                                if(data){
+                                    Message.alert('싱크되었습니다.', function() {
+                                        searchForm.get("search").trigger("click");
+                                    });
+                                }
+                            });
+                        });
+                        break;
+    
+                    case 'save':
+                        var data = grid.getModifiedRows();
+                        console.log(data);
+                        var updt_cnt = data.updatedRows.length;
+    
+                        if ((updt_cnt) == 0) {
+                            Message.alert("저장할 내용이 존재하지 않습니다.");
+                            return;
+                        }
+                        if (grid.isValid() == false) {
+                            grid.validMsg();
+                            return;
+                        }
+                    
+                        Message.confirm('저장하시겠습니까?', function() {
+                            var param = {
+                                brRq : 'UPDT_DATA',
+                                brRs : '',
+                                UPDT_DATA : data.updatedRows
+                            }
+                            _this.send_api('BR_FX_COIN_WITHDRAW_saveCurrencyExcept', param, function(data) {
+                                if(data){
+                                    Message.alert('저장되었습니다.', function() {
+                                        searchForm.get("search").trigger("click");
+                                    });
+                                }
+                            });
+                        });
+                        break;
+                    case "del":
+                        var data = grid.getCheckedData();
+                        console.log(data);
+                        if (data.length <= 0) {
+                            Message.alert('선택된 항목이 없습니다.');
+                            return;
+                        }
+                        
+                        Message.confirm('삭제하시겠습니까?', function() {
+                            var param = {
+                                brRq : 'IN_PSET',
+                                brRs : '',
+                                IN_PSET : data
+                            }
+                            _this.send_api('BR_FX_COIN_WITHDRAW_removeCurrency', param, function(data) {
+                                Message.alert('삭제되었습니다.', function() {
+                                    searchForm.get("search").trigger("click");
+                                });
+                            });
+                        });
+                        break;
+                    }
+                });
+                searchForm.get("search").trigger("click");
+            });
+        });
+    </script>

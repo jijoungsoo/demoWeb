@@ -252,10 +252,12 @@ $(document).ready(function(){
 			searchForm.addEvent("click","input[type=button]", function(el) {
 				switch (el.target.name) {
 				case 'search':
+                    var data = searchForm.getData();
+                    console.log(data);
 					var param = {
-						brRq : 'IN_DATA',
+						brRq : 'IN_PSET',
 						brRs : 'OUT_DATA',
-						IN_DATA : [ {} ]
+						IN_PSET : [ data ]
 					}
 					grid.loadData('BR_CM_SEQ_FIND', param, function(data) {
 						console.log(data);
