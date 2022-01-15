@@ -36,6 +36,14 @@ class FormMngr {
 	get(name) {
 		return this.container_area.find("[name=" + name + "]");
 	}
+    checked(name){
+        var tmp = this.container_area.find("[name=" + name + "]");
+        tmp[0].checked=true;
+    }
+    unChecked(name){
+        var tmp = this.container_area.find("[name=" + name + "]");
+        tmp[0].checked=false;
+    }
 	initBinder() {
 		this.target_data = {};
 		let tgt_data = this.target_data;
@@ -49,7 +57,7 @@ class FormMngr {
 		for (var i = 0; i < w.querySelectorAll('[data-model]').length; i++) {
 			var el = w.querySelectorAll('[data-model]')[i];
 			console.log(el.name);
-			tgt_data[el.name] = '';
+			tgt_data[el.name] = ''; //처음에 value 값을 무조건 비우게 한다. 음//
 		}
 		console.log('bbbbbbbbbbbbb');
 		this.myModel = new ax5.ui.binder();
@@ -113,6 +121,7 @@ class FormMngr {
 			console.log(this.myModel.get());
 			return this.myModel.get()[name]	;
 		} else {
+            console.log(this.myModel);
 			return this.myModel.get();
 		}
 		

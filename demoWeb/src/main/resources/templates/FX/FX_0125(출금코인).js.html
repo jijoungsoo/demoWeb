@@ -3,14 +3,20 @@
         var BINANCE_0125 = new PgmPageMngr('[[${uuid}]]');
             BINANCE_0125.init(function(p_param) {
                 var _this = BINANCE_0125;
-                var searchForm = new FormMngr(_this, "search_area");
-    
+                var searchForm = new FormMngr(_this, "search_area");                
+                searchForm.initCombo("EXCEPT_YN",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'USE_YN', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+                searchForm.initCombo("BINANCE_DEPOSIT_REG_YN",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'USE_YN', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+                searchForm.initCombo("UPBIT_DEPOSIT_REG_YN",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [{  GRP_CD : 'USE_YN', USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+                searchForm.setData("WITHDRAW_ENABLE","Y");
+                searchForm.checked("WITHDRAW_ENABLE");
+                
+                                    
                 const grid = new TuiGridMngr(_this, 'grid', {
                     editable : true,
                     showRowStatus : true,
                     rowNum : true,
                     checkbox : true,
-                    bodyHeight : 700 /*그리드 높이지정 */
+                    bodyHeight : 600 /*그리드 높이지정 */
                     ,
                     header: {
                         height: 60,
@@ -20,14 +26,17 @@
                                 name: 'mergeColumn1',
                                 childNames: [
                                     'UPBIT_DEPOSIT_ADDRESS',
-                                    'UPBIT_DEPOSIT_ADDRESS_SECOND'
+                                    'UPBIT_DEPOSIT_ADDRESS_SECOND',
+                                    'BINANCE_DEPOSIT_REG_YN'
                                 ]
                             } , {
                                 header: '바이낸스',
                                 name: 'mergeColumn2',
                                 childNames: [
                                     'BINANCE_DEPOSIT_ADDRESS',
-                                    'BINANCE_DEPOSIT_ADDRESS_SECOND'
+                                    'BINANCE_DEPOSIT_ADDRESS_SECOND',
+                                    'UPBIT_DEPOSIT_REG_YN'
+
                                 ]
                             }             
                             ]
@@ -77,18 +86,18 @@
                     width : 60,
                     resizable : false,
                     sortable : true,
-                    editor : 'text'
+                    editor : 'text',
+                    align : "center"  
                 },{
                     header : '비고',
                     name : 'RMK',
-                    width : 200,
-                    resizable : false,
-                    sortable : true,
+                    width : 60,
+                    resizable : true,
                     editor : 'text'
                 },{
                     header : '제외여부',
                     name : 'EXCEPT_YN',
-                    width : 80,
+                    width : 70,
                     resizable : false,
                     sortable : true,
                     editor: {
@@ -99,35 +108,64 @@
 			                  { text: 'N', value: 'N' }
 			                ]
 			              }
-			            }
+                    },
+                    align : "center"  
+
                 },{
                     header : '제외사유',
                     name : 'EXCEPT_RSN',
-                    width : 200,
+                    width : 180,
                     resizable : false,
                     editor : 'text'
                 },{
                     header : '입금주소',
                     name : 'UPBIT_DEPOSIT_ADDRESS',
-                    width : 120,
+                    width : 240,
                     resizable : true
                 },{
                     header : '입금2차주소',
                     name : 'UPBIT_DEPOSIT_ADDRESS_SECOND',
-                    width : 120,
+                    width : 100,
                     resizable : true
+                },{
+                    header : '바이낸스-등록',
+                    name : 'BINANCE_DEPOSIT_REG_YN',
+                    width : 80,
+                    editor: {
+			              type: 'radio',
+			              options: {
+			                listItems: [
+			                  { text: 'Y', value: 'Y' },
+			                  { text: 'N', value: 'N' }
+			                ]
+			              }
+			            },
+                    align : "center"  
                 },{
                     header : '입금주소',
                     name : 'BINANCE_DEPOSIT_ADDRESS',
-                    width : 120,
+                    width : 240,
                     resizable : true
                 },{
                     header : '입금2차주소',
                     name : 'BINANCE_DEPOSIT_ADDRESS_SECOND',
-                    width : 120,
+                    width : 100,
                     resizable : true
-                }
-                , {
+                },{
+                    header : '업비트-등록',
+                    name : 'UPBIT_DEPOSIT_REG_YN',
+                    width : 80,
+                    editor: {
+			              type: 'radio',
+			              options: {
+			                listItems: [
+			                  { text: 'Y', value: 'Y' },
+			                  { text: 'N', value: 'N' }
+			                ]
+			              }
+			            },
+                    align : "center"  
+                }, {
                     header : '생성일',
                     name : 'CRT_DTM',
                     renderer : {
@@ -251,4 +289,16 @@
                 searchForm.get("search").trigger("click");
             });
         });
+
+        /* 굳이 이렇게 할필요 없겠다.
+
+        var '출력변수'  = function () {
+
+        };
+
+        '출력변수'.prototype = new PgmPageMngr('[[${uuid}]]');
+        $(document).ready(function(){
+                var form = new '출력변수';
+        });
+        */
     </script>

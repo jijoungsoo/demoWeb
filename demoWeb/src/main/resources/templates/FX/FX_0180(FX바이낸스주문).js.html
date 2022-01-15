@@ -1,0 +1,256 @@
+<script>
+    $(document).ready(function(){
+        var FX_0160 = new PgmPageMngr('[[${uuid}]]');
+        FX_0160.init(function(p_param) {
+                var _this = FX_0160;
+                var searchFormIn = new FormMngr(_this, "search_area_in");
+                searchFormIn.initCombo("SIDE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [  { GRP_CD : 'UPBIT_SIDE_CD',  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+
+                var searchFormOut = new FormMngr(_this, "search_area_out");
+                searchFormOut.initCombo("SIDE",'BR_CM_CD_FIND', {brRq: 'IN_DATA',brRs: 'OUT_DATA',IN_DATA: [  { GRP_CD : 'UPBIT_SIDE_CD',  USE_YN: 'Y'}]},{ USE_EMPTY_YN : 'Y' , VALUE :'CD' , TEXT :'CD_NM' });
+        
+                const grid_log = new TuiGridMngr(_this, 'grid_log', {
+                    editable : false,
+                    showRowStatus : false,
+                    rowNum : false,
+                    checkbox : false,
+                    bodyHeight : 600,
+                    width : 1000
+                }, [
+                
+                {
+                    header : 'SYMBOL',
+                    name : 'SYMBOL',
+                    width : 100,
+                    sortable : false,
+                    align : "left"
+                },{
+                    header : 'ORDER_ID',
+                    name : 'ORDER_ID',
+                    width : 70,
+                    resizable : false
+                },{
+                    header : 'ORDER_LIST_ID',
+                    name : 'ORDER_LIST_ID',
+                    width : 100,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    
+                    header : 'CLIENT_ORDER_ID',
+                    name : 'CLIENT_ORDER_ID',
+                    width : 110,
+                    align : "center"
+                } ,{
+                    header : 'TYPE',
+                    name : 'TYPE',
+                    width : 40,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    header : 'SIDE',
+                    name : 'SIDE',
+                    width : 40,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    header : 'TRANSACT_TIME',
+                    name : 'TRANSACT_TIME',
+                    width : 110,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    header : 'PRICE',
+                    name : 'PRICE',
+                    width : 70,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    header : 'ORIG_QTY',
+                    name : 'ORIG_QTY',
+                    width : 70,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    header : 'EXECUTED_QTY',
+                    name : 'EXECUTED_QTY',
+                    width : 100,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    header : 'CUMMULATIVE_QUOTE_QTY',
+                    name : 'CUMMULATIVE_QUOTE_QTY',
+                    width : 170,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    header : 'STATUS',
+                    name : 'STATUS',
+                    width : 60,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    header : 'TIME_IN_FORCE',
+                    name : 'TIME_IN_FORCE',
+                    width : 100,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    header : '생성일',
+                    name : 'CRT_DTM',
+                    width : 140,
+                    sortable : true,
+                    align : "center"
+                } ]);
+                grid_log.build();
+    
+    
+                grid_log.on('click', (ev) => {
+                    var rowKey = ev.rowKey;
+                    if (rowKey >=0) {
+                        if(ev.columnName=="PGM_ID"
+                            || ev.columnName=="PGM_NM"
+                        ){
+                            var row_data=grid_log.getRow(rowKey);
+                            
+                            var param = {
+                                    PGM_ID : row_data["PGM_ID"]
+                            }
+                          
+                        }	
+                    }
+                });
+
+                const grid_fills_log = new TuiGridMngr(_this, 'grid_fills_log', {
+                    editable : false,
+                    showRowStatus : false,
+                    rowNum : false,
+                    checkbox : false,
+                    bodyHeight : 600,
+                    width : 920
+                }, [
+                
+                {
+                    header : 'SYMBOL',
+                    name : 'SYMBOL',
+                    width : 100,
+                    sortable : false,
+                    align : "center"
+                },{
+                    header : 'SIDE',
+                    name : 'SIDE',
+                    width : 80,
+                    resizable : false
+                },{
+                    header : 'ORDER_ID',
+                    name : 'ORDER_ID',
+                    width : 80,
+                    resizable : false
+                }, {
+                    
+                    header : 'ORDER_LIST_ID',
+                    name : 'ORDER_LIST_ID',
+                    width : 100,
+                    align : "left"
+                },{
+                    header : 'CLIENT_ORDER_ID',
+                    name : 'CLIENT_ORDER_ID',
+                    width : 110,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    header : 'PRICE',
+                    name : 'PRICE',
+                    width : 80,
+                    align : "center"
+                }, {
+                    
+                    header : 'QTY',
+                    name : 'QTY',
+                    width : 70,
+                    align : "center"
+                }, {
+                    header : 'COMMISSION',
+                    name : 'COMMISSION',
+                    width : 90,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    
+                    header : 'COMMISSION_ASSET',
+                    name : 'COMMISSION_ASSET',
+                    width : 130,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    header : '생성일',
+                    name : 'CRT_DTM',
+                    width : 140,
+                    sortable : true,
+                    align : "center"
+                } ]);
+                grid_fills_log.build();
+    
+    
+                grid_fills_log.on('click', (ev) => {
+                    var rowKey = ev.rowKey;
+                    if (rowKey >=0) {
+                        if(ev.columnName=="PGM_ID"
+                            || ev.columnName=="PGM_NM"
+                        ){
+                            var row_data=grid_fills_log.getRow(rowKey);
+                            
+                            var param = {
+                                    PGM_ID : row_data["PGM_ID"]
+                            }
+                          
+                        }	
+                    }
+                });
+    
+    
+                searchFormIn.addEvent("click", "input[type=button]", function(el) {
+                    switch (el.target.name) {
+                    case 'search':
+                        var data = searchFormIn.getData();
+                        var param = {
+                            brRq : 'IN_PSET',
+                            brRs : 'OUT_RSET',
+                            IN_PSET : [ data ]
+                        }
+                        
+                        grid_log.loadData('BR_FX_BINANCE_ORDERED_retrieveBinanceOrderedLog', param, function(data) {
+                            console.log(data);
+                            //gridLoadData에서 자동으로 로드됨..
+    
+                        });
+                        break;
+    
+                    }
+                });
+                searchFormIn.get("search").trigger("click");
+
+
+                searchFormOut.addEvent("click", "input[type=button]", function(el) {
+                    switch (el.target.name) {
+                    case 'search':
+                        var data = searchFormOut.getData();
+                        var param = {
+                            brRq : 'IN_PSET',
+                            brRs : 'OUT_RSET',
+                            IN_PSET : [ data ]
+                        }
+                        
+                        grid_fills_log.loadData('BR_FX_BINANCE_ORDERED_retrieveBinanceOrderedFillsLog', param, function(data) {
+                            console.log(data);
+                            //gridLoadData에서 자동으로 로드됨..
+    
+                        });
+                        break;
+    
+                    }
+                });
+                searchFormOut.get("search").trigger("click");
+            });
+        });
+    </script>

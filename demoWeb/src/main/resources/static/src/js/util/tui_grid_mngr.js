@@ -441,8 +441,11 @@ class TuiGridMngr {
     	p_func(data);
       }
         
+
 	    if(_this.options.pageable==false) {
-            if(_this.visibleTotalCnt==true){
+            if(_this.visibleTotalCnt=== undefined){
+                _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=total_size]')[0].innerText=_this.total_size;
+            } else if(_this.visibleTotalCnt==true){
                 _this.pgm_mngr.get(_this.grid_name+'_page_div').find('[name=total_size]')[0].innerText=_this.total_size;
             }
 	    } else {

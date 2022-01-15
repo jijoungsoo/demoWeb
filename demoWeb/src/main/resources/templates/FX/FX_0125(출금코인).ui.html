@@ -8,7 +8,42 @@
                     <input type="text" class="form-control" data-ax-path="CURRENCY"  name="CURRENCY" style="width:140px;" />
                   </div>
                 </div>
-              </td>
+            </td>
+            <td>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox"   data-ax-path="WITHDRAW_ENABLE"  name="WITHDRAW_ENABLE" value="Y" />
+                    <label class="form-check-label" for="flexCheckDefault">
+                        출금가능여부
+                    </label>
+                  </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <div class="input-group">
+                    <span class="input-group-addon">제외여부</span> 
+                    <select class="form-control" data-ax-path="EXCEPT_YN"  name="EXCEPT_YN" style="width:60px;">
+                    </select>
+                    </div>
+                </div>
+            </td>  
+            <td>
+                <div class="form-group">
+                    <div class="input-group">
+                    <span class="input-group-addon">업비트주소-바이낸스등록</span> 
+                    <select class="form-control" data-ax-path="BINANCE_DEPOSIT_REG_YN"  name="BINANCE_DEPOSIT_REG_YN" style="width:60px;">
+                    </select>
+                    </div>
+                </div>
+            </td>     
+            <td>
+                <div class="form-group">
+                    <div class="input-group">
+                    <span class="input-group-addon">바이낸스주소-업비트등록</span> 
+                    <select class="form-control" data-ax-path="UPBIT_DEPOSIT_REG_YN"  name="UPBIT_DEPOSIT_REG_YN" style="width:60px;">
+                    </select>
+                    </div>
+                </div>
+            </td>     
 			<td><input type="button" name="search" value="조회" /></td>
 			<td><input type="button" name="sync" value="싱크" /></td>
 			<td><input type="button" name="save" value="저장" /></td>

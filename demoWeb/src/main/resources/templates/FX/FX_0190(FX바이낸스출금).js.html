@@ -1,0 +1,103 @@
+<script>
+    $(document).ready(function(){
+        var FX_0190 = new PgmPageMngr('[[${uuid}]]');
+        FX_0190.init(function(p_param) {
+                var _this = FX_0190;
+                var searchForm = new FormMngr(_this, "search_area");
+
+                const grid = new TuiGridMngr(_this, 'grid', {
+                    editable : false,
+                    showRowStatus : false,
+                    rowNum : false,
+                    checkbox : false,
+                    bodyHeight : 600,
+                    width : 1500
+                }, [
+                
+                {
+                    header : 'COIN',
+                    name : 'COIN',
+                    width : 100,
+                    sortable : true,
+                    align : "center"
+                },{
+                    header : 'WITHDRAW_ORDER_ID',
+                    name : 'WITHDRAW_ORDER_ID',
+                    width : 140,
+                    resizable : false
+                },{
+                    header : 'NETWORK',
+                    name : 'NETWORK',
+                    width : 80,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    
+                    header : 'ADDRESS',
+                    name : 'ADDRESS',
+                    width : 240,
+                    align : "center"
+                }, {
+                    header : 'ADDRESS_TAG',
+                    name : 'ADDRESS_TAG',
+                    width : 100,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    header : 'AMOUNT',
+                    name : 'AMOUNT',
+                    width : 80,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    header : 'TRANSACTION_FEE_FLAG',
+                    name : 'TRANSACTION_FEE_FLAG',
+                    width : 160,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    header : 'NAME',
+                    name : 'NAME',
+                    width : 200,
+                    resizable : false,
+                    align : "right"
+                }, {
+                    header : 'RESULT_ID',
+                    name : 'RESULT_ID',
+                    width : 240,
+                    resizable : false,
+                    align : "center"
+                }, {
+                    header : '생성일',
+                    name : 'CRT_DTM',
+                    width : 140,
+                    sortable : true,
+                    align : "center"
+                } ]);
+                grid.build();
+        
+                searchForm.addEvent("click", "input[type=button]", function(el) {
+                    switch (el.target.name) {
+                    case 'search':
+                        var data = searchForm.getData();
+                        var param = {
+                            brRq : 'IN_PSET',
+                            brRs : 'OUT_RSET',
+                            IN_PSET : [ data ]
+                        }
+                        
+                        grid.loadData('BR_FX_BINANCE_WITHDRAW_retrieveBinanceWithdrawLog', param, function(data) {
+                            console.log(data);
+                            //gridLoadData에서 자동으로 로드됨..
+    
+                        });
+                        break;
+    
+                    }
+                });
+                searchForm.get("search").trigger("click");
+
+
+            });
+        });
+    </script>
